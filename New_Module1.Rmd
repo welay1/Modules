@@ -1,0 +1,459 @@
+---
+title: "Motivating the Regression Line of Best Fit"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(remotes)
+library(learnr)
+#remotes::install_github("rstudio/learnr", force=TRUE)
+#gradethis::gradethis_setup()
+
+library(tidyverse)
+library(learnr)
+
+data <- read.csv("cleaning_sim.csv") %>% rename(CrewSize = Crews)
+
+```
+
+
+
+## Background: Help your friend understand her cleaning business
+Consider the following scenario:
+
+A year ago, your best friend launched a cleaning company, but it's not yet profitable. She believes that some employees might not be performing effectively, resulting in no additional rooms being cleaned and, consequently, no profit. She seeks your help to confirm her suspicions.
+
+
+You request records from the past year detailing the number of workers sent (CrewSize, X) and rooms cleaned (Rooms, Y) **to test if more workers lead to more cleaned rooms.** 
+
+Unfortunately, *she only has data for one month*: **February**, rather than the entire year. 
+
+```{r check_in, echo=FALSE}
+question("Which of the following is true about analyzing the business based on just one month's data instead of a full year's data?",
+    
+         answer("If we examined data from another month, the results would be consistent with this month's findings", message = "Every month's data (sample) from the year will show variations due to sampling. Thus, it might not align perfectly with the results from the month our friend provided."), 
+         answer("Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", message = "If the sample is not representative of the population (full year), then we likely will obtain biased estimates."), 
+         answer("The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", correct = TRUE, message = "Although we cannot ascertain the entire population's data on the number of workers hired and the number of rooms cleaned, we can use the sample that our friend provided (data for one month), to infer about the whole year."),
+         answer("It's not possible to get an estimate of association between Crew size and Rooms cleaned.", message = "It is possible, and that will be the topic of this module!"), allow_retry = TRUE
+)
+```
+
+
+## Section 1: Loading and Visualizing the Sample Data
+The dataset for the month of February is named "data". It includes 100 observations and the following 3 variables:
+
+   - Case: observation number (identifier).
+   - CrewSize: the number of members in a cleaning crew sent to a job.
+   - Rooms: the number of rooms cleaned by that cleaning crew.
+
+In R, use the dollar sign (\$) after the dataset name to access a specific column. For instance, `data$Variable` fetches the column named 'Variable' from the dataset called 'data'.
+
+### Part 1.1: Univariate Summaries of the Data:
+
+To begin, let's produce a 5-number summary of each variable in the data. The name of the dataset is "data" and it is loaded for you to use. You can type your code into the box below, and if you are stuck, you can click the hint button to help you with the R code and syntax.
+
+
+```{r exercise1a, exercise=TRUE, exercise.lines = 3}
+# produce a 5-number summary of each variable stored in data
+```
+
+```{r exercise1a-hint-1}
+# ---
+
+# The `summary()` function gives you a 5-number summary on each variable in the dataset."
+
+# ---
+```
+
+```{r exercise1a-hint-2}
+# ---
+
+# Remember, the dataset you are interested in is the one called `data`. "
+
+# ---
+```
+
+We can also show the distribution by creating a histogram for 'CrewSize' and a boxplot for 'Rooms'.
+
+
+
+```{r exercise1b, exercise = TRUE, exercise.lines = 8}
+# Create a histogram of CrewSize
+
+
+# Create a boxplot of Rooms
+
+
+```
+
+```{r exercise1b-hint-1}
+# ---
+
+# For a varible "x" in dataset "y", you would write:
+hist(y$x)
+boxplot(y$x)
+
+# ---
+```
+
+```{r exercise1b-hint-2}
+# ---
+
+# If you want to label your diagram, axes, or even color in your plots for a variable "x" in dataset "y", you can use ggplot:
+
+#Histogram:
+ggplot(y, aes(x = x)) + geom_histogram(binwidth=0.5, fill="color_name", color="color_name", alpha=0.7) +
+  labs(title="Histogram of x", x="Name of Variable", y="Frequency") +
+  theme_minimal() 
+
+#Boxplot:
+ggplot(y, aes(x = x)) + geom_boxplot(fill = "color_name", color = "color_name")
+
+# ---
+```
+
+```{r univariate, echo=FALSE}
+question("What can be said about the distribution of each variable of interest?",
+    answer("The Crew Size appears to be somewhat uniformly distributed.", correct=TRUE, message = "Since all the bars in the histogram have equal height, this suggests a uniform distribution."),
+    answer("The distribution of Rooms Cleaned is bimodal.", message = "We cannot see modality from a boxplot, so we cannot confirm or deny this with a boxplot."),
+    answer("50% of crews cleaned between 10 and 15 rooms.", message = "The range of 10 to 15 rooms represents only 25% of crews, not 50%."),
+    answer("There is one crew that cleaned an unusual number of rooms.", message = "Since there are no outliers displayed in the boxplot, we do not have any crews who cleaned an unusual number of rooms relative to the others in the data."), allow_retry = TRUE
+)
+```
+
+
+### Part 1.2: Visualizing the Association Between Variables:
+We now want to visualize the sample data to determine the association between our two variables. Considering the numerous plot options, which is the most suitable for our data? . 
+
+```{r plot, echo=FALSE}
+question("What type of plot should you draw for this sample?",
+      answer("Histogram", message = "A histogram showcases the distribution of a single continuous variable, not the correlation or relationship between two."), 
+      answer("Barplot", message = "A barplot is designed to represent categorical data with respect to a continuous measure, making it inefective for showing the relationship between two continuous variables."), 
+      answer("Scatterplot", correct = TRUE, message = "A scatterplot is ideal because it displays individual data points, revealing patterns, correlations, or relationships between two continuous variables."),
+      answer("Boxplot", message = "A boxplot primarily visualizes the distribution and spread of a single variable and therefore doesn't effectively illustrate the relationship between two continuous variables."), allow_retry = TRUE
+)
+```
+
+
+Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis, ensuring to label the axes and title appropriately. Fill in the code gaps with the relevant dataset variables to complete the plot.
+
+```{r exercise1c, exercise = TRUE, exercise.lines = 5}
+ggplot(data, aes( ___ , ___ )) + 
+  geom_point()+ 
+  labs(x = ___  , y = ___ , 
+    title = "Figure 1. The association between Crew Size and Rooms Cleaned")
+
+```
+
+```{r exercise1c-hint-1}
+# ---
+
+# In ggplot, use the aes function to define the variable names for the x and y axes in the following manner:
+
+aes(x=Variable1, y=Variable2) 
+
+# In this example, Variable1 is the x-axis variable and Variable2 is the y-axis variable.
+
+# ---
+```
+
+```{r exercise1c-hint-2}
+# ---
+
+# Use the 'labs' function to label axes. Provide the desired names in quotes in the following manner:
+
+labs(x="Variable Name 1", y="Variable Name 2")
+
+# ---
+```
+
+
+```{r trend, echo=FALSE}
+question("How would you describe the association?",
+         answer("Linearly decreasing", message = "If the trend were decreasing, the value of Y would decrease as X increases. It's not the case here!"),
+         answer("Nonlinearly decreasing", message = "The trend is better described as increasing and there appear to be no obvious curves to the trend to make it nonlinear!"), 
+         answer("Nonlinearly increasing", message = "The trend does appear to be increasing but there appear to be no obvious curves to the trend to make it nonlinear!"),
+         answer("Linearly increasing", correct = TRUE, message = "The trend is inedeed increasing, with Y increasing as X does. The relationship appears linear, with no evident curves indicating otherwise!"), allow_retry = TRUE
+)
+```
+
+Congrats on finishing the first section! In the next one, we'll explore if the mean number of rooms cleaned varies with different crew sizes. 
+
+## Section 2: The conditional distribution of Rooms by Crew Size
+In Section 1, we observed a linear relationship between the number of employees and the rooms cleaned. This suggests a potential **line of best fit** that can elucidate this association. 
+
+By determining the equation of this line, we can gain insights into how the increment in employees affects the number of rooms cleaned.
+
+Recall Figure 1 of Part 1.2, where the scatterplot displays discrete crew sizes as distinct vertical clusters. Each cluster represents the **conditional distribution** of rooms cleaned ($Y$) for a specific crew size ($X$). We can examine the average Y within each distribution.
+
+Remember, a *conditional distribution* provides insight into the relationship between two random variables. It does this by analyzing the distribution of one variable, $Y$, for each distinct value of the other variable, $X$. Essentially, for every unique value of $X$, we examine the behavior or distribution of $Y$.
+
+
+### Part 2.1 The Unique Values of CrewSize:
+Let's start by extracting the unique values of CrewSize and saving them to the "uniqueX" variable.
+
+```{r exercise2a, exercise = TRUE, exercise.lines = 3}
+uniqueX <- ___
+uniqueX  
+```
+
+```{r exercise2a-hint-1}
+# ---
+
+# We can use the unique() function to obtain the unique ouptuts of our data.
+
+# For example, consider a variable "x" defined as:
+x <- c(1,2,3,2,1,2,1)
+
+unique(x)
+
+# The unique() function removes duplicates and only outputs the unique values: 1, 2, 3.
+
+# ---
+```
+
+Your output should display the numbers 1 to 5, with no duplicates. We'll use these for plotting to understand the data's trend.
+
+
+### Part 2.2 Mean of Rooms at Each Unique Value of CrewSize:
+
+We just observed that your friend sent crews of sizes 1 through 5 to jobs in February. We'll calculate the average rooms cleaned for each crew size, denoted as $E(Y \mid X = x)$, representing the conditional mean of rooms cleaned for a specific crew size.
+
+In the next code line, use tapply to compute the mean rooms for each CrewSize value. Store the results in "ymeans" and print them. For tapply usage tips, click the hints above the R code box."
+
+
+```{r exercise2b, exercise = TRUE, exercise.lines = 4}
+ymeans <- tapply(X = ___, INDEX = ___, mean)
+ymeans 
+```
+
+```{r exercise2b-hint-1 }
+# ---
+
+# In the tapply code gaps, set 'X =' to the variable you're calculating the mean for (Rooms) and 'INDEX =' to the conditioning variable (CrewSize).
+
+# For instance, if you wanted to use a dataset called "data" to calculate the average number of books rented by different age groups, you'd use:
+
+tapply(X = data$BooksRented, INDEX = data$AgeGroup, mean)
+
+# ---
+```
+
+
+At this point, you should have obtained 5 averages of the number of Rooms, corresponding to each distinct value of CrewSize. We'll plot these on our scatterplot to discern any clearer trends.
+
+### Part 2.3 Adding Conditional Averages of Rooms by CrewSize to Figure 1:
+In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained.
+
+Also, let's color them in green to distinguish them!!
+
+```{r setup_part2, include=F}
+uniqueX <- unique(data$CrewSize)
+ymeans <- tapply(data$Rooms, data$CrewSize, mean)
+```
+
+
+```{r exercise2c, exercise = TRUE, exercise.setup="setup_part2", exercise.lines=8}
+ggplot() + 
+  geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = ___, y = ___), colour = "green")+
+  labs(x = "CrewSize",
+       y ="Rooms", 
+       title = "Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green") 
+```
+
+```{r exercise2c-hint-1}
+#---
+
+# Remember that 'ymeans' contains the mean of Rooms at each unique value of CrewSize, while 'uniqueX' contains all the unique values of CrewSize. 
+
+# These are the values we wish to highlight in blue on our graph using `geom_point`.
+
+# ---
+
+```
+
+
+```{r trend_mean, echo=FALSE}
+question("What do you notice about the relationship between the means as X (CrewSize) increases",
+         answer("We see a reasonably strong positive linear association.", correct = TRUE, message = "The association is linear and positive, characterized by its upward trend, absence of curvature, and the close clustering of points, indicating its strong characteristic."),
+         answer("We see no linear association present.", message = "The scatterplot clearly shows an upward trend, with the number of rooms increasing as the crew size increases. Additionally, the blue points, representing the conditional means, further emphasize this positive linear trend across different crew sizes. Thus, there is a visible linear association between the two variables."), 
+         answer("We see a weak positive linear association.", message = "The scatterplot indicates a clear upward trend with the number of rooms consistently increasing as the crew size increases. The blue points, representing the conditional means, solidify this trend. The data points are relatively closely clustered around these means, suggesting a strong positive linear relationship between the two variables, not a weak one."),
+         answer("We see a reasonably strong nonlinear association.", message = "The scatterplot, especially with the blue points representing the conditional means, clearly shows an upward linear trend as the crew size increases. The data suggests a strong positive linear relationship between the two variables, rather than a nonlinear association."), allow_retry = TRUE
+)
+```
+
+
+## Section 3. Effect of Increasing CrewSize on Average Rooms Cleaned
+
+In this section, we'll use our February sample data to estimate how adding one crew member affects the average number of rooms cleaned. 
+
+### Part 3.1 Find the average difference between consecutive means
+First, we'll determine the average difference in the number of rooms cleaned between consecutive crew sizes. This will help us understand if there is a pattern in the increase of average rooms cleaned for each additional member of the cleaning crew. 
+
+We set up a variable, "diffs", to store the differences between consecutive means. Using a for loop, we'll calculate these differences, represented as $$y_{i+1} - y_{i}, \quad i = 1, \ldots, 4.$$. 
+
+This loop is telling R: for every value of our index $i$, look at the difference between the $(i+1)^{th}$ and $i^{th}$ mean number of rooms cleaned, where $i$ and $i+1$ are consecutive numbers.
+
+Below, specify the indices for storing each difference in 'diff', and for the consecutive means, as highlighted in the equation above.
+
+
+```{r exercise3a, exercise = TRUE, exercise.setup="setup_part2", exercise.lines=8}
+diff <- rep(NA, 4)
+for (i in 1:4) {
+diff[___] <- ymeans[___] - ymeans[___] 
+}
+mean(diff)
+```
+
+```{r exercise3a-hint-1}
+# ---
+
+# If I want to find the difference between the third mean and the second mean, I can set up the following equation:
+
+diff[2] <- ymeans[3] - ymeans[2]
+
+# ---
+
+```
+
+```{r consecutive_means, echo=FALSE}
+question("Well done! You have now found the average difference between the consecutive means of rooms cleaned. What do you think this value represents in the context of the data?",
+         answer("It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", message = "Not entirely. Remember we have variation in how many rooms get cleaned by a crew of a specific size. So one more member does not always mean exactly this number of rooms more will be cleaned."),
+         answer("The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.",correct = TRUE, message = "Well done! It reminds us of the meaning of a slope of a line."), 
+         answer("It is the average difference in average number of rooms cleaned", message = "Remember that we want to think about this interpretation in context of the data and how this average difference links to adding a new member on the cleaning crew!"),
+         answer("I have no idea what this value means", message = "That's alright. Think about a line equation, y = mx + b, and how we normally talk about the meaning of the value m."), allow_retry = TRUE
+)
+```
+
+
+
+### Part 3.2 The Line of Best Fit:
+Another method to estimate the change in Y's mean for a unit increase in X is through linear regression, also known as the line of best fit.
+
+Section 4 will allow us to explore exactly *how we can construct a line of best fit* but for now, let's explore the basics. After running the following code:
+
+```{r, echo = T, results= 'hide'}
+lm(Rooms  ~ CrewSize, data = data)
+```
+
+We observe that our sample's estimated regression yields a slope of 3.96 and an intercept of -1.04, represented as $y = -1.04 + 3.96x$. Let's enhance the scatterplot from Section 2.3 by adding this regression line in red."
+
+
+```{r, exercise3b, exercise = TRUE, exercise.lines = 8, exercise.setup="setup_part2"}
+ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = uniqueX, y = ymeans), colour = "green") +
+  geom_abline(intercept = ___ , slope = ___ , colour = ___) + 
+  labs(x = "Crew Size",
+       y ="Rooms Cleaned", 
+       title = "Figure 3. Rooms vs. Crew Size with Regression Line in Red")
+```
+
+```{r exercise3b-hint-1}
+# ---
+
+# The slope of the line of best fit is 3.96, and the intercept is -1.04. 
+
+# These numbers can be added directly in their corresponding blank spaces  in `geom_abline`. You can also set the color to "red" (or any other color you prefer!)
+
+# ---
+```
+
+
+```{r connecting_means, echo=FALSE}
+question("What do you notice about the line of best fit in this plot?",
+         answer("The line of best fit seems to be placed as far as possible from all data points.", message = "The essence of the 'best fit' in linear regression is to minimize the total distance (often squared) between the line and each individual data point. The goal is for the line to represent the general trend of the data as closely as possible."),
+         answer("The line of best fit could be just one among multiple lines that equally represent the data well.", message = "the 'best fit' in linear regression is mathematically derived to be the optimal line that minimizes the discrepancies between the line and the data points (we will see that in Section 4!). There is only one unique solution for a given set of data."), 
+         answer("The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", message = "The values are not so different. Keep in mind that the line of best fit is determined by a method that seeks to minimize overall error across all data points. This might yield a slope slightly different from a simple rate of change between specific points."),
+         answer("The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", correct = TRUE, message = "Exactly. While individual data points may vary, the line of best fit offers a general trend that can be used for predictive modeling, especially for crew sizes not represented in the current data."), allow_retry = TRUE
+)
+```
+
+You might have noticed that the second multiple choice answer above allows us to touch on why there is only one line of best fit. In the next section, we'll dive into why that is the case!
+
+## Section 4: Constructing the Line of Best Fit
+
+In the previous section, we defined the line of best fit as: $$y = -1.04 + 3.96x.$$  This equation represents a distinct linear relationship derived from the data. The coefficients (-1.04 and 3.96) were determined by finding a line that minimizes the cumulative squared deviations between each observed data point and its corresponding point on the line.
+
+*Let's unpack that a little*: For each data point, we can compute a 'residual', which is the difference between the observed value (y) and the value predicted by our line ($3.96x - 1.04$). The squaring part $(y - (mx + b))^2$ ensures that we account for these residuals in a consistent way, whether they are positive or negative, making our optimization problem smoother.
+
+Each of our 100 data points has a difference from our line, like a small gap. We square these gaps and then add them all up. This total is what we call the **residual sum of squares (RSS)**. The RSS is a number that measures the total discrepancy between our data and our line of best fit. It's like a scorecard; *the smaller the RSS, the better our line fits the data*. We aim for the line that gives us the smallest RSS because that line fits our data the best. Minimizing this RSS yields a *unique* line that closely follows the data points and connects the estimated average rooms cleaned for each crew size.
+
+
+This process of minimizing the RSS will give a unique line, that sits as close as possible to every data point, and happens to connect the estimated mean number of rooms at each crew size to each other.
+
+In the applet below, we've dispersed our familiar data for clarity. Adjust the slope and intercept as you like. The applet will display the corresponding RSS and distance lines. 
+
+**Experiment with various values and observe how the line** $y = -1.04 + 3.96x$ **yields the smallest RSS.**
+
+Plot legend:
+
+* The blue line is the line we are fitting.
+* The red vertical lines are the distance between the line and the original data points. 
+
+```{r, context="render", echo=FALSE}
+numericInput("intercepts", "intercepts:", min = -50, max = 50, value = NULL)
+numericInput("slopes", "slopes:", min = -50, max = 50, value = NULL)
+plotOutput("distPlot")
+tableOutput("my_table")
+```
+
+```{r, context="server"}
+da <- read.csv(file="cleaning_sim.csv")
+da <- da %>% arrange(Crews)
+
+# create a data frame with the jittered original points
+jittered <- data.frame(xjitter = jitter(da[,2], factor=0.75), yjitter = da[,3])
+
+output$distPlot <- renderPlot({
+  x <- jittered$xjitter
+  y <- jittered$yjitter
+  
+ # x <- da[, 2] 
+  #y <- da[, 3]
+  #slopes <- seq(1, 2)
+  #intercepts <- seq(1, 2)
+  
+
+  
+  # create a dataset with the predicted values
+#  predicted <- data.frame(x = jittered$xjitter, predicted = c(rep(input$intercepts + input$slopes * 1,20), rep(input$intercepts + input$slopes * 2,20), rep(input$intercepts + input$slopes * 3,20), rep(input$intercepts + input$slopes * 4,20), rep(input$intercepts + input$slopes * 5,20)))
+  
+  
+  ggplot(data = jittered, aes(x = xjitter, y = yjitter)) + geom_point() + ylim(-5, 25) + geom_abline(intercept = input$intercepts, slope = input$slopes, colour = "blue") + geom_segment(data = jittered, aes(xend = xjitter, yend=(input$intercepts + input$slopes*jittered$xjitter)), colour = "red") + labs(x = "X", y = "Y")
+  #plot(x, y) 
+  #hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  #abline(intercepts, slopes)
+})
+
+output$my_table <- renderTable({
+crew1 <- sum((da[[3]][1:20] - input$intercepts - input$slopes * 1)^2)
+crew2 <- sum((da[[3]][21:40] - input$intercepts - input$slopes * 2)^2)
+crew3 <- sum((da[[3]][41:60] - input$intercepts - input$slopes * 3)^2)
+crew4 <- sum((da[[3]][61:80] - input$intercepts - input$slopes * 4)^2)
+crew5 <- sum((da[[3]][81:100] - input$intercepts - input$slopes * 5)^2)
+data.frame(slope = input$slopes, intercept = input$intercepts, RSS = crew1 + crew2 + crew3 + crew4 + crew5)
+})
+```
+We observe that the RSS is indeed minimized when the intercept is equal to $-1.04$ and when the slope is set to $3.96$!
+
+Congratulations! You have successfully completed this learning module! Using just the data from February, you can now confidently inform your friend about the average increase in the number of rooms cleaned for each additional member added to a cleaning crew over the past year.
+
+```{r final_check, echo=FALSE}
+question("Which of the below statements is most correct about the line of best fit in linear regression, based on what you have seen in this module?",
+         answer("Its position minimizes the total distance between itself and all points.", message = "This is correct - it minimizes the RSS as seen above. However this is not the most correct statement."),
+         answer("It represents the average change in Y for a unit increase in X.", message = "This is correct - the trend is in the conditional averages. However, this is not the most correct statement."), 
+         answer("It says that as X increases, we have a constant linear change in the conditional mean of Y.", message = "This is correct - the linear trend has a constant slope and the slope measures the change in conditional means. However, this is not the most correct statement."),
+         answer("All statements are correct about the line of best fit in linear regression.", correct = TRUE, message = "Well done!"), allow_retry = TRUE
+)
+```
+
+
+
+
+
+
+
+
+
