@@ -1,0 +1,204 @@
+---
+title: "Week 3 Code-Along"
+author: "Katherine Daignault"
+output: pdf_document
+---
+
+# Part 1: How to Fit Linear Models
+
+Let's load the NYC dataset from Week 1 and see if we can fit models that will relate one or more of Decor ratings, Service ratings, Food ratings, or location of the restaurant to the Price of a menu item.  \
+
+```{r }
+nyc <- read.csv(file="nyc.csv", header=T)
+```
+
+First, we will quickly look at some graphical summaries of the various possible predictors with the response to get a sense of any interesting relationships present:  
+
+```{r, echo=F, eval=T, fig.cap="Bivariate Plots of Price (Y) versus each of Food, Decor, Service and East (X)", fig.height=5, fig.width=5}
+par(mfrow=c(2,2))
+plot(nyc$Price ~ nyc$Food, main="Price vs Food", xlab="Food", ylab="Price")
+plot(nyc$Price ~ nyc$Service, main="Price vs Service", xlab="Servce", ylab="Price")
+plot(nyc$Price ~ nyc$Decor, main="Price vs Decor", xlab="Decor", ylab="Price")
+
+boxplot(nyc$Price ~ nyc$East, main="Price vs Location", xlab="Location",
+        ylab="Price", names=c("West", "East"))
+```
+
+Seems like each variable appears to be linearly related with the response, even East which shows slightly higher Prices in the East than the West.  \
+
+
+So how do we fit a linear model? Let's start with fitting a simple (one-predictor) model: \
+
+```{r}
+?lm
+# run a simple linear regression for Price and Food
+
+```
+
+We have many options for how to view the model estimates:
+
+```{r}
+# we could simply type the name of where we saved the model
+
+
+# we could extract the coefficients
+
+
+# we could use the summary function, but this gives us more than we know atm
+
+```
+
+What if we wanted to include all the variables in the model and fit a multiple linear model? Well we can do that easily by quite literally *adding/summing* these variables into the expression:
+
+```{r}
+
+```
+
+This equation is estimating the relationship $Price_{i} = \beta_0 + \beta_1 Food_{i} + \beta_2Decor_{i} + \beta_3Service+{i} + \beta_4\{Location = East\}_{i} + \epsilon_i$ from our sample of 168 restaurants. The coefficients we get are the estimated $\beta$s. 
+
+
+
+
+# Part 2: How to use different predictors and how this changes interpretation.
+
+Let's look into another dataset, based on information extracted from Amazon regarding various LEGO sets (lego.sample.csv). We will be interested in the relationship between Amazon Price and Number of Pieces between two collections of sets: LEGO City and LEGO Friends
+
+```{r}
+lego <- read.csv(file="lego.sample.csv", header=T)
+str(lego)
+
+# the LEGO set collections are contained in the Theme variable
+table(lego$Theme)
+```
+
+Let's begin by plotting Price by Pieces, colour coding the sets City and Friends:
+
+```{r, fig.width=4, fig.cap="Scatterplot of Amazon Selling Price and Number of Pieces in a LEGO set, split into sets from the collection City (blue) or Friends (red)."}
+# type="n" says make the outside of the plot but don't add the dots yet
+
+# this just says only include City and Friends sets
+plot(lego$Amazon_Price[lego$Theme=="City" | lego$Theme == "Friends"] ~ lego$Pieces[lego$Theme=="City" | lego$Theme == "Friends"], main="Price by Pieces", xlab="Pieces",
+     ylab="Price", type="n")
+
+# add points in different colours for the different sets
+points(lego$Amazon_Price[lego$Theme=="City"] ~ lego$Pieces[lego$Theme=="City"], col="blue", pch=16)
+points(lego$Amazon_Price[lego$Theme=="Friends"] ~ lego$Pieces[lego$Theme=="Friends"], col="red", pch=16)
+
+```
+
+Seems as if the blue dots are higher than the red dots (sort of), so what if we fit a simple linear relationship between Price and Pieces for each set separately, and added these relationships to the plot:
+
+```{r, fig.width=4, fig.cap="Relationship between Amazon Selling Price and Number of Pieces in a LEGO set, split into sets from the collection City (blue) or Friends (red)."}
+# fit a simple model for each subset of the data
+city <- lm(Amazon_Price ~ Pieces, data=lego[which(lego$Theme=="City"),])
+friends <- lm(Amazon_Price ~ Pieces, data=lego[which(lego$Theme=="Friends"),])
+
+# plot code from before
+plot(lego$Amazon_Price[lego$Theme=="City" | lego$Theme == "Friends"] ~ lego$Pieces[lego$Theme=="City" | lego$Theme == "Friends"], main="Price by Pieces", xlab="Pieces",
+     ylab="Price", type="n")
+
+# add points in different colours for the different sets
+points(lego$Amazon_Price[lego$Theme=="City"] ~ lego$Pieces[lego$Theme=="City"], col="blue", pch=16)
+points(lego$Amazon_Price[lego$Theme=="Friends"] ~ lego$Pieces[lego$Theme=="Friends"], col="red", pch=16)
+
+# add the relationships as lines to the plot
+abline(a = coef(city)[1], b = coef(city)[2], col="blue")
+abline(a = coef(friends)[1], b = coef(friends)[2], col="red")
+```
+So we created 2 parallel lines. We could do this using one model, by using an indicator variable for City and Friends:
+
+```{r}
+indmod <- lm(Amazon_Price ~ Pieces + as.factor(Theme), data=lego[which(lego$Theme=="City" | lego$Theme=="Friends"),])
+indmod
+
+# notice that the coefficient of the indicator Friends or City is almost the same as the difference between the
+# intercepts in the previous models
+coef(friends)[1] - coef(city)[1]
+```
+
+So by including an indicator variable as a predictor on its own means that the coefficient we get is the difference in the estimates of the intercept between the two parallel lines.  
+
+What if we wanted to have lines with the same intercept, but different slopes? Then we could use what is called an **interaction term**. Let's try this with a different variable in the dataset - Size:
+
+```{r, fig.width=4, fig.cap="Scatterplot of Amazon Selling Price and Number of Pieces in a LEGO set, split into sets that are categorized as Large (blue) and Small (red)."}
+# redo the same plots but split up by size of set instead of Theme
+table(lego$Size)
+
+# make plots
+plot(lego$Amazon_Price ~ lego$Pieces, main="Price by Pieces", xlab="Pieces",
+     ylab="Price", type="n")
+
+# add points in different colours for the different sets
+points(lego$Amazon_Price[lego$Size=="Large"] ~ lego$Pieces[lego$Size=="Large"], col="blue", pch=16)
+points(lego$Amazon_Price[lego$Size=="Small"] ~ lego$Pieces[lego$Size=="Small"], col="red", pch=16)
+```
+
+The relationship we see for both set sizes is very different - one seems much flatter while the other steeply increases. So let's fit simple linear models for each set size and plot those relationship on our plot.
+
+```{r, fig.width=4, fig.cap="Relationship between Amazon Selling Price and Number of Pieces in a LEGO set, split into sets that are categorized as Large (blue) and Small (red)."}
+large <- lm(Amazon_Price ~ Pieces, data=lego[which(lego$Size == "Large"),])
+small <- lm(Amazon_Price ~ Pieces, data=lego[which(lego$Size == "Small"),])
+
+# make plots
+plot(lego$Amazon_Price ~ lego$Pieces, main="Price by Pieces", xlab="Pieces",
+     ylab="Price", type="n")
+
+# add points in different colours for the different sets
+points(lego$Amazon_Price[lego$Size=="Large"] ~ lego$Pieces[lego$Size=="Large"], col="blue", pch=16)
+points(lego$Amazon_Price[lego$Size=="Small"] ~ lego$Pieces[lego$Size=="Small"], col="red", pch=16)
+
+# add the linear relationships
+abline(a = coef(large)[1], b = coef(large)[2], col="blue")
+abline(a = coef(small)[1], b = coef(small)[2], col="red")
+```
+
+So we see that the lines have a common intercept but very different slopes. We could create this in a single linear model by adding an interaction between Size and Pieces:
+
+```{r}
+intmod <- lm(Amazon_Price ~ Pieces + Pieces:as.factor(Size), data=lego)
+intmod
+
+# the coefficient of this interaction term gives us the difference (roughly) between
+# the slope of Pieces in Small sets and the slope of Pieces in Large sets
+coef(small)[2] - coef(large)[2]
+```
+
+We can also include variables that are categorical with more than 2 levels:
+
+```{r}
+all <- lm(Amazon_Price ~ Pieces + as.factor(Theme), data=lego)
+all
+```
+Here, the intercept represents the intercept for City sets, the coefficient of Friends is how different the intercept for Friends sets is compared to City sets, and the coefficient of DUPLO is how different the intercept for DUPLO sets is compared to City sets. So you can have a variable with as many levels as you wish in a model.
+
+
+
+
+
+# Part 3: Preliminary Informal Assessment of Assumptions
+
+While these are NOT formal checks for whether the assumptions of a linear model will hold, you can get a rough idea of whether to expect issues down the road right from your EDA.
+
+1. Preliminary check for linearity - look at scatterplots (to see if in a pairwise setting things look linear) and distributions/histograms (to chceck for symmetry in the variables - not required but if severe skews exist, may become a problem for linearity in the model)
+
+```{r}
+# lets check these for our NYC dataset (histograms and pairs)
+
+
+```
+
+2. Preliminary check for constant variance - look at scatterplots (to see if we notice increase variability in the response across values of each predictor - if we do see this, does not mean the assumption is violated but we'd want to check it out in detail formally)
+
+```{r}
+# can check this quickly with pairs()
+
+```
+
+3. Normality - look at histogram of response to see if roughly symmetric (again if not it does not mean we will violate Normality but it warns us this could happen)
+
+```{r}
+# make a histogram of Price
+
+```
+
+4. Uncorrelated errors - not much of a visual aid to use here, but can think in depth whether it makes sense to assume that each observation is independent from every other observation (ask if things are measured over time, on the same person, grouped by country, etc.)
