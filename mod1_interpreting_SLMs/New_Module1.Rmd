@@ -22,17 +22,14 @@ data <- read.csv("cleaning_sim.csv") %>% rename(CrewSize = Crews)
 ## Background: Help your friend understand her cleaning business
 Consider the following scenario:
 
-A year ago, your best friend launched a cleaning company, but it's not yet profitable. She believes that some employees might not be performing effectively, resulting in no additional rooms being cleaned and, consequently, no profit. She seeks your help to confirm her suspicions.
+Suppose your friend Nancy started a cleaning company, but the company is not profitable yet. Nancy is suspicious that some employees are unproductive. When more employees are working, Nancy expects more rooms to be cleaned, but this doesn’t seem to happen. Nancy asks for your help to better understand the relationship between the number of people working and the number of rooms cleaned over the past year. 
 
-
-You request records from the past year detailing the number of workers sent (CrewSize, X) and rooms cleaned (Rooms, Y) **to test if more workers lead to more cleaned rooms.** 
-
-Unfortunately, *she only has data for one month*: **February**, rather than the entire year. 
+You ask Nancy for records of the number of workers (CrewSize, the X variable) and the number of rooms cleaned (Rooms, the Y value) from the past year **to test if more workers lead to more cleaned rooms.** Unfortunately, **February**, rather than the entire year. 
 
 ```{r check_in, echo=FALSE}
 question("Which of the following is true about analyzing the business based on just one month's data instead of a full year's data?",
     
-         answer("If we examined data from another month, the results would be consistent with this month's findings", message = "Every month's data (sample) from the year will show variations due to sampling. Thus, it might not align perfectly with the results from the month our friend provided."), 
+         answer("If we looked at a different month of data, we would see the same results as this month.", message = "Every month's data (sample) from the year will show variations due to sampling. Thus, it might not align perfectly with the results from the month our friend provided."), 
          answer("Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", message = "If the sample is not representative of the population (full year), then we likely will obtain biased estimates."), 
          answer("The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", correct = TRUE, message = "Although we cannot ascertain the entire population's data on the number of workers hired and the number of rooms cleaned, we can use the sample that our friend provided (data for one month), to infer about the whole year."),
          answer("It's not possible to get an estimate of association between Crew size and Rooms cleaned.", message = "It is possible, and that will be the topic of this module!"), allow_retry = TRUE
@@ -41,17 +38,17 @@ question("Which of the following is true about analyzing the business based on j
 
 
 ## Section 1: Loading and Visualizing the Sample Data
-The dataset for the month of February is named "data". It includes 100 observations and the following 3 variables:
+The dataset for the month of February is named "CleaningData". It includes 100 observations and the following 3 variables:
 
-   - Case: observation number (identifier).
-   - CrewSize: the number of members in a cleaning crew sent to a job.
-   - Rooms: the number of rooms cleaned by that cleaning crew.
+   - `Case`: observation number (identifier).
+   - `CrewSize`: the number of members in a cleaning crew sent to a job.
+   - `Rooms`: the number of rooms cleaned by that cleaning crew.
 
 In R, use the dollar sign (\$) after the dataset name to access a specific column. For instance, `data$Variable` fetches the column named 'Variable' from the dataset called 'data'.
 
 ### Part 1.1: Univariate Summaries of the Data:
 
-To begin, let's produce a 5-number summary of each variable in the data. The name of the dataset is "data" and it is loaded for you to use. You can type your code into the box below, and if you are stuck, you can click the hint button to help you with the R code and syntax.
+To begin, let's produce a 5-number summary of each variable in the data. The name of the dataset is "CleaningData" and it is loaded for you to use. You can type your code into the box below. If you get stuck, click the hint button to help you with the code and syntax. 
 
 
 ```{r exercise1a, exercise=TRUE, exercise.lines = 3}
@@ -124,7 +121,8 @@ question("What can be said about the distribution of each variable of interest?"
 
 
 ### Part 1.2: Visualizing the Association Between Variables:
-We now want to visualize the sample data to determine the association between our two variables. Considering the numerous plot options, which is the most suitable for our data? . 
+
+Now we can visualize the sample data and estimate what association exists between CrewSize and Rooms. There are many kinds of plots; which would be best for plotting these two variables?   
 
 ```{r plot, echo=FALSE}
 question("What type of plot should you draw for this sample?",
@@ -181,16 +179,20 @@ question("How would you describe the association?",
 Congrats on finishing the first section! In the next one, we'll explore if the mean number of rooms cleaned varies with different crew sizes. 
 
 ## Section 2: The conditional distribution of Rooms by Crew Size
-In Section 1, we observed a linear relationship between the number of employees and the rooms cleaned. This suggests a potential **line of best fit** that can elucidate this association. 
 
-By determining the equation of this line, we can gain insights into how the increment in employees affects the number of rooms cleaned.
+In Section 1, we observed a linear relationship between the number of employees and the rooms cleaned. This means there exists a **line of best fit** that models the association. By calculating the equation of this line, we will better understand how an increase in employees affects the number of rooms cleaned. 
 
-Recall Figure 1 of Part 1.2, where the scatterplot displays discrete crew sizes as distinct vertical clusters. Each cluster represents the **conditional distribution** of rooms cleaned ($Y$) for a specific crew size ($X$). We can examine the average Y within each distribution.
+Recall Figure 1 of Part 1.2, where the scatterplot displays discrete crew sizes as distinct vertical clusters. 
 
-Remember, a *conditional distribution* provides insight into the relationship between two random variables. It does this by analyzing the distribution of one variable, $Y$, for each distinct value of the other variable, $X$. Essentially, for every unique value of $X$, we examine the behavior or distribution of $Y$.
+TODO: insert plot image here. 
+
+Each cluster represents the **conditional distribution** of rooms cleaned ($Y$) for a specific crew size ($X$). We can examine the average Y within each distribution.
+
+A *conditional distribution* provides insight into the relationship between two random variables. It does this by analyzing the distribution of one variable, $Y$, for each distinct value of the other variable, $X$. Essentially, for every unique value of $X$, we examine the behavior or distribution of $Y$.
 
 
 ### Part 2.1 The Unique Values of CrewSize:
+
 Let's start by extracting the unique values of CrewSize and saving them to the "uniqueX" variable.
 
 ```{r exercise2a, exercise = TRUE, exercise.lines = 3}
@@ -220,7 +222,7 @@ Your output should display the numbers 1 to 5, with no duplicates. We'll use the
 
 We just observed that your friend sent crews of sizes 1 through 5 to jobs in February. We'll calculate the average rooms cleaned for each crew size, denoted as $E(Y \mid X = x)$, representing the conditional mean of rooms cleaned for a specific crew size.
 
-In the next code line, use tapply to compute the mean rooms for each CrewSize value. Store the results in "ymeans" and print them. For tapply usage tips, click the hints above the R code box."
+In the next code line, use `tapply` to compute the mean rooms for each CrewSize value. Store the results in `ymeans` and print them. For `tapply` usage tips, click the hints above the R code box.
 
 
 ```{r exercise2b, exercise = TRUE, exercise.lines = 4}
@@ -244,9 +246,10 @@ tapply(X = data$BooksRented, INDEX = data$AgeGroup, mean)
 At this point, you should have obtained 5 averages of the number of Rooms, corresponding to each distinct value of CrewSize. We'll plot these on our scatterplot to discern any clearer trends.
 
 ### Part 2.3 Adding Conditional Averages of Rooms by CrewSize to Figure 1:
+
 In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained.
 
-Also, let's color them in green to distinguish them!!
+Also, let's color them in green to distinguish them!
 
 ```{r setup_part2, include=F}
 uniqueX <- unique(data$CrewSize)
@@ -277,10 +280,10 @@ ggplot() +
 
 ```{r trend_mean, echo=FALSE}
 question("What do you notice about the relationship between the means as X (CrewSize) increases",
-         answer("We see a reasonably strong positive linear association.", correct = TRUE, message = "The association is linear and positive, characterized by its upward trend, absence of curvature, and the close clustering of points, indicating its strong characteristic."),
-         answer("We see no linear association present.", message = "The scatterplot clearly shows an upward trend, with the number of rooms increasing as the crew size increases. Additionally, the blue points, representing the conditional means, further emphasize this positive linear trend across different crew sizes. Thus, there is a visible linear association between the two variables."), 
-         answer("We see a weak positive linear association.", message = "The scatterplot indicates a clear upward trend with the number of rooms consistently increasing as the crew size increases. The blue points, representing the conditional means, solidify this trend. The data points are relatively closely clustered around these means, suggesting a strong positive linear relationship between the two variables, not a weak one."),
-         answer("We see a reasonably strong nonlinear association.", message = "The scatterplot, especially with the blue points representing the conditional means, clearly shows an upward linear trend as the crew size increases. The data suggests a strong positive linear relationship between the two variables, rather than a nonlinear association."), allow_retry = TRUE
+         answer("We see a reasonably strong positive linear association.", correct = TRUE, message = "The association is linear and positive, characterized by its upward trend, absence of curvature, and the close clustering of points, indicating a strong relationship"),
+         answer("We see no linear association present.", message = "The scatterplot clearly shows an upward trend, with the number of rooms increasing as the crew size increases. Additionally, the green points, representing the conditional means, further emphasize this positive linear trend across different crew sizes. Thus, there is a visible linear association between the two variables."), 
+         answer("We see a weak positive linear association.", message = "The scatterplot indicates a clear upward trend with the number of rooms consistently increasing as the crew size increases. The green points, representing the conditional means, solidify this trend. The data points are relatively closely clustered around these means, suggesting a strong positive linear relationship between the two variables, not a weak one."),
+         answer("We see a reasonably strong nonlinear association.", message = "The scatterplot, especially with the green points representing the conditional means, clearly shows an upward linear trend as the crew size increases. The data suggests a strong positive linear relationship between the two variables, rather than a nonlinear association."), allow_retry = TRUE
 )
 ```
 
@@ -290,9 +293,10 @@ question("What do you notice about the relationship between the means as X (Crew
 In this section, we'll use our February sample data to estimate how adding one crew member affects the average number of rooms cleaned. 
 
 ### Part 3.1 Find the average difference between consecutive means
+
 First, we'll determine the average difference in the number of rooms cleaned between consecutive crew sizes. This will help us understand if there is a pattern in the increase of average rooms cleaned for each additional member of the cleaning crew. 
 
-We set up a variable, "diffs", to store the differences between consecutive means. Using a for loop, we'll calculate these differences, represented as $$y_{i+1} - y_{i}, \quad i = 1, \ldots, 4.$$. 
+We set up a variable, "diffs", to store the differences between consecutive means. Using a "for loop", we'll calculate these differences, represented as $$y_{i+1} - y_{i}, \quad i = 1, \ldots, 4.$$. 
 
 This loop is telling R: for every value of our index $i$, look at the difference between the $(i+1)^{th}$ and $i^{th}$ mean number of rooms cleaned, where $i$ and $i+1$ are consecutive numbers.
 
@@ -330,6 +334,7 @@ question("Well done! You have now found the average difference between the conse
 
 
 ### Part 3.2 The Line of Best Fit:
+
 Another method to estimate the change in Y's mean for a unit increase in X is through linear regression, also known as the line of best fit.
 
 Section 4 will allow us to explore exactly *how we can construct a line of best fit* but for now, let's explore the basics. After running the following code:
