@@ -19,13 +19,22 @@ set.seed(302)
 ```
 
 
+## Introduction
+
+In this module, you will practice:
+
+* Making plots like histograms, boxplots, and scatterplots using `R`
+* Modelling the conditional distribution between an independent $X$ and dependent $Y$
+* Constructing the line of best fit using the Least Squares method
+
 
 ## Background: Help your friend understand her cleaning business
+
 Consider the following scenario:
 
-Suppose your friend Nancy started a cleaning company, but the company is not profitable yet. Nancy is suspicious that some employees are unproductive. When more employees are working, Nancy expects more rooms to be cleaned, but this doesn’t seem to happen. Nancy asks for your help to better understand the relationship between the number of people working and the number of rooms cleaned over the past year. 
+Suppose your friend Nancy started a cleaning company, but the company is not profitable yet. Nancy suspects that some employees are unproductive. When more employees are working, Nancy expects more rooms to be cleaned, but this doesn’t seem to happen. Nancy asks for your help to better understand the relationship between the number of people working and the number of rooms cleaned over the past year. 
 
-You ask Nancy for records of the number of workers (CrewSize, the X variable) and the number of rooms cleaned (Rooms, the Y value) from the past year **to test if more workers lead to more cleaned rooms.** Unfortunately, **February**, rather than the entire year. 
+You ask Nancy for records of the number of workers (CrewSize, the X variable) and the number of rooms cleaned (Rooms, the Y value) from the past year **to test if more workers lead to more cleaned rooms.** Unfortunately, Nancy only has data for **February** rather than the entire year. 
 
 ```{r check_in, echo=FALSE}
 question("Which of the following is true about analyzing the business based on just one month's data instead of a full year's data?",
@@ -49,7 +58,7 @@ In R, use the dollar sign (\$) after the dataset name to access a specific colum
 
 ### Part 1.1: Univariate Summaries of the Data:
 
-To begin, let's produce a 5-number summary of each variable in the data. The name of the dataset is "CleaningData" and it is loaded for you to use. You can type your code into the box below. If you get stuck, click the hint button to help you with the code and syntax. 
+To begin, let's produce a 5-number summary of each variable in the data using the `summary()` function. The name of the dataset is "CleaningData" and it is loaded for you to use. You can type your code into the box below. If you get stuck, click the hint button to help.
 
 
 ```{r exercise1a, exercise=TRUE, exercise.lines = 3}
@@ -135,7 +144,7 @@ question("What type of plot should you draw for this sample?",
 ```
 
 
-Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis, ensuring to label the axes and title appropriately. Fill in the code gaps with the relevant dataset variables to complete the plot.
+Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis, ensuring to label the axes and title appropriately. Fill in the code blanks with the relevant dataset variables to complete the plot.
 
 ```{r exercise1c, exercise = TRUE, exercise.lines = 5}
 ggplot(data, aes( ___ , ___ )) + 
@@ -185,11 +194,17 @@ In Section 1, we observed a linear relationship between the number of employees 
 
 Recall Figure 1 of Part 1.2, where the scatterplot displays discrete crew sizes as distinct vertical clusters. 
 
-TODO: insert plot image here. 
+```{r, echo=FALSE}
+ggplot(data, aes(CrewSize, Rooms)) + 
+  geom_point()+ 
+  labs(x = "Crew Size"  , y = "Rooms Cleaned" , 
+    title = "Figure 1. The association between Crew Size and Rooms Cleaned")
 
-Each cluster represents the **conditional distribution** of rooms cleaned ($Y$) for a specific crew size ($X$). We can examine the average Y within each distribution.
+```
 
-A *conditional distribution* provides insight into the relationship between two random variables. It does this by analyzing the distribution of one variable, $Y$, for each distinct value of the other variable, $X$. Essentially, for every unique value of $X$, we examine the behavior or distribution of $Y$.
+Each cluster represents the **<mark>conditional distribution</mark>** of rooms cleaned ($Y$) for a specific crew size ($X$). We can examine the average Y within each distribution.
+
+A conditional distribution provides insight into the relationship between two random variables. It does this by analyzing the distribution of one variable, $Y$, for each distinct value of the other variable, $X$. Essentially, for every unique value of $X$, we examine the behavior or distribution of $Y$.
 
 
 ### Part 2.1 The Unique Values of CrewSize:
@@ -221,7 +236,7 @@ Your output should display the numbers 1 to 5, with no duplicates. We'll use the
 
 ### Part 2.2 Mean of Rooms at Each Unique Value of CrewSize:
 
-We just observed that your friend sent crews of sizes 1 through 5 to jobs in February. We'll calculate the average rooms cleaned for each crew size, denoted as $E(Y \mid X = x)$, representing the conditional mean of rooms cleaned for a specific crew size.
+We just observed that Nancy sent crews of sizes 1 through 5 to jobs in February. We'll calculate the average rooms cleaned for each crew size, denoted as $E(Y \mid X = x)$, representing the conditional mean of rooms cleaned for a specific crew size.
 
 In the next code line, use `tapply` to compute the mean rooms for each CrewSize value. Store the results in `ymeans` and print them. For `tapply` usage tips, click the hints above the R code box.
 
@@ -248,9 +263,8 @@ At this point, you should have obtained 5 averages of the number of Rooms, corre
 
 ### Part 2.3 Adding Conditional Averages of Rooms by CrewSize to Figure 1:
 
-In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained.
+In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained. We will color the conditional means <span style="color:green">**green**</span> to distinguish them.
 
-Also, let's color them in green to distinguish them!
 
 ```{r setup_part2, include=F}
 uniqueX <- unique(data$CrewSize)
@@ -376,7 +390,7 @@ question("What do you notice about the line of best fit in this plot?",
 )
 ```
 
-You might have noticed that the second multiple choice answer above allows us to touch on why there is only one line of best fit. In the next section, we'll dive into why that is the case!
+An important aspect of the line of best fit is that it is *singular* and *unique.* In the next section, we will explain why this is true.  
 
 ## Section 4: Constructing the Line of Best Fit
 
@@ -443,7 +457,6 @@ data.frame(slope = input$slopes, intercept = input$intercepts, RSS = crew1 + cre
 ```
 We observe that the RSS is indeed minimized when the intercept is equal to $-1.04$ and when the slope is set to $3.96$!
 
-Congratulations! You have successfully completed this learning module! Using just the data from February, you can now confidently inform your friend about the average increase in the number of rooms cleaned for each additional member added to a cleaning crew over the past year.
 
 ```{r final_check, echo=FALSE}
 question("Which of the below statements is most correct about the line of best fit in linear regression, based on what you have seen in this module?",
@@ -455,7 +468,13 @@ question("Which of the below statements is most correct about the line of best f
 ```
 
 
+## Wrap-Up
 
+Congratulations -- You have successfully completed this learning module! By now, you should be familiar with:
+
+* Making plots like histograms, boxplots, and scatterplots using `R`
+* Modelling the conditional distribution between an independent $X$ and dependent $Y$
+* Constructing the line of best fit using the Least Squares method
 
 
 
