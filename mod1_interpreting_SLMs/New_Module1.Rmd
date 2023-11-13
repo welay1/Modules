@@ -14,6 +14,7 @@ library(tidyverse)
 library(learnr)
 
 data <- read.csv("cleaning_sim.csv") %>% rename(CrewSize = Crews)
+set.seed(302)
 
 ```
 
@@ -379,16 +380,15 @@ You might have noticed that the second multiple choice answer above allows us to
 
 ## Section 4: Constructing the Line of Best Fit
 
-In the previous section, we defined the line of best fit as: $$y = -1.04 + 3.96x.$$  This equation represents a distinct linear relationship derived from the data. The coefficients (-1.04 and 3.96) were determined by finding a line that minimizes the cumulative squared deviations between each observed data point and its corresponding point on the line.
+In the previous section, we defined the line of best fit as: $$y = -1.04 + 3.96x.$$  This equation represents a distinct linear relationship derived from the data. The coefficients (-1.04 and 3.96) were determined using the *Least Squares Method*, where we find the line that minimizes the cumulative squared deviations between each observed data point and its corresponding point on the line.
 
-*Let's unpack that a little*: For each data point, we can compute a 'residual', which is the difference between the observed value (y) and the value predicted by our line ($3.96x - 1.04$). The squaring part $(y - (mx + b))^2$ ensures that we account for these residuals in a consistent way, whether they are positive or negative, making our optimization problem smoother.
+*Let's unpack that a little*: For each data point, we can compute a *residual*, which is the difference between the observed value (y) and the value predicted by our line ($\hat{y}=3.96x - 1.04$). The squaring part $(y - \hat{y})^2$ ensures that we account for these residuals in a consistent way, whether they are positive or negative, making our optimization problem easier.
 
-Each of our 100 data points has a difference from our line, like a small gap. We square these gaps and then add them all up. This total is what we call the **residual sum of squares (RSS)**. The RSS is a number that measures the total discrepancy between our data and our line of best fit. It's like a scorecard; *the smaller the RSS, the better our line fits the data*. We aim for the line that gives us the smallest RSS because that line fits our data the best. Minimizing this RSS yields a *unique* line that closely follows the data points and connects the estimated average rooms cleaned for each crew size.
+First, we find the distance that each $y$ value is from our line. We then square these distances and then add them all up. This total is what we call the **residual sum of squares (RSS)**. The RSS is a number that measures the total discrepancy between our data and the line of best fit. It's like a scorecard; *the smaller the RSS, the better our line fits the data*. We want for the line that gives us the smallest RSS because that line fits our data the best. Minimizing this RSS yields a *unique* line that closely follows the data points and connects the estimated average rooms cleaned for each crew size.
 
+This process of minimizing the RSS will give a unique line that sits as close as possible to every data point, and happens to connect the estimated mean number of rooms at each crew size to each other.
 
-This process of minimizing the RSS will give a unique line, that sits as close as possible to every data point, and happens to connect the estimated mean number of rooms at each crew size to each other.
-
-In the applet below, we've dispersed our familiar data for clarity. Adjust the slope and intercept as you like. The applet will display the corresponding RSS and distance lines. 
+In the applet below, we've dispersed the cleaning data for visual clarity. Adjust the slope and intercept as you like. The applet will display the corresponding RSS and distance lines. 
 
 **Experiment with various values and observe how the line** $y = -1.04 + 3.96x$ **yields the smallest RSS.**
 
