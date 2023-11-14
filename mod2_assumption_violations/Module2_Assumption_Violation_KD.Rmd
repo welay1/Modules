@@ -42,17 +42,25 @@ set.seed(302)
 
 ## Introduction
 
-In this module, we will investigate the consequences of violating the assumptions of linear regression. Specifically, we will look at how confidence intervals of coefficients are impacted by violated assumptions. 
+In this module, you will: 
 
-We will run a simulation to mimic how drawing different samples from the population produces different coefficient estimates and confidence intervals. 
+* Investigate the consequences of violating the assumptions of linear regression, specifically confidence intervals of coefficients. 
 
-Note: There are hints for some questions, so make sure to check them if you get really stuck.
+* Run a simulation to see how different samples produce different estimates. 
 
 ## Section 1 - Setting up a simulation
 
 First, we will set up a simulation. We will set the simulation up such that all assumptions of linear regression will hold. We will then deliberately break each assumption and explore the effects. 
 
-Usually, we do not know the true population relationship -- the whole purpose of linear regression is to *estimate* this relationship. However, for the purpose of this exercise, we will assume we do know this information, as we will be replicating drawing samples from some population. As such, we first establish the "ground truth" -- the true population relationship between the predictors and response. Then we take many samples from this population to obtain an estimate of the sampling distribution of each coefficient. Finally, we compute our confidence interval for each coefficient in each sample we take and see whether we obtain the right proportion of intervals that contain the true value of that parameter (i.e. the coverage).
+Usually, we do not know the true population relationship -- the whole purpose of linear regression is to *estimate* this relationship. However, for the purpose of this exercise, we will assume we do know this information, as we will be replicating drawing samples from some population. The steps of the simulation will be as follows: 
+
+1. We will establish the "ground truth" -- the true population relationship between the predictors and response. 
+
+2. Then, we take many samples from this population to obtain an estimate of the sampling distribution of each coefficient. 
+
+3. Finally, we compute our confidence interval for each coefficient in each sample we take and calculate the **<mark>coverage</mark>**, or the proportion of intervals that contain the true parameter value. 
+
+Why do we care about the coverage? Well, recall how we define a 95% confidence interval: *given that the assumptions of linear regression are met*, if we were to take many samples from a population and calculate a 95% confidence interval for each sample, then approximately 95% of the intervals would contain the true population parameter. Therefore, calculating the coverage for a simulation can tell us whether the linear regression assumptions are met. 
 
 ### Part 1.1: Sampling from the population
 
@@ -161,7 +169,7 @@ To understand how confidence intervals *should* behave if all assumptions hold, 
 
 We will generate 2000 samples using a *for loop*. This allows us to repeat the same process for a desired number of times. In each loop, we will take a sample, fit a model, and save the 95\% confidence interval for each coefficient. 
 
-Fill in the gaps below to run 2000 iterations of the simulation and save the resulting confidence interval of each coefficient for each run.
+Fill in the gaps below to run 2000 iterations of the simulation and save the resulting confidence interval of each coefficient for each iteration.
 
 ```{r confint1-setup, include=F}
 set.seed(302)
@@ -278,9 +286,12 @@ grade_code()
 
 ### Part 1.3: Estimating the Confidence Interval Coverage
 
-Remember that coverage here refers to the **proportion of confidence intervals based on samples from this population that contain the true value of the coefficient.** So by taking the 2000 samples from this population and computing confidence intervals each time, we can check if our 95\% confidence intervals actually capture the true value of the coefficient 95\% of the time. So for a confidence interval $[a, b]$, we would find the coverage by $$\sum_{i=1}^{2000}\frac{1_{\{\beta \in [a, b]\}}}{2000}.$$ 
+As a reminder, coverage here refers to the **proportion of confidence intervals based on samples from this population that contain the true value of the coefficient.** If we simulate many 95% confidence intervals from a population, the coverage should be about 95% if all assumptions are met. If we get a percentage very different from our confidence level, that is a clue that assumptions may be violated. 
 
-This amounts to checking if the true value of the coefficient is inside the interval for each run (a yes or no answer) and then adding up how many yes' we found. This can be broken up into 4 pieces in our code:
+By taking the 2000 samples from this population and computing confidence intervals each time, we can check if our 95\% confidence intervals actually capture the true value of the coefficient 95\% of the time. So for a set of confidence intervals $[a_1, b_1], [a_2, b_2], [a_3, b_3], ... , [a_{2000}, b_{2000}]$, we find the coverage by 
+$$\frac{\sum_{i=1}^{2000}1_{\{\beta \in [a_i, b_i]\}}}{2000}$$, where $1_{\{\beta...}}$ is an indicator function taking $1$ if $\beta$ is in the interval, and $0$ otherwise. 
+
+To code this process, we can break it up into four steps:
 
    1. Check if the true value of the coefficient is LARGER than the lower bound of the computed confidence interval (i.e. $a \leq \beta$ or equivalently $\beta \geq a$).
   2. Check if the true value of the coefficient is also SMALLER than the upper bound of the computed confidence interval (i.e. $b \geq \beta$ or equivalently $\beta \leq b$). 
@@ -365,9 +376,10 @@ question(sprintf("Based on the output, which of the following ranges does the ap
 
 
 ## Section 2 - Violated Homoscedasticity/Non-Constant Variance
-In this part, we will examine the homoscedasticity (constant variance) assumption and how the violation of it could impact the confidence intervals we would build for the estimated coefficients.
 
-Let's start by reviewing the definition for the homoscedasticity (equal variance) assumption.  
+In this part, we will examine the **<mark>homoscedasticity</mark>** (constant variance) assumption and how the violation of it could impact the confidence intervals we would build for the estimated coefficients.
+
+Let's start by reviewing the definition for the homoscedasticity assumption.  
 
 ```{r q3, include=TRUE}
 question("Which of the following statements is guaranteed to satisfy the homoscedasticity assumption?",
@@ -380,11 +392,11 @@ question("Which of the following statements is guaranteed to satisfy the homosce
 ```
 
 
-Now let's break the homoscedasticity assumption in our simulation. We will use the same simulation template as the previous section, but instead of having assumptions hold, we will break constant variance. 
+Now let's break the homoscedasticity assumption in our simulation. We will use the same simulation template as the previous section, but instead of having all assumptions hold, we will break constant variance. 
 
-To do this, all we need to change is the distribution that dictates the population errors. Remember that, when all assumptions hold, the population relationship is $$Y = 1 + 2X_1 + 3X_2 + \epsilon, \text{     where   } \epsilon \sim N(0,1)$$ where the constant error variance is satisfied because the normal distribution has a variance of 1, a constant value that does not depend on the values of the predictors.
+To do this, all we need to change is the distribution that dictates the population errors. Remember that, when all assumptions hold, the population relationship is $$Y = 1 + 2X_1 + 3X_2 + \epsilon, \text{     where   } \epsilon \sim N(0,1)$$ where the constant error variance is satisfied because the normal distribution has a variance of 1, a constant value that does *not* depend on the values of the predictors.
 
-To create non-constant variance, we will make it so that the population relationship is now $$Y = 1 + 2X_1 + 3X_2 + \epsilon, \text{     where   } \epsilon \sim N(0,|X_1|).$$ Notice that as the values of $X_1$ change, so will the variance of the errors, thereby violating this assumption. We can add this into our simulation by setting `sd = abs(x1)` when we generate the errors below.
+To create non-constant variance, we will make it so that the population relationship is now $$Y = 1 + 2X_1 + 3X_2 + \epsilon, \text{     where   } \epsilon \sim N(0,|X_1|).$$ Notice that as the values of $X_1$ change, so will the variance of the errors, thereby violating constant variance. We can add this into our simulation by setting `sd = abs(x1)` when we generate the errors below.
 
 ```{r confint2, exercise = TRUE, exercise.lines = 30}
 # Set up parameters
