@@ -433,7 +433,9 @@ sd = abs(x1)
 # in the sampling of the errors on line 17
 ```
 
-Now that you have your 2000 samples from the population and have fit a linear model to each one and computed the confidence intervals on each coefficient, we can look at whether the coverage of each confidence interval is changed due to the violation of constant variance. Fill in the blanks below to complete the coverage calculation for the CI of the slope of $X_1$ and $X_2$.
+Now that you have your 2000 samples from the population and have fit a linear model to each one and computed the confidence intervals on each coefficient, we can look at whether the coverage of each confidence interval is changed due to the violation of constant variance. Fill in the blanks below to complete the coverage calculation for the CI of the slope of $X_1$ and $X_2$. 
+
+TODO
 
 ```{r confint2_1-setup, include=F}
 # Set up parameters
