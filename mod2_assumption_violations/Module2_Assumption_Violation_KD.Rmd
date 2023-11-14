@@ -433,9 +433,9 @@ sd = abs(x1)
 # in the sampling of the errors on line 17
 ```
 
-Now that you have your 2000 samples from the population and have fit a linear model to each one and computed the confidence intervals on each coefficient, we can look at whether the coverage of each confidence interval is changed due to the violation of constant variance. Fill in the blanks below to complete the coverage calculation for the CI of the slope of $X_1$ and $X_2$. 
+Now that you have your 2000 samples from the population, have fit a linear model to each one, and computed the confidence intervals for each coefficient, we can look at whether the coverage of each confidence interval is changed due to the violation of constant variance. Fill in the blanks below to complete the coverage calculation for the CI of the slope of $X_1$ and $X_2$. 
 
-TODO
+
 
 ```{r confint2_1-setup, include=F}
 # Set up parameters
@@ -510,7 +510,8 @@ question(sprintf("Compared to what you saw for the coverage of $X_1$ when all as
 
 
 ## Section 3 - Violated Linearity/Model Misspecification
-We just noticed that when we violate our assumption of constant error variance in linear regression, we end up with lower coverage in some of our confidence intervals than we should. In this section, we will examine the linearity/model specification assumption and see how its violation could impact the coverage of our confidence intervals.
+
+We saw that when we violate the constant variance assumption, the coverage was lower than it should have been. Now we will examine the linearity/model specification assumption and see how its violation impacts coverage. 
 
 Let's start by reviewing the definition for the linearity assumption.  
 
@@ -524,17 +525,21 @@ question("Which ONE of the following statements regarding the linearity assumpti
 )
 ```
 
-In order to see what happens when the linearity assumption is violated, we can create this violation in our simulation. There are a few ways we can do this:
+We will now break this assumption in the simulation. 
+
+There are a few ways we can do this:
 
   1. Have the true relationship contain both predictors but the fitted model contain only one predictor.
   2. Change the true relationship to contain a predictor in a different functional form, e.g. as $X^2$ instead of just $X$.
 
-We will not only look at the impact of this violation on the coverage of our confidence intervals for the coefficients (as before), but also the average value of the estimated coefficients across all runs to better understand any impact we might see.
+We will not only look at the impact of this violation on the coverage of our confidence intervals for the coefficients (as before), but also the average value of the estimated coefficients across all runs to better understand the impact. 
+
 
 ### Part 3.1: Omitting a predictor
-We can start by violating the linearity assumption by omitting a predictor when we fit our model. We know (because we set it to be true) that the true relationship in the population is $E(Y | X) = 1 + 2X_1 + 3X_2$. 
 
-To violate the assumption, we will keep the true relationship as above in our simulation, but when we fit the linear model, we will only use $X_1$ in the model (i.e not include $X_2$ in the fitted model). Then we can compute the estimated coverage as we did before. We will also store the estimated coefficients from each loop in our simulation so that we can compute the average $\beta$ from all 2000 samples.
+First, we will violate the assumption by omitting a predictor when we fit the model. We know (because we set it to be true) that the true relationship in the population is $E(Y | X) = 1 + 2X_1 + 3X_2$. 
+
+To violate the assumption, we will only use $X_1$ when we fit the model. Then we can compute the estimated coverage as we did before. We will also store the estimated coefficients from each loop in our simulation so that we can compute the average $\beta$ from all 2000 samples.
 
 First, set up the simulation with a true relationship of $y = 1 + 2*X_2 + 3*X_3 + e$ but a fitted linear relationship of $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_2$.
 
@@ -672,6 +677,7 @@ question("Based on these averages, which of the following statements is TRUE?",
 
 
 ### Part 3.2: Incorrect functional form
+
 We can also violate this assumption by changing the functional form of at least one of the predictors. Recall that the linearity assumption states that a linear relationship exists between the response and predictors, and that it specifically includes predictors as they have been added to the fitted model. This means that if we fit a model assuming that the true relationship is $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$$ but in fact the true relationship is $$Y = \beta_0 + \beta_1 X_1^2 + \beta_2 X_2^2  + \epsilon,$$ we would violate the linearity assumption.
 
 Therefore, we can also violate the linearity assumption by creating this situation. We will do this below by squaring each predictor when we generate the responses in our sample.
@@ -743,6 +749,7 @@ question("Which statements is TRUE regarding the independent/uncorrelated errors
 ```
 
 ### Part 4.1: Examining the Coverage when Assumptions Hold
+
 We will study the impact of violating the uncorrelated/independent errors assumption by again looking at the coverage of the confidence intervals to understand what changes when this assumption no longer holds.
 
 To begin, we can create a simulation when all assumptions hold where, for each run, we will save the confidence intervals. Fill in the blanks below to get an idea of how the sampling distribution behaves normally.
@@ -801,6 +808,7 @@ question("Is the coverage of the confidence intervals about what you expected?",
 ```
 
 ### Part 4.2: Adding Correlation to the Errors
+
 To violate uncorrelated errors, we will need to modify how the random errors are generated. The function we have been using to get independent errors from a Normal distribution, `rnorm()` always gives us independent errors. We will need to use a different random normal generator which can generate correlated/dependent random errors to violate this assumption. The function that will let us do this is `mvrnorm()` which can take in a covariance matrix to create correlated variables.
 
 This means that we need to create a **covariance matrix**. A covariance matrix is a way to concisely describe the variance of multiple random variables along with their covariance. Recall that when we have independent random variables, the covariance between any two will be $Cov(X_i, X_j) = 0, i \neq j$. So we could write the covariance matrix between 3 independent random variables as
@@ -899,7 +907,7 @@ question("What do you notice about the coverage?",
 ```
 
 ## Section 5 - Violated Normality
-In our final section, we will examine how the normality assumption relates to the sampling distributions of our estimators of the coefficients. Recall that a sampling distribution is a theoretical distribution that describes how the values we get for an estimate of each coefficient will change depending on the sample we used to compute that estimate. We can mimic the concept of a sampling distribution with our simulation, since we take many samples when we loop through our code.
+In our final section, we will examine how the normality assumption relates to the sampling distributions of our estimators of the coefficients. Recall that a **<mark>sampling distribution</mark>** describes how estimates of coefficients will change depending on the sample used. We can mimic the concept of a sampling distribution with our simulation, since we take many samples when we loop through our code.
 
 ### Part 5.1: Sampling Distribution of the Coefficient Estimators
 Let's start by considering which elements of our linear regression model are assumed to be Normally distributed due to this assumption.  
@@ -970,9 +978,9 @@ question("What do you notice about the sampling distributions?",
 
 ### Part 5.2: Violating the Normality Assumption
 
-To violate Normality, we simply need to change the distribution that is generating the errors to that is not a Normal distribution, i.e. we need to use a function different from `rnorm()`. While any distribution that is not Normal will violate this assumption, the effect is more prominent if we pick a distribution that is far from Normal, such as the log-Normal distribution. The log-Normal distribution is a highly skewed distribution that is based off the Normal. If a random variable X is log-Normally distributed, then then ln(X) will be Normally distributed.
+To violate Normality, we simply need to change the distribution that is generating the errors to that is not a Normal distribution, i.e. we need to use a function different from `rnorm()`. While any distribution that is not Normal will violate this assumption, the effect is more prominent if we pick a distribution that is far from Normal, such as the log-Normal distribution. The log-Normal distribution is a highly skewed distribution that is based off the Normal. If a random variable X is log-Normally distributed, then then $ln(X)$ will be Normally distributed.
 
-Because of this relationship, the log-Normal distribution has both a mean and a standard deviation as parameters, like the Normal. We will use `rlnorm()` to generate errors from a log-Normal, and we will specify the mean to be 0 and the standard deviation to be 1. The `rlnorm()` function uses the same syntax as the `rnorm()` function, so you can copy the syntax from the code that generates the predictors. Fill in the blanks below to see how a violation of Normality affects the sampling distributions of the coefficients.
+Like the Normal distribution, the log-Normal distribution has both a mean and a standard deviation as parameters. We will use `rlnorm()` to generate errors from a log-Normal, and we will specify the mean to be 0 and the standard deviation to be 1. The `rlnorm()` function uses the same syntax as the `rnorm()` function, so you can copy the syntax from the code that generates the predictors. Fill in the blanks below to see how a violation of Normality affects the sampling distributions of the coefficients.
 
 ```{r norm2, exercise = TRUE, exercise.lines = 25}
 # Set up parameters
