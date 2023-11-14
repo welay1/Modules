@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<meta name="progressive" content="false" />
+<meta name="allow-skip" content="false" />
+<meta name="learnr-version-prerender" content="0.11.5.9000" />
+
+<title>Motivating the Regression Line of Best Fit</title>
+
+<!-- header-includes START -->
+<!-- HEAD_CONTENT -->
+<!-- header-includes END -->
+<!-- HEAD_CONTENT -->
+
+<!-- highlightjs -->
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+<!-- taken from https://github.com/rstudio/rmarkdown/blob/de8a9c38618903627ca509f5401d50a0876079f7/inst/rmd/h/default.html#L293-L343 -->
+<!-- tabsets -->
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+<!-- end tabsets -->
+
+
+</head>
+
+<body>
+<a class='sr-only sr-only-focusable visually-hidden-focusable' href='#learnr-tutorial-content'>Skip to Tutorial Content</a>
+
+
+
+<div class="pageContent band">
+<main class="bandContent page">
+
+<article class="topics" id="learnr-tutorial-content">
+
+<div
+id="section-background-help-your-friend-understand-her-cleaning-business"
+class="section level2">
+<h2>Background: Help your friend understand her cleaning business</h2>
+<p>Consider the following scenario:</p>
+<p>Suppose your friend Nancy started a cleaning company, but the company
+is not profitable yet. Nancy is suspicious that some employees are
+unproductive. When more employees are working, Nancy expects more rooms
+to be cleaned, but this doesn’t seem to happen. Nancy asks for your help
+to better understand the relationship between the number of people
+working and the number of rooms cleaned over the past year.</p>
+<p>You ask Nancy for records of the number of workers (CrewSize, the X
+variable) and the number of rooms cleaned (Rooms, the Y value) from the
+past year <strong>to test if more workers lead to more cleaned
+rooms.</strong> Unfortunately, <strong>February</strong>, rather than
+the entire year.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="check_in" class="tutorial-question panel-body">
+<div id="check_in-answer_container" class="shiny-html-output"></div>
+<div id="check_in-message_container" class="shiny-html-output"></div>
+<div id="check_in-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-section-1-loading-and-visualizing-the-sample-data"
+class="section level2">
+<h2>Section 1: Loading and Visualizing the Sample Data</h2>
+<p>The dataset for the month of February is named “CleaningData”. It
+includes 100 observations and the following 3 variables:</p>
+<ul>
+<li><code>Case</code>: observation number (identifier).</li>
+<li><code>CrewSize</code>: the number of members in a cleaning crew sent
+to a job.</li>
+<li><code>Rooms</code>: the number of rooms cleaned by that cleaning
+crew.</li>
+</ul>
+<p>In R, use the dollar sign ($) after the dataset name to access a
+specific column. For instance, <code>data$Variable</code> fetches the
+column named ‘Variable’ from the dataset called ‘data’.</p>
+<div id="section-part-1.1-univariate-summaries-of-the-data"
+class="section level3">
+<h3>Part 1.1: Univariate Summaries of the Data:</h3>
+<p>To begin, let’s produce a 5-number summary of each variable in the
+data. The name of the dataset is “CleaningData” and it is loaded for you
+to use. You can type your code into the box below. If you get stuck,
+click the hint button to help you with the code and syntax.</p>
+<div class="tutorial-exercise" data-label="exercise1a"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="3" data-pipe="|&gt;">
+<pre class="text"><code># produce a 5-number summary of each variable stored in data</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1a-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>summary(data)</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1a-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# The `summary()` function gives you a 5-number summary on each variable in the dataset.&quot;
+
+# ---</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1a-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# The `summary()` function gives you a 5-number summary on each variable in the dataset.&quot;
+
+# ---
+
+# Remember, the dataset you are interested in is the one called `data`. &quot;
+
+# ---</code></pre>
+</div>
+<p>We can also show the distribution by creating a histogram for
+‘CrewSize’ and a boxplot for ‘Rooms’.</p>
+<div class="tutorial-exercise" data-label="exercise1b"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="8" data-pipe="|&gt;">
+<pre class="text"><code># Create a histogram of CrewSize
+
+
+# Create a boxplot of Rooms</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1b-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>hist(data$CrewSize)
+boxplot(data$Rooms)</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1b-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# For a varible &quot;x&quot; in dataset &quot;y&quot;, you would write:
+hist(y$x)
+boxplot(y$x)
+
+# ---</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1b-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# For a varible &quot;x&quot; in dataset &quot;y&quot;, you would write:
+hist(y$x)
+boxplot(y$x)
+
+# ---
+
+#OPTIONAL EDITS
+# If you want to label your diagram, axes, or even color in your plots for a variable &quot;x&quot; in dataset &quot;y&quot;, you can use ggplot:
+
+#Histogram:
+ggplot(y, aes(x = x)) + geom_histogram(binwidth=0.5, fill=&quot;color_name&quot;, color=&quot;color_name&quot;, alpha=0.7) +
+  labs(title=&quot;Histogram of x&quot;, x=&quot;Name of Variable&quot;, y=&quot;Frequency&quot;) +
+  theme_minimal() 
+
+#Boxplot:
+ggplot(y, aes(x = x)) + geom_boxplot(fill = &quot;color_name&quot;, color = &quot;color_name&quot;)
+
+# ---</code></pre>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="univariate" class="tutorial-question panel-body">
+<div id="univariate-answer_container" class="shiny-html-output"></div>
+<div id="univariate-message_container" class="shiny-html-output"></div>
+<div id="univariate-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-part-1.2-visualizing-the-association-between-variables"
+class="section level3">
+<h3>Part 1.2: Visualizing the Association Between Variables:</h3>
+<p>Now we can visualize the sample data and estimate what association
+exists between CrewSize and Rooms. There are many kinds of plots; which
+would be best for plotting these two variables?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="plot" class="tutorial-question panel-body">
+<div id="plot-answer_container" class="shiny-html-output"></div>
+<div id="plot-message_container" class="shiny-html-output"></div>
+<div id="plot-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Generate a scatterplot using “CrewSize” on the x-axis and “Rooms” on
+the y-axis, ensuring to label the axes and title appropriately. Fill in
+the code gaps with the relevant dataset variables to complete the
+plot.</p>
+<div class="tutorial-exercise" data-label="exercise1c"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="5" data-pipe="|&gt;">
+<pre class="text"><code>ggplot(data, aes( ___ , ___ )) + 
+  geom_point()+ 
+  labs(x = &quot;Number of Crew Members&quot;, y = &quot;Number of Rooms&quot;), 
+    title = &quot;Figure 1. The association between Crew Size and Rooms Cleaned&quot;)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1c-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>ggplot(data, aes(CrewSize, Rooms)) + 
+  geom_point()+ 
+  labs(x = &quot;Number of Crew Members&quot;, y = &quot;Number of Rooms&quot; , 
+    title = &quot;Figure 1. The association between Crew Size and Rooms Cleaned&quot;)</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1c-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# In ggplot, use the aes function to define the variable names for the x and y axes in the following manner:
+
+aes(x=Variable1, y=Variable2) 
+
+# In this example, Variable1 is the x-axis variable and Variable2 is the y-axis variable.
+
+# ---</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise1c-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# Use the &#39;labs&#39; function to label axes. Provide the desired names in quotes in the following manner:
+
+labs(x=&quot;Variable Name 1&quot;, y=&quot;Variable Name 2&quot;)
+
+# ---</code></pre>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="trend" class="tutorial-question panel-body">
+<div id="trend-answer_container" class="shiny-html-output"></div>
+<div id="trend-message_container" class="shiny-html-output"></div>
+<div id="trend-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>Congrats on finishing the first section! In the next one, we’ll
+explore if the mean number of rooms cleaned varies with different crew
+sizes.</p>
+</div>
+</div>
+<div
+id="section-section-2-the-conditional-distribution-of-rooms-by-crew-size"
+class="section level2">
+<h2>Section 2: The conditional distribution of Rooms by Crew Size</h2>
+<p>In Section 1, we observed a linear relationship between the number of
+employees and the rooms cleaned. This means there exists a <strong>line
+of best fit</strong> that models the association. By calculating the
+equation of this line, we will better understand how an increase in
+employees affects the number of rooms cleaned.</p>
+<p>Recall Figure 1 of Part 1.2, where the scatterplot displays discrete
+crew sizes as distinct vertical clusters.</p>
+<p>TODO: insert plot image here.</p>
+<p>Each cluster represents the <strong>conditional distribution</strong>
+of rooms cleaned (<span class="math inline">\(Y\)</span>) for a specific
+crew size (<span class="math inline">\(X\)</span>). We can examine the
+average Y within each distribution.</p>
+<p>A <em>conditional distribution</em> provides insight into the
+relationship between two random variables. It does this by analyzing the
+distribution of one variable, <span class="math inline">\(Y\)</span>,
+for each distinct value of the other variable, <span
+class="math inline">\(X\)</span>. Essentially, for every unique value of
+<span class="math inline">\(X\)</span>, we examine the behavior or
+distribution of <span class="math inline">\(Y\)</span>.</p>
+<div id="section-part-2.1-the-unique-values-of-crewsize"
+class="section level3">
+<h3>Part 2.1 The Unique Values of CrewSize:</h3>
+<p>Let’s start by extracting the unique values of CrewSize and saving
+them to the “uniqueX” variable.</p>
+<div class="tutorial-exercise" data-label="exercise2a"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="3" data-pipe="|&gt;">
+<pre class="text"><code>uniqueX &lt;- ___
+uniqueX  </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2a-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# We can use the unique() function to obtain the unique ouptuts of our data.
+
+# For example, consider a variable &quot;x&quot; defined as:
+x &lt;- c(1,2,3,2,1,2,1)
+
+unique(x)
+
+# The unique() function removes duplicates and only outputs the unique values: 1, 2, 3.
+
+# ---</code></pre>
+</div>
+<p>Your output should display the numbers 1 to 5, with no duplicates.
+We’ll use these for plotting to understand the data’s trend.</p>
+</div>
+<div
+id="section-part-2.2-mean-of-rooms-at-each-unique-value-of-crewsize"
+class="section level3">
+<h3>Part 2.2 Mean of Rooms at Each Unique Value of CrewSize:</h3>
+<p>We just observed that your friend sent crews of sizes 1 through 5 to
+jobs in February. We’ll calculate the average rooms cleaned for each
+crew size, denoted as <span class="math inline">\(E(Y \mid X =
+x)\)</span>, representing the conditional mean of rooms cleaned for a
+specific crew size.</p>
+<p>In the next code line, use <code>tapply</code> to compute the mean
+rooms for each CrewSize value. Store the results in <code>ymeans</code>
+and print them. For <code>tapply</code> usage tips, click the hints
+above the R code box.</p>
+<div class="tutorial-exercise" data-label="exercise2b"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="4" data-pipe="|&gt;">
+<pre class="text"><code>ymeans &lt;- tapply(X = ___, INDEX = ___, mean)
+ymeans </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2b-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# In the tapply code gaps, set &#39;X =&#39; to the variable you&#39;re calculating the mean for (Rooms) and &#39;INDEX =&#39; to the conditioning variable (CrewSize).
+
+# For instance, if you wanted to use a dataset called &quot;data&quot; to calculate the average number of books rented by different age groups, you&#39;d use:
+
+tapply(X = data$BooksRented, INDEX = data$AgeGroup, mean)
+
+# ---</code></pre>
+</div>
+<p>At this point, you should have obtained 5 averages of the number of
+Rooms, corresponding to each distinct value of CrewSize. We’ll plot
+these on our scatterplot to discern any clearer trends.</p>
+</div>
+<div
+id="section-part-2.3-adding-conditional-averages-of-rooms-by-crewsize-to-figure-1"
+class="section level3">
+<h3>Part 2.3 Adding Conditional Averages of Rooms by CrewSize to Figure
+1:</h3>
+<p>In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against
+Rooms (y-axis). Now, in this section, we’ll integrate the five
+conditional means that we just obtained.</p>
+<p>Also, let’s color them in green to distinguish them!</p>
+<div class="tutorial-exercise" data-label="exercise2c"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="8" data-pipe="|&gt;">
+<pre class="text"><code>ggplot() + 
+  geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = ___, y = ___), colour = &quot;green&quot;)+
+  labs(x = &quot;CrewSize&quot;,
+       y =&quot;Rooms&quot;, 
+       title = &quot;Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green&quot;) </code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2c-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>#---
+
+# Remember that &#39;ymeans&#39; contains the mean of Rooms at each unique value of CrewSize, while &#39;uniqueX&#39; contains all the unique values of CrewSize. 
+
+# These are the values we wish to highlight in blue on our graph using `geom_point`.
+
+# ---</code></pre>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="trend_mean" class="tutorial-question panel-body">
+<div id="trend_mean-answer_container" class="shiny-html-output"></div>
+<div id="trend_mean-message_container" class="shiny-html-output"></div>
+<div id="trend_mean-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+</div>
+<div
+id="section-section-3.-effect-of-increasing-crewsize-on-average-rooms-cleaned"
+class="section level2">
+<h2>Section 3. Effect of Increasing CrewSize on Average Rooms
+Cleaned</h2>
+<p>In this section, we’ll use our February sample data to estimate how
+adding one crew member affects the average number of rooms cleaned.</p>
+<div
+id="section-part-3.1-find-the-average-difference-between-consecutive-means"
+class="section level3">
+<h3>Part 3.1 Find the average difference between consecutive means</h3>
+<p>First, we’ll determine the average difference in the number of rooms
+cleaned between consecutive crew sizes. This will help us understand if
+there is a pattern in the increase of average rooms cleaned for each
+additional member of the cleaning crew.</p>
+<p>We set up a variable, “diffs”, to store the differences between
+consecutive means. Using a “for loop”, we’ll calculate these
+differences, represented as <span class="math display">\[y_{i+1} -
+y_{i}, \quad i = 1, \ldots, 4.\]</span>.</p>
+<p>This loop is telling R: for every value of our index <span
+class="math inline">\(i\)</span>, look at the difference between the
+<span class="math inline">\((i+1)^{th}\)</span> and <span
+class="math inline">\(i^{th}\)</span> mean number of rooms cleaned,
+where <span class="math inline">\(i\)</span> and <span
+class="math inline">\(i+1\)</span> are consecutive numbers.</p>
+<p>Below, specify the indices for storing each difference in ‘diff’, and
+for the consecutive means, as highlighted in the equation above.</p>
+<div class="tutorial-exercise" data-label="exercise3a"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="8" data-pipe="|&gt;">
+<pre class="text"><code>diff &lt;- rep(NA, 4)
+for (i in 1:4) {
+diff[___] &lt;- ymeans[___] - ymeans[___] 
+}
+mean(diff)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise3a-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# If I want to find the difference between the third mean and the second mean, I can set up the following equation:
+
+diff[2] &lt;- ymeans[3] - ymeans[2]
+
+# ---</code></pre>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="consecutive_means" class="tutorial-question panel-body">
+<div id="consecutive_means-answer_container" class="shiny-html-output"></div>
+<div id="consecutive_means-message_container" class="shiny-html-output"></div>
+<div id="consecutive_means-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
+<div id="section-part-3.2-the-line-of-best-fit" class="section level3">
+<h3>Part 3.2 The Line of Best Fit:</h3>
+<p>Another method to estimate the change in Y’s mean for a unit increase
+in X is through linear regression, also known as the line of best
+fit.</p>
+<p>Section 4 will allow us to explore exactly <em>how we can construct a
+line of best fit</em> but for now, let’s explore the basics. After
+running the following code:</p>
+<pre class="r"><code>lm(Rooms  ~ CrewSize, data = data)</code></pre>
+<p>We observe that our sample’s estimated regression yields a slope of
+3.96 and an intercept of -1.04, represented as <span
+class="math inline">\(y = -1.04 + 3.96x\)</span>. Let’s enhance the
+scatterplot from Section 2.3 by adding this regression line in red.”</p>
+<div class="tutorial-exercise" data-label="exercise3b"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="8" data-pipe="|&gt;">
+<pre class="text"><code>ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = uniqueX, y = ymeans), colour = &quot;green&quot;) +
+  geom_abline(intercept = ___ , slope = ___ , colour = ___) + 
+  labs(x = &quot;Crew Size&quot;,
+       y =&quot;Rooms Cleaned&quot;, 
+       title = &quot;Figure 3. Rooms vs. Crew Size with Regression Line in Red&quot;)</code></pre>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise3b-hint-1"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># ---
+
+# The slope of the line of best fit is 3.96, and the intercept is -1.04. 
+
+# These numbers can be added directly in their corresponding blank spaces  in `geom_abline`. You can also set the color to &quot;red&quot; (or any other color you prefer!)
+
+# ---</code></pre>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="connecting_means" class="tutorial-question panel-body">
+<div id="connecting_means-answer_container" class="shiny-html-output"></div>
+<div id="connecting_means-message_container" class="shiny-html-output"></div>
+<div id="connecting_means-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>You might have noticed that the second multiple choice answer above
+allows us to touch on why there is only one line of best fit. In the
+next section, we’ll dive into why that is the case!</p>
+</div>
+</div>
+<div id="section-section-4-constructing-the-line-of-best-fit"
+class="section level2">
+<h2>Section 4: Constructing the Line of Best Fit</h2>
+<p>In the previous section, we defined the line of best fit as: <span
+class="math display">\[y = -1.04 + 3.96x.\]</span> This equation
+represents a distinct linear relationship derived from the data. The
+coefficients (-1.04 and 3.96) were determined by finding a line that
+minimizes the cumulative squared deviations between each observed data
+point and its corresponding point on the line.</p>
+<p><em>Let’s unpack that a little</em>: For each data point, we can
+compute a ‘residual’, which is the difference between the observed value
+(y) and the value predicted by our line (<span
+class="math inline">\(3.96x - 1.04\)</span>). The squaring part <span
+class="math inline">\((y - (mx + b))^2\)</span> ensures that we account
+for these residuals in a consistent way, whether they are positive or
+negative, making our optimization problem smoother.</p>
+<p>Each of our 100 data points has a difference from our line, like a
+small gap. We square these gaps and then add them all up. This total is
+what we call the <strong>residual sum of squares (RSS)</strong>. The RSS
+is a number that measures the total discrepancy between our data and our
+line of best fit. It’s like a scorecard; <em>the smaller the RSS, the
+better our line fits the data</em>. We aim for the line that gives us
+the smallest RSS because that line fits our data the best. Minimizing
+this RSS yields a <em>unique</em> line that closely follows the data
+points and connects the estimated average rooms cleaned for each crew
+size.</p>
+<p>This process of minimizing the RSS will give a unique line, that sits
+as close as possible to every data point, and happens to connect the
+estimated mean number of rooms at each crew size to each other.</p>
+<p>In the applet below, we’ve dispersed our familiar data for clarity.
+Adjust the slope and intercept as you like. The applet will display the
+corresponding RSS and distance lines.</p>
+<p><strong>Experiment with various values and observe how the
+line</strong> <span class="math inline">\(y = -1.04 + 3.96x\)</span>
+<strong>yields the smallest RSS.</strong></p>
+<p>Plot legend:</p>
+<ul>
+<li>The blue line is the line we are fitting.</li>
+<li>The red vertical lines are the distance between the line and the
+original data points.</li>
+</ul>
+<div class="form-group shiny-input-container">
+<label class="control-label" id="intercepts-label" for="intercepts">intercepts:</label>
+<input id="intercepts" type="number" class="shiny-input-number form-control" min="-50" max="50"/>
+</div>
+<div class="form-group shiny-input-container">
+<label class="control-label" id="slopes-label" for="slopes">slopes:</label>
+<input id="slopes" type="number" class="shiny-input-number form-control" min="-50" max="50"/>
+</div>
+<div class="shiny-plot-output html-fill-item" id="distPlot" style="width:100%;height:400px;"></div>
+<div id="my_table" class="shiny-html-output"></div>
+<p>We observe that the RSS is indeed minimized when the intercept is
+equal to <span class="math inline">\(-1.04\)</span> and when the slope
+is set to <span class="math inline">\(3.96\)</span>!</p>
+<p>Congratulations! You have successfully completed this learning
+module! Using just the data from February, you can now confidently
+inform your friend about the average increase in the number of rooms
+cleaned for each additional member added to a cleaning crew over the
+past year.</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="final_check" class="tutorial-question panel-body">
+<div id="final_check-answer_container" class="shiny-html-output"></div>
+<div id="final_check-message_container" class="shiny-html-output"></div>
+<div id="final_check-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<p>
+<script type="application/shiny-prerendered" data-context="server-start">
+#install.packages("remotes", repos = "https://cloud.r-project.org/")
+library(remotes)
+library(learnr)
+#remotes::install_github("rstudio/learnr", force=TRUE)
+#gradethis::gradethis_setup()
+remotes::install_github("rstudio/gradethis", force =TRUE)
+library(gradethis)
+
+library(tidyverse)
+library(learnr)
+
+data <- read.csv("cleaning_sim.csv") %>% rename(CrewSize = Crews)
+
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::register_http_handlers(session, metadata = NULL)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::prepare_tutorial_state(session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::i18n_observe_tutorial_language(input, session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+session$onSessionEnded(function() {
+        learnr:::event_trigger(session, "session_stop")
+      })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "check_in", question = structure("Which of the following is true about analyzing the business based on just one month’s data instead of a full year’s data?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_4b6c773", 
+    option = "If we looked at a different month of data, we would see the same results as this month.", 
+    value = "If we looked at a different month of data, we would see the same results as this month.", 
+    label = structure("If we looked at a different month of data, we would see the same results as this month.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("Every month’s data (sample) from the year will show variations due to sampling. Thus, it might not align perfectly with the results from the month our friend provided.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b31693", 
+    option = "Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", 
+    value = "Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", 
+    label = structure("Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("If the sample is not representative of the population (full year), then we likely will obtain biased estimates.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7731c17", 
+    option = "The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", 
+    value = "The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", 
+    label = structure("The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = structure("Although we cannot ascertain the entire population’s data on the number of workers hired and the number of rooms cleaned, we can use the sample that our friend provided (data for one month), to infer about the whole year.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff3f506", 
+    option = "It's not possible to get an estimate of association between Crew size and Rooms cleaned.", 
+    value = "It's not possible to get an estimate of association between Crew size and Rooms cleaned.", 
+    label = structure("It’s not possible to get an estimate of association between Crew size and Rooms cleaned.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("It is possible, and that will be the topic of this module!", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "check_in-answer", question = "check_in"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 3515515.99836296, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise1a-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise1a-code-editor`)), session)
+output$`tutorial-exercise-exercise1a-output` <- renderUI({
+  `tutorial-exercise-exercise1a-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise1a", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "exercise1a", code = "# produce a 5-number summary of each variable stored in data", 
+        opts = list(label = "\"exercise1a\"", exercise = "TRUE", 
+            exercise.lines = "3"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise1a-check")), solution = structure("summary(data)", chunk_opts = list(
+        label = "exercise1a-solution", eval = FALSE)), tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise1a", exercise = TRUE, exercise.lines = 3, 
+        code = "# produce a 5-number summary of each variable stored in data", 
+        out.width.px = 624, out.height.px = 384, params.src = "exercise1a, exercise=TRUE, exercise.lines = 3", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise1b-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise1b-code-editor`)), session)
+output$`tutorial-exercise-exercise1b-output` <- renderUI({
+  `tutorial-exercise-exercise1b-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise1b", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "exercise1b", code = "# Create a histogram of CrewSize\n\n\n# Create a boxplot of Rooms\n\n", 
+        opts = list(label = "\"exercise1b\"", exercise = "TRUE", 
+            exercise.lines = "8"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise1b-check")), solution = structure(c("hist(data$CrewSize)", 
+    "boxplot(data$Rooms)"), chunk_opts = list(label = "exercise1b-solution", 
+        eval = FALSE)), tests = NULL, options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        size = "normalsize", background = "#F7F7F7", strip.white = TRUE, 
+        cache = 0, cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise1b", exercise = TRUE, exercise.lines = 8, 
+        code = c("# Create a histogram of CrewSize", "", "", 
+        "# Create a boxplot of Rooms", "", ""), out.width.px = 624, 
+        out.height.px = 384, params.src = "exercise1b, exercise = TRUE, exercise.lines = 8", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "univariate", question = structure("What can be said about the distribution of each variable of interest?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_f606b8f", 
+    option = "The Crew Size appears to be somewhat uniformly distributed.", 
+    value = "The Crew Size appears to be somewhat uniformly distributed.", 
+    label = structure("The Crew Size appears to be somewhat uniformly distributed.", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = structure("Since all the bars in the histogram have equal height, this suggests a uniform distribution.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c3f5193", 
+    option = "The distribution of Rooms Cleaned is bimodal.", 
+    value = "The distribution of Rooms Cleaned is bimodal.", 
+    label = structure("The distribution of Rooms Cleaned is bimodal.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("We cannot see modality from a boxplot, so we cannot confirm or deny this with a boxplot.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_954ced", 
+    option = "50% of crews cleaned between 10 and 15 rooms.", 
+    value = "50% of crews cleaned between 10 and 15 rooms.", 
+    label = structure("50% of crews cleaned between 10 and 15 rooms.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The range of 10 to 15 rooms represents only 25% of crews, not 50%.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_28542ad", 
+    option = "There is one crew that cleaned an unusual number of rooms.", 
+    value = "There is one crew that cleaned an unusual number of rooms.", 
+    label = structure("There is one crew that cleaned an unusual number of rooms.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("Since there are no outliers displayed in the boxplot, we do not have any crews who cleaned an unusual number of rooms relative to the others in the data.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "univariate-answer", question = "univariate"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1098032620.48869, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "plot", question = structure("What type of plot should you draw for this sample?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_ff1b62d", 
+    option = "Histogram", value = "Histogram", label = structure("Histogram", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("A histogram showcases the distribution of a single continuous variable, not the correlation or relationship between two.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_489db7", 
+    option = "Barplot", value = "Barplot", label = structure("Barplot", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("A barplot is designed to represent categorical data with respect to a continuous measure, making it inefective for showing the relationship between two continuous variables.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_601f708", 
+    option = "Scatterplot", value = "Scatterplot", label = structure("Scatterplot", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = structure("A scatterplot is ideal because it displays individual data points, revealing patterns, correlations, or relationships between two continuous variables.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7d453fd", 
+    option = "Boxplot", value = "Boxplot", label = structure("Boxplot", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("A boxplot primarily visualizes the distribution and spread of a single variable and therefore doesn’t effectively illustrate the relationship between two continuous variables.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "plot-answer", question = "plot"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 969641176.048476, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise1c-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise1c-code-editor`)), session)
+output$`tutorial-exercise-exercise1c-output` <- renderUI({
+  `tutorial-exercise-exercise1c-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise1c", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "exercise1c", code = "ggplot(data, aes( ___ , ___ )) + \n  geom_point()+ \n  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), \n    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")\n", 
+        opts = list(label = "\"exercise1c\"", exercise = "TRUE", 
+            exercise.lines = "5"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise1c-check")), solution = structure(c("ggplot(data, aes(CrewSize, Rooms)) + ", 
+    "  geom_point()+ ", "  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\" , ", 
+    "    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")"
+    ), chunk_opts = list(label = "exercise1c-solution", eval = FALSE)), 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise1c", exercise = TRUE, exercise.lines = 5, 
+        code = c("ggplot(data, aes( ___ , ___ )) + ", "  geom_point()+ ", 
+        "  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), ", 
+        "    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")", 
+        ""), out.width.px = 624, out.height.px = 384, params.src = "exercise1c, exercise = TRUE, exercise.lines = 5", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "trend", question = structure("How would you describe the association?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_3d35b6f", 
+    option = "Linearly decreasing", value = "Linearly decreasing", 
+    label = structure("Linearly decreasing", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("If the trend were decreasing, the value of Y would decrease as X increases. It’s not the case here!", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c051d14", 
+    option = "Nonlinearly decreasing", value = "Nonlinearly decreasing", 
+    label = structure("Nonlinearly decreasing", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The trend is better described as increasing and there appear to be no obvious curves to the trend to make it nonlinear!", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_98681a2", 
+    option = "Nonlinearly increasing", value = "Nonlinearly increasing", 
+    label = structure("Nonlinearly increasing", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The trend does appear to be increasing but there appear to be no obvious curves to the trend to make it nonlinear!", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_49e3f18", 
+    option = "Linearly increasing", value = "Linearly increasing", 
+    label = structure("Linearly increasing", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = structure("The trend is inedeed increasing, with Y increasing as X does. The relationship appears linear, with no evident curves indicating otherwise!", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "trend-answer", question = "trend"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1623075942.7442, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise2a-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise2a-code-editor`)), session)
+output$`tutorial-exercise-exercise2a-output` <- renderUI({
+  `tutorial-exercise-exercise2a-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise2a", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "exercise2a", code = "uniqueX <- ___\nuniqueX  ", 
+        opts = list(label = "\"exercise2a\"", exercise = "TRUE", 
+            exercise.lines = "3"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise2a", exercise = TRUE, exercise.lines = 3, 
+        code = c("uniqueX <- ___", "uniqueX  "), out.width.px = 624, 
+        out.height.px = 384, params.src = "exercise2a, exercise = TRUE, exercise.lines = 3", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise2b-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise2b-code-editor`)), session)
+output$`tutorial-exercise-exercise2b-output` <- renderUI({
+  `tutorial-exercise-exercise2b-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise2b", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "exercise2b", code = "ymeans <- tapply(X = ___, INDEX = ___, mean)\nymeans ", 
+        opts = list(label = "\"exercise2b\"", exercise = "TRUE", 
+            exercise.lines = "4"), engine = "r")), code_check = NULL, 
+    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
+    options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise2b", exercise = TRUE, exercise.lines = 4, 
+        code = c("ymeans <- tapply(X = ___, INDEX = ___, mean)", 
+        "ymeans "), out.width.px = 624, out.height.px = 384, 
+        params.src = "exercise2b, exercise = TRUE, exercise.lines = 4", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise2c-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise2c-code-editor`)), session)
+output$`tutorial-exercise-exercise2c-output` <- renderUI({
+  `tutorial-exercise-exercise2c-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise2c", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+    chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+        opts = list(label = "\"setup_part2\"", include = "F"), 
+        engine = "r"), list(label = "exercise2c", code = "ggplot() + \n  geom_point(data = data, aes(x = CrewSize, y = Rooms))+\n  geom_point(aes(x = ___, y = ___), colour = \"green\")+\n  labs(x = \"CrewSize\",\n       y =\"Rooms\", \n       title = \"Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green\") ", 
+        opts = list(label = "\"exercise2c\"", exercise = "TRUE", 
+            exercise.setup = "\"setup_part2\"", exercise.lines = "8"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "New_Module1_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise2c", exercise = TRUE, exercise.setup = "setup_part2", 
+        exercise.lines = 8, code = c("ggplot() + ", "  geom_point(data = data, aes(x = CrewSize, y = Rooms))+", 
+        "  geom_point(aes(x = ___, y = ___), colour = \"green\")+", 
+        "  labs(x = \"CrewSize\",", "       y =\"Rooms\", ", 
+        "       title = \"Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green\") "
+        ), out.width.px = 624, out.height.px = 384, params.src = "exercise2c, exercise = TRUE, exercise.setup=\"setup_part2\", exercise.lines=8", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "trend_mean", question = structure("What do you notice about the relationship between the means as X (CrewSize) increases", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_6b23928", 
+    option = "We see a reasonably strong positive linear association.", 
+    value = "We see a reasonably strong positive linear association.", 
+    label = structure("We see a reasonably strong positive linear association.", html = TRUE, class = c("html", 
+    "character")), correct = TRUE, message = structure("The association is linear and positive, characterized by its upward trend, absence of curvature, and the close clustering of points, indicating a strong relationship", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9d69d1", 
+    option = "We see no linear association present.", value = "We see no linear association present.", 
+    label = structure("We see no linear association present.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The scatterplot clearly shows an upward trend, with the number of rooms increasing as the crew size increases. Additionally, the green points, representing the conditional means, further emphasize this positive linear trend across different crew sizes. Thus, there is a visible linear association between the two variables.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e5e32eb", 
+    option = "We see a weak positive linear association.", value = "We see a weak positive linear association.", 
+    label = structure("We see a weak positive linear association.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The scatterplot indicates a clear upward trend with the number of rooms consistently increasing as the crew size increases. The green points, representing the conditional means, solidify this trend. The data points are relatively closely clustered around these means, suggesting a strong positive linear relationship between the two variables, not a weak one.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c5b3c5f", 
+    option = "We see a reasonably strong nonlinear association.", 
+    value = "We see a reasonably strong nonlinear association.", 
+    label = structure("We see a reasonably strong nonlinear association.", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The scatterplot, especially with the green points representing the conditional means, clearly shows an upward linear trend as the crew size increases. The data suggests a strong positive linear relationship between the two variables, rather than a nonlinear association.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+"character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+"character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+"character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "trend_mean-answer", question = "trend_mean"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 47051956.4780897, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise3a-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise3a-code-editor`)), session)
+output$`tutorial-exercise-exercise3a-output` <- renderUI({
+  `tutorial-exercise-exercise3a-result`()
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise3a", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+    chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+        opts = list(label = "\"setup_part2\"", include = "F"), 
+        engine = "r"), list(label = "exercise3a", code = "diff <- rep(NA, 4)\nfor (i in 1:4) {\ndiff[___] <- ymeans[___] - ymeans[___] \n}\nmean(diff)", 
+        opts = list(label = "\"exercise3a\"", exercise = "TRUE", 
+            exercise.setup = "\"setup_part2\"", exercise.lines = "8"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "New_Module1_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise3a", exercise = TRUE, exercise.setup = "setup_part2", 
+        exercise.lines = 8, code = c("diff <- rep(NA, 4)", "for (i in 1:4) {", 
+        "diff[___] <- ymeans[___] - ymeans[___] ", "}", "mean(diff)"
+        ), out.width.px = 624, out.height.px = 384, params.src = "exercise3a, exercise = TRUE, exercise.setup=\"setup_part2\", exercise.lines=8", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "consecutive_means", 
+    question = structure("Well done! You have now found the average difference between the consecutive means of rooms cleaned. What do you think this value represents in the context of the data?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_94e9cfb", 
+        option = "It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", 
+        value = "It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", 
+        label = structure("It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Not entirely. Remember we have variation in how many rooms get cleaned by a crew of a specific size. So one more member does not always mean exactly this number of rooms more will be cleaned.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8350bbd", 
+        option = "The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", 
+        value = "The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", 
+        label = structure("The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Well done! It reminds us of the meaning of a slope of a line.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_395ecf3", 
+        option = "It is the average difference in average number of rooms cleaned", 
+        value = "It is the average difference in average number of rooms cleaned", 
+        label = structure("It is the average difference in average number of rooms cleaned", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Remember that we want to think about this interpretation in context of the data and how this average difference links to adding a new member on the cleaning crew!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_798e9e0", 
+        option = "I have no idea what this value means", value = "I have no idea what this value means", 
+        label = structure("I have no idea what this value means", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("That’s alright. Think about a line equation, y = mx + b, and how we normally talk about the meaning of the value m.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "consecutive_means-answer", question = "consecutive_means"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1275162777.40621, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+`tutorial-exercise-exercise3b-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-exercise3b-code-editor`)), session)
+output$`tutorial-exercise-exercise3b-output` <- renderUI({
+  `tutorial-exercise-exercise3b-result`()
+})
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::store_exercise_cache(structure(list(label = "exercise3b", global_setup = structure(c("#install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+"library(remotes)", "library(learnr)", "#remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
+"#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
+"library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
+"", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
+""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+    chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+        opts = list(label = "\"setup_part2\"", include = "F"), 
+        engine = "r"), list(label = "exercise3b", code = "ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+\n  geom_point(aes(x = uniqueX, y = ymeans), colour = \"green\") +\n  geom_abline(intercept = ___ , slope = ___ , colour = ___) + \n  labs(x = \"Crew Size\",\n       y =\"Rooms Cleaned\", \n       title = \"Figure 3. Rooms vs. Crew Size with Regression Line in Red\")", 
+        opts = list(label = "\"exercise3b\"", exercise = "TRUE", 
+            exercise.lines = "8", exercise.setup = "\"setup_part2\""), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, tests = NULL, options = list(
+        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
+        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
+        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
+        strip.white = TRUE, cache = 0, cache.path = "New_Module1_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+        dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
+        fig.width = 6.5, fig.height = 4, fig.env = "figure", 
+        fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
+        fig.pos = "", out.width = 624, out.height = NULL, out.extra = NULL, 
+        fig.retina = 2, external = TRUE, sanitize = FALSE, interval = 1, 
+        aniopts = "controls,loop", warning = TRUE, error = FALSE, 
+        message = TRUE, render = NULL, ref.label = NULL, child = NULL, 
+        engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
+        max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
+        exercise.error.check.code = "gradethis_error_checker()", 
+        label = "exercise3b", exercise = TRUE, exercise.lines = 8, 
+        exercise.setup = "setup_part2", code = c("ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+", 
+        "  geom_point(aes(x = uniqueX, y = ymeans), colour = \"green\") +", 
+        "  geom_abline(intercept = ___ , slope = ___ , colour = ___) + ", 
+        "  labs(x = \"Crew Size\",", "       y =\"Rooms Cleaned\", ", 
+        "       title = \"Figure 3. Rooms vs. Crew Size with Regression Line in Red\")"
+        ), out.width.px = 624, out.height.px = 384, params.src = "exercise3b, exercise = TRUE, exercise.lines = 8, exercise.setup=\"setup_part2\"", 
+        fig.num = 0, exercise.df_print = "paged"), engine = "r", 
+    version = "4"), class = c("r", "tutorial_exercise")))
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "connecting_means", 
+    question = structure("What do you notice about the line of best fit in this plot?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_6329f5e", 
+        option = "The line of best fit seems to be placed as far as possible from all data points.", 
+        value = "The line of best fit seems to be placed as far as possible from all data points.", 
+        label = structure("The line of best fit seems to be placed as far as possible from all data points.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("The essence of the ‘best fit’ in linear regression is to minimize the total distance (often squared) between the line and each individual data point. The goal is for the line to represent the general trend of the data as closely as possible.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_27f0ec6", 
+        option = "The line of best fit could be just one among multiple lines that equally represent the data well.", 
+        value = "The line of best fit could be just one among multiple lines that equally represent the data well.", 
+        label = structure("The line of best fit could be just one among multiple lines that equally represent the data well.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("the ‘best fit’ in linear regression is mathematically derived to be the optimal line that minimizes the discrepancies between the line and the data points (we will see that in Section 4!). There is only one unique solution for a given set of data.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_af52667", 
+        option = "The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", 
+        value = "The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", 
+        label = structure("The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("The values are not so different. Keep in mind that the line of best fit is determined by a method that seeks to minimize overall error across all data points. This might yield a slope slightly different from a simple rate of change between specific points.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c6802b6", 
+        option = "The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", 
+        value = "The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", 
+        label = structure("The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Exactly. While individual data points may vary, the line of best fit offers a general trend that can be used for predictive modeling, especially for crew sizes not represented in the current data.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "connecting_means-answer", question = "connecting_means"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1055102702.00868, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+da <- read.csv(file="cleaning_sim.csv")
+da <- da %>% arrange(Crews)
+
+# create a data frame with the jittered original points
+jittered <- data.frame(xjitter = jitter(da[,2], factor=0.75), yjitter = da[,3])
+
+output$distPlot <- renderPlot({
+  x <- jittered$xjitter
+  y <- jittered$yjitter
+  
+ # x <- da[, 2] 
+  #y <- da[, 3]
+  #slopes <- seq(1, 2)
+  #intercepts <- seq(1, 2)
+  
+
+  
+  # create a dataset with the predicted values
+#  predicted <- data.frame(x = jittered$xjitter, predicted = c(rep(input$intercepts + input$slopes * 1,20), rep(input$intercepts + input$slopes * 2,20), rep(input$intercepts + input$slopes * 3,20), rep(input$intercepts + input$slopes * 4,20), rep(input$intercepts + input$slopes * 5,20)))
+  
+  
+  ggplot(data = jittered, aes(x = xjitter, y = yjitter)) + geom_point() + ylim(-5, 25) + geom_abline(intercept = input$intercepts, slope = input$slopes, colour = "blue") + geom_segment(data = jittered, aes(xend = xjitter, yend=(input$intercepts + input$slopes*jittered$xjitter)), colour = "red") + labs(x = "X", y = "Y")
+  #plot(x, y) 
+  #hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  #abline(intercepts, slopes)
+})
+
+output$my_table <- renderTable({
+crew1 <- sum((da[[3]][1:20] - input$intercepts - input$slopes * 1)^2)
+crew2 <- sum((da[[3]][21:40] - input$intercepts - input$slopes * 2)^2)
+crew3 <- sum((da[[3]][41:60] - input$intercepts - input$slopes * 3)^2)
+crew4 <- sum((da[[3]][61:80] - input$intercepts - input$slopes * 4)^2)
+crew5 <- sum((da[[3]][81:100] - input$intercepts - input$slopes * 5)^2)
+data.frame(slope = input$slopes, intercept = input$intercepts, RSS = crew1 + crew2 + crew3 + crew4 + crew5)
+})
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "final_check", 
+    question = structure("Which of the below statements is most correct about the line of best fit in linear regression, based on what you have seen in this module?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_9751ea3", 
+        option = "Its position minimizes the total distance between itself and all points.", 
+        value = "Its position minimizes the total distance between itself and all points.", 
+        label = structure("Its position minimizes the total distance between itself and all points.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is correct - it minimizes the RSS as seen above. However this is not the most correct statement.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_607fb74", 
+        option = "It represents the average change in Y for a unit increase in X.", 
+        value = "It represents the average change in Y for a unit increase in X.", 
+        label = structure("It represents the average change in Y for a unit increase in X.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is correct - the trend is in the conditional averages. However, this is not the most correct statement.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b77fae9", 
+        option = "It says that as X increases, we have a constant linear change in the conditional mean of Y.", 
+        value = "It says that as X increases, we have a constant linear change in the conditional mean of Y.", 
+        label = structure("It says that as X increases, we have a constant linear change in the conditional mean of Y.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is correct - the linear trend has a constant slope and the slope measures the change in conditional means. However, this is not the most correct statement.", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c2e0cf", 
+        option = "All statements are correct about the line of best fit in linear regression.", 
+        value = "All statements are correct about the line of best fit in linear regression.", 
+        label = structure("All statements are correct about the line of best fit in linear regression.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "final_check-answer", question = "final_check"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 320372135.350815, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+</p>
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="dependencies">
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["header-attrs"]},{"type":"character","attributes":{},"value":["2.25"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pandoc"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["header-attrs.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootstrap"]},{"type":"character","attributes":{},"value":["3.3.5"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/bootstrap"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["viewport"]}},"value":[{"type":"character","attributes":{},"value":["width=device-width, initial-scale=1"]}]},{"type":"character","attributes":{},"value":["js/bootstrap.min.js","shim/html5shiv.min.js","shim/respond.min.js"]},{"type":"character","attributes":{},"value":["css/cerulean.min.css"]},{"type":"character","attributes":{},"value":["<style>h1 {font-size: 34px;}\n       h1.title {font-size: 38px;}\n       h2 {font-size: 30px;}\n       h3 {font-size: 24px;}\n       h4 {font-size: 18px;}\n       h5 {font-size: 16px;}\n       h6 {font-size: 12px;}\n       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}\n       pre:not([class]) { background-color: white }<\/style>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["pagedtable"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/pagedtable-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/pagedtable.js"]},{"type":"character","attributes":{},"value":["css/pagedtable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["textmate.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["i18n"]},{"type":"character","attributes":{},"value":["21.6.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/i18n"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["i18next.min.js","tutorial-i18n-init.js"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["<script id=\"i18n-cstm-trns\" type=\"application/json\">{\"language\":\"en\",\"resources\":{\"en\":{\"translation\":{\"button\":{\"runcode\":\"Run Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hints\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Next Hint\",\"hintprev\":\"Previous Hint\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copy to Clipboard\",\"startover\":\"Start Over\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continue\",\"submitanswer\":\"Submit Answer\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Previous Topic\",\"nexttopic\":\"Next Topic\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Try Again\"},\"text\":{\"startover\":\"Start Over\",\"areyousure\":\"Are you sure you want to start over? (All exercise progress will be reset)\",\"youmustcomplete\":\"You must complete the\",\"exercise\":\"exercise\",\"exercise_plural\":\"exercises\",\"inthissection\":\"in this section before continuing.\",\"code\":\"Code\",\"enginecap\":\"{{engine}} $t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"blank\",\"blank_plural\":\"blanks\",\"exercisecontainsblank\":\"This exercise contains {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Please replace {{blank}} with valid code.\",\"unparsable\":\"It looks like this might not be valid R code. R cannot determine how to turn your text into a complete command. You may have forgotten to fill in a blank, to remove an underscore, to include a comma between arguments, or to close an opening <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> or <code>{<\\/code> with a matching <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> or <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>It looks like your R code contains specially formatted quotation marks or &quot;curly&quot; quotes (<code>{{character}}<\\/code>) around character strings, making your code invalid. R requires character values to be contained in straight quotation marks (<code>&quot;<\\/code> or <code>'<\\/code>).<\\/p> {{code}} <p>Don't worry, this is a common source of errors when you copy code from another app that applies its own formatting to text. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. Try deleting the special character from your code and retyping it manually.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>It looks like your R code contains an unexpected special character (<code>{{character}}<\\/code>) that makes your code invalid.<\\/p> {{code}} <p>Sometimes your code may contain a special character that looks like a regular character, especially if you copy and paste the code from another app. You can try replacing the code on that line with the following. There may be other places that need to be fixed, too.<\\/p> {{suggestion}}\\n\",\"and\":\"and\",\"or\":\"or\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"fr\":{\"translation\":{\"button\":{\"runcode\":\"Lancer le Code\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Indication\",\"hint_plural\":\"Indications\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Indication Suivante\",\"hintprev\":\"Indication Précédente\",\"solution\":\"Solution\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copier dans le Presse-papier\",\"startover\":\"Recommencer\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuer\",\"submitanswer\":\"Soumettre\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Chapitre Précédent\",\"nexttopic\":\"Chapitre Suivant\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Réessayer\"},\"text\":{\"startover\":\"Recommencer\",\"areyousure\":\"Êtes-vous certains de vouloir recommencer? (La progression sera remise à zéro)\",\"youmustcomplete\":\"Vous devez d'abord compléter\",\"exercise\":\"l'exercice\",\"exercise_plural\":\"des exercices\",\"inthissection\":\"de cette section avec de continuer.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"et\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"es\":{\"translation\":{\"button\":{\"runcode\":\"Ejecutar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Pista\",\"hint_plural\":\"Pistas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Siguiente pista\",\"hintprev\":\"Pista anterior\",\"solution\":\"Solución\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar al portapapeles\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar respuesta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tema anterior\",\"nexttopic\":\"Tema siguiente\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Volver a intentar\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"¿De verdad quieres empezar de nuevo? (todo el progreso del ejercicio se perderá)\",\"youmustcomplete\":\"Debes completar\",\"exercise\":\"el ejercicio\",\"exercise_plural\":\"los ejercicios\",\"inthissection\":\"en esta sección antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Cuestionario\",\"and\":\"y\",\"or\":\"o\",\"oxfordcomma\":\"\"}}},\"pt\":{\"translation\":{\"button\":{\"runcode\":\"Executar código\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Dica\",\"hint_plural\":\"Dicas\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Próxima dica\",\"hintprev\":\"Dica anterior\",\"solution\":\"Solução\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Copiar para a área de transferência\",\"startover\":\"Reiniciar\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Continuar\",\"submitanswer\":\"Enviar resposta\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Tópico anterior\",\"nexttopic\":\"Próximo tópico\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tentar novamente\"},\"text\":{\"startover\":\"Reiniciar\",\"areyousure\":\"Tem certeza que deseja começar novamente? (todo o progresso feito será perdido)\",\"youmustcomplete\":\"Você deve completar\",\"exercise\":\"o exercício\",\"exercise_plural\":\"os exercícios\",\"inthissection\":\"nesta seção antes de continuar.\",\"code\":\"Código\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"and\":\"e\",\"or\":\"ou\",\"oxfordcomma\":\"\"}}},\"tr\":{\"translation\":{\"button\":{\"runcode\":\"Çalıştırma Kodu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Ipucu\",\"hint_plural\":\"İpuçları\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Sonraki İpucu\",\"hintprev\":\"Önceki İpucu\",\"solution\":\"Çözüm\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Pano'ya Kopyala\",\"startover\":\"Baştan Başlamak\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Devam et\",\"submitanswer\":\"Cevabı onayla\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Önceki Konu\",\"nexttopic\":\"Sonraki Konu\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Tekrar Deneyin\"},\"text\":{\"startover\":\"Baştan Başlamak\",\"areyousure\":\"Baştan başlamak istediğinizden emin misiniz? (tüm egzersiz ilerlemesi kaybolacak)\",\"youmustcomplete\":\"Tamamlamalısın\",\"exercise\":\"egzersiz\",\"exercise_plural\":\"egzersizler\",\"inthissection\":\"devam etmeden önce bu bölümde\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Sınav\",\"oxfordcomma\":\"\"}}},\"emo\":{\"translation\":{\"button\":{\"runcode\":\"🏃\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"💡\",\"hint_plural\":\"$t(button.hint)\",\"hinttitle\":\"$t(button.hint)\",\"solution\":\"🎯\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"📋\",\"startover\":\"⏮\",\"startovertitle\":\"Start Over\",\"continue\":\"✅\",\"submitanswer\":\"🆗\",\"submitanswertitle\":\"Submit Answer\",\"previoustopic\":\"⬅\",\"nexttopic\":\"➡\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"🔁\"},\"text\":{\"startover\":\"⏮\",\"areyousure\":\"🤔\",\"youmustcomplete\":\"⚠️ 👉 🧑‍💻\",\"exercise\":\"\",\"exercise_plural\":\"\",\"inthissection\":\"\",\"code\":\"💻\",\"enginecap\":\"$t(text.code) {{engine}}\",\"oxfordcomma\":\"\"}}},\"eu\":{\"translation\":{\"button\":{\"runcode\":\"Kodea egikaritu\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Laguntza\",\"hint_plural\":\"Laguntza\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Aurreko laguntza\",\"hintprev\":\"Hurrengo laguntza\",\"solution\":\"Ebazpena\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Arbelean kopiatu\",\"startover\":\"Berrabiarazi\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Jarraitu\",\"submitanswer\":\"Erantzuna bidali\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Aurreko atala\",\"nexttopic\":\"Hurrengo atala\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Berriro saiatu\"},\"text\":{\"startover\":\"Berrabiarazi\",\"areyousure\":\"Berriro hasi nahi duzu? (egindako lana galdu egingo da)\",\"youmustcomplete\":\"Aurrera egin baino lehen atal honetako\",\"exercise\":\"ariketa egin behar duzu.\",\"exercise_plural\":\"ariketak egin behar dituzu.\",\"inthissection\":\"\",\"code\":\"Kodea\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Galdetegia\",\"oxfordcomma\":\"\"}}},\"de\":{\"translation\":{\"button\":{\"runcode\":\"Code ausführen\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Tipp\",\"hint_plural\":\"Tipps\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Nächster Tipp\",\"hintprev\":\"Vorheriger Tipp\",\"solution\":\"Lösung\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"In die Zwischenablage kopieren\",\"startover\":\"Neustart\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Weiter\",\"submitanswer\":\"Antwort einreichen\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Vorheriges Kapitel\",\"nexttopic\":\"Nächstes Kapitel\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Nochmal versuchen\"},\"text\":{\"startover\":\"Neustart\",\"areyousure\":\"Bist du sicher, dass du neustarten willst? (der gesamte Lernfortschritt wird gelöscht)\",\"youmustcomplete\":\"Vervollstädinge\",\"exercise\":\"die Übung\",\"exercise_plural\":\"die Übungen\",\"inthissection\":\"in diesem Kapitel, bevor du fortfährst.\",\"code\":\"Code\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"Lücke\",\"blank_plural\":\"Lücken\",\"pleasereplaceblank\":\"Bitte ersetze {{blank}} mit gültigem Code.\",\"unparsable\":\"Dies scheint kein gültiger R Code zu sein. R kann deinen Text nicht in einen gültigen Befehl übersetzen. Du hast vielleicht vergessen, die Lücke zu füllen, einen Unterstrich zu entfernen, ein Komma zwischen Argumente zu setzen oder ein eröffnendes <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> oder <code>{<\\/code> mit einem zugehörigen <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> oder <code>}<\\/code> zu schließen.\\n\",\"and\":\"und\",\"or\":\"oder\",\"listcomma\":\", \",\"oxfordcomma\":\",\"}}},\"ko\":{\"translation\":{\"button\":{\"runcode\":\"코드 실행\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"힌트\",\"hint_plural\":\"힌트들\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"다음 힌트\",\"hintprev\":\"이전 힌트\",\"solution\":\"솔루션\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"클립보드에 복사\",\"startover\":\"재학습\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"다음 학습으로\",\"submitanswer\":\"정답 제출\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"이전 토픽\",\"nexttopic\":\"다음 토픽\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"재시도\"},\"text\":{\"startover\":\"재학습\",\"areyousure\":\"다시 시작 하시겠습니까? (모든 예제의 진행 정보가 재설정됩니다)\",\"youmustcomplete\":\"당신은 완료해야 합니다\",\"exercise\":\"연습문제\",\"exercise_plural\":\"연습문제들\",\"inthissection\":\"이 섹션을 실행하기 전에\",\"code\":\"코드\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"퀴즈\",\"blank\":\"공백\",\"blank_plural\":\"공백들\",\"exercisecontainsblank\":\"이 연습문제에는 {{count}}개의 $t(text.blank)이 포함되어 있습니다.\",\"pleasereplaceblank\":\"{{blank}}를 유효한 코드로 바꾸십시오.\",\"unparsable\":\"이것은 유효한 R 코드가 아닐 수 있습니다. R은 텍스트를 완전한 명령으로 변환하는 방법을 결정할 수 없습니다. 당신은 공백이나 밑줄을 대체하여 채우기, 인수를 컴마로 구분하기, 또는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> , <code>{<\\/code>로 시작하는 구문을 닫는 <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>, <code>}<\\/code>을 잊었을 수도 있습니다.\\n\",\"and\":\"그리고\",\"or\":\"혹은\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"zh\":{\"translation\":{\"button\":{\"runcode\":\"运行代码\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"提示\",\"hint_plural\":\"提示\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"下一个提示\",\"hintprev\":\"上一个提示\",\"solution\":\"答案\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"复制到剪切板\",\"startover\":\"重新开始\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"继续\",\"submitanswer\":\"提交答案\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"上一专题\",\"nexttopic\":\"下一专题\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"再试一次\"},\"text\":{\"startover\":\"重置\",\"areyousure\":\"你确定要重新开始吗? (所有当前进度将被重置)\",\"youmustcomplete\":\"你必须完成\",\"exercise\":\"练习\",\"exercise_plural\":\"练习\",\"inthissection\":\"在进行本节之前\",\"code\":\"代码\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"测试\",\"blank\":\"空\",\"blank_plural\":\"空\",\"exercisecontainsblank\":\"本练习包含{{count}}个$t(text.blank)\",\"pleasereplaceblank\":\"请在{{blank}}内填写恰当的代码\",\"unparsable\":\"这似乎不是有效的R代码。 R不知道如何将您的文本转换为完整的命令。 您是否忘了填空，忘了删除下划线，忘了在参数之间包含逗号，或者是忘了用<code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code>,<code>}<\\/code>来封闭<code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code>。 or <code>{<\\/code>。\\n\",\"unparsablequotes\":\"<p>您的R代码中似乎含有特殊格式的引号，或者弯引号(<code>{{character}}<\\/code>) 在字符串前后，在R中字符串应该被直引号(<code>&quot;<\\/code> 或者 <code>'<\\/code>)包裹。<\\/p> {{code}} <p>别担心，该错误经常在复制粘贴包含格式的代码时遇到， 您可以尝试将该行中的代码替换为以下代码，也许还有其他地方需要修改。<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>您的代码中似乎包含有异常字符(<code>{{character}}<\\/code>),导致代码无效。<\\/p> {{code}} <p>有时候你的代码可能含有看似正常字符的特殊字符，特别是当你复制粘贴其他来源代码的时候。 请试着删除这些特殊字符,重新输入<\\/p>\\n\",\"and\":\"且\",\"or\":\"或\",\"listcomma\":\",\",\"oxfordcomma\":\",\"}}},\"pl\":{\"translation\":{\"button\":{\"runcode\":\"Uruchom kod\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Podpowiedź\",\"hint_plural\":\"Podpowiedzi\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Następna podpowiedź\",\"hintprev\":\"Poprzednia podpowiedź\",\"solution\":\"Rozwiązanie\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopiuj do schowka\",\"startover\":\"Zacznij od początku\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Kontynuuj\",\"submitanswer\":\"Wyślij\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Poprzednia sekcja\",\"nexttopic\":\"Następna sekcja\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Spróbuj ponownie\"},\"text\":{\"startover\":\"Zacznij od początku\",\"areyousure\":\"Czy na pewno chcesz zacząć od początku? (cały postęp w zadaniu zostanie utracony)\",\"youmustcomplete\":\"Musisz ukończyć\",\"exercise\":\"ćwiczenie\",\"exercise_plural\":\"ćwiczenia\",\"inthissection\":\"w tej sekcji przed kontynuowaniem\",\"code\":\"Kod\",\"enginecap\":\"$t(text.code) {{engine}}\",\"quiz\":\"Quiz\",\"blank\":\"luka\",\"blank_plural\":\"luk(i)\",\"exercisecontainsblank\":\"To ćwiczenie zawiera {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Proszę uzupełnić {{blank}} prawidłowym kodem.\",\"unparsable\":\"Wygląda na to, że może to nie być prawidłowy kod R. R nie jest w stanie przetworzyć Twojego tekstu na polecenie. Mogłeś(-aś) zapomnieć wypełnić luki, usunąć podkreślnik, umieścić przecinka między argumentami, lub zamknąć znak <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> lub <code>{<\\/code> odpowiadającym <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> lub <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Wygląda na to, że Twój kod zawiera szczególnie sformatowane cudzysłowy lub cudzysłowy typograficzne (<code>{{character}}<\\/code>) przy ciągach znaków, co sprawia, że kod jest niepoprawny. R wymaga cudzysłowów prostych (<code>&quot;<\\/code> albo <code>'<\\/code>).<\\/p> {{code}} <p>Nie martw się, to powszechne źródło błędów, gdy kopiuje się kod z innego programu, który sam formatuje teskt. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Spróbuj usunąć znak specjalny i wpisać do ponownie ręcznie.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Wygląda na to, że Twój kod zawiera niespodziewany znak specjalny (<code>{{character}}<\\/code>), co sprawia, że kod jest niepoprawny.<\\/p> {{code}} <p>Czasami Twój kod może zawierać znak specjalny, który wygląda jak zwykły znak, zwłaszcza jeśli kopiujesz kod z innego programu. Możesz spróbować zastąpić swój kod następującym kodem. Mogą być też inne miejsca, które wymagają poprawienia.<\\/p> {{suggestion}}\\n\",\"and\":\"i\",\"or\":\"lub\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}},\"no\":{\"translation\":{\"button\":{\"runcode\":\"Kjør kode\",\"runcodetitle\":\"$t(button.runcode) ({{kbd}})\",\"hint\":\"Hint\",\"hint_plural\":\"Hint\",\"hinttitle\":\"$t(button.hint)\",\"hintnext\":\"Neste hint\",\"hintprev\":\"Forrige hint\",\"solution\":\"Løsning\",\"solutiontitle\":\"$t(button.solution)\",\"copyclipboard\":\"Kopier til utklippstavle\",\"startover\":\"Start på nytt\",\"startovertitle\":\"$t(button.startover)\",\"continue\":\"Fortsett\",\"submitanswer\":\"Send inn svar\",\"submitanswertitle\":\"$t(button.submitanswer)\",\"previoustopic\":\"Forrige tema\",\"nexttopic\":\"Neste tema\",\"questionsubmit\":\"$t(button.submitanswer)\",\"questiontryagain\":\"Prøv igjen\"},\"text\":{\"startover\":\"Start på nytt\",\"areyousure\":\"Er du sikker på at du vil starte på nytt? (All fremgang vil bli slettet)\",\"youmustcomplete\":\"Du må fullføre\",\"exercise\":\"oppgave\",\"exercise_plural\":\"oppgaver\",\"inthissection\":\"i denne seksjonen før du fortsetter.\",\"code\":\"kode\",\"enginecap\":\"{{engine}}-$t(text.code)\",\"quiz\":\"Quiz\",\"blank\":\"tomrom\",\"blank_plural\":\"tomrom\",\"exercisecontainsblank\":\"Denne oppgaven inneholder {{count}} $t(text.blank).\",\"pleasereplaceblank\":\"Erstatt {{blank}} med gyldig kode.\",\"unparsable\":\"Dette ser ikke ut til å være gyldig R-kode. Slik R ser det, utgjør ikke teksten en fullstendig kommando. Du kan ha glemt å fylle ut en luke, å fjerne en understrek, å inkludere et komma mellom argumenter, eller å lukke et åpnende <code>&quot;<\\/code>, <code>'<\\/code>, <code>(<\\/code> eller <code>{<\\/code> med et tilsvarende <code>&quot;<\\/code>, <code>'<\\/code>, <code>)<\\/code> eller <code>}<\\/code>.\\n\",\"unparsablequotes\":\"<p>Det ser ut som om R-koden din inneholder spesielt formaterte anførselstegn eller &quot;krøllete&quot; anførselstegn (<code>{{character}}<\\/code>) rundt tekststrenger, noe som gjør koden din ugyldig. R krever at tekstverdier skal være inneholdt i rette anførselstegn (<code>&quot;<\\/code> eller <code>'<\\/code>).<\\/p> {{code}} <p>Dette er et vanlig problem når du kopierer kode fra et annet program som bruker sin egen formatering på tekst.  Du kan prøve å erstatte koden i den linjen med følgende. Kanskje er det også andre steder som må fikses.<\\/p> {{suggestion}}\\n\",\"unparsableunicode\":\"<p>Det ser ut som om R-koden din inneholder et uventet spesialtegn (<code>{{character}}<\\/code>) som gjør koden din ugyldig.<\\/p> {{code}} <p>Noen ganger kan koden din inneholde et spesialtegn som ser ut som et vanlig tegn, spesielt hvis du kopierer og limer inn koden fra et annet program. Prøv å slette spesialtegnet fra koden din og skriv det inn på nytt for hånd.<\\/p>\\n\",\"unparsableunicodesuggestion\":\"<p>Det ser ut som om R-koden din inneholder et uventet spesialtegn (<code>{{character}}<\\/code>) som gjør koden din ugyldig.<\\/p> {{code}} <p>Noen ganger kan koden din inneholde et spesialtegn som ser ut som et vanlig tegn, spesielt hvis du kopierer og limer inn koden fra et annet program. Du kan prøve å erstatte koden i den linjen med følgende. Kanskje er det også andre steder som må fikses.<\\/p> {{suggestion}}\\n\",\"and\":\"og\",\"or\":\"eller\",\"listcomma\":\", \",\"oxfordcomma\":\"\"}}}}}<\/script>"]},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial-format"]},{"type":"character","attributes":{},"value":["0.11.5.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmarkdown/templates/tutorial/resources"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial-format.js"]},{"type":"character","attributes":{},"value":["tutorial-format.css","rstudio-theme.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["navigation"]},{"type":"character","attributes":{},"value":["1.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/navigation-1.1"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tabsets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["highlightjs"]},{"type":"character","attributes":{},"value":["9.12.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["rmd/h/highlightjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["highlight.js"]},{"type":"character","attributes":{},"value":["default.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["rmarkdown"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["2.25"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["jquery"]},{"type":"character","attributes":{},"value":["3.6.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/3.6.0"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquery-3.6.0.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["jquerylib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.1.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["font-awesome"]},{"type":"character","attributes":{},"value":["6.4.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fontawesome"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["css/all.min.css","css/v4-shims.min.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fontawesome"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.2"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bootbox"]},{"type":"character","attributes":{},"value":["5.5.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/bootbox"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["bootbox.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["idb-keyvalue"]},{"type":"character","attributes":{},"value":["3.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/idb-keyval"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["idb-keyval-iife-compat.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["tutorial"]},{"type":"character","attributes":{},"value":["0.11.5.9000"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/tutorial"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tutorial.js"]},{"type":"character","attributes":{},"value":["tutorial.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["ace"]},{"type":"character","attributes":{},"value":["1.10.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/ace"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["ace.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["clipboardjs"]},{"type":"character","attributes":{},"value":["2.0.10"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["lib/clipboardjs"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["clipboard.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["learnr"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.11.5.9000"]}]}]}
+</script>
+<!--/html_preserve-->
+<!--html_preserve-->
+<script type="application/shiny-prerendered" data-context="execution_dependencies">
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","desc","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","munsell","pillar","pkgbuild","pkgconfig","prettyunits","processx","promises","ps","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","0.5.1","1.0.8","3.7.3","2.3.0","3.6.1","2.1-0","1.9.0","4.3.1","1.5.2","5.0.2","4.3.1","1.4.2","0.6.33","1.1.3","0.3.2","0.23","1.0.5","1.1.1","0.5.2","1.0.0","0.1.3","3.4.3","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","1.1.3","0.5.7","1.6.2","1.6.12","0.1.4","1.8.7","1.45","1.3.1","0.11.5.9000","1.0.3","1.9.3","2.0.3","1.11","4.3.1","0.12","0.5.0","1.9.0","1.4.2","2.0.3","1.2.0","3.8.2","1.2.1","1.7.5","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.1","2.25","2.0.3","0.15.0","0.4.7","1.2.1","1.7.5.1","4.3.1","1.7.12","1.5.0","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.4","2.5.2","0.41","1.8-4","2.3.7"]}]}]}
+</script>
+<!--/html_preserve-->
+</div>
+
+</article> <!-- topics -->
+
+<div class="topicsContainer">
+<div class="topicsPositioner">
+<div class="band">
+<div class="bandContent topicsListContainer">
+
+<!-- begin doc-metadata -->
+<div id="doc-metadata">
+<h1 class="title toc-ignore" style="display:none;">Motivating the
+Regression Line of Best Fit</h1>
+</div>
+<!-- end doc-metadata -->
+
+</div> <!-- bandContent.topicsListContainer -->
+</div> <!-- band -->
+</div> <!-- topicsPositioner -->
+</div> <!-- topicsContainer -->
+
+
+</main> <!-- bandContent page -->
+</div> <!-- pageContent band -->
+
+
+
+<!-- Build Tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("section-TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<script>
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+
+</body>
+
+</html>

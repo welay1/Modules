@@ -5,10 +5,13 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+#install.packages("remotes", repos = "https://cloud.r-project.org/")
 library(remotes)
 library(learnr)
 #remotes::install_github("rstudio/learnr", force=TRUE)
 #gradethis::gradethis_setup()
+remotes::install_github("rstudio/gradethis", force =TRUE)
+library(gradethis)
 
 library(tidyverse)
 library(learnr)
@@ -55,6 +58,14 @@ To begin, let's produce a 5-number summary of each variable in the data. The nam
 # produce a 5-number summary of each variable stored in data
 ```
 
+```{r exercise1a-solution, eval=FALSE}
+summary(data)
+```
+
+```{r exercise1a-check}
+grade_this_code()
+```
+
 ```{r exercise1a-hint-1}
 # ---
 
@@ -64,6 +75,10 @@ To begin, let's produce a 5-number summary of each variable in the data. The nam
 ```
 
 ```{r exercise1a-hint-2}
+# ---
+
+# The `summary()` function gives you a 5-number summary on each variable in the dataset."
+
 # ---
 
 # Remember, the dataset you are interested in is the one called `data`. "
@@ -84,6 +99,17 @@ We can also show the distribution by creating a histogram for 'CrewSize' and a b
 
 ```
 
+
+```{r exercise1b-solution, eval=FALSE}
+hist(data$CrewSize)
+boxplot(data$Rooms)
+```
+
+```{r exercise1b-check}
+grade_this_code()
+```
+
+
 ```{r exercise1b-hint-1}
 # ---
 
@@ -97,6 +123,13 @@ boxplot(y$x)
 ```{r exercise1b-hint-2}
 # ---
 
+# For a varible "x" in dataset "y", you would write:
+hist(y$x)
+boxplot(y$x)
+
+# ---
+
+#OPTIONAL EDITS
 # If you want to label your diagram, axes, or even color in your plots for a variable "x" in dataset "y", you can use ggplot:
 
 #Histogram:
@@ -139,9 +172,20 @@ Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis,
 ```{r exercise1c, exercise = TRUE, exercise.lines = 5}
 ggplot(data, aes( ___ , ___ )) + 
   geom_point()+ 
-  labs(x = ___  , y = ___ , 
+  labs(x = "Number of Crew Members", y = "Number of Rooms"), 
     title = "Figure 1. The association between Crew Size and Rooms Cleaned")
 
+```
+
+```{r exercise1c-solution, eval=FALSE}
+ggplot(data, aes(CrewSize, Rooms)) + 
+  geom_point()+ 
+  labs(x = "Number of Crew Members", y = "Number of Rooms" , 
+    title = "Figure 1. The association between Crew Size and Rooms Cleaned")
+```
+
+```{r exercise1c-check}
+grade_this_code()
 ```
 
 ```{r exercise1c-hint-1}
@@ -157,6 +201,14 @@ aes(x=Variable1, y=Variable2)
 ```
 
 ```{r exercise1c-hint-2}
+# ---
+
+# In ggplot, use the aes function to define the variable names for the x and y axes in the following manner:
+
+aes(x=Variable1, y=Variable2) 
+
+# In this example, Variable1 is the x-axis variable and Variable2 is the y-axis variable.
+
 # ---
 
 # Use the 'labs' function to label axes. Provide the desired names in quotes in the following manner:
