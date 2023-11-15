@@ -182,7 +182,7 @@ Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis,
 ```{r exercise1c, exercise = TRUE, exercise.lines = 5}
 ggplot(data, aes( ___ , ___ )) + 
   geom_point()+ 
-  labs(x = "Number of Crew Members", y = "Number of Rooms"), 
+  labs(x = "CrewSize", y = "Rooms"), 
     title = "Figure 1. The association between Crew Size and Rooms Cleaned")
 
 ```
@@ -190,7 +190,7 @@ ggplot(data, aes( ___ , ___ )) +
 ```{r exercise1c-solution, eval=FALSE}
 ggplot(data, aes(CrewSize, Rooms)) + 
   geom_point()+ 
-  labs(x = "Number of Crew Members", y = "Number of Rooms" , 
+  labs(x = "CrewSize", y = "Rooms" , 
     title = "Figure 1. The association between Crew Size and Rooms Cleaned")
 ```
 
@@ -308,7 +308,7 @@ ymeans
 ```
 
 ```{r exercise2b-solution, eval=FALSE}
-ymeans <- tapply(X = ___, INDEX = ___, mean)
+ymeans <- tapply(X = data$Rooms, INDEX = data$CrewSize, mean)
 ymeans 
 ```
 
@@ -349,6 +349,19 @@ ggplot() +
   labs(x = "CrewSize",
        y ="Rooms", 
        title = "Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green") 
+```
+
+```{r exercise2c-solution, eval=FALSE}
+ggplot() + 
+  geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = uniqueX, y = ymeans), colour = "green")+
+  labs(x = "CrewSize",
+       y ="Rooms", 
+       title = "Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green")
+```
+
+```{r exercise2c-check}
+grade_this_code()
 ```
 
 ```{r exercise2c-hint-1}
@@ -396,6 +409,18 @@ diff[___] <- ymeans[___] - ymeans[___]
 mean(diff)
 ```
 
+```{r exercise3a-solution, eval=FALSE}
+diff <- rep(NA, 4)
+for (i in 1:4) {
+diff[i] <- ymeans[i+1] - ymeans[i] 
+}
+mean(diff)
+```
+
+```{r exercise3a-check}
+grade_this_code()
+```
+
 ```{r exercise3a-hint-1}
 # ---
 
@@ -439,6 +464,20 @@ ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+
        y ="Rooms Cleaned", 
        title = "Figure 3. Rooms vs. Crew Size with Regression Line in Red")
 ```
+
+```{r exercise3b-solution, eval=FALSE}
+ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = uniqueX, y = ymeans), colour = "green") +
+  geom_abline(intercept = -1.04 , slope = 3.96 , colour = 'red') + 
+  labs(x = "Crew Size",
+       y ="Rooms Cleaned", 
+       title = "Figure 3. Rooms vs. Crew Size with Regression Line in Red")
+```
+
+```{r exercise3b-check}
+grade_this_code()
+```
+
 
 ```{r exercise3b-hint-1}
 # ---

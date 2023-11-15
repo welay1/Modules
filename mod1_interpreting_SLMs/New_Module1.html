@@ -287,7 +287,7 @@ data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="5" data-pipe="|&gt;">
 <pre class="text"><code>ggplot(data, aes( ___ , ___ )) + 
   geom_point()+ 
-  labs(x = &quot;Number of Crew Members&quot;, y = &quot;Number of Rooms&quot;), 
+  labs(x = &quot;CrewSize&quot;, y = &quot;Rooms&quot;), 
     title = &quot;Figure 1. The association between Crew Size and Rooms Cleaned&quot;)</code></pre>
 <script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
@@ -296,7 +296,7 @@ data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
 <pre class="text"><code>ggplot(data, aes(CrewSize, Rooms)) + 
   geom_point()+ 
-  labs(x = &quot;Number of Crew Members&quot;, y = &quot;Number of Rooms&quot; , 
+  labs(x = &quot;CrewSize&quot;, y = &quot;Rooms&quot; , 
     title = &quot;Figure 1. The association between Crew Size and Rooms Cleaned&quot;)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise1c-hint-1"
@@ -378,7 +378,13 @@ data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="3" data-pipe="|&gt;">
 <pre class="text"><code>uniqueX &lt;- ___
 uniqueX  </code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2a-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>uniqueX &lt;- unique(data$CrewSize)
+uniqueX </code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise2a-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
@@ -417,7 +423,13 @@ data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="4" data-pipe="|&gt;">
 <pre class="text"><code>ymeans &lt;- tapply(X = ___, INDEX = ___, mean)
 ymeans </code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2b-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>ymeans &lt;- tapply(X = data$Rooms, INDEX = data$CrewSize, mean)
+ymeans </code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise2b-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
@@ -455,7 +467,17 @@ data-lines="8" data-pipe="|&gt;">
   labs(x = &quot;CrewSize&quot;,
        y =&quot;Rooms&quot;, 
        title = &quot;Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green&quot;) </code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+</div>
+<div class="tutorial-exercise-support" data-label="exercise2c-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>ggplot() + 
+  geom_point(data = data, aes(x = CrewSize, y = Rooms))+
+  geom_point(aes(x = uniqueX, y = ymeans), colour = &quot;green&quot;)+
+  labs(x = &quot;CrewSize&quot;,
+       y =&quot;Rooms&quot;, 
+       title = &quot;Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green&quot;)</code></pre>
 </div>
 <div class="tutorial-exercise-support" data-label="exercise2c-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
@@ -913,12 +935,12 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1c", global_setup 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
 "set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
-    setup = NULL, chunks = list(list(label = "exercise1c", code = "ggplot(data, aes( ___ , ___ )) + \n  geom_point()+ \n  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), \n    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")\n", 
+    setup = NULL, chunks = list(list(label = "exercise1c", code = "ggplot(data, aes( ___ , ___ )) + \n  geom_point()+ \n  labs(x = \"CrewSize\", y = \"Rooms\"), \n    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")\n", 
         opts = list(label = "\"exercise1c\"", exercise = "TRUE", 
             exercise.lines = "5"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
         label = "exercise1c-check")), solution = structure(c("ggplot(data, aes(CrewSize, Rooms)) + ", 
-    "  geom_point()+ ", "  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\" , ", 
+    "  geom_point()+ ", "  labs(x = \"CrewSize\", y = \"Rooms\" , ", 
     "    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")"
     ), chunk_opts = list(label = "exercise1c-solution", eval = FALSE)), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
@@ -941,8 +963,7 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1c", global_setup 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "exercise1c", exercise = TRUE, exercise.lines = 5, 
         code = c("ggplot(data, aes( ___ , ___ )) + ", "  geom_point()+ ", 
-        "  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), ", 
-        "    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")", 
+        "  labs(x = \"CrewSize\", y = \"Rooms\"), ", "    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")", 
         ""), out.width.px = 624, out.height.px = 384, params.src = "exercise1c, exercise = TRUE, exercise.lines = 5", 
         fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
@@ -1001,12 +1022,14 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2a", global_setup 
     setup = NULL, chunks = list(list(label = "exercise2a", code = "uniqueX <- ___\nuniqueX  ", 
         opts = list(label = "\"exercise2a\"", exercise = "TRUE", 
             exercise.lines = "3"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise2a-check")), solution = structure(c("uniqueX <- unique(data$CrewSize)", 
+    "uniqueX "), chunk_opts = list(label = "exercise2a-solution", 
+        eval = FALSE)), tests = NULL, options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        size = "normalsize", background = "#F7F7F7", strip.white = TRUE, 
+        cache = 0, cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
         fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
@@ -1045,12 +1068,14 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2b", global_setup 
     setup = NULL, chunks = list(list(label = "exercise2b", code = "ymeans <- tapply(X = ___, INDEX = ___, mean)\nymeans ", 
         opts = list(label = "\"exercise2b\"", exercise = "TRUE", 
             exercise.lines = "4"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
-    options = list(eval = FALSE, echo = TRUE, results = "markup", 
-        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
-        comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise2b-check")), solution = structure(c("ymeans <- tapply(X = data$Rooms, INDEX = data$CrewSize, mean)", 
+    "ymeans "), chunk_opts = list(label = "exercise2b-solution", 
+        eval = FALSE)), tests = NULL, options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        size = "normalsize", background = "#F7F7F7", strip.white = TRUE, 
+        cache = 0, cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
         cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
         cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
         fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
@@ -1094,14 +1119,20 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2c", global_setup 
         opts = list(label = "\"exercise2c\"", exercise = "TRUE", 
             exercise.setup = "\"setup_part2\"", exercise.lines = "8"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = NULL, tests = NULL, options = list(
-        eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
-        tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
-        highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
-        strip.white = TRUE, cache = 0, cache.path = "New_Module1_cache/html/", 
-        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
-        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
-        fig.show = "asis", fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
+    check = structure("grade_this_code()", chunk_opts = list(
+        label = "exercise2c-check")), solution = structure(c("ggplot() + ", 
+    "  geom_point(data = data, aes(x = CrewSize, y = Rooms))+", 
+    "  geom_point(aes(x = uniqueX, y = ymeans), colour = \"green\")+", 
+    "  labs(x = \"CrewSize\",", "       y =\"Rooms\", ", "       title = \"Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green\")"
+    ), chunk_opts = list(label = "exercise2c-solution", eval = FALSE)), 
+    tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
+        tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
+        comment = NA, highlight = FALSE, size = "normalsize", 
+        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
+        cache.path = "New_Module1_cache/html/", cache.vars = NULL, 
+        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
+        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
+        fig.align = "default", fig.path = "New_Module1_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 4, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
