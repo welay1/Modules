@@ -109,13 +109,26 @@ if (window.hljs) {
 
 <article class="topics" id="learnr-tutorial-content">
 
+<div id="section-introduction" class="section level2">
+<h2>Introduction</h2>
+<p>In this module, you will practice:</p>
+<ul>
+<li>Making plots like histograms, boxplots, and scatterplots using
+<code>R</code></li>
+<li>Modelling the conditional distribution between an independent <span
+class="math inline">\(X\)</span> and dependent <span
+class="math inline">\(Y\)</span></li>
+<li>Constructing the line of best fit using the Least Squares
+method</li>
+</ul>
+</div>
 <div
 id="section-background-help-your-friend-understand-her-cleaning-business"
 class="section level2">
 <h2>Background: Help your friend understand her cleaning business</h2>
 <p>Consider the following scenario:</p>
 <p>Suppose your friend Nancy started a cleaning company, but the company
-is not profitable yet. Nancy is suspicious that some employees are
+is not profitable yet. Nancy suspects that some employees are
 unproductive. When more employees are working, Nancy expects more rooms
 to be cleaned, but this doesn’t seem to happen. Nancy asks for your help
 to better understand the relationship between the number of people
@@ -123,8 +136,8 @@ working and the number of rooms cleaned over the past year.</p>
 <p>You ask Nancy for records of the number of workers (CrewSize, the X
 variable) and the number of rooms cleaned (Rooms, the Y value) from the
 past year <strong>to test if more workers lead to more cleaned
-rooms.</strong> Unfortunately, <strong>February</strong>, rather than
-the entire year.</p>
+rooms.</strong> Unfortunately, Nancy only has data for
+<strong>February</strong> rather than the entire year.</p>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="check_in" class="tutorial-question panel-body">
 <div id="check_in-answer_container" class="shiny-html-output"></div>
@@ -153,9 +166,10 @@ column named ‘Variable’ from the dataset called ‘data’.</p>
 class="section level3">
 <h3>Part 1.1: Univariate Summaries of the Data:</h3>
 <p>To begin, let’s produce a 5-number summary of each variable in the
-data. The name of the dataset is “CleaningData” and it is loaded for you
-to use. You can type your code into the box below. If you get stuck,
-click the hint button to help you with the code and syntax.</p>
+data using the <code>summary()</code> function. The name of the dataset
+is “CleaningData” and it is loaded for you to use. You can type your
+code into the box below. If you get stuck, click the hint button to
+help.</p>
 <div class="tutorial-exercise" data-label="exercise1a"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="3" data-pipe="|&gt;">
@@ -266,7 +280,7 @@ would be best for plotting these two variables?</p>
 </div>
 <p>Generate a scatterplot using “CrewSize” on the x-axis and “Rooms” on
 the y-axis, ensuring to label the axes and title appropriately. Fill in
-the code gaps with the relevant dataset variables to complete the
+the code blanks with the relevant dataset variables to complete the
 plot.</p>
 <div class="tutorial-exercise" data-label="exercise1c"
 data-completion="1" data-diagnostics="1" data-startover="1"
@@ -303,6 +317,14 @@ data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
 <pre class="text"><code># ---
 
+# In ggplot, use the aes function to define the variable names for the x and y axes in the following manner:
+
+aes(x=Variable1, y=Variable2) 
+
+# In this example, Variable1 is the x-axis variable and Variable2 is the y-axis variable.
+
+# ---
+
 # Use the &#39;labs&#39; function to label axes. Provide the desired names in quotes in the following manner:
 
 labs(x=&quot;Variable Name 1&quot;, y=&quot;Variable Name 2&quot;)
@@ -333,15 +355,16 @@ equation of this line, we will better understand how an increase in
 employees affects the number of rooms cleaned.</p>
 <p>Recall Figure 1 of Part 1.2, where the scatterplot displays discrete
 crew sizes as distinct vertical clusters.</p>
-<p>TODO: insert plot image here.</p>
-<p>Each cluster represents the <strong>conditional distribution</strong>
-of rooms cleaned (<span class="math inline">\(Y\)</span>) for a specific
-crew size (<span class="math inline">\(X\)</span>). We can examine the
-average Y within each distribution.</p>
-<p>A <em>conditional distribution</em> provides insight into the
-relationship between two random variables. It does this by analyzing the
-distribution of one variable, <span class="math inline">\(Y\)</span>,
-for each distinct value of the other variable, <span
+<p><img src="New_Module1_files/figure-html/unnamed-chunk-1-1.png" width="624" /></p>
+<p>Each cluster represents the <strong><mark>conditional
+distribution</mark></strong> of rooms cleaned (<span
+class="math inline">\(Y\)</span>) for a specific crew size (<span
+class="math inline">\(X\)</span>). We can examine the average Y within
+each distribution.</p>
+<p>A conditional distribution provides insight into the relationship
+between two random variables. It does this by analyzing the distribution
+of one variable, <span class="math inline">\(Y\)</span>, for each
+distinct value of the other variable, <span
 class="math inline">\(X\)</span>. Essentially, for every unique value of
 <span class="math inline">\(X\)</span>, we examine the behavior or
 distribution of <span class="math inline">\(Y\)</span>.</p>
@@ -380,11 +403,11 @@ We’ll use these for plotting to understand the data’s trend.</p>
 id="section-part-2.2-mean-of-rooms-at-each-unique-value-of-crewsize"
 class="section level3">
 <h3>Part 2.2 Mean of Rooms at Each Unique Value of CrewSize:</h3>
-<p>We just observed that your friend sent crews of sizes 1 through 5 to
-jobs in February. We’ll calculate the average rooms cleaned for each
-crew size, denoted as <span class="math inline">\(E(Y \mid X =
-x)\)</span>, representing the conditional mean of rooms cleaned for a
-specific crew size.</p>
+<p>We just observed that Nancy sent crews of sizes 1 through 5 to jobs
+in February. We’ll calculate the average rooms cleaned for each crew
+size, denoted as <span class="math inline">\(E(Y \mid X = x)\)</span>,
+representing the conditional mean of rooms cleaned for a specific crew
+size.</p>
 <p>In the next code line, use <code>tapply</code> to compute the mean
 rooms for each CrewSize value. Store the results in <code>ymeans</code>
 and print them. For <code>tapply</code> usage tips, click the hints
@@ -420,8 +443,9 @@ class="section level3">
 1:</h3>
 <p>In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against
 Rooms (y-axis). Now, in this section, we’ll integrate the five
-conditional means that we just obtained.</p>
-<p>Also, let’s color them in green to distinguish them!</p>
+conditional means that we just obtained. We will color the conditional
+means <span style="color:green"><strong>green</strong></span> to
+distinguish them.</p>
 <div class="tutorial-exercise" data-label="exercise2c"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="8" data-pipe="|&gt;">
@@ -554,9 +578,9 @@ data-lines="0" data-pipe="|&gt;">
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
-<p>You might have noticed that the second multiple choice answer above
-allows us to touch on why there is only one line of best fit. In the
-next section, we’ll dive into why that is the case!</p>
+<p>An important aspect of the line of best fit is that it is
+<em>singular</em> and <em>unique.</em> In the next section, we will
+explain why this is true.</p>
 </div>
 </div>
 <div id="section-section-4-constructing-the-line-of-best-fit"
@@ -565,32 +589,33 @@ class="section level2">
 <p>In the previous section, we defined the line of best fit as: <span
 class="math display">\[y = -1.04 + 3.96x.\]</span> This equation
 represents a distinct linear relationship derived from the data. The
-coefficients (-1.04 and 3.96) were determined by finding a line that
-minimizes the cumulative squared deviations between each observed data
-point and its corresponding point on the line.</p>
+coefficients (-1.04 and 3.96) were determined using the <em>Least
+Squares Method</em>, where we find the line that minimizes the
+cumulative squared deviations between each observed data point and its
+corresponding point on the line.</p>
 <p><em>Let’s unpack that a little</em>: For each data point, we can
-compute a ‘residual’, which is the difference between the observed value
-(y) and the value predicted by our line (<span
-class="math inline">\(3.96x - 1.04\)</span>). The squaring part <span
-class="math inline">\((y - (mx + b))^2\)</span> ensures that we account
-for these residuals in a consistent way, whether they are positive or
-negative, making our optimization problem smoother.</p>
-<p>Each of our 100 data points has a difference from our line, like a
-small gap. We square these gaps and then add them all up. This total is
-what we call the <strong>residual sum of squares (RSS)</strong>. The RSS
-is a number that measures the total discrepancy between our data and our
-line of best fit. It’s like a scorecard; <em>the smaller the RSS, the
-better our line fits the data</em>. We aim for the line that gives us
-the smallest RSS because that line fits our data the best. Minimizing
-this RSS yields a <em>unique</em> line that closely follows the data
-points and connects the estimated average rooms cleaned for each crew
-size.</p>
-<p>This process of minimizing the RSS will give a unique line, that sits
+compute a <em>residual</em>, which is the difference between the
+observed value (y) and the value predicted by our line (<span
+class="math inline">\(\hat{y}=3.96x - 1.04\)</span>). The squaring part
+<span class="math inline">\((y - \hat{y})^2\)</span> ensures that we
+account for these residuals in a consistent way, whether they are
+positive or negative, making our optimization problem easier.</p>
+<p>First, we find the distance that each <span
+class="math inline">\(y\)</span> value is from our line. We then square
+these distances and then add them all up. This total is what we call the
+<strong>residual sum of squares (RSS)</strong>. The RSS is a number that
+measures the total discrepancy between our data and the line of best
+fit. It’s like a scorecard; <em>the smaller the RSS, the better our line
+fits the data</em>. We want for the line that gives us the smallest RSS
+because that line fits our data the best. Minimizing this RSS yields a
+<em>unique</em> line that closely follows the data points and connects
+the estimated average rooms cleaned for each crew size.</p>
+<p>This process of minimizing the RSS will give a unique line that sits
 as close as possible to every data point, and happens to connect the
 estimated mean number of rooms at each crew size to each other.</p>
-<p>In the applet below, we’ve dispersed our familiar data for clarity.
-Adjust the slope and intercept as you like. The applet will display the
-corresponding RSS and distance lines.</p>
+<p>In the applet below, we’ve dispersed the cleaning data for visual
+clarity. Adjust the slope and intercept as you like. The applet will
+display the corresponding RSS and distance lines.</p>
 <p><strong>Experiment with various values and observe how the
 line</strong> <span class="math inline">\(y = -1.04 + 3.96x\)</span>
 <strong>yields the smallest RSS.</strong></p>
@@ -613,11 +638,6 @@ original data points.</li>
 <p>We observe that the RSS is indeed minimized when the intercept is
 equal to <span class="math inline">\(-1.04\)</span> and when the slope
 is set to <span class="math inline">\(3.96\)</span>!</p>
-<p>Congratulations! You have successfully completed this learning
-module! Using just the data from February, you can now confidently
-inform your friend about the average increase in the number of rooms
-cleaned for each additional member added to a cleaning crew over the
-past year.</p>
 <div class="panel panel-default tutorial-question-container">
 <div data-label="final_check" class="tutorial-question panel-body">
 <div id="final_check-answer_container" class="shiny-html-output"></div>
@@ -626,6 +646,20 @@ past year.</p>
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
+</div>
+<div id="section-wrap-up" class="section level2">
+<h2>Wrap-Up</h2>
+<p>Congratulations – You have successfully completed this learning
+module! By now, you should be familiar with:</p>
+<ul>
+<li>Making plots like histograms, boxplots, and scatterplots using
+<code>R</code></li>
+<li>Modelling the conditional distribution between an independent <span
+class="math inline">\(X\)</span> and dependent <span
+class="math inline">\(Y\)</span></li>
+<li>Constructing the line of best fit using the Least Squares
+method</li>
+</ul>
 <p>
 <script type="application/shiny-prerendered" data-context="server-start">
 #install.packages("remotes", repos = "https://cloud.r-project.org/")
@@ -640,6 +674,7 @@ library(tidyverse)
 library(learnr)
 
 data <- read.csv("cleaning_sim.csv") %>% rename(CrewSize = Crews)
+set.seed(302)
 
 </script>
  
@@ -665,25 +700,25 @@ session$onSessionEnded(function() {
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "check_in", question = structure("Which of the following is true about analyzing the business based on just one month’s data instead of a full year’s data?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_4b6c773", 
+"character")), answers = list(structure(list(id = "lnr_ans_96deae7", 
     option = "If we looked at a different month of data, we would see the same results as this month.", 
     value = "If we looked at a different month of data, we would see the same results as this month.", 
     label = structure("If we looked at a different month of data, we would see the same results as this month.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Every month’s data (sample) from the year will show variations due to sampling. Thus, it might not align perfectly with the results from the month our friend provided.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b31693", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_feff7b0", 
     option = "Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", 
     value = "Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", 
     label = structure("Even if our sample (one month) is not representative of the population (full year), we can still obtain an unbiased estimate of the association.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If the sample is not representative of the population (full year), then we likely will obtain biased estimates.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7731c17", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2f8501", 
     option = "The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", 
     value = "The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", 
     label = structure("The relationship observed between the crew size and the number of rooms cleaned in this sample might not precisely reflect the yearly trend, but it offers a reasonable estimate.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Although we cannot ascertain the entire population’s data on the number of workers hired and the number of rooms cleaned, we can use the sample that our friend provided (data for one month), to infer about the whole year.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff3f506", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dfcea27", 
     option = "It's not possible to get an estimate of association between Crew size and Rooms cleaned.", 
     value = "It's not possible to get an estimate of association between Crew size and Rooms cleaned.", 
     label = structure("It’s not possible to get an estimate of association between Crew size and Rooms cleaned.", html = TRUE, class = c("html", 
@@ -696,7 +731,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "check_in-answer", question = "check_in"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 3515515.99836296, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 95145102.9556946, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -715,8 +750,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1a", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "exercise1a", code = "# produce a 5-number summary of each variable stored in data", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = NULL, chunks = list(list(label = "exercise1a", code = "# produce a 5-number summary of each variable stored in data", 
         opts = list(label = "\"exercise1a\"", exercise = "TRUE", 
             exercise.lines = "3"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
@@ -761,8 +796,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1b", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "exercise1b", code = "# Create a histogram of CrewSize\n\n\n# Create a boxplot of Rooms\n\n", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = NULL, chunks = list(list(label = "exercise1b", code = "# Create a histogram of CrewSize\n\n\n# Create a boxplot of Rooms\n\n", 
         opts = list(label = "\"exercise1b\"", exercise = "TRUE", 
             exercise.lines = "8"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
@@ -797,25 +832,25 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1b", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "univariate", question = structure("What can be said about the distribution of each variable of interest?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_f606b8f", 
+"character")), answers = list(structure(list(id = "lnr_ans_9402088", 
     option = "The Crew Size appears to be somewhat uniformly distributed.", 
     value = "The Crew Size appears to be somewhat uniformly distributed.", 
     label = structure("The Crew Size appears to be somewhat uniformly distributed.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Since all the bars in the histogram have equal height, this suggests a uniform distribution.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c3f5193", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9fccda", 
     option = "The distribution of Rooms Cleaned is bimodal.", 
     value = "The distribution of Rooms Cleaned is bimodal.", 
     label = structure("The distribution of Rooms Cleaned is bimodal.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("We cannot see modality from a boxplot, so we cannot confirm or deny this with a boxplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_954ced", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4ff762e", 
     option = "50% of crews cleaned between 10 and 15 rooms.", 
     value = "50% of crews cleaned between 10 and 15 rooms.", 
     label = structure("50% of crews cleaned between 10 and 15 rooms.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The range of 10 to 15 rooms represents only 25% of crews, not 50%.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_28542ad", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_53158e8", 
     option = "There is one crew that cleaned an unusual number of rooms.", 
     value = "There is one crew that cleaned an unusual number of rooms.", 
     label = structure("There is one crew that cleaned an unusual number of rooms.", html = TRUE, class = c("html", 
@@ -828,26 +863,26 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "univariate-answer", question = "univariate"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1098032620.48869, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1302761034.39335, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "plot", question = structure("What type of plot should you draw for this sample?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_ff1b62d", 
+"character")), answers = list(structure(list(id = "lnr_ans_2d20030", 
     option = "Histogram", value = "Histogram", label = structure("Histogram", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("A histogram showcases the distribution of a single continuous variable, not the correlation or relationship between two.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_489db7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f4b0a8", 
     option = "Barplot", value = "Barplot", label = structure("Barplot", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("A barplot is designed to represent categorical data with respect to a continuous measure, making it inefective for showing the relationship between two continuous variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_601f708", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_86d640b", 
     option = "Scatterplot", value = "Scatterplot", label = structure("Scatterplot", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("A scatterplot is ideal because it displays individual data points, revealing patterns, correlations, or relationships between two continuous variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7d453fd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_811bdce", 
     option = "Boxplot", value = "Boxplot", label = structure("Boxplot", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("A boxplot primarily visualizes the distribution and spread of a single variable and therefore doesn’t effectively illustrate the relationship between two continuous variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -858,7 +893,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "plot-answer", question = "plot"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 969641176.048476, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1067093771.0031, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -877,8 +912,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1c", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "exercise1c", code = "ggplot(data, aes( ___ , ___ )) + \n  geom_point()+ \n  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), \n    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")\n", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = NULL, chunks = list(list(label = "exercise1c", code = "ggplot(data, aes( ___ , ___ )) + \n  geom_point()+ \n  labs(x = \"Number of Crew Members\", y = \"Number of Rooms\"), \n    title = \"Figure 1. The association between Crew Size and Rooms Cleaned\")\n", 
         opts = list(label = "\"exercise1c\"", exercise = "TRUE", 
             exercise.lines = "5"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
@@ -916,22 +951,22 @@ learnr:::store_exercise_cache(structure(list(label = "exercise1c", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "trend", question = structure("How would you describe the association?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_3d35b6f", 
+"character")), answers = list(structure(list(id = "lnr_ans_47ca125", 
     option = "Linearly decreasing", value = "Linearly decreasing", 
     label = structure("Linearly decreasing", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If the trend were decreasing, the value of Y would decrease as X increases. It’s not the case here!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c051d14", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b6fe25d", 
     option = "Nonlinearly decreasing", value = "Nonlinearly decreasing", 
     label = structure("Nonlinearly decreasing", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The trend is better described as increasing and there appear to be no obvious curves to the trend to make it nonlinear!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_98681a2", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_aa83658", 
     option = "Nonlinearly increasing", value = "Nonlinearly increasing", 
     label = structure("Nonlinearly increasing", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The trend does appear to be increasing but there appear to be no obvious curves to the trend to make it nonlinear!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_49e3f18", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dcbb189", 
     option = "Linearly increasing", value = "Linearly increasing", 
     label = structure("Linearly increasing", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("The trend is inedeed increasing, with Y increasing as X does. The relationship appears linear, with no evident curves indicating otherwise!", html = TRUE, class = c("html", 
@@ -943,7 +978,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "trend-answer", question = "trend"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1623075942.7442, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1968539501.08333, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -962,8 +997,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2a", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "exercise2a", code = "uniqueX <- ___\nuniqueX  ", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = NULL, chunks = list(list(label = "exercise2a", code = "uniqueX <- ___\nuniqueX  ", 
         opts = list(label = "\"exercise2a\"", exercise = "TRUE", 
             exercise.lines = "3"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
@@ -1006,8 +1041,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2b", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "exercise2b", code = "ymeans <- tapply(X = ___, INDEX = ___, mean)\nymeans ", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = NULL, chunks = list(list(label = "exercise2b", code = "ymeans <- tapply(X = ___, INDEX = ___, mean)\nymeans ", 
         opts = list(label = "\"exercise2b\"", exercise = "TRUE", 
             exercise.lines = "4"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = NULL, solution = NULL, tests = NULL, 
@@ -1051,7 +1086,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2c", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
     chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
         opts = list(label = "\"setup_part2\"", include = "F"), 
         engine = "r"), list(label = "exercise2c", code = "ggplot() + \n  geom_point(data = data, aes(x = CrewSize, y = Rooms))+\n  geom_point(aes(x = ___, y = ___), colour = \"green\")+\n  labs(x = \"CrewSize\",\n       y =\"Rooms\", \n       title = \"Scatterplot of Rooms vs. CrewSize with Conditional Means Highlighted in Green\") ", 
@@ -1088,23 +1124,23 @@ learnr:::store_exercise_cache(structure(list(label = "exercise2c", global_setup 
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "trend_mean", question = structure("What do you notice about the relationship between the means as X (CrewSize) increases", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_6b23928", 
+"character")), answers = list(structure(list(id = "lnr_ans_41f2a4f", 
     option = "We see a reasonably strong positive linear association.", 
     value = "We see a reasonably strong positive linear association.", 
     label = structure("We see a reasonably strong positive linear association.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("The association is linear and positive, characterized by its upward trend, absence of curvature, and the close clustering of points, indicating a strong relationship", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9d69d1", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_faf43d3", 
     option = "We see no linear association present.", value = "We see no linear association present.", 
     label = structure("We see no linear association present.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The scatterplot clearly shows an upward trend, with the number of rooms increasing as the crew size increases. Additionally, the green points, representing the conditional means, further emphasize this positive linear trend across different crew sizes. Thus, there is a visible linear association between the two variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e5e32eb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4839827", 
     option = "We see a weak positive linear association.", value = "We see a weak positive linear association.", 
     label = structure("We see a weak positive linear association.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The scatterplot indicates a clear upward trend with the number of rooms consistently increasing as the crew size increases. The green points, representing the conditional means, solidify this trend. The data points are relatively closely clustered around these means, suggesting a strong positive linear relationship between the two variables, not a weak one.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c5b3c5f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_76ca9f8", 
     option = "We see a reasonably strong nonlinear association.", 
     value = "We see a reasonably strong nonlinear association.", 
     label = structure("We see a reasonably strong nonlinear association.", html = TRUE, class = c("html", 
@@ -1117,7 +1153,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "trend_mean-answer", question = "trend_mean"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 47051956.4780897, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1041403184.01506, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -1136,7 +1172,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise3a", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
     chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
         opts = list(label = "\"setup_part2\"", include = "F"), 
         engine = "r"), list(label = "exercise3a", code = "diff <- rep(NA, 4)\nfor (i in 1:4) {\ndiff[___] <- ymeans[___] - ymeans[___] \n}\nmean(diff)", 
@@ -1173,25 +1210,25 @@ learnr:::store_exercise_cache(structure(list(label = "exercise3a", global_setup 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "consecutive_means", 
     question = structure("Well done! You have now found the average difference between the consecutive means of rooms cleaned. What do you think this value represents in the context of the data?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_94e9cfb", 
+    "character")), answers = list(structure(list(id = "lnr_ans_7ba47e7", 
         option = "It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", 
         value = "It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", 
         label = structure("It tells us that one more member in the cleaning crew will always clean 3.85 more rooms.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Not entirely. Remember we have variation in how many rooms get cleaned by a crew of a specific size. So one more member does not always mean exactly this number of rooms more will be cleaned.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_8350bbd", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4714784", 
         option = "The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", 
         value = "The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", 
         label = structure("The rate of change in the average number of rooms cleaned for each additional member on the cleaning crew is 3.85.", html = TRUE, class = c("html", 
         "character")), correct = TRUE, message = structure("Well done! It reminds us of the meaning of a slope of a line.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_395ecf3", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf1534f", 
         option = "It is the average difference in average number of rooms cleaned", 
         value = "It is the average difference in average number of rooms cleaned", 
         label = structure("It is the average difference in average number of rooms cleaned", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("Remember that we want to think about this interpretation in context of the data and how this average difference links to adding a new member on the cleaning crew!", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_798e9e0", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d22d39", 
         option = "I have no idea what this value means", value = "I have no idea what this value means", 
         label = structure("I have no idea what this value means", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("That’s alright. Think about a line equation, y = mx + b, and how we normally talk about the meaning of the value m.", html = TRUE, class = c("html", 
@@ -1204,7 +1241,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "consecutive_means-answer", question = "consecutive_means"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1275162777.40621, options = list()), class = c("learnr_radio", 
+    seed = 1977707629.57906, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1222,7 +1259,8 @@ learnr:::store_exercise_cache(structure(list(label = "exercise3b", global_setup 
 "#gradethis::gradethis_setup()", "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "library(gradethis)", "", "library(tidyverse)", "library(learnr)", 
 "", "data <- read.csv(\"cleaning_sim.csv\") %>% rename(CrewSize = Crews)", 
-""), chunk_opts = list(label = "setup", include = FALSE)), setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
+"set.seed(302)", ""), chunk_opts = list(label = "setup", include = FALSE)), 
+    setup = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
     chunks = list(list(label = "setup_part2", code = "uniqueX <- unique(data$CrewSize)\nymeans <- tapply(data$Rooms, data$CrewSize, mean)", 
         opts = list(label = "\"setup_part2\"", include = "F"), 
         engine = "r"), list(label = "exercise3b", code = "ggplot() + geom_point(data = data, aes(x = CrewSize, y = Rooms))+\n  geom_point(aes(x = uniqueX, y = ymeans), colour = \"green\") +\n  geom_abline(intercept = ___ , slope = ___ , colour = ___) + \n  labs(x = \"Crew Size\",\n       y =\"Rooms Cleaned\", \n       title = \"Figure 3. Rooms vs. Crew Size with Regression Line in Red\")", 
@@ -1261,25 +1299,25 @@ learnr:::store_exercise_cache(structure(list(label = "exercise3b", global_setup 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "connecting_means", 
     question = structure("What do you notice about the line of best fit in this plot?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_6329f5e", 
+    "character")), answers = list(structure(list(id = "lnr_ans_f47dc05", 
         option = "The line of best fit seems to be placed as far as possible from all data points.", 
         value = "The line of best fit seems to be placed as far as possible from all data points.", 
         label = structure("The line of best fit seems to be placed as far as possible from all data points.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("The essence of the ‘best fit’ in linear regression is to minimize the total distance (often squared) between the line and each individual data point. The goal is for the line to represent the general trend of the data as closely as possible.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_27f0ec6", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac2e7fc", 
         option = "The line of best fit could be just one among multiple lines that equally represent the data well.", 
         value = "The line of best fit could be just one among multiple lines that equally represent the data well.", 
         label = structure("The line of best fit could be just one among multiple lines that equally represent the data well.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("the ‘best fit’ in linear regression is mathematically derived to be the optimal line that minimizes the discrepancies between the line and the data points (we will see that in Section 4!). There is only one unique solution for a given set of data.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_af52667", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_f493438", 
         option = "The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", 
         value = "The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", 
         label = structure("The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("The values are not so different. Keep in mind that the line of best fit is determined by a method that seeks to minimize overall error across all data points. This might yield a slope slightly different from a simple rate of change between specific points.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_c6802b6", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_93808cc", 
         option = "The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", 
         value = "The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", 
         label = structure("The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", html = TRUE, class = c("html", 
@@ -1293,7 +1331,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "connecting_means-answer", question = "connecting_means"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 1055102702.00868, options = list()), class = c("learnr_radio", 
+    seed = 556225345.740987, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1339,25 +1377,25 @@ data.frame(slope = input$slopes, intercept = input$intercepts, RSS = crew1 + cre
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "final_check", 
     question = structure("Which of the below statements is most correct about the line of best fit in linear regression, based on what you have seen in this module?", html = TRUE, class = c("html", 
-    "character")), answers = list(structure(list(id = "lnr_ans_9751ea3", 
+    "character")), answers = list(structure(list(id = "lnr_ans_514dd6", 
         option = "Its position minimizes the total distance between itself and all points.", 
         value = "Its position minimizes the total distance between itself and all points.", 
         label = structure("Its position minimizes the total distance between itself and all points.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("This is correct - it minimizes the RSS as seen above. However this is not the most correct statement.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_607fb74", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4abfe00", 
         option = "It represents the average change in Y for a unit increase in X.", 
         value = "It represents the average change in Y for a unit increase in X.", 
         label = structure("It represents the average change in Y for a unit increase in X.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("This is correct - the trend is in the conditional averages. However, this is not the most correct statement.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b77fae9", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_987230a", 
         option = "It says that as X increases, we have a constant linear change in the conditional mean of Y.", 
         value = "It says that as X increases, we have a constant linear change in the conditional mean of Y.", 
         label = structure("It says that as X increases, we have a constant linear change in the conditional mean of Y.", html = TRUE, class = c("html", 
         "character")), correct = FALSE, message = structure("This is correct - the linear trend has a constant slope and the slope measures the change in conditional means. However, this is not the most correct statement.", html = TRUE, class = c("html", 
         "character")), type = "literal"), class = c("tutorial_question_answer", 
-    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c2e0cf", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f197bd", 
         option = "All statements are correct about the line of best fit in linear regression.", 
         value = "All statements are correct about the line of best fit in linear regression.", 
         label = structure("All statements are correct about the line of best fit in linear regression.", html = TRUE, class = c("html", 
@@ -1371,7 +1409,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     "character")), message = NULL, post_message = NULL), ids = list(
         answer = "final_check-answer", question = "final_check"), 
     loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
-    seed = 320372135.350815, options = list()), class = c("learnr_radio", 
+    seed = 1276800135.40544, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 </p>
@@ -1382,7 +1420,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","desc","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","munsell","pillar","pkgbuild","pkgconfig","prettyunits","processx","promises","ps","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","0.5.1","1.0.8","3.7.3","2.3.0","3.6.1","2.1-0","1.9.0","4.3.1","1.5.2","5.0.2","4.3.1","1.4.2","0.6.33","1.1.3","0.3.2","0.23","1.0.5","1.1.1","0.5.2","1.0.0","0.1.3","3.4.3","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","1.1.3","0.5.7","1.6.2","1.6.12","0.1.4","1.8.7","1.45","1.3.1","0.11.5.9000","1.0.3","1.9.3","2.0.3","1.11","4.3.1","0.12","0.5.0","1.9.0","1.4.2","2.0.3","1.2.0","3.8.2","1.2.1","1.7.5","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.1","2.25","2.0.3","0.15.0","0.4.7","1.2.1","1.7.5.1","4.3.1","1.7.12","1.5.0","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.4","2.5.2","0.41","1.8-4","2.3.7"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","desc","digest","dplyr","ellipsis","evaluate","fansi","farver","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","highr","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","labeling","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","munsell","pillar","pkgbuild","pkgconfig","prettyunits","processx","promises","ps","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","0.5.1","1.0.8","3.7.3","2.3.0","3.6.1","2.1-0","1.9.0","4.3.1","1.5.2","5.0.2","4.3.1","1.4.2","0.6.33","1.1.3","0.3.2","0.23","1.0.5","2.1.1","1.1.1","0.5.2","1.0.0","0.1.3","3.4.3","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","0.10","1.1.3","0.5.7","1.6.2","1.6.12","0.1.4","1.8.7","1.45","0.4.3","1.3.1","0.11.5.9000","1.0.3","1.9.3","2.0.3","1.11","4.3.1","0.12","0.5.0","1.9.0","1.4.2","2.0.3","1.2.0","3.8.2","1.2.1","1.7.5","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.1","2.25","2.0.3","0.15.0","0.4.7","1.2.1","1.7.5.1","4.3.1","1.7.12","1.5.0","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.4","2.5.2","0.41","1.8-4","2.3.7"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>

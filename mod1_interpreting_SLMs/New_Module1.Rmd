@@ -268,6 +268,15 @@ uniqueX <- ___
 uniqueX  
 ```
 
+```{r exercise2a-solution, eval=FALSE}
+uniqueX <- unique(data$CrewSize)
+uniqueX 
+```
+
+```{r exercise2a-check}
+grade_this_code()
+```
+
 ```{r exercise2a-hint-1}
 # ---
 
@@ -296,6 +305,15 @@ In the next code line, use `tapply` to compute the mean rooms for each CrewSize 
 ```{r exercise2b, exercise = TRUE, exercise.lines = 4}
 ymeans <- tapply(X = ___, INDEX = ___, mean)
 ymeans 
+```
+
+```{r exercise2b-solution, eval=FALSE}
+ymeans <- tapply(X = ___, INDEX = ___, mean)
+ymeans 
+```
+
+```{r exercise2b-check}
+grade_this_code()
 ```
 
 ```{r exercise2b-hint-1 }
