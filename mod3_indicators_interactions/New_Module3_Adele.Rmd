@@ -229,9 +229,9 @@ The results of a model that uses ratings as a categorical predictor shows us tha
 
 ## Section 2: Indicators as Main Effects
 
-Let's look at how we can use categorical variables as predictors in a linear regression model and what function they perform in these models.
+Let's look at how we can use categorical predictors in a linear regression model.
 
-We will look at the relationship between the Amazon selling price (Y, Amazon_Price) and the Number of Pieces in the set (X, Pieces). But we will also see if there is a difference in this relationship based on the Theme of the set. We have already determined that the variable Theme is qualitative and categorizes the set into a theme of either City, Friends or Duplo. For this section, we will simplify this and look at only 2 themes: City and Friends.
+We will look at the relationship between the Amazon selling price (Y, `Amazon_Price`) and the Number of Pieces in the set (X, `Pieces`). But we will also see if there is a difference in this relationship *based on the Theme of the set*. We have already determined that the variable Theme is qualitative and categorizes the set into a theme of either City, Friends or Duplo. For this section, we will simplify this and look at only 2 themes: City and Friends.
 
 ### Fitting Separate Simple Linear Models
 
@@ -352,7 +352,7 @@ abline(a = intercept_value, b = slope_value, col="black")
 # and these values are stored in your b_city and b_friends
 ```
 
-We did not need to fit two separate simple linear models to be able to estimate the trend between Amazon Price and Number of Pieces for the two Themes. Instead, we can use Theme as another predictor. Remember that we don't want to use the whole dataset because we don't want to include the DUPLO sets, so we will fit the model using the `noDuplo` dataset we created earlier.
+Fitting two separate models can make interpreting the trends easier, but it's not necessary. Instead, we can just include Theme as a predictor in the model. Remember that we don't want to use the whole dataset because we don't want to include the DUPLO sets, so we will fit the model using the `noDuplo` dataset we created earlier.
 
 To fit the same trend, we can simply include the Theme variable as a predictor in the model. When we fit a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2, data=dataset)`. Try this now using Amazon_Price as the response, and Pieces and Theme as the two predictors, on the dataset noDuplo.
 

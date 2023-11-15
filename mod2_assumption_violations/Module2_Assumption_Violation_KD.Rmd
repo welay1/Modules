@@ -1044,3 +1044,12 @@ question("What types of mistakes could we make if we use inferential tools witho
 ```
 
 Hopefully, you see how important it is to verify that assumptions hold in all inferential tools. There are many ways to verify the assumptions and to correct or at minimum improve them if needed. But it is most important to know that statistical tools depend on assumptions and to recognize that if assumptions do not hold, the statistical tool should not be used. 
+
+## Wrap-Up
+
+Congratulations -- You have successfully completed this learning module! By now, you should be familiar with:
+
+
+* How confidence intervals of coefficients are impacted by violated assumptions
+
+* How to set up a simulation in R
