@@ -27,9 +27,13 @@ lego$Theme <- as.factor(lego$Theme)
 
 ## Introduction
 
-In this module, you will: 
+In this module, you will learn: 
 
-* 
+* How to manipulate qualitative data
+
+* How to include qualitative variables in regression models and how to interpret their effects on the response
+
+* How to include interaction terms in a linear model and how to interpet their effects on the response
 
 ## Motivation
 
@@ -950,3 +954,13 @@ lego$Theme == "DUPLO\xae"
 
 In this model, we should now have a separate intercept for City, Friends and DUPLO, and a separate slope for only DUPLO (as we had noted earlier that City and Friends had the same slope). This doesn't change the estimates by much and there is no harm in fitting the model with the extra estimates. But if you are ever interested in cleaning up your model to remove estimates close to 0, this is one option for you.
 
+
+## Wrap-up
+
+Congratulations, you have completed this module! Hopefully by now, you are familiar with:
+
+* Manipulating qualitative data
+
+* Including qualitative variables in regression models and interpreting their effects on the response
+
+* Including interaction terms in a linear model and interpreting their effects on the response
