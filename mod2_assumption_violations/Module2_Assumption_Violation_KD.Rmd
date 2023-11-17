@@ -383,11 +383,11 @@ Let's start by reviewing the definition for the homoscedasticity assumption.
 
 ```{r q3, include=TRUE}
 question("Which of the following statements is guaranteed to satisfy the homoscedasticity assumption?",
-         answer(sprintf("$E(\\epsilon) = 0$"), message = "The homoscedasticity assumption refers to the variance, not the expectation."),
-         answer(sprintf("$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$"), message = sprintf("This is close to the definition of homoscedasticity but only is true if $x$ only takes the values 1 and 2")),
-         answer(sprintf("$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant."), message = sprintf("Since this variance contains the term $x^2$, it varies with different values of $x$ so it is not constant.")),
+         answer(sprintf("$E(\\epsilon) = 0$"), message = "While the expectation of the error term being zero is a critical assumption for an unbiased regression model, it does not address homoscedasticity. Homoscedasticity concerns the spread or variability of the error terms, not their central tendency (expectation)."),
+         answer(sprintf("$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$"), message = sprintf("This statement checks for equal variance at two specific points, which is not sufficient to establish homoscedasticity across the entire range of X. Homoscedasticity requires the variance of the error terms to be constant across all values of the independent variable, not just at individual points.")),
+         answer(sprintf("$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant."), message = sprintf("This condition indicates heteroscedasticity, not homoscedasticity, as the variance of the error term is explicitly modeled as increasing with the square of X. Homoscedasticity is violated here because the variability of the error terms depends on the value of X.")),
          answer(sprintf("$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant."), correct = TRUE,
-         message = "The homoscedasticity assumption states that the error variance should not change with the different values of X."), allow_retry = TRUE
+         message = "This statement encapsulates the essence of homoscedasticity, where the variance of the error terms remains constant across different levels of the independent variable, X."), allow_retry = TRUE
 )
 ```
 
@@ -500,10 +500,10 @@ Now that you've computed the coverage of each coefficient's confidence interval 
 
 ```{r q4, include=TRUE}
 question(sprintf("Compared to what you saw for the coverage of $X_1$ when all assumptions held, which of the following statements is true?"),
-         answer("An error occurs when we try to compute the confidence interval when assumptions don't hold."),
-         answer("The coverage is higher when assumptions don't hold."),
-         answer("The coverage is lower when assumptions don't hold.", correct = TRUE),
-         answer("The coverage is exactly the same when assumptions don't hold.", message = "Since the assumption no longer holds, we would expect to see some change in the coverage. Further, simulations inject randomness so it's very unlikely that the coverage would be exactly the same"),
+         answer(sprintf("An error occurs when we try to compute the confidence interval when assumptions don't hold."), message = "This statement is not entirely accurate. While it's not strictly an 'error' to compute a confidence interval when assumptions are violated, the resulting interval may not have the intended properties, giving us misleading results."),
+         answer(sprintf("The coverage is higher when assumptions don't hold."),message = "In statistical terms, 'coverage' refers to the proportion of time that the confidence intervals contain the true parameter value. If the underlying assumptions are violated, the coverage is not guaranteed to be higher; in fact, it's more likely to be lower or different from the expected level."),
+         answer(sprintf("The coverage is lower when assumptions don't hold."), correct = TRUE, message = "When the statistical assumptions underlying the computation of a confidence interval are not met, the actual coverage rate of the interval can be lower than the nominal coverage rate. This means that the interval will contain the true parameter value less often than expected."),
+         answer(sprintf("The coverage is exactly the same when assumptions don't hold.", message = "Since the assumption no longer holds, we would expect to see some change in the coverage. Further, simulations inject randomness so it's very unlikely that the coverage would be exactly the same"),message = "The validity of a confidence interval is heavily dependent on the underlying assumptions of the statistical model, such as normality, independence, and homoscedasticity. When these assumptions are not met, the actual coverage of the interval is likely to deviate from the nominal coverage."),
          allow_retry = TRUE
 )
 ```
