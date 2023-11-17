@@ -37,7 +37,7 @@ Consider the following scenario:
 
 Suppose your friend Nancy started a cleaning company, but the company is not profitable yet. Nancy suspects that some employees are unproductive. When more employees are working, Nancy expects more rooms to be cleaned, but this doesn’t seem to happen. Nancy asks for your help to better understand the relationship between the number of people working and the number of rooms cleaned over the past year. 
 
-You ask Nancy for records of the number of workers (CrewSize, the X variable) and the number of rooms cleaned (Rooms, the Y value) from the past year **to test if more workers lead to more cleaned rooms.** Unfortunately, Nancy only has data for **February** rather than the entire year. 
+You ask Nancy for records of the number of workers (CrewSize, the X variable) and the number of rooms cleaned (Rooms, the Y value) from the past year **to test if more workers lead to more cleaned rooms**. Unfortunately, Nancy only has data for **February** rather than the entire year. 
 
 ```{r check_in, echo=FALSE}
 question("Which of the following is true about analyzing the business based on just one month's data instead of a full year's data?",
