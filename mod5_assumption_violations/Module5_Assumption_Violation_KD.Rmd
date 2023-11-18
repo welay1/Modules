@@ -1,13 +1,11 @@
 ---
-title: 'STA302 Module 3: Assumption Violation'
+title: 'STA302 Module 2: Assumption Violation'
 output: learnr::tutorial
 #css: "css/learnr_302.css"
 runtime: shiny_prerendered
 ---
 
 ```{r setup, include = FALSE}
-#install.packages("remotes", repos = "https://cloud.r-project.org/")
-
 # These are the packages you will need for this activity
 packages_needed <- c("tidyverse","learnr", "MASS")
 
@@ -27,9 +25,6 @@ remotes::install_github("rstudio/gradethis")
 
 library(tidyverse)
 library(learnr)
-library(remotes)
-library(gradethis)
-
 gradethis::gradethis_setup()
 
 
@@ -101,7 +96,38 @@ model <- lm(___)
 summary(model)
 ```
 
-```{r sim1-solution, eval=FALSE}
+```{r sim1-hint-1}
+# The syntax of the rnorm function (for getting Normal errors) is
+rnorm(sample size, mean, sd)
+
+# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
+```
+
+```{r sim1-hint-2}
+# The syntax of the rnorm function (for getting Normal errors) is
+rnorm(sample size, mean, sd)
+
+# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
+
+# Note that Y is generated using the relationship noted in the instructions: 
+Y = 1 + 2*x1 + 3*x2 + e
+
+```
+
+```{r sim1-hint-3}
+# The syntax of the rnorm function (for getting Normal errors) is
+rnorm(sample size, mean, sd)
+
+# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
+
+# Note that Y is generated using the relationship noted in the instructions: 
+Y = 1 + 2*x1 + 3*x2 + e
+
+# You may find the following function helpful when fitting linear regression: 
+lm(response~predictors)
+```
+
+```{r sim1-solution}
 # Set up parameters of the population errors
 error_mean = 0
 error_sd = 1
@@ -118,62 +144,14 @@ x2<-  rnorm(sample_size, mean = 1, sd = 1)
 y <- 1 + 2*x1 + 3*x2 + e
 
 #Fit a linear regression model and summarize the output
-model <- lm(y ~ x1 + x2)
+model <- lm(y~x1+x2)
 summary(model)
+
 ```
 
-```{r sim1-check}
-grade_this_code()
+```{r sim1-code-check}
+grade_code()
 ```
-
-```{r sim1-hint-1}
-# ---
-
-# The syntax of the rnorm function (for getting Normal errors) is
-rnorm(sample size, mean, sd)
-
-# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
-
-# ---
-```
-
-```{r sim1-hint-2}
-# ---
-
-# Note that Y is generated using the relationship noted in the instructions: 
-Y = 1 + 2*x1 + 3*x2 + e
-
-# ---
-
-# The syntax of the rnorm function (for getting Normal errors) is
-rnorm(sample size, mean, sd)
-
-# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
-
-# ---
-```
-
-```{r sim1-hint-3}
-# ---
-
-# You may find the following function helpful when fitting linear regression: 
-lm(response~predictors)
-
-# ---
-
-# Note that Y is generated using the relationship noted in the instructions: 
-Y = 1 + 2*x1 + 3*x2 + e
-
-# ---
-
-# The syntax of the rnorm function (for getting Normal errors) is
-rnorm(sample size, mean, sd)
-
-# It's a good idea to use the names we gave to the parameters in the first lines of the code (see "set up parameters...")
-
-# ---
-```
-
 
 ```{r q1, include=TRUE}
 question("Based on the summary for your model, which of the following statements is correct?",
@@ -224,7 +202,56 @@ for (i in 1:____){
 }
 ```
 
-```{r confint1-solution, eval=FALSE}
+
+```{r confint1-hint-1}
+# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
+
+num_runs = 2000
+
+for(i in 1:num_runs){
+  
+}
+```
+
+```{r confint1-hint-2}
+
+# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
+
+num_runs = 2000
+
+for(i in 1:num_runs){
+  
+}
+
+# The following hint might be helpful if you are stuck on nrow and ncol:
+
+# Number of rows (nrow) is the number of times the simulation is repeated
+
+# Number of columns (ncol) is how many values we need to store to represent a confidence interval 
+```
+
+```{r confint1-hint-3}
+# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
+
+num_runs = 2000
+
+for(i in 1:num_runs){
+  
+}
+
+# The following hint might be helpful if you are stuck on nrow and ncol:
+
+# Number of rows (nrow) is the number of times the simulation is repeated
+
+# Number of columns (ncol) is how many values we need to store to represent a confidence interval 
+
+# The following command can be used to extract a confidence interval of a model
+confint(model)
+# and it will give us 2 values in each row, with as many rows as coefficients
+```
+
+
+```{r confint1-solution}
 # set up the parameters like before
 error_mean = 0
 error_sd = 1
@@ -247,71 +274,13 @@ for (i in 1:num_runs){
   model <- lm(y ~ x1 + x2)
   Beta0CI[i,] <- confint(model)[1,]
   Beta1CI[i,] <- confint(model)[2,]
-  Beta2CI[i,] <- confint(model)[3,]
+  Beta2CI[i,] <- confint(model)[3]
 }
 ```
 
 
-```{r confint1-check}
-grade_this_code()
-```
-
-
-
-```{r confint1-hint-1}
-# ---
-
-# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
-num_runs = 2000
-for(i in 1:num_runs){
-}
-
-# ---
-```
-
-```{r confint1-hint-2}
-# ---
-
-# The following hint might be helpful if you are stuck on nrow and ncol:
-
-# Number of rows (nrow) is the number of times the simulation is repeated
-
-# Number of columns (ncol) is how many values we need to store to represent a confidence interval 
-
-# ---
-
-# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
-num_runs = 2000
-for(i in 1:num_runs){
-}
-
-# ---
-
-```
-
-```{r confint1-hint-3}
-# ---
-
-# The following command can be used to extract a confidence interval of a model
-confint(model)
-# and it will give us 2 values in each row, with as many rows as coefficients
-
-# ---
-
-# The following hint might be helpful if you are stuck on nrow and ncol:
-
-# Number of rows (nrow) is the number of times the simulation is repeated
-
-# Number of columns (ncol) is how many values we need to store to represent a confidence interval 
-
-# ---
-
-# We gave the number of samples a name, num_runs. You can call this in other parts of the code:
-num_runs = 2000
-for(i in 1:num_runs){
-}
-
-# ---
+```{r confint-code-check}
+grade_code()
 ```
 
 
@@ -320,7 +289,7 @@ for(i in 1:num_runs){
 As a reminder, coverage here refers to the **proportion of confidence intervals based on samples from this population that contain the true value of the coefficient.** If we simulate many 95% confidence intervals from a population, the coverage should be about 95% if all assumptions are met. If we get a percentage very different from our confidence level, that is a clue that assumptions may be violated. 
 
 By taking the 2000 samples from this population and computing confidence intervals each time, we can check if our 95\% confidence intervals actually capture the true value of the coefficient 95\% of the time. So for a set of confidence intervals $[a_1, b_1], [a_2, b_2], [a_3, b_3], ... , [a_{2000}, b_{2000}]$, we find the coverage by 
-$$\frac{\sum_{i=1}^{2000}1_{\{\beta \in [a_i, b_i]\}}}{2000}$$, where $1_{{\beta...}}$ is an indicator function taking $1$ if $\beta$ is in the interval, and $0$ otherwise. 
+$$\frac{\sum_{i=1}^{2000}1_{\{\beta \in [a_i, b_i]\}}}{2000}$$, where $1_{\{\beta...}}$ is an indicator function taking $1$ if $\beta$ is in the interval, and $0$ otherwise. 
 
 To code this process, we can break it up into four steps:
 
@@ -364,28 +333,10 @@ print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/
 
 # use the same template as aboce to finish the next two lines
 print(paste0("Coverage for Slope X1: ", sum(___[,1] <=2 & ___[,2] >=2)/num_runs))
-print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=___ & Beta2CI[,2] >=___)/num_runs))
+print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=___ & Beta2CI[,2] >___)/num_runs))
 ```
-
-```{r confint1_1-solution, eval=FALSE}
-# This is how we compute the coverage for the intercept:
-print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))
-
-# use the same template as above to finish the next two lines
-print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))
-print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))
-```
-
-
-```{r confint1_1-check}
-grade_this_code()
-```
-
-
 
 ```{r confint1_1-hint-1}
-# ---
-
 # To get the coverage of the intervals, remember that we are checking:
 
 # 1. if the lower value of our interval is less than the true value of the parameter, for example
@@ -397,61 +348,19 @@ sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)
 # 4. and lastly divide by the number of samples we collected to get a proportion
 sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs
 
-# ---
-
 ```
 
 ```{r confint1_1-hint-2}
-# ---
-
 # Remember what we called the objects that store our confidence intervals:
 Beta0CI
 Beta1CI
 Beta2CI
 # each one has 2000 rows of information and 2 columns
-
-# ---
-
-# To get the coverage of the intervals, remember that we are checking:
-
-# 1. if the lower value of our interval is less than the true value of the parameter, for example
-Beta0CI[,1] <=1 
-# 2. AND (&) if it's also true that the upper value of our interval is greater than the true value of the parameter (this is equivalent to then asking is the truth in my interval), for example
-Beta0CI[,2]
-# 3. then we sum up how many times the interval contains the truth
-sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)
-# 4. and lastly divide by the number of samples we collected to get a proportion
-sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs
-
-# ---
 ```
 
 ```{r confint1_1-hint-3}
 # The true values of the parameters were used to get the response as
 y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
-
-# Remember what we called the objects that store our confidence intervals:
-Beta0CI
-Beta1CI
-Beta2CI
-# each one has 2000 rows of information and 2 columns
-
-# ---
-
-# To get the coverage of the intervals, remember that we are checking:
-
-# 1. if the lower value of our interval is less than the true value of the parameter, for example
-Beta0CI[,1] <=1 
-# 2. AND (&) if it's also true that the upper value of our interval is greater than the true value of the parameter (this is equivalent to then asking is the truth in my interval), for example
-Beta0CI[,2]
-# 3. then we sum up how many times the interval contains the truth
-sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)
-# 4. and lastly divide by the number of samples we collected to get a proportion
-sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs
-
-# ---
 ```
 
 
@@ -474,11 +383,11 @@ Let's start by reviewing the definition for the homoscedasticity assumption.
 
 ```{r q3, include=TRUE}
 question("Which of the following statements is guaranteed to satisfy the homoscedasticity assumption?",
-         answer(sprintf("$E(\\epsilon) = 0$"), message = "The homoscedasticity assumption refers to the variance, not the expectation."),
-         answer(sprintf("$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$"), message = sprintf("This is close to the definition of homoscedasticity but only is true if $x$ only takes the values 1 and 2")),
-         answer(sprintf("$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant."), message = sprintf("Since this variance contains the term $x^2$, it varies with different values of $x$ so it is not constant.")),
+         answer(sprintf("$E(\\epsilon) = 0$"), message = "While the expectation of the error term being zero is a critical assumption for an unbiased regression model, it does not address homoscedasticity. Homoscedasticity concerns the spread or variability of the error terms, not their central tendency (expectation)."),
+         answer(sprintf("$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$"), message = sprintf("This statement checks for equal variance at two specific points, which is not sufficient to establish homoscedasticity across the entire range of X. Homoscedasticity requires the variance of the error terms to be constant across all values of the independent variable, not just at individual points.")),
+         answer(sprintf("$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant."), message = sprintf("This condition indicates heteroscedasticity, not homoscedasticity, as the variance of the error term is explicitly modeled as increasing with the square of X. Homoscedasticity is violated here because the variability of the error terms depends on the value of X.")),
          answer(sprintf("$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant."), correct = TRUE,
-         message = "The homoscedasticity assumption states that the error variance should not change with the different values of X."), allow_retry = TRUE
+         message = "This statement encapsulates the essence of homoscedasticity, where the variance of the error terms remains constant across different levels of the independent variable, X."), allow_retry = TRUE
 )
 ```
 
@@ -518,49 +427,10 @@ for (i in 1:num_runs){
 }
 ```
 
-
-```{r confint2-solution, eval=FALSE}
-# Set up parameters
-error_mean = 0
-num_runs = 2000
-sample_size = 50
-
-# Initialize how you will store your results
-# Each row of the matrix represents 1 simulation loop
-Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-# repeat the commands num_run times
-for (i in 1:num_runs){
-  # sample the predictors
-  x1<-  rnorm(sample_size, mean = 0, sd = 5)
-  x2<-  rnorm(sample_size, mean = 1, sd = 1)
-  # sample the errors
-  # Let's break constant variance by making it depend on the value of x1
-  e <- rnorm(sample_size, mean = error_mean, sd= abs(x1))
-  # sample the responses
-  y <- 1 + 2*x1 + 3*x2 + e
-  # Fit the model and compute the confidence interval
-  model <- lm(y ~ x1 + x2)
-  # Store the results so you won't lose it when we run the next run
-  Beta0CI[i,] <- confint(model)[1,]
-  Beta1CI[i,] <- confint(model)[2,]
-  Beta2CI[i,] <- confint(model)[3,]
-}
-```
-
-
-```{r confint2-check}
-grade_this_code()
-```
-
 ```{r confint2-hint-1}
-# ---
-
 # to create non-constant variance, set
 sd = abs(x1)
 # in the sampling of the errors on line 17
-
-# ---
 ```
 
 Now that you have your 2000 samples from the population, have fit a linear model to each one, and computed the confidence intervals for each coefficient, we can look at whether the coverage of each confidence interval is changed due to the violation of constant variance. Fill in the blanks below to complete the coverage calculation for the CI of the slope of $X_1$ and $X_2$. 
@@ -606,73 +476,23 @@ print(paste0("Coverage for Slope X1: ", sum(___[,1] <= ___ & ___[,2] >= ___)/num
 print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,___] <= ___ & Beta2CI[,___] >= ___)/num_runs))
 ```
 
-```{r confint2_1-solution, eval=FALSE}
-# Here is how the coverage is checked for the intercept CI
-
-print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))
-
-# fill in the coverage for the two slopes:
-print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <= 2 & Beta1CI[,2] >= 2)/num_runs))
-print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <= 3 & Beta2CI[,2] >= 3)/num_runs))
-```
-
-
-```{r confint2_1-check}
-grade_this_code()
-```
-
-
 ```{r confint2_1-hint-1}
-# --- 
-
 # Remember what we called the objects that store our confidence intervals:
 Beta0CI
 Beta1CI
 Beta2CI
 # each one has 2000 rows of information and 2 columns
-
-# --- 
 ```
 
 ```{r confint2_1-hint-2}
-# --- 
-
 # Remember that each storage object for the confidence intervals has
     # 2000 rows and 2 columns with lower bound in column 1 and upper in column 2
 Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-# --- 
-
-# Remember what we called the objects that store our confidence intervals:
-Beta0CI
-Beta1CI
-Beta2CI
-# each one has 2000 rows of information and 2 columns
-
-# --- 
 ```
 
 ```{r confint2_1-hint-3}
-# ---
-
 # The true values of the parameters were used to get the response as
 y <- 1 + 2*x1 + 3*x2 + e
-
-# --- 
-
-# Remember that each storage object for the confidence intervals has
-    # 2000 rows and 2 columns with lower bound in column 1 and upper in column 2
-Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-# --- 
-
-# Remember what we called the objects that store our confidence intervals:
-Beta0CI
-Beta1CI
-Beta2CI
-# each one has 2000 rows of information and 2 columns
-
-# --- 
 ```
 
 
@@ -680,10 +500,10 @@ Now that you've computed the coverage of each coefficient's confidence interval 
 
 ```{r q4, include=TRUE}
 question(sprintf("Compared to what you saw for the coverage of $X_1$ when all assumptions held, which of the following statements is true?"),
-         answer("An error occurs when we try to compute the confidence interval when assumptions don't hold."),
-         answer("The coverage is higher when assumptions don't hold."),
-         answer("The coverage is lower when assumptions don't hold.", correct = TRUE),
-         answer("The coverage is exactly the same when assumptions don't hold.", message = "Since the assumption no longer holds, we would expect to see some change in the coverage. Further, simulations inject randomness so it's very unlikely that the coverage would be exactly the same"),
+         answer(sprintf("An error occurs when we try to compute the confidence interval when assumptions don't hold."), message = "This statement is not entirely accurate. While it's not strictly an 'error' to compute a confidence interval when assumptions are violated, the resulting interval may not have the intended properties, giving us misleading results."),
+         answer(sprintf("The coverage is higher when assumptions don't hold."),message = "In statistical terms, 'coverage' refers to the proportion of time that the confidence intervals contain the true parameter value. If the underlying assumptions are violated, the coverage is not guaranteed to be higher; in fact, it's more likely to be lower or different from the expected level."),
+         answer(sprintf("The coverage is lower when assumptions don't hold."), correct = TRUE, message = "When the statistical assumptions underlying the computation of a confidence interval are not met, the actual coverage rate of the interval can be lower than the nominal coverage rate. This means that the interval will contain the true parameter value less often than expected."),
+         answer(sprintf("The coverage is exactly the same when assumptions don't hold.", message = "Since the assumption no longer holds, we would expect to see some change in the coverage. Further, simulations inject randomness so it's very unlikely that the coverage would be exactly the same"),message = "The validity of a confidence interval is heavily dependent on the underlying assumptions of the statistical model, such as normality, independence, and homoscedasticity. When these assumptions are not met, the actual coverage of the interval is likely to deviate from the nominal coverage."),
          allow_retry = TRUE
 )
 ```
@@ -697,7 +517,7 @@ Let's start by reviewing the definition for the linearity assumption.
 
 ```{r q5, include=TRUE}
 question("Which ONE of the following statements regarding the linearity assumption is incorrect?",
-         answer(sprintf("The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$."), correct = TRUE, message="While it can happen that X is not related to the conditional mean of Y, the linearity assumption does not state that this must be true."),
+         answer(sprintf("The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$."), correct = TRUE, message="This is the correct answer because it inaccurately reflects the linearity assumption. The linearity assumption actually posits that the conditional mean of Y given X is a linear function of X. This incorrect statement suggests a lack of relationship between X and Y, which is contrary to the assumption."),
          answer(sprintf("The linearity assumption says the conditional mean of  $Y |X = x$ is linear with respect to $X$. "), message="One phrasing of the linearity assumption is exactly this, that X is related to the conditional mean of Y in a linear fashion through the coefficients."),
          answer("The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", message="This is an alternative phrasing of the linearity assumption, called the mean zero assumption, and is equivalent to option B through properties of linear combinations of Normal random variables."),
          answer("The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", message="This is another alternative phrasing of the linearity assumption, which says that the fitted model is the true one too, and therefore is not missing any predictors, does not have any predictors that are not needed, and all predictors are in the correct format (e.g. none need to be squared to be the true relationship)."),
@@ -721,7 +541,7 @@ First, we will violate the assumption by omitting a predictor when we fit the mo
 
 To violate the assumption, we will only use $X_1$ when we fit the model. Then we can compute the estimated coverage as we did before. We will also store the estimated coefficients from each loop in our simulation so that we can compute the average $\beta$ from all 2000 samples.
 
-First, set up the simulation with a true relationship of $y = 1 + 2*X_1 + 3*X_2 + e$ but a fitted linear relationship of $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_2$.
+First, set up the simulation with a true relationship of $y = 1 + 2*X_2 + 3*X_3 + e$ but a fitted linear relationship of $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 x_2$.
 
 ```{r linearity1, exercise = TRUE, exercise.lines=26}
 # Set up parameters
@@ -749,78 +569,20 @@ for (i in 1:num_runs){
 
 ```
 
-```{r linearity1-solution, eval=FALSE}
-# Set up parameters
-error_mean = 0
-num_runs = 2000
-sample_size = 50
-error_sd = 1
-betas <- matrix(NA, nrow=num_runs, ncol=2)
-Beta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-for (i in 1:num_runs){
-  x1<-  rnorm(sample_size, mean = 1, sd = 5)
-  x2<-  rnorm(sample_size, mean = 1, sd = 1)
-  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)
-  # add the true population relationship here
-  y <- 1 + 2*x1 + 3*x2 +e
-  #Let's break the linearity assumption by making it only depends on the value of x2
-  model <- lm(y~x2)
-  #Store the coefficients of the model in matrix betas
-  betas[i,] <- as.numeric(coef(model))
-  # Store the confidence intervals
-  Beta0CI[i,] <- confint(model)[1,]
-  Beta1CI[i,] <- confint(model)[2,]
-}
-```
-
-
-```{r linearity1-check}
-grade_this_code()
-```
-
-
 ```{r linearity1-hint-1}
-# ---
-
 # remember that the true relationship is not changing and is
 y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
 ```
 
 ```{r linearity1-hint-2}
-# ---
-
 # the model we fit using lm contains the violation and should only have one predictor:
 lm(y ~ x2)
-
-# ---
-
-# remember that the true relationship is not changing and is
-y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
 ```
 
 ```{r linearity1-hint-3}
-# ---
-
 # The following command can be used to obtain the coefficients of a model
 coef(model)
 # which will only give you the estimated coefficients from the model
-
-# ---
-
-# the model we fit using lm contains the violation and should only have one predictor:
-lm(y ~ x2)
-
-# ---
-
-# remember that the true relationship is not changing and is
-y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
 ```
 
 
@@ -868,46 +630,17 @@ print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/
 print(paste0("Coverage for Slope X2: ", sum(___[,___] <= 3 & ___[,___] >= 3)/___))
 ```
 
-```{r confint3_1-solution, eval=FALSE}
-# Here is how the coverage is checked for the intercept CI
-
-print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))
-
-# Fill in the gaps for the coverage of the slope of X2
-print(paste0("Coverage for Slope X2: ", sum(Beta1CI[,1] <= 3 & Beta1CI[,2] >= 3)/num_runs))
-
-```
-
-```{r confint3_1-check}
-grade_this_code()
-```
-
 ```{r confint3_1-hint-1}
-# ---
-
 # Remember what we called the objects that store our confidence intervals:
 Beta0CI
 Beta1CI
 # each one has 2000 rows of information and 2 columns
-
-# ---
 ```
 
 ```{r confint3_1-hint-2}
-# ---
-
 # Remember that each storage object for the confidence intervals has
     # 2000 rows and 2 columns with lower bound in column 1 and upper in column 2
 Beta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-# ---
-
-# Remember what we called the objects that store our confidence intervals:
-Beta0CI
-Beta1CI
-# each one has 2000 rows of information and 2 columns
-
-# ---
 ```
 
 ```{r q6, include=TRUE}
@@ -927,24 +660,10 @@ print(paste0("Average value of the estimated intercept: ", mean(___)))
 print(paste0("Average value of the estimated slope: ", mean(___)))
 ```
 
-```{r bias1-solution}
-# take the mean() of each COLUMN of our matrix of betas
-print(paste0("Average value of the estimated intercept: ", mean(betas[1])))
-print(paste0("Average value of the estimated slope: ", mean(betas[2])))
-```
-
-```{r bias1-check}
-grade_this_code()
-```
-
 ```{r bias1-hint-1}
-# ---
-
 # remember that we stored our estimated coefficients in
 betas
 # where column 1 stored all the intercepts and column 2 all the slopes
-
-# ---
 ```
 
 ```{r q7, include=TRUE}
@@ -989,76 +708,19 @@ print(paste0("Average value of the estimated slope of X1: ", mean(betas[,2])))
 print(paste0("Average value of the estimated slope of X2: ", mean(betas[,3])))
 ```
 
-```{r linearity2-solution, eval=FALSE}
-# Set up parameters
-error_mean = 0
-num_runs = 2000
-sample_size = 50
-error_sd = 1
-betas <- matrix(NA, nrow=num_runs, ncol=3)
-
-for (i in 1:num_runs){
-  x1<-  rnorm(sample_size, mean = 1, sd = 5)
-  x2<-  rnorm(sample_size, mean = 1, sd = 1)
-  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)
-  # Break the linearity assumption by squaring each predictor
-  y <- 1 + 2*x1**2 + 3*x2**2 + e
-  # fit a model as we have previously assuming that linearity holds
-  model <- lm(y~x1 + x2)
-  # Store the coefficients of the model in matrix betas
-  betas[i,] <- as.numeric(coef(model))
-}
-
-# Print the mean of the estimated coefficients
-print(paste0("Average value of the estimated intercept: ", mean(betas[,1])))
-print(paste0("Average value of the estimated slope of X1: ", mean(betas[,2])))
-print(paste0("Average value of the estimated slope of X2: ", mean(betas[,3])))
-```
-
-```{r linearity2-check}
-grade_this_code()
-```
-
 ```{r linearity2-hint-1}
-# ---
-
 # we want to square the predictors in the true relationship like below
 y <- 1 + 2*x1**2 + 3*x2**2 + e
-
-# ---
 ```
 
 ```{r linearity2-hint-2}
-# ---
-
 # the fitted model would assume that the true relationship is
 y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
-
-# we want to square the predictors in the true relationship like below
-y <- 1 + 2*x1**2 + 3*x2**2 + e
-
-# ---
 ```
 
 ```{r linearity2-hint-3}
-# ---
-
 # we can extract the estimated coefficients using
 coef(model)
-
-# ---
-
-# the fitted model would assume that the true relationship is
-y <- 1 + 2*x1 + 3*x2 + e
-
-# ---
-
-# we want to square the predictors in the true relationship like below
-y <- 1 + 2*x1**2 + 3*x2**2 + e
-
-# ---
 ```
 
 
@@ -1119,83 +781,21 @@ print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <=__ & Beta1CI[,2] >=__)
 print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=__ & Beta2CI[,2] >=__)/num_runs))
 ```
 
-```{r corr1-solution, eval=FALSE}
-# Set up parameters
-num_runs = 2000
-sample_size = 100
-# setup storage
-Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)
-
-for(i in 1:num_runs){
-  # generate the sample
-  x1<- rnorm(sample_size, mean = 1, sd = 5)
-  x2<- rnorm(sample_size, mean = 1, sd = 1)
-  e <- rnorm(sample_size, mean = 0, sd = 1)
-  y <- 1+2*x1+3*x2+e
-  # fit the model
-  model <- lm(y~x1+x2)
-  # store each confidence interval
-  Beta0CI[i,] <- confint(model)[1,]
-  Beta1CI[i,] <- confint(model)[2,]
-  Beta2CI[i,] <- confint(model)[3,]
-}
-
-# compute the coverage of the confidence intervals
-print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))
-print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))
-print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))
-
-```
-
-```{r corr1-check}
-grade_this_code()
-```
-
 ```{r corr1-hint-1}
-# ---
-
 # Remember that we are generating a sample of Normal errors with mean 0 and sd 1.
 # we can use the same code as for generating the predictors, just with different values, e.g.
 x2<- rnorm(sample_size, mean = 1, sd = 1)
-
-# ---
 ```
 
 ```{r corr1-hint-2}
-# ---
-
 # remember that we had the following parameters set up in previous sections
 error_mean = 0
 error_sd = 1
-
-# ---
-
-# Remember that we are generating a sample of Normal errors with mean 0 and sd 1.
-# we can use the same code as for generating the predictors, just with different values, e.g.
-x2<- rnorm(sample_size, mean = 1, sd = 1)
-
-# ---
 ```
 
 ```{r corr1-hint-3}
-# ---
-
 # our true relationship with the true intercept, slope of x1 and slope of x2 is
 y <- 1+2*x1+3*x2+e
-
-# ---
-
-# remember that we had the following parameters set up in previous sections
-error_mean = 0
-error_sd = 1
-
-# ---
-
-# Remember that we are generating a sample of Normal errors with mean 0 and sd 1.
-# we can use the same code as for generating the predictors, just with different values, e.g.
-x2<- rnorm(sample_size, mean = 1, sd = 1)
-
-# ---
 ```
 
 
@@ -1276,94 +876,24 @@ print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/n
 print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))
 ```
 
-```{r corr2-solution, eval=FALSE}
-# Set up parameters
-num_runs = 5000
-sample_size = 100
-# set up the storage
-Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)
-# Build the covariance matrix by row
-row1 <- c(1, 0.75, 0.5, 0.25)
-row2 <- c(0.75, 1, 0.75, 0.5)
-row3 <- c(0.5, 0.75, 1, 0.75)
-row4 <- c(0.25, 0.5, 0.75, 1)
-# Create covariance matrix such that all errors corresponding to unique values of x1 will be correlated
-Sigma = matrix(rbind(row1, row2, row3, row4), nrow=4, ncol=4)
-library(MASS)
-for(i in 1:num_runs){
-  x1<-  rnorm(sample_size, mean = 1, sd = 5)
-  x2<-  rnorm(sample_size, mean = 1, sd = 1)
-  e <- as.vector(mvrnorm(n=25, mu = rep(0, times=4), Sigma = matrix(rbind(row1, row2, row3, row4), nrow=4, ncol=4)))
-  y <- 1+2*x1+3*x2+e
-  model <- lm(y~x1+x2)
-  Beta0CI[i,] <- confint(model)[1,]
-  Beta1CI[i,] <- confint(model)[2,]
-  Beta2CI[i,] <- confint(model)[3,]
-}
-  
-# compute the coverage of the confidence intervals
-print(paste0("Coverage for Intercept: ", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))
-print(paste0("Coverage for Slope X1: ", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))
-print(paste0("Coverage for Slope X2: ", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))
-```
-
-```{r corr2-check}
-grade_this_code()
-```
-
 ```{r corr2-hint-1}
-# ---
-
 # the covariance matrix should have diagonal elements equal to 1
 row1 <- c(1, 0.75, 0.5, 0.25)
 row2 <- c(0.75, 1, 0.75, 0.5)
 row3 <- c(0.5, 0.75, 1, 0.75)
 row4 <- c(0.25, 0.5, 0.75, 1)
-
-# ---
 ```
 
 ```{r corr2-hint-2}
-# ---
-
 # the mean we want for the errors is 0 and since we generate 4 errors at once, we want to repeat this value 4 times.
 # to repeat something many times we use the code
 rep(0, times=4)
 # which repeats the value 0 four times.
-
-# ---
-
-# the covariance matrix should have diagonal elements equal to 1
-row1 <- c(1, 0.75, 0.5, 0.25)
-row2 <- c(0.75, 1, 0.75, 0.5)
-row3 <- c(0.5, 0.75, 1, 0.75)
-row4 <- c(0.25, 0.5, 0.75, 1)
-
-# ---
 ```
 
 ```{r corr2-hint-3}
-# ---
-
 # see line 12 in the code chunk for the label we gave to our covariance matrix:
 Sigma = matrix(rbind(row1, row2, row3, row4), nrow=4, ncol=4)
-
-# ---
-
-# the mean we want for the errors is 0 and since we generate 4 errors at once, we want to repeat this value 4 times.
-# to repeat something many times we use the code
-rep(0, times=4)
-# which repeats the value 0 four times.
-
-# ---
-
-# the covariance matrix should have diagonal elements equal to 1
-row1 <- c(1, 0.75, 0.5, 0.25)
-row2 <- c(0.75, 1, 0.75, 0.5)
-row3 <- c(0.5, 0.75, 1, 0.75)
-row4 <- c(0.25, 0.5, 0.75, 1)
-
-# ---
 ```
 
 ```{r q11, include=TRUE}
@@ -1420,77 +950,20 @@ hist(betas[,2], main="X1 Slope Distribution", xlab="Estimated X1 Slopes")
 hist(betas[,3], main="X2 Slope Distribution", xlab="Estimated X2 Slopes")
 ```
 
-```{r norm1-solution, eval=FALSE}
-# Set up parameters
-num_runs = 2000
-sample_size = 25
-# setup storage
-betas <- matrix(NA, nrow=num_runs, ncol = 3)
-
-for(i in 1:num_runs){
-  # generate the sample
-  x1<- rnorm(sample_size, mean = 1, sd = 5)
-  x2<- rnorm(sample_size, mean = 1, sd = 1)
-  e <- rnorm(sample_size, mean = 0, sd = 1)
-  y <- 1+2*x1+3*x2+e
-  # fit the model
-  model <- lm(y~x1+x2)
-  # store each coefficient
-  betas[i,] <- as.numeric(coef(model))
-}
-
-# plot a histogram of each coefficient
-par(mfrow=c(1,3))
-hist(betas[,1], main="Intercept Distribution", xlab="Estimated Intercepts")
-hist(betas[,2], main="X1 Slope Distribution", xlab="Estimated X1 Slopes")
-hist(betas[,3], main="X2 Slope Distribution", xlab="Estimated X2 Slopes")
-```
-
-```{r norm1-check}
-grade_this_code()
-```
-
 ```{r norm1-hint-1}
-# --- 
-
 # the number of columns must be the same as the number of coefficients
-
-# --- 
 ```
 
 ```{r norm1-hint-2}
-# --- 
-
 # remember that we had the following parameters set up in previous sections
 error_mean = 0
 error_sd = 1
 # and that our assumption is that the errors are Normal like the predictors
-
-# --- 
-
-# the number of columns must be the same as the number of coefficients
-
-# --- 
 ```
 
 ```{r norm1-hint-3}
-# --- 
-
 # To extract the estimated coefficients, use
 coef(model)
-
-# --- 
-
-# remember that we had the following parameters set up in previous sections
-error_mean = 0
-error_sd = 1
-# and that our assumption is that the errors are Normal like the predictors
-
-# --- 
-
-# the number of columns must be the same as the number of coefficients
-
-# --- 
 ```
 
 ```{r normq, include=TRUE}
@@ -1535,58 +1008,15 @@ hist(betas[,3], main="X2 Slope Distribution", xlab="X2 Slope")
 
 ```
 
-```{r norm2-solution, eval=FALSE}
-# Set up parameters
-error_mean = 0
-num_run = 2000
-sample_size = 25
-error_sd = 1
-betas <- matrix(NA, nrow=num_run, ncol=3)
-
-for(i in 1:num_run){
-  x1<- rnorm(sample_size, mean = 1, sd = 5)
-  x2<- rnorm(sample_size, mean = 1, sd = 1)
-  # Use a log-Normal distribution
-  e <- rlnorm(sample_size, meanlog = 0, sdlog = 1)
-  y <- 1+2*x1+3*x2+e
-  model <- lm(y~x1+x2)
-  betas[i,] <- as.numeric(coef(model))
-}
-
-# plot the distribution of betas
-par(mfrow=c(1,3))
-hist(betas[,1], main="Intercept Distribution", xlab="Intercept")
-hist(betas[,2], main="X1 Slope Distribution", xlab="X1 Slope")
-hist(betas[,3], main="X2 Slope Distribution", xlab="X2 Slope")
-```
-
-```{r norm2-check}
-grade_this_code()
-```
-
 ```{r norm2-hint-1}
-# ---
-
 # The syntax of rlnorm function that generates log Normal data is
 rlnorm(sample_size, meanlog = mean, sdlog = sd)
 # and we want meanlog = 0 and sdlog = 1
-
-# ---
 ```
 
 ```{r norm2-hint-2}
-# ---
-
 # To extract the estimated coefficients, use
 coef(model)
-
-# ---
-
-# The syntax of rlnorm function that generates log Normal data is
-rlnorm(sample_size, meanlog = mean, sdlog = sd)
-# and we want meanlog = 0 and sdlog = 1
-
-# ---
 ```
 
 
@@ -1614,3 +1044,12 @@ question("What types of mistakes could we make if we use inferential tools witho
 ```
 
 Hopefully, you see how important it is to verify that assumptions hold in all inferential tools. There are many ways to verify the assumptions and to correct or at minimum improve them if needed. But it is most important to know that statistical tools depend on assumptions and to recognize that if assumptions do not hold, the statistical tool should not be used. 
+
+## Wrap-Up
+
+Congratulations -- You have successfully completed this learning module! By now, you should be familiar with:
+
+
+* How violating each of the linear regression assumptions impacts results -- specifically confidence intervals for coefficients
+
+* How to set up a simulation in R
