@@ -957,6 +957,9 @@ In this model, we should now have a separate intercept for City, Friends and DUP
 
 ## Wrap-up
 
+
+TODO: Insert interactive piece
+
 Congratulations, you have completed this module! Hopefully by now, you are familiar with:
 
 * Manipulating qualitative data
