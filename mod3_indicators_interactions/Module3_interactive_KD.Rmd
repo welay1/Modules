@@ -3,6 +3,7 @@ title: "Interpretation and Use of Indicators and Interactions"
 output: 
   learnr::tutorial:
    progressive: true
+   allow_skip: true
 runtime: shiny_prerendered
 ---
 
@@ -27,26 +28,28 @@ lego$Theme <- as.factor(lego$Theme)
 
 ## Introduction
 
-In this module, you will learn: 
+Welcome to Module 3: **Interpretation and Use of Indicators and Interactions**. In this module, you will learn: 
 
 * How to manipulate qualitative data
 
-* How to include qualitative variables in regression models and how to interpret their effects on the response
+* How to include and interpret qualitative variables in linear models
 
-* How to include interaction terms in a linear model and how to interpet their effects on the response
+* How to include and interpret interaction terms in linear model 
+
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
 
 ## Motivation
 
-We have already seen that a simple linear model estimates the population relationship between a response (Y) and a predictor (X) using a sample. The population relationship is $$Y = \beta_0 + \beta_1 X + \epsilon$$ where we use the process of least squares to estimate $$\hat{y} = \hat{\beta_0} + \hat{\beta_1}X$$, where $\hat{\beta_0}$ is the intercept and $\hat{\beta_1}$ is the slope. 
+We have already seen that a simple linear model estimates the population relationship between a predictor and a response using a sample. The population relationship is $Y = \beta_0 + \beta_1 X + \epsilon$, and we use the process of <mark>least squares</mark> to estimate $\hat{y} = \hat{\beta_0} + \hat{\beta_1}X$, where $\hat{\beta_0}$ is the intercept and $\hat{\beta_1}$ is the slope. 
 
 
-We know that more complex relationships with multiple predictors can be modeled in the form $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon.$$ While it is common that predictors are *quantitative*, there can be *qualitative* properties that inform the population relationship. 
+We know that we can extend simple linear regression to model more complex relationships of the form $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon$. While we have only seen quantitative (numerical) predictors so far, we can also include qualitative (categorical) predictors in linear regression models. 
 
-In this module, we will explore how we can use qualitative predictors in a multiple linear model to estimate population relationships, and how this changes our interpretation of the coefficients in the model.
+In this module, we will explore how we can include qualitative predictors in a multiple linear model, and how to correctly interpret qualitative coefficients.
 
 ## Section 0: Recognizing Categorical Variables
 
-Before we jump into understanding how we use qualitative predictors alongside other predictors, let's focus on working on how to include this type of information in a simple linear model.
+Before we jump to creating a mulitple linear model, let's focus on working on how to include qualitative information in a simple linear model.
 
 To do this, we will work with a LEGO dataset (called `lego`). This dataset contains information on 75 LEGO brick sets sold on Amazon. The response variable of interest will be `Amazon_Price`, the price that the set was sold on Amazon. We have a number of different possible predictors in our data:
 
@@ -65,9 +68,9 @@ To do this, we will work with a LEGO dataset (called `lego`). This dataset conta
   - `Size`: The size classification of the set (Large or Small) based on the number of pieces
   - `rating`: The rating (on a scale of 1 to 5) of each set.
 
-To know whether a variable is qualitative, we have to check the levels of the variable. Levels are all possible values a variable can take. 
+To know whether a variable is qualitative, we have to check the levels of the variable. <mark>Levels</mark> are all possible values a variable can take. 
 
-In the code chunk below, identify the levels of the variable `Theme`, `Pieces`, and `rating`. and the number of observations in each level. You can do this using the `table()` function, with the syntax `table(data$variable)`. 
+In the code chunk below, identify the levels of the variables `Theme`, `Pieces`, and `rating`, and the number of observations in each level. You can do this using the `table()` function, with the syntax `table(data$variable)`. 
 
 ```{r summary, exercise=TRUE, exercise.lines=6}
 # add your code below
@@ -108,9 +111,9 @@ While informative, qualitative variables can be difficult to work with. Sometime
 
 ### Named Categories
 
-Qualitative predictors may often have levels that are names or words (called a *string* or *character* data type). For example, `Theme` has levels that are words. It is reasonable that a Lego set's theme may impact its price -- but how do we include character data types in a linear model? 
+Qualitative predictors may often have levels that are names or words (called a *string* or *character* data type). For example, `Theme` has levels that are words. We may want to include Theme in a model predicting price, but how do we include character data types in a linear model? 
 
-Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being *subsetting*. To subset is to select only certain levels of the variable. To do this, we can use true/false conditions (called *booleans*) to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. 
+Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being *subsetting*. To subset is to select only certain levels of the variable, and we can use true/false conditions to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. To perform the subsetting action, we use the syntax `variable[variable == value]` or `variable[variable != value]`. 
 
 Below, fill in the two lines of code that 1) subsets Theme to only have values equal to City, and 2) subsets Theme to only have values that are *not* Friends.
 
@@ -145,16 +148,15 @@ lego$Theme != "Friends"
 ```
 
 
-
 We could also achieve the same result of collecting only rows that are not Friends sets by using an OR argument, which looks like a vertical bar: 
 
 ```{r}
 lego$Theme[lego$Theme == "City" | lego$Theme == "DUPLO\xae"]
 ```
 
-The next important skill is to turn qualitative variables, which take character values, into *indicator* variables, which take $0$ or $1$ only. This is useful for understanding how R treats qualitative information when used in a linear model. The `Theme` variable has 3 possible values: `City`, `Friends`, `DUPLO\xae`. Creating an indicator variable is similar to subsetting, but instead of removing rows that do not meet the condition, it creates a new column that takes $1$ if the condition is met, and $0$ if the condition is not met. 
+The next important skill is to turn qualitative variables, which take character values, into <mark>indicator variables</mark>, which take $0$ or $1$ only. This is useful for understanding how R treats qualitative information when used in a linear model. The `Theme` variable has 3 possible values: `City`, `Friends`, `DUPLO\xae`. Creating an indicator variable is similar to subsetting, but instead of removing rows that do not meet the condition, it creates a new column that takes $1$ if the condition is met, and $0$ if the condition is not met. 
 
-We can create these new *indicator variables* using `ifelse()` functions. These functions ask the question "Is this row equal to this value?", and then you give it an option for what to do if the answer is yes, and then what to do if the answer is no. In our case, we would say `ifelse(lego$Theme == "DUPLO\xae", 1, 0)` which says if the value is DUPLO\\xae, assign it a value of 1, otherwise give it a value 0. Try this for the City value and the Friends value.
+We can create these new indicator variables using `ifelse()` functions. These functions ask the question "Is this row equal to this value?", and what to do if the answer is yes, and then what to do if the answer is no. In our case, we would say `ifelse(lego$Theme == "DUPLO\xae", 1, 0)` which says if the value is DUPLO\\xae, assign it a value of 1, otherwise give it a value 0. Try this for the City value and the Friends value.
 
 
 ```{r indicate, exercise=TRUE, exercise.lines=12}
@@ -200,7 +202,7 @@ lego$Theme == "Friends"
 friends
 ```
 
-Lastly, we can see how we can use this type of variable in a simple linear model. When the levels are words/text, we can simply write the variable name as a predictor and the model will understand to treat it as qualitative.
+Lastly, we can see how we can use this type of variable in a simple linear model. When the levels are words, we can simply write the variable name as a predictor and the model will understand to treat it as qualitative.
 
 ```{r model1, exercise=TRUE}
 # create a simple linear model with Theme as a predictor
@@ -219,9 +221,13 @@ lm(Amazon_Price ~ Theme, data=lego)
 grade_this_code()
 ```
 
-Notice that the coefficients are labelled with values of the qualitative predictor *Theme*, but only two out of the three levels are present. This is because the intercept is actually equal to the average value of Amazon_Price among the City sets: E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="City"])`. The slope for Friends is the **difference** between the mean Amazon Price of City sets and Friends sets: E(Y | X = "Friends") - E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="Friends"]) - mean(lego$Amazon_Price[lego$Theme=="City"])`. The same is true of the slope for DUPLO\\xae.  
+Notice that the coefficients are labelled with values of the qualitative predictor `Theme`, but only two out of the three levels are present. 
 
-We could have also fit the exact same model using indicator variables (0's and 1's), we would just need to include more than one predictor.
+This is because the intercept is actually equal to the average value of `Amazon_Price` among the City sets: E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="City"])`. 
+
+The slope for Friends is the **difference** between the mean Amazon Price of City sets and Friends sets: E(Y | X = "Friends") - E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="Friends"]) - mean(lego$Amazon_Price[lego$Theme=="City"])`. The same is true of the slope for DUPLO\\xae.  
+
+We could have also fit the exact same model using indicator variables (0's and 1's) for the different levels of `Theme`, we would just need to include more than one predictor.
 
 
 ```{r q2, echo=F}
@@ -956,6 +962,9 @@ In this model, we should now have a separate intercept for City, Friends and DUP
 
 
 ## Wrap-up
+
+
+TODO: Insert interactive piece
 
 Congratulations, you have completed this module! Hopefully by now, you are familiar with:
 
