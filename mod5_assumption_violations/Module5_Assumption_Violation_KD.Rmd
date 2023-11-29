@@ -1,5 +1,5 @@
 ---
-title: 'STA302 Module 2: Assumption Violation'
+title: 'STA302 Module 5: Assumption Violation'
 output: learnr::tutorial
 #css: "css/learnr_302.css"
 runtime: shiny_prerendered
