@@ -22,10 +22,15 @@ package.check <- lapply(
 
 # Credit: package.check based on a helpful post from Vikram Baliga https://vbaliga.github.io/verify-that-r-packages-are-installed-and-loaded/
 
-remotes::install_github("rstudio/gradethis")
+#remotes::install_github("rstudio/gradethis")
 
 
 library(tidyverse)
+library(shiny)
+library(ggplot2)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+install.packages("broom")
+library(broom)
 library(learnr)
 library(remotes)
 library(gradethis)
@@ -1601,65 +1606,178 @@ question("What types of mistakes could we make if we use inferential tools witho
 
 Hopefully, you see how important it is to verify that assumptions hold in all inferential tools. There are many ways to verify the assumptions and to correct or at minimum improve them if needed. But it is most important to know that statistical tools depend on assumptions and to recognize that if assumptions do not hold, the statistical tool should not be used. 
 
-## Interaction Section
+## Visualizing Assumption Violations
 
-### Visualising the Violation of the Homoscedasticity Assumption
+In this section, we use plots to visualize assumption violations, learning what to look out for when attempting to fit a linear model.
 
-As we learned, for homoscedasticity, the variance of the error term must be constant and consequently independent of the predictors. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). 
-
-If the assumption holds, you should expect:
+### Understanding Homoscedasticity
+As we learned, for homoscedasticity, the variance of the error term must be constant and consequently independent of the predictors. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). If the assumption holds, you should expect:
 
 1. The residuals should look random and display no clear trends.
+
 2. No identifiable patterns in the plot. 
+
 3. The vertical spread of the residuals should not increase or decrease as the fitted values increase.
 
 In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values. 
 
+### Understanding Linearity
+As we learnt, it is important to ensure that the relationship between the predictor variable (X) and the response variable (Y) is linear when applying a linear model. This assumption underpins the reliability of our regression models. So, what should you be on the lookout for when evaluating the linearity assumption?
+
+1. The Y-X scatter plot should show that X and Y follows a linear pattern, such that changes in X should result in proportional changes in Y. 
+
+2. Alternatively, for Residuals vs. Fitted Values Plots, any curved or bending trends in the residuals may be an indication of ill-fitted relationship. Such patterns might suggest that our chosen model fails to capture the true relationship. 
+
+In the interactive plot below, you can experiment with different model types (linear or quadratic) and observe how well the model fits the data. Keep note of the R-squared value and determine if they align with our expectations of linearity.
+
+
+```{r}
+# # UI for adjusting the variance multiplier
+# sliderInput("varianceMultiplier", 
+#             "Variance Multiplier:", 
+#             min = 0, 
+#             max = 10, 
+#             value = 0, 
+#             step = 2)
+# plotOutput("variancePlot")
+```
+
+```{r}
+# 
+#   output$variancePlot <- renderPlot({
+#     set.seed(302) # Ensure reproducibility
+# 
+#     # Simulated data
+#     x <- rnorm(500)
+#     
+#     # Control the level of heteroscedasticity through input$varianceMultiplier
+#     #variance <- 1 + input$varianceMultiplier * x    change slider to only go from 0-1 (show homoscedastic vs heteroscedastic)
+#     variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
+#     
+#     # Generate errors based on the specified variance
+#     e <- rnorm(500, sd = sqrt(variance))
+#     
+#     y <- 1 + 4 * x + e
+# 
+#     model <- lm(y ~ x)
+#     residuals <- resid(model)
+# 
+#     # Plot residuals vs. fitted values
+#     ggplot(NULL, aes(fitted(model), residuals)) +
+#       geom_point() +
+#       geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
+#       labs(x = "Fitted Values (x)", y = "Residuals",
+#            title = "Residual Plot with Non-constant Variation in Error Terms") +
+#       theme_minimal()
+#   })
+
+```
+
+
+
 
 ```{r, context="render", echo=FALSE}
-# UI for adjusting the variance multiplier
-sliderInput("varianceMultiplier", 
-            "Variance Multiplier:", 
-            min = 0, 
-            max = 10, 
-            value = 0, 
-            step = 2)
-plotOutput("variancePlot")
+fluidPage(
+    titlePanel("Violating Homoscedasticity Assumption"),
+    
+    fluidRow(
+        plotOutput("variancePlot")
+    ),
+    fluidRow(
+        sliderInput("varianceMultiplier", 
+                    "Heteroscedasticity Multiplier:", 
+                    min = 0, 
+                    max = 10, 
+                    value = 0, 
+                    step = 2)
+    ),
+    
+    hr(),
+    
+    titlePanel("Violating Linearity Assumption"),
+    fluidRow(
+        plotOutput("modelPlot")
+    ),
+    fluidRow(
+        selectInput("modelType", "Select Model Type for Linearity Exercise:", 
+                    choices = c("Linear", "Quadratic"))
+    ),
+    fluidRow(
+        tableOutput("modelStats")
+    )
+)
+
 ```
 
 ```{r, context="server"}
-  output$variancePlot <- renderPlot({
-    set.seed(302) # Ensure reproducibility
+# First interactive exercise (Homoscedasticity)
+output$variancePlot <- renderPlot({
+  set.seed(302) # Ensure reproducibility
 
-    # Simulated data
-    x <- rnorm(500)
-    
-    # Control the level of heteroscedasticity through input$varianceMultiplier
-    #variance <- 1 + input$varianceMultiplier * x    change slider to only go from 0-1 (show homoscedastic vs heteroscedastic)
-    variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
-    
-    # Generate errors based on the specified variance
-    e <- rnorm(500, sd = sqrt(variance))
-    
-    y <- 1 + 4 * x + e
+  # Simulated data
+  x <- rnorm(500)
+  
+  # Control the level of heteroscedasticity through input$varianceMultiplier
+  variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
+  
+  # Generate errors based on the specified variance
+  e <- rnorm(500, sd = sqrt(variance))
+  
+  y <- 1 + 4 * x + e
 
-    model <- lm(y ~ x)
-    residuals <- resid(model)
+  model <- lm(y ~ x)
+  residuals <- resid(model)
 
-    # Plot residuals vs. fitted values
-    ggplot(NULL, aes(fitted(model), residuals)) +
-      geom_point() +
-      geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
-      labs(x = "Fitted Values (x)", y = "Residuals",
-           title = "Residual Plot with Non-constant Variation in Error Terms") +
-      theme_minimal()
-  })
+  # Plot residuals vs. fitted values
+  ggplot(NULL, aes(fitted(model), residuals)) +
+    geom_point() +
+    geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
+    labs(x = "Fitted Values (x)", y = "Residuals",
+         title = "Residual Plot with Non-constant Variation in Error Terms") +
+    theme_minimal()
+})
+
+
+#Second interactive exercise (Linearity)
+
+set.seed(301)
+x <- runif(100, 0, 10)
+data <- data.frame(
+    x = x,
+    y = 1 + 5 * x^3 + rnorm(100, 0, 200)  
+)
+
+fittedModel <- reactive({
+  if (input$modelType == "Linear") {
+    lm(y ~ x, data = data)
+  } else {
+    lm(y ~ poly(x, 3), data = data)
+  }
+})
+
+output$modelPlot <- renderPlot({
+  model <- fittedModel()
+  ggplot(data, aes(x = x, y = y)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y ~ poly(x, ifelse(input$modelType == "Linear", 1, ifelse(input$modelType == "Quadratic", 2, 3))), se = FALSE, colour = "red") +
+    labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  
+    theme_minimal()
+})
+
+
+output$modelStats <- renderTable({
+  model <- fittedModel()
+  df <- broom::glance(model)
+  df[, c("r.squared")]
+})
+
 
 ```
 
-Note that while the observed hourglass pattern in the residual plot indicates heteroscedasticity, other patterns also indicate the violation e.g. a fanning pattern.  
+In the first plot, note that while the observed hourglass pattern in the residual plot indicates heteroscedasticity, other patterns also indicate the violation e.g. a fanning pattern. In the second plot, we observe that the true relationship in non-linear, and fitting the data to a linear model is inappropriate.
 
-Great job! Now that you know what to look for in.the residual plot, you are better equipped to identify when the assumption of homoscedasticity is violated. Keep up the good work!
+Great job! Now that you know what to look for in the plots, you are better equipped to identify when an assumption is violated. Keep up the good work!
+
 
 ## Wrap-Up
 
