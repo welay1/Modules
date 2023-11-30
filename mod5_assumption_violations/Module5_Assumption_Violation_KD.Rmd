@@ -1605,7 +1605,7 @@ Hopefully, you see how important it is to verify that assumptions hold in all in
 
 ### Visualising the Violation of the Homoscedasticity Assumption
 
-As we learned, to violate homoscedasticity, the variance of the error term must be constant and consequency independent of the predictors i.e. be uncorrelated. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). 
+As we learned, for homoscedasticity, the variance of the error term must be constant and consequently independent of the predictors. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). 
 
 If the assumption holds, you should expect:
 
@@ -1613,7 +1613,7 @@ If the assumption holds, you should expect:
 2. No identifiable patterns in the plot. 
 3. The vertical spread of the residuals should not increase or decrease as the fitted values increase.
 
-In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values, as the error terms become correlated. 
+In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values. 
 
 
 ```{r, context="render", echo=FALSE}
