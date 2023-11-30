@@ -1670,6 +1670,7 @@ fluidPage(
     
     hr())
 ```
+In the plot above, note that while the observed hourglass pattern in the residual plot indicates heteroscedasticity, other patterns also indicate the violation e.g. a fanning pattern. 
 
 
 ### Understanding Linearity
@@ -1784,7 +1785,7 @@ output$modelStats <- renderTable({
 
 ```
 
-In the first plot, note that while the observed hourglass pattern in the residual plot indicates heteroscedasticity, other patterns also indicate the violation e.g. a fanning pattern. In the second plot, we observe that the true relationship in non-linear, and fitting the data to a linear model is inappropriate.
+In the plot above, we observe that the true relationship in non-linear, and fitting the data to a linear model is inappropriate.
 
 Great job! Now that you know what to look for in the plots, you are better equipped to identify when an assumption is violated. Keep up the good work!
 
