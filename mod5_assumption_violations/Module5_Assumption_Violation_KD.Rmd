@@ -1603,39 +1603,61 @@ Hopefully, you see how important it is to verify that assumptions hold in all in
 
 ## Interaction Section
 
+### Visualising the Violation of the Homoscedasticity Assumption
+
+As we learned, to violate homoscedasticity, the variance of the error term must be constant and consequency independent of the predictors i.e. be uncorrelated. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). 
+
+If the assumption holds, you should expect:
+
+1. The residuals should look random and display no clear trends.
+2. No identifiable patterns in the plot. 
+3. The vertical spread of the residuals should not increase or decrease as the fitted values increase.
+
+In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values, as the error terms become correlated. 
+
+
 ```{r, context="render", echo=FALSE}
 # UI for adjusting the variance multiplier
 sliderInput("varianceMultiplier", 
             "Variance Multiplier:", 
             min = 0, 
-            max = 5, 
-            value = 1, 
-            step = 0.1)
+            max = 10, 
+            value = 0, 
+            step = 2)
 plotOutput("variancePlot")
 ```
 
 ```{r, context="server"}
-output$variancePlot <- renderPlot({
-  set.seed(302) # Ensure reproducibility
+  output$variancePlot <- renderPlot({
+    set.seed(302) # Ensure reproducibility
 
-  # Simulated data
-  x <- rnorm(500)
-  variance <- 1 + input$varianceMultiplier * abs(x - mean(x)) / sd(x)
-  e <- rnorm(100, sd = sqrt(variance))
-  y <- 2 + 3 * x + e
+    # Simulated data
+    x <- rnorm(500)
+    
+    # Control the level of heteroscedasticity through input$varianceMultiplier
+    #variance <- 1 + input$varianceMultiplier * x    change slider to only go from 0-1 (show homoscedastic vs heteroscedastic)
+    variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
+    
+    # Generate errors based on the specified variance
+    e <- rnorm(500, sd = sqrt(variance))
+    
+    y <- 1 + 4 * x + e
 
-  # Fit the model
-  model <- lm(y ~ x)
-  residuals <- resid(model)
+    model <- lm(y ~ x)
+    residuals <- resid(model)
 
-  # Plot residuals vs. fitted values
-  ggplot(NULL, aes(fitted(model), residuals)) + 
-    geom_point() +
-    geom_hline(yintercept = 0, col = "red") +
-    labs(x = "Fitted Values", y = "Residuals",
-         title = "Residual Plot with Varied Variance")
-})
+    # Plot residuals vs. fitted values
+    ggplot(NULL, aes(fitted(model), residuals)) +
+      geom_point() +
+      geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
+      labs(x = "Fitted Values (x)", y = "Residuals",
+           title = "Residual Plot with Non-constant Variation in Error Terms") +
+      theme_minimal()
+  })
+
 ```
+
+
 
 ## Wrap-Up
 
