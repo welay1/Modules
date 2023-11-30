@@ -1621,6 +1621,57 @@ As we learned, for homoscedasticity, the variance of the error term must be cons
 
 In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values. 
 
+```{r, context="server"}
+# First interactive exercise (Homoscedasticity)
+output$variancePlot <- renderPlot({
+  set.seed(302) # Ensure reproducibility
+
+  # Simulated data
+  x <- rnorm(500)
+  
+  # Control the level of heteroscedasticity through input$varianceMultiplier
+  variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
+  
+  # Generate errors based on the specified variance
+  e <- rnorm(500, sd = sqrt(variance))
+  
+  y <- 1 + 4 * x + e
+
+  model <- lm(y ~ x)
+  residuals <- resid(model)
+
+  # Plot residuals vs. fitted values
+  ggplot(NULL, aes(fitted(model), residuals)) +
+    geom_point() +
+    geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
+    labs(x = "Fitted Values (x)", y = "Residuals",
+         title = "Residual Plot with Non-constant Variation in Error Terms") +
+    theme_minimal()
+})
+```
+
+   
+```{r, context="render", echo=FALSE}
+fluidPage(
+   # titlePanel("Violating Homoscedasticity Assumption"),
+  tags$h1("Violating Homoscedasticity Assumption", style = "font-size: 18px;"),
+    
+    fluidRow(
+        plotOutput("variancePlot")
+    ),
+    fluidRow(
+        sliderInput("varianceMultiplier", 
+                    "Heteroscedasticity Multiplier:", 
+                    min = 0, 
+                    max = 10, 
+                    value = 0, 
+                    step = 2)
+    ),
+    
+    hr())
+```
+
+
 ### Understanding Linearity
 As we learnt, it is important to ensure that the relationship between the predictor variable (X) and the response variable (Y) is linear when applying a linear model. This assumption underpins the reliability of our regression models. So, what should you be on the lookout for when evaluating the linearity assumption?
 
@@ -1675,26 +1726,11 @@ In the interactive plot below, you can experiment with different model types (li
 
 
 
+```{r, context="render", echo = FALSE}
+ fluidPage(
+  # titlePanel("Violating Linearity Assumption"),
+     tags$h1("Violating Linearity Assumption", style = "font-size: 18px;"),
 
-```{r, context="render", echo=FALSE}
-fluidPage(
-    titlePanel("Violating Homoscedasticity Assumption"),
-    
-    fluidRow(
-        plotOutput("variancePlot")
-    ),
-    fluidRow(
-        sliderInput("varianceMultiplier", 
-                    "Heteroscedasticity Multiplier:", 
-                    min = 0, 
-                    max = 10, 
-                    value = 0, 
-                    step = 2)
-    ),
-    
-    hr(),
-    
-    titlePanel("Violating Linearity Assumption"),
     fluidRow(
         plotOutput("modelPlot")
     ),
@@ -1708,35 +1744,9 @@ fluidPage(
 )
 
 ```
+    
 
 ```{r, context="server"}
-# First interactive exercise (Homoscedasticity)
-output$variancePlot <- renderPlot({
-  set.seed(302) # Ensure reproducibility
-
-  # Simulated data
-  x <- rnorm(500)
-  
-  # Control the level of heteroscedasticity through input$varianceMultiplier
-  variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
-  
-  # Generate errors based on the specified variance
-  e <- rnorm(500, sd = sqrt(variance))
-  
-  y <- 1 + 4 * x + e
-
-  model <- lm(y ~ x)
-  residuals <- resid(model)
-
-  # Plot residuals vs. fitted values
-  ggplot(NULL, aes(fitted(model), residuals)) +
-    geom_point() +
-    geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
-    labs(x = "Fitted Values (x)", y = "Residuals",
-         title = "Residual Plot with Non-constant Variation in Error Terms") +
-    theme_minimal()
-})
-
 
 #Second interactive exercise (Linearity)
 
@@ -1777,7 +1787,6 @@ output$modelStats <- renderTable({
 In the first plot, note that while the observed hourglass pattern in the residual plot indicates heteroscedasticity, other patterns also indicate the violation e.g. a fanning pattern. In the second plot, we observe that the true relationship in non-linear, and fitting the data to a linear model is inappropriate.
 
 Great job! Now that you know what to look for in the plots, you are better equipped to identify when an assumption is violated. Keep up the good work!
-
 
 ## Wrap-Up
 
