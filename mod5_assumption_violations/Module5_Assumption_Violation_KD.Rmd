@@ -1657,7 +1657,9 @@ plotOutput("variancePlot")
 
 ```
 
+The observed hourglass pattern in the residual plot is an indicator of heteroscedasticity. 
 
+Great job! Now that you know what to look for in.the residual plot, you are better equipped to identify when the assumption of homoscedasticity is violated. Keep up the good work!
 
 ## Wrap-Up
 
