@@ -17,6 +17,7 @@ remotes::install_github("rstudio/gradethis", force =TRUE)
 library(learnr)
 library(gradethis)
 library(tidyverse)
+library(mathjaxr)
 
 #tutorial_options(exercise.timelimit = 120)
 
@@ -53,19 +54,8 @@ Before we jump to creating a mulitple linear model, let's focus on working on ho
 
 To do this, we will work with a LEGO dataset (called `lego`). This dataset contains information on 75 LEGO brick sets sold on Amazon. The response variable of interest will be `Amazon_Price`, the price that the set was sold on Amazon. We have a number of different possible predictors in our data:
 
-  - `Set_Name`: The name of the set
   - `Theme`: The theme of the set, one of Duplo, Friends, or City
   - `Pieces`: The number of pieces in each set
-  - `Price`: The original sale price of the set, which may be different from `Amazon_Price`
-  - `Year`: The year that the set was sold on Amazon
-  - `Ages`: The ages that each set is listed as being appropriate for kids
-  - `Pages`: The number of pages of the instruction booklet
-  - `Minifigures`: The number of figurines included in the set
-  - `Packaging`: The type of packaging of the set
-  - `Weight`: The weight of each set
-  - `Unique_Pieces`: The number of unique piece types in the set
-  - `Availability`: The type of availability of the set (exclusive, promotional, retail)
-  - `Size`: The size classification of the set (Large or Small) based on the number of pieces
   - `rating`: The rating (on a scale of 1 to 5) of each set.
 
 To know whether a variable is qualitative, we have to check the levels of the variable. <mark>Levels</mark> are all possible values a variable can take. 
@@ -242,7 +232,7 @@ question("What is the minimum amount of indicator variables necessary to replica
 
 ### Numerical Categories
 
-Qualitative information is sometimes recorded as numbers, often when we are dealing with a rating system. If we were to use this kind of variable as a predictor without any manipulation, R would treat this as a numerical variable. Let's fit a simple linear model to Amazon_Price using rating as a predictor to see what we get.
+Qualitative information is sometimes recorded as numbers, often when we are dealing with a rating system. If we were to use this kind of variable as a predictor without any manipulation, R would treat this as a numerical variable. Let's fit a simple linear model to predict `Amazon_Price` using rating as a predictor to see what we get.
 
 ```{r model2, exercise=TRUE}
 # fit a model using rating as a quantitative predictor
@@ -265,7 +255,7 @@ question("How would we interpret the slope in this model?",
          allow_retry = TRUE)
 ```
 
-*However* -- does it make sense to treat the predictor as continuous? The rating scale only goes from 1 to 5, and it can only take integer values. Further, it is inherently a qualitative measurement (the set is rated on "goodness"). It also may not make sense to assume that, if we compare sets with a rating of 1 and 2, it would necessarily have the same effect on the mean Amazon Price as sets with ratings of 4 and 5 (i.e. the price change may differ for different ratings). 
+*However* -- does it make sense to treat `rating` as a numerical predictor? It is inherently a qualitative measurement -- the set is rated on "goodness". It also may not make sense to assume that, if we compare sets with a rating of 1 and 2, it would necessarily have the same effect on the mean Amazon Price as sets with ratings of 4 and 5 (i.e. the price change may differ for different ratings). Therefore, it is best to treat `rating` as a categorical predictor.
 
 Therefore, it's important to always think about what variables are actually representing. We can tell R that we want it to use rating as a qualitative variable by using the `as.factor(variable)` command, which forces R to see this variable as qualitative rather than numerical. Try this below to see how it changes the model estimates.
 
@@ -302,13 +292,13 @@ The results of a model that uses ratings as a categorical predictor shows us tha
 
 ## Section 2: Indicators as Main Effects
 
-Let's look at how we can use categorical variables as predictors in a linear regression model and what function they perform in these models.
+Let's look at how we can use categorical variables as predictors in a linear regression model. 
 
-We will look at the relationship between the Amazon selling price (Y, Amazon_Price) and the Number of Pieces in the set (X, Pieces). But we will also see if there is a difference in this relationship based on the Theme of the set. We have already determined that the variable Theme is qualitative and categorizes the set into a theme of either City, Friends or Duplo. For this section, we will simplify this and look at only 2 themes: City and Friends.
+We will look at the relationship between the predictor `Pieces` and the response `Amazon_Price` -- but we will also explore how this relationship differs based on the theme of the set. We have already determined that `Theme` is qualitative. For simplicity, we will only include two levels of `Theme` in our model: City and Friends.
 
 ### Fitting Separate Simple Linear Models
 
-To begin, we will create a scatterplot with Amazon_Price on the y-axis, and Pieces on the x-axis. We will do this in a way that R will only create the axes but will not include the points just yet. We will then add the points onto the plot, highlighting the points corresponding to City sets blue, and the points corresponding to the Friends sets red. This will give us an idea of whether there is a different relationship between Amazon_Price and Pieces for each set Theme.
+To begin, we will create a plot with `Pieces` on the x-axis and `Amazon_Price` on the y-axis. We will then add the points onto the plot, highlighting City sets in blue, and Friends sets in red. This will give us an idea of whether there is a different relationship between `Amazon_Price` and `Pieces` for each set `Theme.`
 
 ```{r part2_1, exercise=TRUE}
 # subset the data into a city set and a friends set
@@ -410,6 +400,7 @@ slr_friends
 grade_this_code()
 ```
 
+Notice that the intercept for the City model is about 7 units lower than Friends. This will come up again later!
 
 ```{r q5, echo=F}
 question("Which of the statements is true regarding the estimated slopes and intercepts of the two simple linear models?",
@@ -422,7 +413,7 @@ question("Which of the statements is true regarding the estimated slopes and int
 
 ### Adding the Set Themes as a Predictor
 
-From the previous portion, we have noticed that when we fit separate simple linear models for each of the different sets, we find a common slope but a different intercept. To better see this with our data, we can augmnent our scatterplot to include these estimated trends.
+From the previous portion, we have noticed that when we fit separate simple linear models for each of the different sets, we find a common slope but a different intercept. We can add these lines of best fit to our scatterplot. First, we will extract the coefficients from a model using the syntax `coef(model)`. For a simple linear model, this will produce an vector of the form `(intercept, slope)`, which can be indexed appropriately to access each value. Remember that in R, indexing starts at 1, not 0. 
 
 ```{r mlr_setup, include=F}
 noDuplo <- lego[lego$Theme != "DUPLO\xae",]
@@ -452,6 +443,8 @@ abline(a = ___, b = ___, col="blue")
 # add a red line for the linear trend among the friends sets
 abline(a = ___, b = ___, col="red")
 ```
+
+
 
 ```{r part2_2-solution, eval=FALSE}
 
@@ -497,13 +490,12 @@ abline(a = intercept_value, b = slope_value, col="black")
 # and these values are stored in your b_city and b_friends
 ```
 
-Fitting two separate models can make interpreting the trends easier, but it's not necessary. Instead, we can just include Theme as a predictor in the model. Remember that we don't want to use the whole dataset because we don't want to include the DUPLO sets, so we will fit the model using the `noDuplo` dataset we created earlier.
+Fitting two separate models can make interpreting the trends easier, but it's not necessary. Instead, we can just include `Theme` as a predictor in the model. Remember that we don't want to use the whole dataset because we don't want to include the DUPLO sets, so we will fit the model using the `noDuplo` dataset we created earlier.
 
-To fit the same trend, we can simply include the Theme variable as a predictor in the model. When we fit a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2, data=dataset)`. Try this now using Amazon_Price as the response, and Pieces and Theme as the two predictors, on the dataset noDuplo.
+When we fit a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2, data=dataset)`. Try this now using `Amazon_Price` as the response, and `Pieces` and `Theme` as the two predictors, on the dataset `noDuplo.`
 
 ```{r mlr, exercise=TRUE, exercise.setup="mlr_setup"}
 lm(Amazon_Price ~ Pieces + ____, data = ____)
-lm(Amazon_Price ~ Pieces + Theme, data = noDuplo)
 ```
 
 ```{r mlr-hint, eval=FALSE}
@@ -519,10 +511,14 @@ grade_this_code()
 ```
 
 
+You should notice that your intercept in the multiple linear model is estimated as $10.02$ with an estimated slope for Friends of $-7.32$.
 
-You should notice that your intercept in the multiple linear model is estimated to be about 10 with an estimated slope for Friends of about -7. To interpret the coefficients, notice that the intercept is the mean Amazon Price for a *City* set with 0 pieces. This value is about 10, which is very close to the 9.4 we saw for an intercept in the simple linear model for City. So the intercept in the multiple linear model nearly matches the one from the City simple model.
+Notice that the intercept of $10.02$ is the mean Amazon Price for a "City" set with 0 pieces. Recall that the intercept from the simple linear model for City was $9.4$. Therefore, the intercept for the multiple linear model is very similar to the intercept from the corresponding simple model.  
 
-Also, we would interpret the slope on the indicator of a Friends set to be the difference in the average Amazon Price for a Friends set with a fixed number of pieces compared to a City set. This value is -7. When we look at the difference in the intercepts between the two simple linear models, we see that this is approximately -7. So when we add the categorical information into the model rather than fit two separate models, we estimate nearly the same trend, with less work.
+Remember that `ThemeFriends` represents an indicator variable that takes 1 if a set has theme "Friends" and 0 otherwise. This coefficient is interpreted as the difference in the average Amazon Price for a Friends set with a fixed number of pieces compared to a City set. With a value of $-7.32$, this means for a set with $n$ pieces, the mean Amazon Price for Friends sets is \$7.32 lower than City sets. 
+
+Remember that in the simple linear models, the intercept for City was about 7 units less than the intercept for Friends. Therefore, there is evidence to suggest that including categorical information in a multiple linear model produces similar results to fitting separate models, but with less work. 
+
 
 ```{r q6, echo=F}
 question("When using a categorical predictor as a main effect (i.e. alone as a predictor) in a multiple linear model, what type of relationship are we estimating?",
@@ -539,13 +535,13 @@ question("When using a categorical predictor as a main effect (i.e. alone as a p
 
 We just learned that using an indicator/qualitative variable as a main effect predictor results in an estimated relationship for City that is parallel to the estimated relationship for Friends. In other words, using an indicator variable as a main effect gives us two lines with the **same slope but different intercepts**.
 
-Let's consider a different scenario, one in which we have two predictors that work together, or **interact** with each other, to define the relationship between Amazon_Price and Pieces. We say that two variables interact when the effect of one variable on the response depends on the value of the other variable.
+Let's consider a different scenario, one in which we have two predictors that work together, or **interact** with each other, to define the relationship between `Amazon_Price` and `Pieces.` We say that two variables interact when the effect of one variable on the response depends on the value of the other variable.
 
 To see an example of this, we will be working with the `Theme` variable again, but this time investigating the DUPLO sets.
 
 ### Fitting Separate Simple Linear Models
 
-Like we did in Section 2, we will begin by plotting a scatterplot of our data. We want to plot `Amazon_Price` on the y-axis and `Pieces` on the x-axis. This time, we will highlight groups of LEGO sets based on their `Theme` (City or DUPLO). We will highlight the City sets in blue and the DUPLO sets in orange. Complete the code below to create this plot.
+Like we did in Section 2, we will begin by plotting a scatterplot of our data. We want to plot `Pieces` on the x-axis and `Amazon_Price` on the y-axis. This time, we will highlight groups of LEGO sets based on their `Theme` (City or DUPLO). We will highlight the City sets in blue and the DUPLO sets in orange. Complete the code below to create this plot.
 
 ```{r part3_1, exercise=TRUE, exercise.lines=18}
 # create a dataset that just contains city sets
@@ -622,7 +618,7 @@ city$Amazon_Price
 duplo$Pieces
 ```
 
-It appears that once again, we may have a different relationship between Amazon Price and Pieces depending on which set grouping we consider. To see whether this is the case (i.e. that we get a different relationship), we will fit two simple linear models again. In both cases, we want to estimate the relationship between Amazon Price and Pieces but in one we will only use the City sets and in the other we will only use the DUPLO sets.
+It appears that once again, we may have a different relationship between `Amazon_Price` and `Pieces` depending on which set grouping we consider. To see whether this is the case (i.e. that we get a different relationship), we will fit two simple linear models again. In both cases, we want to estimate the relationship between `Amazon_Price and `Pieces` but in one we will only use the City sets and in the other we will only use the DUPLO sets.
 
 Let's do this below.
 
@@ -749,11 +745,11 @@ abline(a = intercept_value, b = slope_value, col="black")
 # and these values are stored in your b_city and b_friends
 ```
 
-We did not need to fit two separate simple linear models to be able to estimate the trend between Amazon Price and Number of Pieces for the two Themes. Instead, we can use Theme as a predictor. We will do this now. Remember that we don't want to use the whole dataset because we don't want to include the Friends sets, so we will fit the model using the `noFriends` dataset we created earlier.
+We did not need to fit two separate simple linear models to be able to estimate the trend between `Amazon_Price` and `Pieces` for the two themes. Instead, we can use `Theme` as a predictor. Remember that we don't want to use the whole dataset because we don't want to include the Friends sets, so we will fit the model using the `noFriends` dataset we created earlier.
 
-To fit the same trend, we can simple include the Theme variable as an interaction with Pieces in the model. When we fit an interaction in a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2:predictor1, data=dataset)`. This makes it so that the effect of predictor1 changes depending on which group of predictor2 we are looking at.
+When we fit an interaction in a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2:predictor1, data=dataset)`. This makes it so that the effect of predictor1 changes depending on which group of predictor2 we are looking at.
 
-Try this now using Amazon_Price as the response, Pieces as predictor1 and Theme as  predictor2, on the dataset noFriends.
+Try this now using `Amazon_Price` as the response, `Pieces` as predictor1 and `Theme` as  predictor2, on the dataset `noFriends.`
 
 ```{r mlr2, exercise=TRUE, exercise.setup="mlr2_setup"}
 lm(Amazon_Price ~ Pieces + ____, data = ____)
@@ -767,10 +763,9 @@ lm(Amazon_Price ~ Pieces + Theme:Pieces, data = noFriends)
 grade_this_code()
 ```
 
-
-<div id="mlr2-hint">
-**Hint:** Remember that the interaction we want to include is `Theme:Pieces` and the dataset we want to use is `noFriends`.
-</div>
+```{r mlr2-hint-1}
+#Remember that the interaction we want to include is `Theme:Pieces` and the dataset we want to use is `noFriends`.
+```
 
 You should notice that the slope that is estimated on the interaction term `Theme:Pieces` is about 0.58. If we look back at the slopes we had in the simple linear models, the slope using the City sets was about 0.13 and the slope using the DUPLO sets was about 0.71, a difference of about 0.58. The slope on Pieces in the multiple linear model is 0.13 as well. So this tells us that **the slope of the interaction term is now much larger the mean Amazon Price is for an additional piece in a DUPLO set compared to a City set.**
 
@@ -822,7 +817,7 @@ grade_this_code()
 lego[lego$Theme == "DUPLO\xae", ]
 ```
 
-What you probably see from the results is that the relationship between Amazon Price and Pieces is different depending on the Theme (they have both different slopes and intercepts). To fit this relationship using a single model, we would have to include both a main effect AND an interaction term to create this difference. We would do this by specifying a model with the form `lm(response ~  predictor1 + predictor2 + predictor1:predictor2)`, or perhaps more simply `lm(response ~ predictor1*predictor2)`.
+What you probably see from the results is that the relationship between `Amazon_Price` and `Pieces` is different depending on the Theme (they have both different slopes and intercepts). To fit this relationship using a single model, we would have to include both a main effect AND an interaction term to create this difference. We would do this by specifying a model with the form `lm(response ~  predictor1 + predictor2 + predictor1:predictor2)`, or perhaps more simply `lm(response ~ predictor1*predictor2)`.
 
 Try both versions below, making sure to use a dataset that excludes the City sets.
 
@@ -884,7 +879,7 @@ lm(Amazon_Price ~ _____, data = lego)
 ```
 
 ```{r mlr4-solution, eval=FALSE}
-lm(Amazon_Price ~ Theme + Pieces:Theme, data = lego)
+lm(Amazon_Price ~ Theme + Pieces + Pieces:Theme, data = lego)
 ```
 
 ```{r mlr4-check}
@@ -911,7 +906,7 @@ question("Which estimated value from the above model represents the mean Amazon 
 
 ### Customizing the Relationship
 
-If you look closely at the model estimates, you will notice that the slope for the interaction of Pieces and Friends Theme is very small and close to 0. We also noticed through our explorations that the Friends and City Themes had almost the same slope in their respective simple linear models. So  you might wonder whether it's necessary to estimate a value for this slope at all.
+If you look closely at the model estimates, you will notice that the slope for the interaction of `Pieces` and the theme Friends is very small and close to 0. We also noticed through our explorations that the themes Friends and City had almost the same slope in their respective simple linear models. So  you might wonder whether it's necessary to estimate a value for this slope at all.
 
 It's definitely possible (as we'll see below), but most of the time, it's easier to leave the qualitative variables as they are, rather than change them to individual indicator variables. But since we've learned how to do this in Section 1, we can apply the same technique here.
 
@@ -963,8 +958,66 @@ In this model, we should now have a separate intercept for City, Friends and DUP
 
 ## Wrap-up
 
+To put it all together, explore how the simple linear model compares to the complete interaction model both graphically and in terms of the RSS below. Which model do you think more accurately describes the `lego` data? 
 
-TODO: Insert interactive piece
+```{r, context="render", echo=FALSE}
+withMathJax()
+radioButtons("model", "Select a model:", 
+             c("$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$",
+               "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}+ \\hat{\\beta_2}\\text{Theme} + \\hat{\\beta_3}\\text{Pieces}\\times\\text{Theme}$$")
+             )
+
+plotOutput("plot")
+tableOutput("table")
+```
+
+```{r, context="server"}
+
+    output$plot <- renderPlot({
+      
+      if(input$model == "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$"){
+        mod <- lm(Amazon_Price ~ Pieces, data=lego)
+        p <- ggplot(data = lego, aes(x = Pieces, y = Amazon_Price, color=Theme)) + geom_point() +
+              geom_abline(intercept=coef(mod)[1], slope=coef(mod)[2])
+        
+        
+      }
+      else{
+       
+      city <- lego[lego$Theme == "City",]
+      duplo <- lego[lego$Theme == "DUPLO\xae", ]
+      friends <- lego[lego$Theme == "Friends", ]
+      slr_city <- lm(Amazon_Price ~ Pieces, data = city)
+      slr_duplo <- lm(Amazon_Price ~ Pieces, data = duplo)
+      slr_friends <- lm(Amazon_Price ~ Pieces, data = friends)
+      
+      mod <- lm(Amazon_Price ~ Pieces*Theme, data=lego)
+              
+      p <- ggplot(data = lego, aes(x = Pieces, y = Amazon_Price, color=Theme)) + geom_point() +
+                geom_abline(intercept=coef(slr_city)[1], slope=coef(slr_city)[2]) + 
+                geom_abline(intercept=coef(slr_duplo)[1], slope=coef(slr_duplo)[2]) +
+                geom_abline(intercept=coef(slr_friends)[1], slope=coef(slr_friends)[2])
+      }
+      
+      p
+    
+
+})
+
+
+output$table <- renderTable({
+  if(input$model == "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$"){
+     mod <- lm(Amazon_Price ~ Pieces, data=lego)
+  }
+  else{
+    mod <- lm(Amazon_Price ~ Pieces*Theme, data=lego)
+  }
+    RSS <- sum(resid(mod)^2)
+    
+    data.frame(RSS = round(RSS, 2))
+})
+```
+
 
 Congratulations, you have completed this module! Hopefully by now, you are familiar with:
 
