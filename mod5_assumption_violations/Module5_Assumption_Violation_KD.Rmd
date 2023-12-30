@@ -1619,7 +1619,11 @@ As we learned, for homoscedasticity, the variance of the error term must be cons
 
 3. The vertical spread of the residuals should not increase or decrease as the fitted values increase.
 
-In the plot below, the slider allows you to adjust the variance for the error term. For a variance multiplier greater than zero, the variance of the error term becomes dependent on the fitted values. 
+In the plot below, the slider allows you to adjust the variance for the error term. For the purpose of this exercise, we define the variance as 
+
+$$\sigma_e^2 = 1 + \frac{a(x - \bar{x})^2}{s_x}$$
+
+such that for a variance multiplier i.e $a > 0$, the variance of the error term becomes dependent on the fitted values.  
 
 ```{r, context="server"}
 # First interactive exercise (Homoscedasticity)
@@ -1639,11 +1643,15 @@ output$variancePlot <- renderPlot({
 
   model <- lm(y ~ x)
   residuals <- resid(model)
-
+  x_range <- c(-10, 11)
+  y_range <- c(-8, 8)
+  
   # Plot residuals vs. fitted values
   ggplot(NULL, aes(fitted(model), residuals)) +
     geom_point() +
     geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
+    xlim(x_range[1], x_range[2]) + # Set fixed x-axis limits
+    ylim(y_range[1], y_range[2]) + # Set fixed y-axis limits
     labs(x = "Fitted Values (x)", y = "Residuals",
          title = "Residual Plot with Non-constant Variation in Error Terms") +
     theme_minimal()
@@ -1683,70 +1691,6 @@ As we learnt, it is important to ensure that the relationship between the predic
 In the interactive plot below, you can experiment with different model types (linear or quadratic) and observe how well the model fits the data. Keep note of the R-squared value and determine if they align with our expectations of linearity.
 
 
-```{r}
-# # UI for adjusting the variance multiplier
-# sliderInput("varianceMultiplier", 
-#             "Variance Multiplier:", 
-#             min = 0, 
-#             max = 10, 
-#             value = 0, 
-#             step = 2)
-# plotOutput("variancePlot")
-```
-
-```{r}
-# 
-#   output$variancePlot <- renderPlot({
-#     set.seed(302) # Ensure reproducibility
-# 
-#     # Simulated data
-#     x <- rnorm(500)
-#     
-#     # Control the level of heteroscedasticity through input$varianceMultiplier
-#     #variance <- 1 + input$varianceMultiplier * x    change slider to only go from 0-1 (show homoscedastic vs heteroscedastic)
-#     variance <- 1 + input$varianceMultiplier * (x - mean(x))^2 / sd(x)^2
-#     
-#     # Generate errors based on the specified variance
-#     e <- rnorm(500, sd = sqrt(variance))
-#     
-#     y <- 1 + 4 * x + e
-# 
-#     model <- lm(y ~ x)
-#     residuals <- resid(model)
-# 
-#     # Plot residuals vs. fitted values
-#     ggplot(NULL, aes(fitted(model), residuals)) +
-#       geom_point() +
-#       geom_hline(yintercept = 0, col = 'red', linetype = "dashed") +
-#       labs(x = "Fitted Values (x)", y = "Residuals",
-#            title = "Residual Plot with Non-constant Variation in Error Terms") +
-#       theme_minimal()
-#   })
-
-```
-
-
-
-```{r, context="render", echo = FALSE}
- fluidPage(
-  # titlePanel("Violating Linearity Assumption"),
-     tags$h1("Violating Linearity Assumption", style = "font-size: 18px;"),
-
-    fluidRow(
-        plotOutput("modelPlot")
-    ),
-    fluidRow(
-        selectInput("modelType", "Select Model Type for Linearity Exercise:", 
-                    choices = c("Linear", "Quadratic"))
-    ),
-    fluidRow(
-        tableOutput("modelStats")
-    )
-)
-
-```
-    
-
 ```{r, context="server"}
 
 #Second interactive exercise (Linearity)
@@ -1766,12 +1710,14 @@ fittedModel <- reactive({
   }
 })
 
+ y_range <- c(-800, 5000)
+
 output$modelPlot <- renderPlot({
   model <- fittedModel()
   ggplot(data, aes(x = x, y = y)) +
     geom_point() +
     geom_smooth(method = "lm", formula = y ~ poly(x, ifelse(input$modelType == "Linear", 1, ifelse(input$modelType == "Quadratic", 2, 3))), se = FALSE, colour = "red") +
-    labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  
+    labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  ylim(y_range[1], y_range[2]) +
     theme_minimal()
 })
 
@@ -1782,6 +1728,25 @@ output$modelStats <- renderTable({
   df[, c("r.squared")]
 })
 
+
+```
+
+```{r, context="render", echo = FALSE}
+ fluidPage(
+  # titlePanel("Violating Linearity Assumption"),
+     tags$h1("Violating Linearity Assumption", style = "font-size: 18px;"),
+
+    fluidRow(
+        plotOutput("modelPlot")
+    ),
+    fluidRow(
+        selectInput("modelType", "Select Model Type for Linearity Exercise:", 
+                    choices = c("Linear", "Quadratic"))
+    ),
+    fluidRow(
+        tableOutput("modelStats")
+    )
+)
 
 ```
 
