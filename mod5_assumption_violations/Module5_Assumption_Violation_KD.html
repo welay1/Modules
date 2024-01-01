@@ -1923,6 +1923,8 @@ options(tutorial.storage = list(
   get_object = function(...) NULL,
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
+
+#update.packages()
 </script>
 
 
@@ -1966,11 +1968,12 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "set.seed(302)", 
-    chunks = list(list(label = "sim1-setup", code = "set.seed(302)", 
-        opts = list(label = "\"sim1-setup\"", include = "F"), 
-        engine = "r"), list(label = "sim1", code = "# Set up parameters of the population errors\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n\n# Generate a sample from the true distribution of errors\ne <- rnorm(___, ___, ___)\n\n# Generate the predictors\nx1<-  rnorm(sample_size, mean = 0, sd = 5)\nx2<-  rnorm(sample_size, mean = 1, sd = 1)\n\n# use the predictors and the errors to get your response\ny <- ___\n\n#Fit a linear regression model and summarize the output\nmodel <- lm(___)\nsummary(model)", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "set.seed(302)", chunks = list(
+    list(label = "sim1-setup", code = "set.seed(302)", opts = list(
+        label = "\"sim1-setup\"", include = "F"), engine = "r"), 
+    list(label = "sim1", code = "# Set up parameters of the population errors\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n\n# Generate a sample from the true distribution of errors\ne <- rnorm(___, ___, ___)\n\n# Generate the predictors\nx1<-  rnorm(sample_size, mean = 0, sd = 5)\nx2<-  rnorm(sample_size, mean = 1, sd = 1)\n\n# use the predictors and the errors to get your response\ny <- ___\n\n#Fit a linear regression model and summarize the output\nmodel <- lm(___)\nsummary(model)", 
         opts = list(label = "\"sim1\"", exercise = "TRUE", exercise.lines = "20"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
@@ -2018,25 +2021,25 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q1", question = structure("Based on the summary for your model, which of the following statements is correct?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2b5ff71", 
+"character")), answers = list(structure(list(id = "lnr_ans_846fb74", 
     option = "The residual standard error has 48 degrees of freedom.", 
     value = "The residual standard error has 48 degrees of freedom.", 
     label = structure("The residual standard error has 48 degrees of freedom.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The degrees of freedome for the residual standard error is 50-2-1 or 47.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7163ace", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1cd2e4b", 
     option = "We have no evidence against the claim that the coefficient for $X_1$ is 0.", 
     value = "We have no evidence against the claim that the coefficient for $X_1$ is 0.", 
     label = structure("We have no evidence against the claim that the coefficient for \\(X_1\\) is 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Since the p-value for \\(X_1 &lt; 2e-16\\), this tells us that we have evidence that the slope of \\(X_1\\) is not 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d8d8546", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_584d34a", 
     option = "We have strong evidence that the true coefficient for $X_1$ is 0. ", 
     value = "We have strong evidence that the true coefficient for $X_1$ is 0. ", 
     label = structure("We have strong evidence that the true coefficient for \\(X_1\\) is 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Since the p-value for \\(X_1 &lt; 2e-16\\), this tells us that we have evidence that the slope of \\(X_1\\) is not 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc28ec0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6abb841", 
     option = "We have strong evidence against the claim that the coefficient for $X_2$ is 0.", 
     value = "We have strong evidence against the claim that the coefficient for $X_2$ is 0.", 
     label = structure("We have strong evidence against the claim that the coefficient for \\(X_2\\) is 0.", html = TRUE, class = c("html", 
@@ -2049,7 +2052,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q1-answer", question = "q1"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 9220076.49570657, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1297831343.89565, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2074,11 +2077,12 @@ learnr:::store_exercise_cache(structure(list(label = "confint1", global_setup = 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "set.seed(302)", 
-    chunks = list(list(label = "confint1-setup", code = "set.seed(302)", 
-        opts = list(label = "\"confint1-setup\"", include = "F"), 
-        engine = "r"), list(label = "confint1", code = "# set up the parameters like before\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n# include how many samples you want to take below\nnum_runs = _____\n\n# Initialize how you will store your results\n# Each row of the matrix will store an interval that contains 2 numbers\n# We will have as many rows as times we are sampling our population\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=____, ncol = ____)\n\n# the for loop will run the code below as many times as we have samples\nfor (i in 1:____){\n  e <- rnorm(sample_size, mean = error_mean, sd=error_sd)\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1 + x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- ____\n  Beta2CI[i,] <- ____\n}", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "set.seed(302)", chunks = list(
+    list(label = "confint1-setup", code = "set.seed(302)", opts = list(
+        label = "\"confint1-setup\"", include = "F"), engine = "r"), 
+    list(label = "confint1", code = "# set up the parameters like before\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n# include how many samples you want to take below\nnum_runs = _____\n\n# Initialize how you will store your results\n# Each row of the matrix will store an interval that contains 2 numbers\n# We will have as many rows as times we are sampling our population\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=____, ncol = ____)\n\n# the for loop will run the code below as many times as we have samples\nfor (i in 1:____){\n  e <- rnorm(sample_size, mean = error_mean, sd=error_sd)\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1 + x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- ____\n  Beta2CI[i,] <- ____\n}", 
         opts = list(label = "\"confint1\"", exercise = "TRUE", 
             exercise.lines = "26"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
@@ -2152,8 +2156,9 @@ learnr:::store_exercise_cache(structure(list(label = "confint1_1", global_setup 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "set.seed(302)\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n# include how many samples you want to take below\nnum_runs = 2000\n\n# Initialize how you will store your results\n# Each row of the matrix will store an interval that contains 2 numbers\n# We will have as many rows as times we are sampling our population\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=2000, ncol = 2)\n\n# the for loop will run the code below as many times as we have samples\nfor (i in 1:2000){\n  e <- rnorm(sample_size, mean = error_mean, sd=error_sd)\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1 + x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "set.seed(302)\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n# include how many samples you want to take below\nnum_runs = 2000\n\n# Initialize how you will store your results\n# Each row of the matrix will store an interval that contains 2 numbers\n# We will have as many rows as times we are sampling our population\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=2000, ncol = 2)\n\n# the for loop will run the code below as many times as we have samples\nfor (i in 1:2000){\n  e <- rnorm(sample_size, mean = error_mean, sd=error_sd)\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1 + x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
     chunks = list(list(label = "confint1_1-setup", code = "set.seed(302)\nerror_mean = 0\nerror_sd = 1\nsample_size = 50\n# include how many samples you want to take below\nnum_runs = 2000\n\n# Initialize how you will store your results\n# Each row of the matrix will store an interval that contains 2 numbers\n# We will have as many rows as times we are sampling our population\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=2000, ncol = 2)\n\n# the for loop will run the code below as many times as we have samples\nfor (i in 1:2000){\n  e <- rnorm(sample_size, mean = error_mean, sd=error_sd)\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1 + x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
         opts = list(label = "\"confint1_1-setup\"", include = "F"), 
         engine = "r"), list(label = "confint1_1", code = "# This is how we compute the coverage for the intercept:\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))\n\n# use the same template as aboce to finish the next two lines\nprint(paste0(\"Coverage for Slope X1: \", sum(___[,1] <=2 & ___[,2] >=2)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=___ & Beta2CI[,2] >=___)/num_runs))", 
@@ -2197,24 +2202,24 @@ learnr:::store_exercise_cache(structure(list(label = "confint1_1", global_setup 
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q3", question = structure("Which of the following statements is guaranteed to satisfy the homoscedasticity assumption?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2af9e95", 
+"character")), answers = list(structure(list(id = "lnr_ans_8e3ca06", 
     option = "$E(\\epsilon) = 0$", value = "$E(\\epsilon) = 0$", 
     label = structure("\\(E(\\epsilon) = 0\\)", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("While the expectation of the error term being zero is a critical assumption for an unbiased regression model, it does not address homoscedasticity. Homoscedasticity concerns the spread or variability of the error terms, not their central tendency (expectation).", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_77f3adf", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_52cdb21", 
     option = "$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$", 
     value = "$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$", 
     label = structure("\\(Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.\\)", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement checks for equal variance at two specific points, which is not sufficient to establish homoscedasticity across the entire range of X. Homoscedasticity requires the variance of the error terms to be constant across all values of the independent variable, not just at individual points.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b12f06e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9334432", 
     option = "$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant.", 
     value = "$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant.", 
     label = structure("\\(Var(\\epsilon \\mid X = x) = \\sigma^2 x^2\\) where \\(\\sigma^2\\) is a constant.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This condition indicates heteroscedasticity, not homoscedasticity, as the variance of the error term is explicitly modeled as increasing with the square of X. Homoscedasticity is violated here because the variability of the error terms depends on the value of X.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b9ce04", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_536afad", 
     option = "$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant.", 
     value = "$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant.", 
     label = structure("\\(Var(\\epsilon \\mid X = x) = σ^2.\\) where \\(\\sigma^2\\) is a constant.", html = TRUE, class = c("html", 
@@ -2227,7 +2232,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q3-answer", question = "q3"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1171970784.45426, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 838350094.109613, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2252,27 +2257,26 @@ learnr:::store_exercise_cache(structure(list(label = "confint2", global_setup = 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "confint2", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\n\n# Initialize how you will store your results\n# Each row of the matrix represents 1 simulation loop\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\n# repeat the commands num_run times\nfor (i in 1:num_runs){\n  # sample the predictors\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  # sample the errors\n  # Let's break constant variance by making it depend on the value of x1\n  e <- rnorm(sample_size, mean = error_mean, sd=____)\n  # sample the responses\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(___ ~ ____)\n  # Store the results so you won't lose it when we run the next run\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
-        opts = list(label = "\"confint2\"", exercise = "TRUE", 
-            exercise.lines = "30"), engine = "r")), code_check = NULL, 
-    error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
-        label = "confint2-check")), solution = structure(c("# Set up parameters", 
-    "error_mean = 0", "num_runs = 2000", "sample_size = 50", 
-    "", "# Initialize how you will store your results", "# Each row of the matrix represents 1 simulation loop", 
-    "Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)", 
-    "", "# repeat the commands num_run times", "for (i in 1:num_runs){", 
-    "  # sample the predictors", "  x1<-  rnorm(sample_size, mean = 0, sd = 5)", 
-    "  x2<-  rnorm(sample_size, mean = 1, sd = 1)", "  # sample the errors", 
-    "  # Let's break constant variance by making it depend on the value of x1", 
-    "  e <- rnorm(sample_size, mean = error_mean, sd= abs(x1))", 
-    "  # sample the responses", "  y <- 1 + 2*x1 + 3*x2 + e", 
-    "  # Fit the model and compute the confidence interval", 
-    "  model <- lm(y ~ x1 + x2)", "  # Store the results so you won't lose it when we run the next run", 
-    "  Beta0CI[i,] <- confint(model)[1,]", "  Beta1CI[i,] <- confint(model)[2,]", 
-    "  Beta2CI[i,] <- confint(model)[3,]", "}"), chunk_opts = list(
-        label = "confint2-solution", eval = FALSE)), tests = NULL, 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "confint2", 
+    code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\n\n# Initialize how you will store your results\n# Each row of the matrix represents 1 simulation loop\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\n# repeat the commands num_run times\nfor (i in 1:num_runs){\n  # sample the predictors\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  # sample the errors\n  # Let's break constant variance by making it depend on the value of x1\n  e <- rnorm(sample_size, mean = error_mean, sd=____)\n  # sample the responses\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(___ ~ ____)\n  # Store the results so you won't lose it when we run the next run\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
+    opts = list(label = "\"confint2\"", exercise = "TRUE", exercise.lines = "30"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+    label = "confint2-check")), solution = structure(c("# Set up parameters", 
+"error_mean = 0", "num_runs = 2000", "sample_size = 50", "", 
+"# Initialize how you will store your results", "# Each row of the matrix represents 1 simulation loop", 
+"Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)", 
+"", "# repeat the commands num_run times", "for (i in 1:num_runs){", 
+"  # sample the predictors", "  x1<-  rnorm(sample_size, mean = 0, sd = 5)", 
+"  x2<-  rnorm(sample_size, mean = 1, sd = 1)", "  # sample the errors", 
+"  # Let's break constant variance by making it depend on the value of x1", 
+"  e <- rnorm(sample_size, mean = error_mean, sd= abs(x1))", 
+"  # sample the responses", "  y <- 1 + 2*x1 + 3*x2 + e", "  # Fit the model and compute the confidence interval", 
+"  model <- lm(y ~ x1 + x2)", "  # Store the results so you won't lose it when we run the next run", 
+"  Beta0CI[i,] <- confint(model)[1,]", "  Beta1CI[i,] <- confint(model)[2,]", 
+"  Beta2CI[i,] <- confint(model)[3,]", "}"), chunk_opts = list(
+    label = "confint2-solution", eval = FALSE)), tests = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -2332,8 +2336,9 @@ learnr:::store_exercise_cache(structure(list(label = "confint2_1", global_setup 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\n\n# Initialize how you will store your results\n# Each row of the matrix represents 1 simulation loop\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\n# repeat the commands num_run times\nfor (i in 1:num_runs){\n  # sample the predictors\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  # sample the errors\n  # Let's break constant variance by making it depend on the value of x1\n  e <- rnorm(sample_size, mean = error_mean, sd=abs(x1))\n  # sample the responses\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1+x2)\n  # Store the results so you won't lose it when we run the next run\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\n\n# Initialize how you will store your results\n# Each row of the matrix represents 1 simulation loop\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\n# repeat the commands num_run times\nfor (i in 1:num_runs){\n  # sample the predictors\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  # sample the errors\n  # Let's break constant variance by making it depend on the value of x1\n  e <- rnorm(sample_size, mean = error_mean, sd=abs(x1))\n  # sample the responses\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1+x2)\n  # Store the results so you won't lose it when we run the next run\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
     chunks = list(list(label = "confint2_1-setup", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\n\n# Initialize how you will store your results\n# Each row of the matrix represents 1 simulation loop\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\n# repeat the commands num_run times\nfor (i in 1:num_runs){\n  # sample the predictors\n  x1<-  rnorm(sample_size, mean = 0, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  # sample the errors\n  # Let's break constant variance by making it depend on the value of x1\n  e <- rnorm(sample_size, mean = error_mean, sd=abs(x1))\n  # sample the responses\n  y <- 1 + 2*x1 + 3*x2 + e\n  # Fit the model and compute the confidence interval\n  model <- lm(y ~ x1+x2)\n  # Store the results so you won't lose it when we run the next run\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}", 
         opts = list(label = "\"confint2_1-setup\"", include = "F"), 
         engine = "r"), list(label = "confint2_1", code = "# Here is how the coverage is checked for the intercept CI\n\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))\n\n# fill in the coverage for the two slopes:\nprint(paste0(\"Coverage for Slope X1: \", sum(___[,1] <= ___ & ___[,2] >= ___)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,___] <= ___ & Beta2CI[,___] >= ___)/num_runs))", 
@@ -2376,25 +2381,25 @@ learnr:::store_exercise_cache(structure(list(label = "confint2_1", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q4", question = structure("Compared to what you saw for the coverage of \\(X_1\\) when all assumptions held, which of the following statements is true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_5cb7f25", 
+"character")), answers = list(structure(list(id = "lnr_ans_b8956cb", 
     option = "An error occurs when we try to compute the confidence interval when assumptions don't hold.", 
     value = "An error occurs when we try to compute the confidence interval when assumptions don't hold.", 
     label = structure("An error occurs when we try to compute the confidence interval when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement is not entirely accurate. While it’s not strictly an ‘error’ to compute a confidence interval when assumptions are violated, the resulting interval may not have the intended properties, giving us misleading results.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9422c65", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff40d13", 
     option = "The coverage is higher when assumptions don't hold.", 
     value = "The coverage is higher when assumptions don't hold.", 
     label = structure("The coverage is higher when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("In statistical terms, ‘coverage’ refers to the proportion of time that the confidence intervals contain the true parameter value. If the underlying assumptions are violated, the coverage is not guaranteed to be higher; in fact, it’s more likely to be lower or different from the expected level.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2ca02ff", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4d0f8b", 
     option = "The coverage is lower when assumptions don't hold.", 
     value = "The coverage is lower when assumptions don't hold.", 
     label = structure("The coverage is lower when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("When the statistical assumptions underlying the computation of a confidence interval are not met, the actual coverage rate of the interval can be lower than the nominal coverage rate. This means that the interval will contain the true parameter value less often than expected.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_80ce1b5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4945f50", 
     option = "The coverage is exactly the same when assumptions don't hold.", 
     value = "The coverage is exactly the same when assumptions don't hold.", 
     label = structure("The coverage is exactly the same when assumptions don’t hold.", html = TRUE, class = c("html", 
@@ -2407,31 +2412,31 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q4-answer", question = "q4"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1989620655.07351, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1865022415.63153, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q5", question = structure("Which ONE of the following statements regarding the linearity assumption is incorrect?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_9958cdd", 
+"character")), answers = list(structure(list(id = "lnr_ans_7719bc4", 
     option = "The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$.", 
     value = "The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$.", 
     label = structure("The linearity assumption says the conditional mean of  \\(Y |X = x\\) does not depend on \\(X\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is the correct answer because it inaccurately reflects the linearity assumption. The linearity assumption actually posits that the conditional mean of Y given X is a linear function of X. This incorrect statement suggests a lack of relationship between X and Y, which is contrary to the assumption.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f0fa160", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_74bb2e6", 
     option = "The linearity assumption says the conditional mean of  $Y |X = x$ is linear with respect to $X$. ", 
     value = "The linearity assumption says the conditional mean of  $Y |X = x$ is linear with respect to $X$. ", 
     label = structure("The linearity assumption says the conditional mean of  \\(Y |X = x\\) is linear with respect to \\(X\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("One phrasing of the linearity assumption is exactly this, that X is related to the conditional mean of Y in a linear fashion through the coefficients.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c55a61", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1ebd4dd", 
     option = "The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", 
     value = "The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", 
     label = structure("The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is an alternative phrasing of the linearity assumption, called the mean zero assumption, and is equivalent to option B through properties of linear combinations of Normal random variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7894aeb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_47166bc", 
     option = "The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", 
     value = "The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", 
     label = structure("The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", html = TRUE, class = c("html", 
@@ -2444,7 +2449,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q5-answer", question = "q5"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1325242676.88289, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 536512799.750167, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2469,11 +2474,12 @@ learnr:::store_exercise_cache(structure(list(label = "linearity1", global_setup 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "linearity1", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- _____\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(__________)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(__________)\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
-        opts = list(label = "\"linearity1\"", exercise = "TRUE", 
-            exercise.lines = "26"), engine = "r")), code_check = NULL, 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "linearity1", 
+    code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- _____\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(__________)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(__________)\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
+    opts = list(label = "\"linearity1\"", exercise = "TRUE", 
+        exercise.lines = "26"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
         label = "linearity1-check")), solution = structure(c("# Set up parameters", 
     "error_mean = 0", "num_runs = 2000", "sample_size = 50", 
@@ -2542,8 +2548,9 @@ learnr:::store_exercise_cache(structure(list(label = "confint3_1", global_setup 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
     chunks = list(list(label = "confint3-setup", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
         opts = list(label = "\"confint3-setup\"", include = "F"), 
         engine = "r"), list(label = "confint3_1", code = "# Here is how the coverage is checked for the intercept CI\n\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))\n\n# Fill in the gaps for the coverage of the slope of X2\nprint(paste0(\"Coverage for Slope X2: \", sum(___[,___] <= 3 & ___[,___] >= 3)/___))", 
@@ -2586,18 +2593,18 @@ learnr:::store_exercise_cache(structure(list(label = "confint3_1", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q6", question = structure("Which confidence interval has reduced coverage (i.e. smaller than 95%)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b28c1e4", 
+"character")), answers = list(structure(list(id = "lnr_ans_7dde496", 
     option = "Neither interval has reduced coverage", value = "Neither interval has reduced coverage", 
     label = structure("Neither interval has reduced coverage", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Check that you have computed the coverage correctly and that you have violated linearity as described.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a884e1", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_78a01f5", 
     option = "The interval for the slope of $X_2$ has reduced coverage", 
     value = "The interval for the slope of $X_2$ has reduced coverage", 
     label = structure("The interval for the slope of \\(X_2\\) has reduced coverage", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The coverage here should be close to 95%. Check that you have computed the coverage correctly and that you have violated linearity as described.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e13a606", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_39b9521", 
     option = "The interval for the intercept has reduced coverage", 
     value = "The interval for the intercept has reduced coverage", 
     label = structure("The interval for the intercept has reduced coverage", html = TRUE, class = c("html", 
@@ -2610,7 +2617,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q6-answer", question = "q6"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 926051666.068774, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1129627470.47398, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2635,8 +2642,9 @@ learnr:::store_exercise_cache(structure(list(label = "bias1", global_setup = str
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
     chunks = list(list(label = "confint3-setup", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=2)\nBeta0CI <- Beta1CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # add the true population relationship here\n  y <- 1 + 2*x1 + 3*x2 + e\n  #Let's break the linearity assumption by making it only depends on the value of x2\n  model <- lm(y ~ x2)\n  #Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(coef(model))\n  # Store the confidence intervals\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n}\n", 
         opts = list(label = "\"confint3-setup\"", include = "F"), 
         engine = "r"), list(label = "bias1", code = "# take the mean() of each COLUMN of our matrix of betas\nprint(paste0(\"Average value of the estimated intercept: \", mean(___)))\nprint(paste0(\"Average value of the estimated slope: \", mean(___)))", 
@@ -2676,19 +2684,19 @@ learnr:::store_exercise_cache(structure(list(label = "bias1", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q7", question = structure("Based on these averages, which of the following statements is TRUE?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_1ad76c4", 
+"character")), answers = list(structure(list(id = "lnr_ans_be8b39a", 
     option = "The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", 
     value = "The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", 
     label = structure("The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check your simulation, as we should see an issue with bias since we saw an issue with coverage.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9ced814", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d0b318f", 
     option = "The average value of the estimated slope of $X_2$ is very different from the true value.", 
     value = "The average value of the estimated slope of $X_2$ is very different from the true value.", 
     label = structure("The average value of the estimated slope of \\(X_2\\) is very different from the true value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("While it won’t be exactly the same, you should see that it is somewhat near the true value of 3. If not, double check your simulation.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_92547c0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b583c1", 
     option = "The estimate of the intercept appears to be biased as it is not near the true value.", 
     value = "The estimate of the intercept appears to be biased as it is not near the true value.", 
     label = structure("The estimate of the intercept appears to be biased as it is not near the true value.", html = TRUE, class = c("html", 
@@ -2701,7 +2709,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q7-answer", question = "q7"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 2095059926.02441, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1332916937.87931, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2726,11 +2734,12 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "linearity2", code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=3)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # Break the linearity assumption by squaring each predictor\n  y <- __________\n  # fit a model as we have previously assuming that linearity holds\n  model <- lm(__________)\n  # Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(__________)\n}\n\n# Print the mean of the estimated coefficients\nprint(paste0(\"Average value of the estimated intercept: \", mean(betas[,1])))\nprint(paste0(\"Average value of the estimated slope of X1: \", mean(betas[,2])))\nprint(paste0(\"Average value of the estimated slope of X2: \", mean(betas[,3])))", 
-        opts = list(label = "\"linearity2\"", exercise = "TRUE", 
-            exercise.lines = "25"), engine = "r")), code_check = NULL, 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "linearity2", 
+    code = "# Set up parameters\nerror_mean = 0\nnum_runs = 2000\nsample_size = 50\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_runs, ncol=3)\n\nfor (i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- rnorm(sample_size, mean = error_mean, sd = error_sd)\n  # Break the linearity assumption by squaring each predictor\n  y <- __________\n  # fit a model as we have previously assuming that linearity holds\n  model <- lm(__________)\n  # Store the coefficients of the model in matrix betas\n  betas[i,] <- as.numeric(__________)\n}\n\n# Print the mean of the estimated coefficients\nprint(paste0(\"Average value of the estimated intercept: \", mean(betas[,1])))\nprint(paste0(\"Average value of the estimated slope of X1: \", mean(betas[,2])))\nprint(paste0(\"Average value of the estimated slope of X2: \", mean(betas[,3])))", 
+    opts = list(label = "\"linearity2\"", exercise = "TRUE", 
+        exercise.lines = "25"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
         label = "linearity2-check")), solution = structure(c("# Set up parameters", 
     "error_mean = 0", "num_runs = 2000", "sample_size = 50", 
@@ -2783,25 +2792,25 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q8", question = structure("What do you notice about the average value of the estimated coefficients?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_3d2584c", 
+"character")), answers = list(structure(list(id = "lnr_ans_8e397f8", 
     option = "On average, the estimated coefficients are similar to the true value", 
     value = "On average, the estimated coefficients are similar to the true value", 
     label = structure("On average, the estimated coefficients are similar to the true value", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check how you’ve set up the true relationship that generates the data and the fitted model. They should be different.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2dfca00", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ce192c0", 
     option = "Only one of the estimated coefficients on average is different that the true value.", 
     value = "Only one of the estimated coefficients on average is different that the true value.", 
     label = structure("Only one of the estimated coefficients on average is different that the true value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check how you’ve set up the true relationship that generates the data and the fitted model. They should be different.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2cac294", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f37f9f", 
     option = "On average, the estimated coefficients are not estimating the correct true value.", 
     value = "On average, the estimated coefficients are not estimating the correct true value.", 
     label = structure("On average, the estimated coefficients are not estimating the correct true value.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is because the true relationship has the preedictors squared but the fitted model doesn’t. So the coefficients being estimated are not those that are part of the true relationship.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c1c085", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5a1aea", 
     option = "The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", 
     value = "The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", 
     label = structure("The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", html = TRUE, class = c("html", 
@@ -2814,25 +2823,25 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q8-answer", question = "q8"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1664071355.72511, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 598906471.221112, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q9", question = structure("Which statements is TRUE regarding the independent/uncorrelated errors assumption?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_5228077", 
+"character")), answers = list(structure(list(id = "lnr_ans_962abb2", 
     option = "The relationship $\\epsilon_{k+1} = \\epsilon_{k}$ for $k=1,2,3,...$ satisfies the independence assumption.", 
     value = "The relationship $\\epsilon_{k+1} = \\epsilon_{k}$ for $k=1,2,3,...$ satisfies the independence assumption.", 
     label = structure("The relationship \\(\\epsilon_{k+1} = \\epsilon_{k}\\) for \\(k=1,2,3,...\\) satisfies the independence assumption.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The assumption does not require that all errors be equal, rather that they have no relationship to each other.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_64b585", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_71d9d1e", 
     option = "The independence assumption states that $Corr(\\epsilon_i, \\epsilon_j) = 0$ for all $i \\neq j$.", 
     value = "The independence assumption states that $Corr(\\epsilon_i, \\epsilon_j) = 0$ for all $i \\neq j$.", 
     label = structure("The independence assumption states that \\(Corr(\\epsilon_i, \\epsilon_j) = 0\\) for all \\(i \\neq j\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("The assumption requires that all errors be uncorrelated with one another, namely have a correlation of 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_66365ea", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_56ef016", 
     option = "The independence assumption states that the observed predictors $X_1, X_2, X_3...$ are independent/uncorrelated of each other.", 
     value = "The independence assumption states that the observed predictors $X_1, X_2, X_3...$ are independent/uncorrelated of each other.", 
     label = structure("The independence assumption states that the observed predictors \\(X_1, X_2, X_3...\\) are independent/uncorrelated of each other.", html = TRUE, class = c("html", 
@@ -2845,7 +2854,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q9-answer", question = "q9"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 912351706.575153, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1014291302.52768, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2870,25 +2879,24 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "corr1", code = "# Set up parameters\nnum_runs = 2000\nsample_size = 100\n# setup storage\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor(i in 1:num_runs){\n  # generate the sample\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  e <- ____\n  y <- 1+2*x1+3*x2+e\n  # fit the model\n  model <- lm(y~x1+x2)\n  # store each confidence interval\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}\n\n# compute the coverage of the confidence intervals\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=__ & Beta0CI[,2] >=__)/num_runs))\nprint(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=__ & Beta1CI[,2] >=__)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=__ & Beta2CI[,2] >=__)/num_runs))", 
-        opts = list(label = "\"corr1\"", exercise = "TRUE", exercise.lines = "25"), 
-        engine = "r")), code_check = NULL, error_check = NULL, 
-    check = structure("grade_this_code()", chunk_opts = list(
-        label = "corr1-check")), solution = structure(c("# Set up parameters", 
-    "num_runs = 2000", "sample_size = 100", "# setup storage", 
-    "Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)", 
-    "", "for(i in 1:num_runs){", "  # generate the sample", "  x1<- rnorm(sample_size, mean = 1, sd = 5)", 
-    "  x2<- rnorm(sample_size, mean = 1, sd = 1)", "  e <- rnorm(sample_size, mean = 0, sd = 1)", 
-    "  y <- 1+2*x1+3*x2+e", "  # fit the model", "  model <- lm(y~x1+x2)", 
-    "  # store each confidence interval", "  Beta0CI[i,] <- confint(model)[1,]", 
-    "  Beta1CI[i,] <- confint(model)[2,]", "  Beta2CI[i,] <- confint(model)[3,]", 
-    "}", "", "# compute the coverage of the confidence intervals", 
-    "print(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))", 
-    "print(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))", 
-    "print(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))", 
-    ""), chunk_opts = list(label = "corr1-solution", eval = FALSE)), 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "corr1", 
+    code = "# Set up parameters\nnum_runs = 2000\nsample_size = 100\n# setup storage\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n\nfor(i in 1:num_runs){\n  # generate the sample\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  e <- ____\n  y <- 1+2*x1+3*x2+e\n  # fit the model\n  model <- lm(y~x1+x2)\n  # store each confidence interval\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}\n\n# compute the coverage of the confidence intervals\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=__ & Beta0CI[,2] >=__)/num_runs))\nprint(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=__ & Beta1CI[,2] >=__)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=__ & Beta2CI[,2] >=__)/num_runs))", 
+    opts = list(label = "\"corr1\"", exercise = "TRUE", exercise.lines = "25"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+    label = "corr1-check")), solution = structure(c("# Set up parameters", 
+"num_runs = 2000", "sample_size = 100", "# setup storage", "Beta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)", 
+"", "for(i in 1:num_runs){", "  # generate the sample", "  x1<- rnorm(sample_size, mean = 1, sd = 5)", 
+"  x2<- rnorm(sample_size, mean = 1, sd = 1)", "  e <- rnorm(sample_size, mean = 0, sd = 1)", 
+"  y <- 1+2*x1+3*x2+e", "  # fit the model", "  model <- lm(y~x1+x2)", 
+"  # store each confidence interval", "  Beta0CI[i,] <- confint(model)[1,]", 
+"  Beta1CI[i,] <- confint(model)[2,]", "  Beta2CI[i,] <- confint(model)[3,]", 
+"}", "", "# compute the coverage of the confidence intervals", 
+"print(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))", 
+"print(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))", 
+"print(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))", 
+""), chunk_opts = list(label = "corr1-solution", eval = FALSE)), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -2927,11 +2935,11 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q10", question = structure("Is the coverage of the confidence intervals about what you expected?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b3a02ae", 
+"character")), answers = list(structure(list(id = "lnr_ans_df8cc6d", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("All our assumptions hold, so we should observe no issues with the coverage. It should be around 95%.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c91d63b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_27008c7", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("All our assumptions hold, so we should observe no issues with the coverage. It should be around 95%. If this is not what you saw, double check that you have filled in the gaps to ensure the assumptions hold.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -2942,7 +2950,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q10-answer", question = "q10"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1378140915.85825, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 545299237.746075, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2968,11 +2976,12 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = "set.seed(1234)", 
-    chunks = list(list(label = "corr2-setup", code = "set.seed(1234)", 
-        opts = list(label = "\"corr2-setup\"", include = "F"), 
-        engine = "r"), list(label = "corr2", code = "# Set up parameters\nnum_runs = 5000\nsample_size = 100\n# set up the storage\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n# Build the covariance matrix by row\nrow1 <- c(___, 0.75, 0.5, 0.25)\nrow2 <- c(0.75, ___, 0.75, 0.5)\nrow3 <- c(0.5, 0.75, ___, 0.75)\nrow4 <- c(0.25, 0.5, 0.75, ___)\n# Create covariance matrix such that all errors corresponding to unique values of x1 will be correlated\nSigma = matrix(rbind(row1, row2, row3, row4), nrow=4, ncol=4)\nlibrary(MASS)\nfor(i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- as.vector(mvrnorm(n=25, mu = rep(___, times=4), Sigma = ____))\n  y <- 1+2*x1+3*x2+e\n  model <- lm(y~x1+x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}\n  \n# compute the coverage of the confidence intervals\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))\nprint(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))", 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = "set.seed(1234)", chunks = list(
+    list(label = "corr2-setup", code = "set.seed(1234)", opts = list(
+        label = "\"corr2-setup\"", include = "F"), engine = "r"), 
+    list(label = "corr2", code = "# Set up parameters\nnum_runs = 5000\nsample_size = 100\n# set up the storage\nBeta0CI <- Beta1CI <- Beta2CI <- matrix(NA, nrow=num_runs, ncol = 2)\n# Build the covariance matrix by row\nrow1 <- c(___, 0.75, 0.5, 0.25)\nrow2 <- c(0.75, ___, 0.75, 0.5)\nrow3 <- c(0.5, 0.75, ___, 0.75)\nrow4 <- c(0.25, 0.5, 0.75, ___)\n# Create covariance matrix such that all errors corresponding to unique values of x1 will be correlated\nSigma = matrix(rbind(row1, row2, row3, row4), nrow=4, ncol=4)\nlibrary(MASS)\nfor(i in 1:num_runs){\n  x1<-  rnorm(sample_size, mean = 1, sd = 5)\n  x2<-  rnorm(sample_size, mean = 1, sd = 1)\n  e <- as.vector(mvrnorm(n=25, mu = rep(___, times=4), Sigma = ____))\n  y <- 1+2*x1+3*x2+e\n  model <- lm(y~x1+x2)\n  Beta0CI[i,] <- confint(model)[1,]\n  Beta1CI[i,] <- confint(model)[2,]\n  Beta2CI[i,] <- confint(model)[3,]\n}\n  \n# compute the coverage of the confidence intervals\nprint(paste0(\"Coverage for Intercept: \", sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs))\nprint(paste0(\"Coverage for Slope X1: \", sum(Beta1CI[,1] <=2 & Beta1CI[,2] >=2)/num_runs))\nprint(paste0(\"Coverage for Slope X2: \", sum(Beta2CI[,1] <=3 & Beta2CI[,2] >=3)/num_runs))", 
         opts = list(label = "\"corr2\"", exercise = "TRUE", exercise.lines = "30", 
             exercise.setup = "\"corr2-setup\""), engine = "r")), 
     code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
@@ -3033,25 +3042,25 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q11", question = structure("What do you notice about the coverage?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_5b70b5c", 
+"character")), answers = list(structure(list(id = "lnr_ans_77df81", 
     option = "At least one confidence interval does not have the correct coverage.", 
     value = "At least one confidence interval does not have the correct coverage.", 
     label = structure("At least one confidence interval does not have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("We should notice that the intercept has lower coverage than it should, indicating that having correlated errors impacts this property.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1b3eef", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_940fb27", 
     option = "All of the confidence intervals do not have the correct coverage.", 
     value = "All of the confidence intervals do not have the correct coverage.", 
     label = structure("All of the confidence intervals do not have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This type of violation does not usually impact all confidence intervals, and this should be supported by the values you compare between section 4.1 and 4.2.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc7b0fb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d09e8fa", 
     option = "All of the confidence intervals have the correct coverage.", 
     value = "All of the confidence intervals have the correct coverage.", 
     label = structure("All of the confidence intervals have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This type of violation usually impacts at least one of the confidence intervals, and this should be supported by the values you compare between section 4.1 and 4.2.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bfbac69", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fba94af", 
     option = "I'm not sure what is happening to the coverage", 
     value = "I'm not sure what is happening to the coverage", 
     label = structure("I’m not sure what is happening to the coverage", html = TRUE, class = c("html", 
@@ -3064,7 +3073,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q11-answer", question = "q11"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 504479645.765083, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1252113337.91694, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3072,22 +3081,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q12", question = structure("Which quantity should NOT have a Normal distribution, assuming the Normality assumption is not violated?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_239d2d2", 
+"character")), answers = list(structure(list(id = "lnr_ans_5343fa1", 
     option = "The population responses", value = "The population responses", 
     label = structure("The population responses", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The Normality assumption can equivalently be written for the responses or the errors.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fe63e1f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3e1f3", 
     option = "The population errors", value = "The population errors", 
     label = structure("The population errors", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The Normality assumption can equivalently be written for the responses or the errors.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d6ef3f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8ce5fb", 
     option = "The estimators of the coefficients", value = "The estimators of the coefficients", 
     label = structure("The estimators of the coefficients", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If the Normality assumption holds, then by properties of Normal random variables, the distribution of the estimators will also be Normal.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f2db37", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_52978f4", 
     option = "The population predictors", value = "The population predictors", 
     label = structure("The population predictors", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("In linear regression, the predictors are fixed, not random, and therefore do not have a distribution.", html = TRUE, class = c("html", 
@@ -3099,7 +3108,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q12-answer", question = "q12"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 936977675.563686, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 595650540.722629, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3125,24 +3134,23 @@ learnr:::store_exercise_cache(structure(list(label = "norm1", global_setup = str
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "norm1", code = "# Set up parameters\nnum_runs = 2000\nsample_size = 25\n# setup storage\nbetas <- matrix(NA, nrow=num_runs, ncol = ___)\n\nfor(i in 1:num_runs){\n  # generate the sample\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  e <- ____\n  y <- 1+2*x1+3*x2+e\n  # fit the model\n  model <- lm(y~x1+x2)\n  # store each coefficient\n  betas[i,] <- as.numeric(___)\n}\n\n# plot a histogram of each coefficient\npar(mfrow=c(1,3))\nhist(betas[,1], main=\"Intercept Distribution\", xlab=\"Estimated Intercepts\")\nhist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"Estimated X1 Slopes\")\nhist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"Estimated X2 Slopes\")", 
-        opts = list(label = "\"norm1\"", exercise = "TRUE", exercise.lines = "25"), 
-        engine = "r")), code_check = NULL, error_check = NULL, 
-    check = structure("grade_this_code()", chunk_opts = list(
-        label = "norm1-check")), solution = structure(c("# Set up parameters", 
-    "num_runs = 2000", "sample_size = 25", "# setup storage", 
-    "betas <- matrix(NA, nrow=num_runs, ncol = 3)", "", "for(i in 1:num_runs){", 
-    "  # generate the sample", "  x1<- rnorm(sample_size, mean = 1, sd = 5)", 
-    "  x2<- rnorm(sample_size, mean = 1, sd = 1)", "  e <- rnorm(sample_size, mean = 0, sd = 1)", 
-    "  y <- 1+2*x1+3*x2+e", "  # fit the model", "  model <- lm(y~x1+x2)", 
-    "  # store each coefficient", "  betas[i,] <- as.numeric(coef(model))", 
-    "}", "", "# plot a histogram of each coefficient", "par(mfrow=c(1,3))", 
-    "hist(betas[,1], main=\"Intercept Distribution\", xlab=\"Estimated Intercepts\")", 
-    "hist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"Estimated X1 Slopes\")", 
-    "hist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"Estimated X2 Slopes\")"
-    ), chunk_opts = list(label = "norm1-solution", eval = FALSE)), 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "norm1", 
+    code = "# Set up parameters\nnum_runs = 2000\nsample_size = 25\n# setup storage\nbetas <- matrix(NA, nrow=num_runs, ncol = ___)\n\nfor(i in 1:num_runs){\n  # generate the sample\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  e <- ____\n  y <- 1+2*x1+3*x2+e\n  # fit the model\n  model <- lm(y~x1+x2)\n  # store each coefficient\n  betas[i,] <- as.numeric(___)\n}\n\n# plot a histogram of each coefficient\npar(mfrow=c(1,3))\nhist(betas[,1], main=\"Intercept Distribution\", xlab=\"Estimated Intercepts\")\nhist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"Estimated X1 Slopes\")\nhist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"Estimated X2 Slopes\")", 
+    opts = list(label = "\"norm1\"", exercise = "TRUE", exercise.lines = "25"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+    label = "norm1-check")), solution = structure(c("# Set up parameters", 
+"num_runs = 2000", "sample_size = 25", "# setup storage", "betas <- matrix(NA, nrow=num_runs, ncol = 3)", 
+"", "for(i in 1:num_runs){", "  # generate the sample", "  x1<- rnorm(sample_size, mean = 1, sd = 5)", 
+"  x2<- rnorm(sample_size, mean = 1, sd = 1)", "  e <- rnorm(sample_size, mean = 0, sd = 1)", 
+"  y <- 1+2*x1+3*x2+e", "  # fit the model", "  model <- lm(y~x1+x2)", 
+"  # store each coefficient", "  betas[i,] <- as.numeric(coef(model))", 
+"}", "", "# plot a histogram of each coefficient", "par(mfrow=c(1,3))", 
+"hist(betas[,1], main=\"Intercept Distribution\", xlab=\"Estimated Intercepts\")", 
+"hist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"Estimated X1 Slopes\")", 
+"hist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"Estimated X2 Slopes\")"
+), chunk_opts = list(label = "norm1-solution", eval = FALSE)), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -3179,25 +3187,25 @@ learnr:::store_exercise_cache(structure(list(label = "norm1", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "normq", question = structure("What do you notice about the sampling distributions?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e7c81db", 
+"character")), answers = list(structure(list(id = "lnr_ans_8efe327", 
     option = "The sampling distributions appear to be non-Normal shaped.", 
     value = "The sampling distributions appear to be non-Normal shaped.", 
     label = structure("The sampling distributions appear to be non-Normal shaped.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("By properties of Normals, they should look approximately Normal.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_604fe39", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e03abc4", 
     option = "The sampling distributions appear to be centred at the true values of the coefficients.", 
     value = "The sampling distributions appear to be centred at the true values of the coefficients.", 
     label = structure("The sampling distributions appear to be centred at the true values of the coefficients.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("If all assumptions hold, our estimates should be unbiased, meaning that the expected value is the true value.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_afe2f0b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_693ae30", 
     option = "The estimators of the coefficients appear to be biased.", 
     value = "The estimators of the coefficients appear to be biased.", 
     label = structure("The estimators of the coefficients appear to be biased.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If all assumptions hold, our estimates should be unbiased, meaning that the expected value is the true value.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_386ed76", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a43f74", 
     option = "We would expect the coverage of the confidence intervals to be much less than 95%.", 
     value = "We would expect the coverage of the confidence intervals to be much less than 95%.", 
     label = structure("We would expect the coverage of the confidence intervals to be much less than 95%.", html = TRUE, class = c("html", 
@@ -3210,7 +3218,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "normq-answer", question = "normq"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1390484836.3525, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 354315427.835009, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3236,23 +3244,23 @@ learnr:::store_exercise_cache(structure(list(label = "norm2", global_setup = str
 "library(remotes)", "library(gradethis)", "", "gradethis::gradethis_setup()", 
 "", "", "knitr::opts_chunk$set(echo = FALSE)", "", "options(tutorial.storage = list(", 
 "  save_object = function(...){},", "  get_object = function(...) NULL,", 
-"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))"
-), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
-    chunks = list(list(label = "norm2", code = "# Set up parameters\nerror_mean = 0\nnum_run = 2000\nsample_size = 25\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_run, ncol=3)\n\nfor(i in 1:num_run){\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  # Use a log-Normal distribution\n  e <- __________\n  y <- 1+2*x1+3*x2+e\n  model <- lm(y~x1+x2)\n  betas[i,] <- as.numeric(_____)\n}\n\n# plot the distribution of betas\npar(mfrow=c(1,3))\nhist(betas[,1], main=\"Intercept Distribution\", xlab=\"Intercept\")\nhist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"X1 Slope\")\nhist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"X2 Slope\")\n", 
-        opts = list(label = "\"norm2\"", exercise = "TRUE", exercise.lines = "25"), 
-        engine = "r")), code_check = NULL, error_check = NULL, 
-    check = structure("grade_this_code()", chunk_opts = list(
-        label = "norm2-check")), solution = structure(c("# Set up parameters", 
-    "error_mean = 0", "num_run = 2000", "sample_size = 25", "error_sd = 1", 
-    "betas <- matrix(NA, nrow=num_run, ncol=3)", "", "for(i in 1:num_run){", 
-    "  x1<- rnorm(sample_size, mean = 1, sd = 5)", "  x2<- rnorm(sample_size, mean = 1, sd = 1)", 
-    "  # Use a log-Normal distribution", "  e <- rlnorm(sample_size, meanlog = 0, sdlog = 1)", 
-    "  y <- 1+2*x1+3*x2+e", "  model <- lm(y~x1+x2)", "  betas[i,] <- as.numeric(coef(model))", 
-    "}", "", "# plot the distribution of betas", "par(mfrow=c(1,3))", 
-    "hist(betas[,1], main=\"Intercept Distribution\", xlab=\"Intercept\")", 
-    "hist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"X1 Slope\")", 
-    "hist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"X2 Slope\")"
-    ), chunk_opts = list(label = "norm2-solution", eval = FALSE)), 
+"  get_objects = function(...) list(),", "  remove_all_objects = function(...){}))", 
+"", "#update.packages()"), chunk_opts = list(label = "setup", 
+    include = FALSE)), setup = NULL, chunks = list(list(label = "norm2", 
+    code = "# Set up parameters\nerror_mean = 0\nnum_run = 2000\nsample_size = 25\nerror_sd = 1\nbetas <- matrix(NA, nrow=num_run, ncol=3)\n\nfor(i in 1:num_run){\n  x1<- rnorm(sample_size, mean = 1, sd = 5)\n  x2<- rnorm(sample_size, mean = 1, sd = 1)\n  # Use a log-Normal distribution\n  e <- __________\n  y <- 1+2*x1+3*x2+e\n  model <- lm(y~x1+x2)\n  betas[i,] <- as.numeric(_____)\n}\n\n# plot the distribution of betas\npar(mfrow=c(1,3))\nhist(betas[,1], main=\"Intercept Distribution\", xlab=\"Intercept\")\nhist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"X1 Slope\")\nhist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"X2 Slope\")\n", 
+    opts = list(label = "\"norm2\"", exercise = "TRUE", exercise.lines = "25"), 
+    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
+    label = "norm2-check")), solution = structure(c("# Set up parameters", 
+"error_mean = 0", "num_run = 2000", "sample_size = 25", "error_sd = 1", 
+"betas <- matrix(NA, nrow=num_run, ncol=3)", "", "for(i in 1:num_run){", 
+"  x1<- rnorm(sample_size, mean = 1, sd = 5)", "  x2<- rnorm(sample_size, mean = 1, sd = 1)", 
+"  # Use a log-Normal distribution", "  e <- rlnorm(sample_size, meanlog = 0, sdlog = 1)", 
+"  y <- 1+2*x1+3*x2+e", "  model <- lm(y~x1+x2)", "  betas[i,] <- as.numeric(coef(model))", 
+"}", "", "# plot the distribution of betas", "par(mfrow=c(1,3))", 
+"hist(betas[,1], main=\"Intercept Distribution\", xlab=\"Intercept\")", 
+"hist(betas[,2], main=\"X1 Slope Distribution\", xlab=\"X1 Slope\")", 
+"hist(betas[,3], main=\"X2 Slope Distribution\", xlab=\"X2 Slope\")"
+), chunk_opts = list(label = "norm2-solution", eval = FALSE)), 
     tests = NULL, options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -3289,19 +3297,19 @@ learnr:::store_exercise_cache(structure(list(label = "norm2", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q13", question = structure("What about the sampling distribution has changed now that Normality is violated?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_269aab6", 
+"character")), answers = list(structure(list(id = "lnr_ans_9f001a7", 
     option = "The sampling distributions are more bell-shaped now than when Normality held.", 
     value = "The sampling distributions are more bell-shaped now than when Normality held.", 
     label = structure("The sampling distributions are more bell-shaped now than when Normality held.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The opposite should be true, as we are generating our errors from a very highly skewed distribution. So you should see a less bell-shaped appearance than before.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9be40e8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d030363", 
     option = "The mean of all sampling distributions are still around the true value of the coefficients.", 
     value = "The mean of all sampling distributions are still around the true value of the coefficients.", 
     label = structure("The mean of all sampling distributions are still around the true value of the coefficients.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("We should observe a slightly different mean in at least one of the sampling distributions, most likely the intercept.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c9f39e8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_63c5b24", 
     option = "The sampling distributions exhibit more variability in the estimated coefficients.", 
     value = "The sampling distributions exhibit more variability in the estimated coefficients.", 
     label = structure("The sampling distributions exhibit more variability in the estimated coefficients.", html = TRUE, class = c("html", 
@@ -3314,32 +3322,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q13-answer", question = "q13"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1109511917.48334, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1005127317.53195, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q14", question = structure("What types of mistakes could we make if we use inferential tools without checking assumptions?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_6573932", 
+"character")), answers = list(structure(list(id = "lnr_ans_2601d1f", 
     option = "We might conclude an effect is significant when it isn't.", 
     value = "We might conclude an effect is significant when it isn't.", 
     label = structure("We might conclude an effect is significant when it isn’t.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since p-values are directly linked to the sampling distribution. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7330052", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac8a958", 
     option = "We might obtain an estimate of a quantity that is far from being true.", 
     value = "We might obtain an estimate of a quantity that is far from being true.", 
     label = structure("We might obtain an estimate of a quantity that is far from being true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since we’ve seen that violated assumptions can lead to biased estimation. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_da66438", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f1f0b5", 
     option = "We might have more confidence in our results and process than we should.", 
     value = "We might have more confidence in our results and process than we should.", 
     label = structure("We might have more confidence in our results and process than we should.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since we saw that violated assumptions lead to lower coverage. meaning we will have more confidence than we should. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7b18ef4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1fa2759", 
     option = "All of the options are potential mistakes.", value = "All of the options are potential mistakes.", 
     label = structure("All of the options are potential mistakes.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Bias means the centre of the sampling distribution isn’t in the correct place, which means our confidence intervals are less likely to capture the truth. Further, if sampling distributions are not as they should be, we will compute incorrect p-values and thus make decisions regarding significance that may be incorrect.", html = TRUE, class = c("html", 
@@ -3351,7 +3359,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q14-answer", question = "q14"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 439068999.295543, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 668707117.188609, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3448,7 +3456,18 @@ output$independencePlot <- renderPlot({
 })
 
 #### For Homoscedasticity
+
+# Conditional UI for the variance multiplier
+    output$varianceMultiplierUI <- renderUI({
+        if (input$plotType == "Homoscedasticity") {
+            sliderInput("varianceMultiplier", "Variance Multiplier:",
+                        min = 0, max = 10, value = 0, step =2)
+        }
+    })
+
 output$homoscedasticityPlot <- renderPlot({
+  print(paste("Variance Multiplier:", input$varianceMultiplier))
+
   set.seed(302) # Ensure reproducibility
 
   # Simulated data
@@ -3472,6 +3491,14 @@ output$homoscedasticityPlot <- renderPlot({
 })
 
 #### Plotting for Linearity
+
+ # Conditional UI for the model type
+    output$modelTypeUI <- renderUI({
+        if (input$plotType == "Linearity") {
+            selectInput("modelType", "Model Type:",
+                        choices = c("Linear" = "Linear", "Quadratic" = "Quadratic", "Cubic" = "Cubic"), selected = "Linear")}
+    })
+    
 
 fittedModel <- reactive({
     set.seed(301)
@@ -3519,22 +3546,6 @@ output$linearPlot <- renderPlot({
 })
     
     
-    # Conditional UI for the variance multiplier
-    output$varianceMultiplierUI <- renderUI({
-        if (input$plotType == "Homoscedasticity") {
-            sliderInput("varianceMultiplier", "Variance Multiplier:",
-                        min = 0, max = 10, value = 0, step =2)
-        }
-    })
-    
-    # Conditional UI for the model type
-    output$modelTypeUI <- renderUI({
-        if (input$plotType == "Linearity") {
-            selectInput("modelType", "Model Type:",
-                        choices = c("Linear" = "Linear", "Quadratic" = "Quadratic", "Cubic" = "Cubic"), selected = "Linear")}
-    })
-    
-    
 output$plotUI <- renderUI({
     if (input$plotType == "Independence") {
         plotOutput("independencePlot")
@@ -3554,7 +3565,7 @@ output$plotUI <- renderUI({
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","bslib","cachem","checkmate","cli","colorspace","commonmark","compiler","datasets","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","memoise","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","1.0.5","0.6.1","1.0.8","2.3.0","3.6.1","2.1-0","1.9.0","4.3.1","4.3.1","0.6.33","1.1.3","0.3.2","0.23","1.0.5","1.1.1","0.5.2","1.0.0","0.1.3","3.4.3","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","1.1.3","0.5.7","1.6.3","1.6.12","0.1.4","1.8.7","1.45","1.3.1","0.11.5.9000","1.0.4","1.9.3","2.0.3","1.11","7.3-60","2.0.1","4.3.1","0.12","0.5.0","1.9.0","2.0.3","1.2.1","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.2","2.25","2.0.4","0.15.0","0.4.7","1.2.1","1.8.0","4.3.1","1.8.2","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.4","2.5.2","0.41","1.8-4","2.3.7"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","bslib","cachem","checkmate","cli","colorspace","commonmark","compiler","datasets","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","memoise","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","1.0.5","0.6.1","1.0.8","2.3.1","3.6.2","2.1-0","1.9.0","4.3.1","4.3.1","0.6.33","1.1.4","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.4","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","1.1.3","0.5.7","1.6.4","1.6.13","0.1.4","1.8.8","1.45","1.3.2","0.11.5.9000","1.0.4","1.9.3","2.0.3","1.12","7.3-60","2.0.1","4.3.1","0.12","0.5.0","1.9.0","2.0.3","1.2.1","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.2","2.25","2.0.4","0.15.0","0.4.8","1.3.0","1.8.0","4.3.1","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.5","2.5.2","0.41","1.8-4","2.3.8"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>

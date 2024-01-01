@@ -45,6 +45,8 @@ options(tutorial.storage = list(
   get_object = function(...) NULL,
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
+
+#update.packages()
 ```
 
 
@@ -1773,7 +1775,18 @@ output$independencePlot <- renderPlot({
 })
 
 #### For Homoscedasticity
+
+# Conditional UI for the variance multiplier
+    output$varianceMultiplierUI <- renderUI({
+        if (input$plotType == "Homoscedasticity") {
+            sliderInput("varianceMultiplier", "Variance Multiplier:",
+                        min = 0, max = 10, value = 0, step =2)
+        }
+    })
+
 output$homoscedasticityPlot <- renderPlot({
+  print(paste("Variance Multiplier:", input$varianceMultiplier))
+
   set.seed(302) # Ensure reproducibility
 
   # Simulated data
@@ -1797,6 +1810,14 @@ output$homoscedasticityPlot <- renderPlot({
 })
 
 #### Plotting for Linearity
+
+ # Conditional UI for the model type
+    output$modelTypeUI <- renderUI({
+        if (input$plotType == "Linearity") {
+            selectInput("modelType", "Model Type:",
+                        choices = c("Linear" = "Linear", "Quadratic" = "Quadratic", "Cubic" = "Cubic"), selected = "Linear")}
+    })
+    
 
 fittedModel <- reactive({
     set.seed(301)
@@ -1842,22 +1863,6 @@ output$linearPlot <- renderPlot({
         broom::glance(model)[, c("r.squared")]
     }
 })
-    
-    
-    # Conditional UI for the variance multiplier
-    output$varianceMultiplierUI <- renderUI({
-        if (input$plotType == "Homoscedasticity") {
-            sliderInput("varianceMultiplier", "Variance Multiplier:",
-                        min = 0, max = 10, value = 0, step =2)
-        }
-    })
-    
-    # Conditional UI for the model type
-    output$modelTypeUI <- renderUI({
-        if (input$plotType == "Linearity") {
-            selectInput("modelType", "Model Type:",
-                        choices = c("Linear" = "Linear", "Quadratic" = "Quadratic", "Cubic" = "Cubic"), selected = "Linear")}
-    })
     
     
 output$plotUI <- renderUI({
