@@ -1769,7 +1769,7 @@ output$independencePlot <- renderPlot({
   
   # Create a scatter plot matrix
   pairs(data, main = "Scatter Plot Matrix for Independence Violation",
-        pch = 21, bg = c("red", "green3", "blue")[unclass(data$x1)])
+        pch = 21, lower.panel = NULL)
 })
 
 #### For Homoscedasticity
@@ -1831,11 +1831,17 @@ output$linearPlot <- renderPlot({
    
 
     # Model statistics for Linearity
+    #output$modelStats <- renderTable({
+        #model <- fittedModel()
+        #broom::glance(model)[, c("r.squared")]
+    #})
+    
     output$modelStats <- renderTable({
+    if (input$plotType == "Linearity") {
         model <- fittedModel()
         broom::glance(model)[, c("r.squared")]
-    })
-    
+    }
+})
     
     
     # Conditional UI for the variance multiplier
