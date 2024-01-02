@@ -1698,7 +1698,7 @@ In the interactive plot below, you can experiment with different model types (li
 #Second interactive exercise (Linearity)
 
 set.seed(301)
-x <- runif(100, 0, 10)
+x <- runif(100, 0, 10 )
 data <- data.frame(
     x = x,
     y = 1 + 5 * x^3 + rnorm(100, 0, 200)  
@@ -1707,7 +1707,9 @@ data <- data.frame(
 fittedModel <- reactive({
   if (input$modelType == "Linear") {
     lm(y ~ x, data = data)
-  } else {
+  } else if (input$modelType == "Quadratic") {
+    lm(y ~ poly(x, 2), data = data)
+  } else{
     lm(y ~ poly(x, 3), data = data)
   }
 })
@@ -1718,7 +1720,11 @@ output$modelPlot <- renderPlot({
   model <- fittedModel()
   ggplot(data, aes(x = x, y = y)) +
     geom_point() +
-    geom_smooth(method = "lm", formula = y ~ poly(x, ifelse(input$modelType == "Linear", 1, ifelse(input$modelType == "Quadratic", 2, 3))), se = FALSE, colour = "red") +
+    geom_smooth(method = "lm", formula = y ~ poly(x, 
+      ifelse(input$modelType == "Linear", 1, 
+        ifelse(input$modelType == "Quadratic", 2, 
+          ifelse(input$modelType == "Cubic", 3, 1)))), 
+      se = FALSE, colour = "red") +
     labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  ylim(y_range[1], y_range[2]) +
     theme_minimal()
 })
@@ -1726,8 +1732,9 @@ output$modelPlot <- renderPlot({
 
 output$modelStats <- renderTable({
   model <- fittedModel()
+  req(input$modelType)
   df <- broom::glance(model)
-  df[, c("r.squared")]
+  df[, c("r.squared", "adj.r.squared")]
 })
 
 
@@ -1743,7 +1750,7 @@ output$modelStats <- renderTable({
     ),
     fluidRow(
         selectInput("modelType", "Select Model Type for Linearity Exercise:", 
-                    choices = c("Linear", "Quadratic"))
+                    choices = c("Linear", "Quadratic", "Cubic"))
     ),
     fluidRow(
         tableOutput("modelStats")
@@ -1898,6 +1905,8 @@ fluidPage(
 
 
 ```
+
+## Test xyz
 
 
 ## Wrap-Up

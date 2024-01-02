@@ -1833,7 +1833,8 @@ with our expectations of linearity.</p>
 <label class="control-label" id="modelType-label" for="modelType">Select Model Type for Linearity Exercise:</label>
 <div>
 <select id="modelType" class="shiny-input-select"><option value="Linear" selected>Linear</option>
-<option value="Quadratic">Quadratic</option></select>
+<option value="Quadratic">Quadratic</option>
+<option value="Cubic">Cubic</option></select>
 <script type="application/json" data-for="modelType" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
 </div>
 </div>
@@ -1874,6 +1875,9 @@ good work!</p>
 </div>
 </div>
 </div>
+</div>
+<div id="section-test-xyz" class="section level2">
+<h2>Test xyz</h2>
 </div>
 <div id="section-wrap-up" class="section level2">
 <h2>Wrap-Up</h2>
@@ -2021,25 +2025,25 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q1", question = structure("Based on the summary for your model, which of the following statements is correct?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_846fb74", 
+"character")), answers = list(structure(list(id = "lnr_ans_6d7a1af", 
     option = "The residual standard error has 48 degrees of freedom.", 
     value = "The residual standard error has 48 degrees of freedom.", 
     label = structure("The residual standard error has 48 degrees of freedom.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The degrees of freedome for the residual standard error is 50-2-1 or 47.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1cd2e4b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c2829f7", 
     option = "We have no evidence against the claim that the coefficient for $X_1$ is 0.", 
     value = "We have no evidence against the claim that the coefficient for $X_1$ is 0.", 
     label = structure("We have no evidence against the claim that the coefficient for \\(X_1\\) is 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Since the p-value for \\(X_1 &lt; 2e-16\\), this tells us that we have evidence that the slope of \\(X_1\\) is not 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_584d34a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c76487b", 
     option = "We have strong evidence that the true coefficient for $X_1$ is 0. ", 
     value = "We have strong evidence that the true coefficient for $X_1$ is 0. ", 
     label = structure("We have strong evidence that the true coefficient for \\(X_1\\) is 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Since the p-value for \\(X_1 &lt; 2e-16\\), this tells us that we have evidence that the slope of \\(X_1\\) is not 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6abb841", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3cdf651", 
     option = "We have strong evidence against the claim that the coefficient for $X_2$ is 0.", 
     value = "We have strong evidence against the claim that the coefficient for $X_2$ is 0.", 
     label = structure("We have strong evidence against the claim that the coefficient for \\(X_2\\) is 0.", html = TRUE, class = c("html", 
@@ -2052,7 +2056,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q1-answer", question = "q1"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1297831343.89565, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 196034187.908714, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2202,24 +2206,24 @@ learnr:::store_exercise_cache(structure(list(label = "confint1_1", global_setup 
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q3", question = structure("Which of the following statements is guaranteed to satisfy the homoscedasticity assumption?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8e3ca06", 
+"character")), answers = list(structure(list(id = "lnr_ans_efc589", 
     option = "$E(\\epsilon) = 0$", value = "$E(\\epsilon) = 0$", 
     label = structure("\\(E(\\epsilon) = 0\\)", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("While the expectation of the error term being zero is a critical assumption for an unbiased regression model, it does not address homoscedasticity. Homoscedasticity concerns the spread or variability of the error terms, not their central tendency (expectation).", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_52cdb21", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a400f2c", 
     option = "$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$", 
     value = "$Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.$", 
     label = structure("\\(Var(\\epsilon \\mid X = 1) = Var(\\epsilon \\mid X = 2) = 1.\\)", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement checks for equal variance at two specific points, which is not sufficient to establish homoscedasticity across the entire range of X. Homoscedasticity requires the variance of the error terms to be constant across all values of the independent variable, not just at individual points.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9334432", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_233e4c6", 
     option = "$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant.", 
     value = "$Var(\\epsilon \\mid X = x) = \\sigma^2 x^2$ where $\\sigma^2$ is a constant.", 
     label = structure("\\(Var(\\epsilon \\mid X = x) = \\sigma^2 x^2\\) where \\(\\sigma^2\\) is a constant.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This condition indicates heteroscedasticity, not homoscedasticity, as the variance of the error term is explicitly modeled as increasing with the square of X. Homoscedasticity is violated here because the variability of the error terms depends on the value of X.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_536afad", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f6b13c9", 
     option = "$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant.", 
     value = "$Var(\\epsilon \\mid X = x) = σ^2.$ where $\\sigma^2$ is a constant.", 
     label = structure("\\(Var(\\epsilon \\mid X = x) = σ^2.\\) where \\(\\sigma^2\\) is a constant.", html = TRUE, class = c("html", 
@@ -2232,7 +2236,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q3-answer", question = "q3"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 838350094.109613, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 713567064.16772, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2381,25 +2385,25 @@ learnr:::store_exercise_cache(structure(list(label = "confint2_1", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q4", question = structure("Compared to what you saw for the coverage of \\(X_1\\) when all assumptions held, which of the following statements is true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b8956cb", 
+"character")), answers = list(structure(list(id = "lnr_ans_b246f13", 
     option = "An error occurs when we try to compute the confidence interval when assumptions don't hold.", 
     value = "An error occurs when we try to compute the confidence interval when assumptions don't hold.", 
     label = structure("An error occurs when we try to compute the confidence interval when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This statement is not entirely accurate. While it’s not strictly an ‘error’ to compute a confidence interval when assumptions are violated, the resulting interval may not have the intended properties, giving us misleading results.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff40d13", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_745d20c", 
     option = "The coverage is higher when assumptions don't hold.", 
     value = "The coverage is higher when assumptions don't hold.", 
     label = structure("The coverage is higher when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("In statistical terms, ‘coverage’ refers to the proportion of time that the confidence intervals contain the true parameter value. If the underlying assumptions are violated, the coverage is not guaranteed to be higher; in fact, it’s more likely to be lower or different from the expected level.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4d0f8b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8a3520d", 
     option = "The coverage is lower when assumptions don't hold.", 
     value = "The coverage is lower when assumptions don't hold.", 
     label = structure("The coverage is lower when assumptions don’t hold.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("When the statistical assumptions underlying the computation of a confidence interval are not met, the actual coverage rate of the interval can be lower than the nominal coverage rate. This means that the interval will contain the true parameter value less often than expected.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4945f50", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a8d4536", 
     option = "The coverage is exactly the same when assumptions don't hold.", 
     value = "The coverage is exactly the same when assumptions don't hold.", 
     label = structure("The coverage is exactly the same when assumptions don’t hold.", html = TRUE, class = c("html", 
@@ -2412,31 +2416,31 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q4-answer", question = "q4"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1865022415.63153, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1350528677.87111, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q5", question = structure("Which ONE of the following statements regarding the linearity assumption is incorrect?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7719bc4", 
+"character")), answers = list(structure(list(id = "lnr_ans_b8ad90c", 
     option = "The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$.", 
     value = "The linearity assumption says the conditional mean of  $Y |X = x$ does not depend on $X$.", 
     label = structure("The linearity assumption says the conditional mean of  \\(Y |X = x\\) does not depend on \\(X\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is the correct answer because it inaccurately reflects the linearity assumption. The linearity assumption actually posits that the conditional mean of Y given X is a linear function of X. This incorrect statement suggests a lack of relationship between X and Y, which is contrary to the assumption.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_74bb2e6", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3a3e05a", 
     option = "The linearity assumption says the conditional mean of  $Y |X = x$ is linear with respect to $X$. ", 
     value = "The linearity assumption says the conditional mean of  $Y |X = x$ is linear with respect to $X$. ", 
     label = structure("The linearity assumption says the conditional mean of  \\(Y |X = x\\) is linear with respect to \\(X\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("One phrasing of the linearity assumption is exactly this, that X is related to the conditional mean of Y in a linear fashion through the coefficients.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1ebd4dd", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_62ac856", 
     option = "The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", 
     value = "The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", 
     label = structure("The linearity assumption says that the errors in the population come from a distribution with a mean of zero.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is an alternative phrasing of the linearity assumption, called the mean zero assumption, and is equivalent to option B through properties of linear combinations of Normal random variables.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_47166bc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c948fe3", 
     option = "The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", 
     value = "The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", 
     label = structure("The linearity assumption states that the model as fitted to the sample is in fact the true relationship present in the population.", html = TRUE, class = c("html", 
@@ -2449,7 +2453,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q5-answer", question = "q5"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 536512799.750167, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 771449545.640766, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2593,18 +2597,18 @@ learnr:::store_exercise_cache(structure(list(label = "confint3_1", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q6", question = structure("Which confidence interval has reduced coverage (i.e. smaller than 95%)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7dde496", 
+"character")), answers = list(structure(list(id = "lnr_ans_38a4504", 
     option = "Neither interval has reduced coverage", value = "Neither interval has reduced coverage", 
     label = structure("Neither interval has reduced coverage", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Check that you have computed the coverage correctly and that you have violated linearity as described.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_78a01f5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fb16f9d", 
     option = "The interval for the slope of $X_2$ has reduced coverage", 
     value = "The interval for the slope of $X_2$ has reduced coverage", 
     label = structure("The interval for the slope of \\(X_2\\) has reduced coverage", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The coverage here should be close to 95%. Check that you have computed the coverage correctly and that you have violated linearity as described.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_39b9521", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dd32342", 
     option = "The interval for the intercept has reduced coverage", 
     value = "The interval for the intercept has reduced coverage", 
     label = structure("The interval for the intercept has reduced coverage", html = TRUE, class = c("html", 
@@ -2617,7 +2621,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q6-answer", question = "q6"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1129627470.47398, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1715440233.20119, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2684,19 +2688,19 @@ learnr:::store_exercise_cache(structure(list(label = "bias1", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q7", question = structure("Based on these averages, which of the following statements is TRUE?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_be8b39a", 
+"character")), answers = list(structure(list(id = "lnr_ans_ee2e33f", 
     option = "The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", 
     value = "The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", 
     label = structure("The coefficients all appear to be unbiased, i.e. the average is roughly the same as the true parameter value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check your simulation, as we should see an issue with bias since we saw an issue with coverage.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d0b318f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e45a128", 
     option = "The average value of the estimated slope of $X_2$ is very different from the true value.", 
     value = "The average value of the estimated slope of $X_2$ is very different from the true value.", 
     label = structure("The average value of the estimated slope of \\(X_2\\) is very different from the true value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("While it won’t be exactly the same, you should see that it is somewhat near the true value of 3. If not, double check your simulation.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6b583c1", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2881289", 
     option = "The estimate of the intercept appears to be biased as it is not near the true value.", 
     value = "The estimate of the intercept appears to be biased as it is not near the true value.", 
     label = structure("The estimate of the intercept appears to be biased as it is not near the true value.", html = TRUE, class = c("html", 
@@ -2709,7 +2713,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q7-answer", question = "q7"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1332916937.87931, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1789804061.66656, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2792,25 +2796,25 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q8", question = structure("What do you notice about the average value of the estimated coefficients?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8e397f8", 
+"character")), answers = list(structure(list(id = "lnr_ans_51ba725", 
     option = "On average, the estimated coefficients are similar to the true value", 
     value = "On average, the estimated coefficients are similar to the true value", 
     label = structure("On average, the estimated coefficients are similar to the true value", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check how you’ve set up the true relationship that generates the data and the fitted model. They should be different.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ce192c0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_60f16d6", 
     option = "Only one of the estimated coefficients on average is different that the true value.", 
     value = "Only one of the estimated coefficients on average is different that the true value.", 
     label = structure("Only one of the estimated coefficients on average is different that the true value.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Double check how you’ve set up the true relationship that generates the data and the fitted model. They should be different.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f37f9f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_50a494c", 
     option = "On average, the estimated coefficients are not estimating the correct true value.", 
     value = "On average, the estimated coefficients are not estimating the correct true value.", 
     label = structure("On average, the estimated coefficients are not estimating the correct true value.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("This is because the true relationship has the preedictors squared but the fitted model doesn’t. So the coefficients being estimated are not those that are part of the true relationship.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5a1aea", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_be6c1c3", 
     option = "The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", 
     value = "The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", 
     label = structure("The average values of the estimated coefficients suggest that the coverage of the confidence intervals should be close to 95%.", html = TRUE, class = c("html", 
@@ -2823,25 +2827,25 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q8-answer", question = "q8"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 598906471.221112, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 368230775.828529, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q9", question = structure("Which statements is TRUE regarding the independent/uncorrelated errors assumption?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_962abb2", 
+"character")), answers = list(structure(list(id = "lnr_ans_8eb6bf6", 
     option = "The relationship $\\epsilon_{k+1} = \\epsilon_{k}$ for $k=1,2,3,...$ satisfies the independence assumption.", 
     value = "The relationship $\\epsilon_{k+1} = \\epsilon_{k}$ for $k=1,2,3,...$ satisfies the independence assumption.", 
     label = structure("The relationship \\(\\epsilon_{k+1} = \\epsilon_{k}\\) for \\(k=1,2,3,...\\) satisfies the independence assumption.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The assumption does not require that all errors be equal, rather that they have no relationship to each other.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_71d9d1e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6804f89", 
     option = "The independence assumption states that $Corr(\\epsilon_i, \\epsilon_j) = 0$ for all $i \\neq j$.", 
     value = "The independence assumption states that $Corr(\\epsilon_i, \\epsilon_j) = 0$ for all $i \\neq j$.", 
     label = structure("The independence assumption states that \\(Corr(\\epsilon_i, \\epsilon_j) = 0\\) for all \\(i \\neq j\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("The assumption requires that all errors be uncorrelated with one another, namely have a correlation of 0.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_56ef016", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a6ff7aa", 
     option = "The independence assumption states that the observed predictors $X_1, X_2, X_3...$ are independent/uncorrelated of each other.", 
     value = "The independence assumption states that the observed predictors $X_1, X_2, X_3...$ are independent/uncorrelated of each other.", 
     label = structure("The independence assumption states that the observed predictors \\(X_1, X_2, X_3...\\) are independent/uncorrelated of each other.", html = TRUE, class = c("html", 
@@ -2854,7 +2858,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q9-answer", question = "q9"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1014291302.52768, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1093709625.9907, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2935,11 +2939,11 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q10", question = structure("Is the coverage of the confidence intervals about what you expected?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_df8cc6d", 
+"character")), answers = list(structure(list(id = "lnr_ans_4982f97", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("All our assumptions hold, so we should observe no issues with the coverage. It should be around 95%.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_27008c7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ed59b4", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("All our assumptions hold, so we should observe no issues with the coverage. It should be around 95%. If this is not what you saw, double check that you have filled in the gaps to ensure the assumptions hold.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -2950,7 +2954,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q10-answer", question = "q10"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 545299237.746075, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 932638122.065706, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3042,25 +3046,25 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q11", question = structure("What do you notice about the coverage?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_77df81", 
+"character")), answers = list(structure(list(id = "lnr_ans_21277a2", 
     option = "At least one confidence interval does not have the correct coverage.", 
     value = "At least one confidence interval does not have the correct coverage.", 
     label = structure("At least one confidence interval does not have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("We should notice that the intercept has lower coverage than it should, indicating that having correlated errors impacts this property.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_940fb27", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e1a7e69", 
     option = "All of the confidence intervals do not have the correct coverage.", 
     value = "All of the confidence intervals do not have the correct coverage.", 
     label = structure("All of the confidence intervals do not have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This type of violation does not usually impact all confidence intervals, and this should be supported by the values you compare between section 4.1 and 4.2.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d09e8fa", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b6be233", 
     option = "All of the confidence intervals have the correct coverage.", 
     value = "All of the confidence intervals have the correct coverage.", 
     label = structure("All of the confidence intervals have the correct coverage.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This type of violation usually impacts at least one of the confidence intervals, and this should be supported by the values you compare between section 4.1 and 4.2.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fba94af", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4fd81fc", 
     option = "I'm not sure what is happening to the coverage", 
     value = "I'm not sure what is happening to the coverage", 
     label = structure("I’m not sure what is happening to the coverage", html = TRUE, class = c("html", 
@@ -3073,7 +3077,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q11-answer", question = "q11"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1252113337.91694, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1906751655.1121, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3081,22 +3085,22 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q12", question = structure("Which quantity should NOT have a Normal distribution, assuming the Normality assumption is not violated?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_5343fa1", 
+"character")), answers = list(structure(list(id = "lnr_ans_9021763", 
     option = "The population responses", value = "The population responses", 
     label = structure("The population responses", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The Normality assumption can equivalently be written for the responses or the errors.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3e1f3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_daace46", 
     option = "The population errors", value = "The population errors", 
     label = structure("The population errors", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The Normality assumption can equivalently be written for the responses or the errors.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8ce5fb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1081cc5", 
     option = "The estimators of the coefficients", value = "The estimators of the coefficients", 
     label = structure("The estimators of the coefficients", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If the Normality assumption holds, then by properties of Normal random variables, the distribution of the estimators will also be Normal.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_52978f4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b4ed72f", 
     option = "The population predictors", value = "The population predictors", 
     label = structure("The population predictors", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("In linear regression, the predictors are fixed, not random, and therefore do not have a distribution.", html = TRUE, class = c("html", 
@@ -3108,7 +3112,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q12-answer", question = "q12"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 595650540.722629, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1007733100.53074, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3187,25 +3191,25 @@ learnr:::store_exercise_cache(structure(list(label = "norm1", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "normq", question = structure("What do you notice about the sampling distributions?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8efe327", 
+"character")), answers = list(structure(list(id = "lnr_ans_663225a", 
     option = "The sampling distributions appear to be non-Normal shaped.", 
     value = "The sampling distributions appear to be non-Normal shaped.", 
     label = structure("The sampling distributions appear to be non-Normal shaped.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("By properties of Normals, they should look approximately Normal.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e03abc4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b51649", 
     option = "The sampling distributions appear to be centred at the true values of the coefficients.", 
     value = "The sampling distributions appear to be centred at the true values of the coefficients.", 
     label = structure("The sampling distributions appear to be centred at the true values of the coefficients.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("If all assumptions hold, our estimates should be unbiased, meaning that the expected value is the true value.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_693ae30", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_79090a4", 
     option = "The estimators of the coefficients appear to be biased.", 
     value = "The estimators of the coefficients appear to be biased.", 
     label = structure("The estimators of the coefficients appear to be biased.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("If all assumptions hold, our estimates should be unbiased, meaning that the expected value is the true value.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4a43f74", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cb3caf5", 
     option = "We would expect the coverage of the confidence intervals to be much less than 95%.", 
     value = "We would expect the coverage of the confidence intervals to be much less than 95%.", 
     label = structure("We would expect the coverage of the confidence intervals to be much less than 95%.", html = TRUE, class = c("html", 
@@ -3218,7 +3222,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "normq-answer", question = "normq"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 354315427.835009, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1334957126.37836, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3297,19 +3301,19 @@ learnr:::store_exercise_cache(structure(list(label = "norm2", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q13", question = structure("What about the sampling distribution has changed now that Normality is violated?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_9f001a7", 
+"character")), answers = list(structure(list(id = "lnr_ans_5859b0e", 
     option = "The sampling distributions are more bell-shaped now than when Normality held.", 
     value = "The sampling distributions are more bell-shaped now than when Normality held.", 
     label = structure("The sampling distributions are more bell-shaped now than when Normality held.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The opposite should be true, as we are generating our errors from a very highly skewed distribution. So you should see a less bell-shaped appearance than before.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d030363", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b348c59", 
     option = "The mean of all sampling distributions are still around the true value of the coefficients.", 
     value = "The mean of all sampling distributions are still around the true value of the coefficients.", 
     label = structure("The mean of all sampling distributions are still around the true value of the coefficients.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("We should observe a slightly different mean in at least one of the sampling distributions, most likely the intercept.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_63c5b24", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e08de93", 
     option = "The sampling distributions exhibit more variability in the estimated coefficients.", 
     value = "The sampling distributions exhibit more variability in the estimated coefficients.", 
     label = structure("The sampling distributions exhibit more variability in the estimated coefficients.", html = TRUE, class = c("html", 
@@ -3322,32 +3326,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q13-answer", question = "q13"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1005127317.53195, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 538810943.249097, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q14", question = structure("What types of mistakes could we make if we use inferential tools without checking assumptions?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2601d1f", 
+"character")), answers = list(structure(list(id = "lnr_ans_84db730", 
     option = "We might conclude an effect is significant when it isn't.", 
     value = "We might conclude an effect is significant when it isn't.", 
     label = structure("We might conclude an effect is significant when it isn’t.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since p-values are directly linked to the sampling distribution. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac8a958", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d95162", 
     option = "We might obtain an estimate of a quantity that is far from being true.", 
     value = "We might obtain an estimate of a quantity that is far from being true.", 
     label = structure("We might obtain an estimate of a quantity that is far from being true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since we’ve seen that violated assumptions can lead to biased estimation. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8f1f0b5", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_82b26cc", 
     option = "We might have more confidence in our results and process than we should.", 
     value = "We might have more confidence in our results and process than we should.", 
     label = structure("We might have more confidence in our results and process than we should.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is true since we saw that violated assumptions lead to lower coverage. meaning we will have more confidence than we should. But it’s not the only true option.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1fa2759", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5065b75", 
     option = "All of the options are potential mistakes.", value = "All of the options are potential mistakes.", 
     label = structure("All of the options are potential mistakes.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Bias means the centre of the sampling distribution isn’t in the correct place, which means our confidence intervals are less likely to capture the truth. Further, if sampling distributions are not as they should be, we will compute incorrect p-values and thus make decisions regarding significance that may be incorrect.", html = TRUE, class = c("html", 
@@ -3359,7 +3363,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q14-answer", question = "q14"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 668707117.188609, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 2939000.49863142, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -3412,7 +3416,9 @@ data <- data.frame(
 fittedModel <- reactive({
   if (input$modelType == "Linear") {
     lm(y ~ x, data = data)
-  } else {
+  } else if (input$modelType == "Quadratic") {
+    lm(y ~ poly(x, 2), data = data)
+  } else{
     lm(y ~ poly(x, 3), data = data)
   }
 })
@@ -3423,7 +3429,11 @@ output$modelPlot <- renderPlot({
   model <- fittedModel()
   ggplot(data, aes(x = x, y = y)) +
     geom_point() +
-    geom_smooth(method = "lm", formula = y ~ poly(x, ifelse(input$modelType == "Linear", 1, ifelse(input$modelType == "Quadratic", 2, 3))), se = FALSE, colour = "red") +
+    geom_smooth(method = "lm", formula = y ~ poly(x, 
+      ifelse(input$modelType == "Linear", 1, 
+        ifelse(input$modelType == "Quadratic", 2, 
+          ifelse(input$modelType == "Cubic", 3, 1)))), 
+      se = FALSE, colour = "red") +
     labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  ylim(y_range[1], y_range[2]) +
     theme_minimal()
 })
@@ -3431,8 +3441,9 @@ output$modelPlot <- renderPlot({
 
 output$modelStats <- renderTable({
   model <- fittedModel()
+  req(input$modelType)
   df <- broom::glance(model)
-  df[, c("r.squared")]
+  df[, c("r.squared", "adj.r.squared")]
 })
 
 
@@ -3565,7 +3576,7 @@ output$plotUI <- renderUI({
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","bslib","cachem","checkmate","cli","colorspace","commonmark","compiler","datasets","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","memoise","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.1","1.0.5","0.6.1","1.0.8","2.3.1","3.6.2","2.1-0","1.9.0","4.3.1","4.3.1","0.6.33","1.1.4","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.4","1.6.2","0.2.14","4.3.1","4.3.1","4.3.1","0.3.4","1.1.3","0.5.7","1.6.4","1.6.13","0.1.4","1.8.8","1.45","1.3.2","0.11.5.9000","1.0.4","1.9.3","2.0.3","1.12","7.3-60","2.0.1","4.3.1","0.12","0.5.0","1.9.0","2.0.3","1.2.1","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.2","2.25","2.0.4","0.15.0","0.4.8","1.3.0","1.8.0","4.3.1","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.1","0.4.0","1.2.4","4.3.1","0.6.5","2.5.2","0.41","1.8-4","2.3.8"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77]}},"value":[{"type":"character","attributes":{},"value":["backports","base","broom","bslib","cachem","checkmate","cli","colorspace","commonmark","compiler","datasets","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","MASS","memoise","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.2","1.0.5","0.6.1","1.0.8","2.3.1","3.6.2","2.1-0","1.9.0","4.3.2","4.3.2","0.6.33","1.1.4","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.4","1.6.2","0.2.14","4.3.2","4.3.2","4.3.2","0.3.4","1.1.3","0.5.7","1.6.4","1.6.13","0.1.4","1.8.8","1.45","1.3.2","0.11.5.9000","1.0.4","1.9.3","2.0.3","1.12","7.3-60","2.0.1","4.3.2","0.12","0.5.0","1.9.0","2.0.3","1.2.1","1.0.2","2.5.1","1.0.11","2.1.4","2.4.2.1","1.1.2","2.25","2.0.4","0.15.0","0.4.8","1.3.0","1.8.0","4.3.2","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.2","0.4.0","1.2.4","4.3.2","0.6.5","2.5.2","0.41","1.8-4","2.3.8"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
