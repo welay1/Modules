@@ -1695,6 +1695,7 @@ In the interactive plot below, you can experiment with different model types (li
 
 ```{r, context="server"}
 
+library(shiny)
 #Second interactive exercise (Linearity)
 
 set.seed(301)
@@ -1907,7 +1908,6 @@ fluidPage(
 ```
 
 ## Test xyz
-
 
 ## Wrap-Up
 
