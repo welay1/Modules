@@ -1819,59 +1819,56 @@ output$homoscedasticityPlot <- renderPlot({
 
 #### Plotting for Linearity
 
- # Conditional UI for the model type
-    output$modelTypeUI <- renderUI({
-        if (input$plotType == "Linearity") {
-            selectInput("modelType", "Model Type:",
-                        choices = c("Linear" = "Linear", "Quadratic" = "Quadratic", "Cubic" = "Cubic"), selected = "Linear")}
-    })
-    
-
-fittedModel <- reactive({
-    set.seed(301)
-    x <- runif(100, 0, 10)
-    data <- data.frame(x = x, y = 1 + 5 * x^3 + rnorm(100, 0, 200))
-
-    if (input$modelType == "Quadratic") {
-        lm(y ~ poly(x, 2), data = data)
-    } else if (input$modelType == "Cubic") {
-        lm(y ~ poly(x, 3), data = data)
-    } else {
-        lm(y ~ x, data = data)
+# Conditional UI for the model type
+output$modelTypeUI <- renderUI({
+    if (input$plotType == "Linearity") {
+        selectInput("modelType", "Model Type:",
+                    choices = c("Linear", "Quadratic", "Cubic"), selected = "Linear")
     }
 })
 
-output$linearPlot <- renderPlot({
-    model <- fittedModel()
-    data <- model$model
+set.seed(301)
+x <- runif(100, 0, 10)
+y <- 1 + 5 * x^3 + rnorm(100, 0, 200)  # Generating data with a cubic trend
+data <- data.frame(
+  x = x,
+  y = y)
 
-    ggplot(data, aes(x = x, y = y)) +
-        geom_point() +
-        geom_smooth(
-            method = "lm",
-            formula = y ~ poly(x, ifelse(input$modelType == "Quadratic", 2, ifelse(input$modelType == "Cubic", 3, 1))),
-            se = FALSE,
-            colour = "red"
-        ) +
-        labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +
-        ylim(-800, 5000) +
-        theme_minimal()
-})
-   
-
-    # Model statistics for Linearity
-    #output$modelStats <- renderTable({
-        #model <- fittedModel()
-        #broom::glance(model)[, c("r.squared")]
-    #})
     
-    output$modelStats <- renderTable({
+# Reactive expression for fitted model and prediction function
+fittedModelAndPredict <- reactive({
+  if (input$modelType == "Linear") {
+    lm(y ~ x, data = data)
+  } else if (input$modelType == "Quadratic") {
+    lm(y ~ poly(x, 2), data = data)
+  } else{
+    lm(y ~ poly(x, 3), data = data)
+  }
+})
+
+y_range <- c(-800, 5000)
+
+# Render the plot output
+output$linearPlot <- renderPlot({
+  model <- fittedModel()
+  ggplot(data, aes(x = x, y = y)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y ~ poly(x, 
+      ifelse(input$modelType == "Linear", 1, 
+        ifelse(input$modelType == "Quadratic", 2, 
+          ifelse(input$modelType == "Cubic", 3, 1)))), 
+      se = FALSE, colour = "red") +
+    labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  ylim(y_range[1], y_range[2]) +
+    theme_minimal()
+})
+
+# Model statistics for Linearity
+output$modelStats <- renderTable({
     if (input$plotType == "Linearity") {
-        model <- fittedModel()
+        model <- fittedModelAndPredict()$model
         broom::glance(model)[, c("r.squared")]
     }
 })
-    
     
 output$plotUI <- renderUI({
     if (input$plotType == "Independence") {
