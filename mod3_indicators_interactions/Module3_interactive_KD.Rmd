@@ -31,11 +31,15 @@ lego$Theme <- as.factor(lego$Theme)
 
 Welcome to Module 3: **Interpretation and Use of Indicators and Interactions**. In this module, you will learn: 
 
-* How to manipulate qualitative data
+* To use R to manipulate and summarize qualitative variables
 
-* How to include and interpret qualitative variables in linear models
+* To use R to isolate specific variables in a dataset 
 
-* How to include and interpret interaction terms in linear model 
+* To use R to estimate and plot simple linear relationships among data subgroups
+
+* To use R to describe how the use of indicator variables as main effects or interactions result in different slopes and intercepts
+
+* To extend the interpretation of the estimated coefficients of simple linear models for use with qualitative groups 
 
 Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
 
@@ -50,7 +54,7 @@ In this module, we will explore how we can include qualitative predictors in a m
 
 ## Section 0: Recognizing Categorical Variables
 
-Before we jump to creating a mulitple linear model, let's focus on working on how to include qualitative information in a simple linear model.
+First, we will learn how we can include qualitative variables in a linear model.
 
 To do this, we will work with a LEGO dataset (called `lego`). This dataset contains information on 75 LEGO brick sets sold on Amazon. The response variable of interest will be `Amazon_Price`, the price that the set was sold on Amazon. We have a number of different possible predictors in our data:
 
@@ -101,9 +105,9 @@ While informative, qualitative variables can be difficult to work with. Sometime
 
 ### Named Categories
 
-Qualitative predictors may often have levels that are names or words (called a *string* or *character* data type). For example, `Theme` has levels that are words. We may want to include Theme in a model predicting price, but how do we include character data types in a linear model? 
+Qualitative predictors may often have levels that are names or words (called a <mark>string</mark> or <mark>character</mark> data type). For example, `Theme` has levels that are words. We may want to use Theme to predict Price, but how do we include character data types in a linear model? 
 
-Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being *subsetting*. To subset is to select only certain levels of the variable, and we can use true/false conditions to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. To perform the subsetting action, we use the syntax `variable[variable == value]` or `variable[variable != value]`. 
+Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being <mark>subsetting</mark>. To subset is to select only certain levels of the variable, and we can use true/false conditions to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. To perform the subsetting action, we use the syntax `variable[variable == value]` or `variable[variable != value]`. 
 
 Below, fill in the two lines of code that 1) subsets Theme to only have values equal to City, and 2) subsets Theme to only have values that are *not* Friends.
 
@@ -230,6 +234,8 @@ question("What is the minimum amount of indicator variables necessary to replica
 ```
 
 
+
+
 ### Numerical Categories
 
 Qualitative information is sometimes recorded as numbers, often when we are dealing with a rating system. If we were to use this kind of variable as a predictor without any manipulation, R would treat this as a numerical variable. Let's fit a simple linear model to predict `Amazon_Price` using rating as a predictor to see what we get.
@@ -257,7 +263,7 @@ question("How would we interpret the slope in this model?",
 
 *However* -- does it make sense to treat `rating` as a numerical predictor? It is inherently a qualitative measurement -- the set is rated on "goodness". It also may not make sense to assume that, if we compare sets with a rating of 1 and 2, it would necessarily have the same effect on the mean Amazon Price as sets with ratings of 4 and 5 (i.e. the price change may differ for different ratings). Therefore, it is best to treat `rating` as a categorical predictor.
 
-Therefore, it's important to always think about what variables are actually representing. We can tell R that we want it to use rating as a qualitative variable by using the `as.factor(variable)` command, which forces R to see this variable as qualitative rather than numerical. Try this below to see how it changes the model estimates.
+It's important to always think about what variables are actually representing. We can tell R that we want it to use rating as a qualitative variable by using the `as.factor(variable)` command, which forces R to see this variable as qualitative rather than numerical. Try this below to see how it changes the model estimates.
 
 ```{r model3, exercise=TRUE}
 # fit a model by including rating as a qualitative variable
@@ -289,6 +295,19 @@ question("LEGO sets with which rating have a lower Amazon Price compared to a se
 ```
 
 The results of a model that uses ratings as a categorical predictor shows us that, compared to a rating of 1, sets with other ratings change the mean Amazon Price by different amounts, so it may not be reasonable to treat this predictor as continuous with a constant effect on the response.
+
+
+
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to manipulate and summarize qualitative variables
+
+* To use R to isolate specific variables in a dataset 
+
+</div>
+
+
 
 ## Section 2: Indicators as Main Effects
 
@@ -413,7 +432,7 @@ question("Which of the statements is true regarding the estimated slopes and int
 
 ### Adding the Set Themes as a Predictor
 
-From the previous portion, we have noticed that when we fit separate simple linear models for each of the different sets, we find a common slope but a different intercept. We can add these lines of best fit to our scatterplot. First, we will extract the coefficients from a model using the syntax `coef(model)`. For a simple linear model, this will produce an vector of the form `(intercept, slope)`, which can be indexed appropriately to access each value. Remember that in R, indexing starts at 1, not 0. 
+We have noticed that when we fit separate simple linear models for each of the different sets, we find a common slope but a different intercept. We can add these lines of best fit to our scatterplot. We will extract the coefficients from the model using the syntax `coef(model)`. For a simple linear model, this will produce an vector of the form `(intercept, slope)`, which can be indexed appropriately to access each value. Remember that in R, indexing starts at 1, not 0. 
 
 ```{r mlr_setup, include=F}
 noDuplo <- lego[lego$Theme != "DUPLO\xae",]
@@ -529,6 +548,18 @@ question("When using a categorical predictor as a main effect (i.e. alone as a p
          allow_retry = T)
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to manipulate and summarize qualitative variables
+
+* To use R to isolate specific variables in a dataset 
+
+* To use R to estimate and plot simple linear relationships among data subgroups
+
+* To use R to describe how the use of indicator variables as main effects result in different intercepts
+
+</div>
 
 
 ## Section 3: Indicators in Interaction Terms
@@ -779,6 +810,23 @@ question("When using a categorical predictor as part of an interaction in a mult
 ```
 
 
+
+
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to manipulate and summarize qualitative variables
+
+* To use R to isolate specific variables in a dataset 
+
+* To use R to estimate and plot simple linear relationships among data subgroups
+
+* To use R to describe how the use of indicator variables as main effects results in different intercepts
+
+* To use R to describe how the use of indicator variables as interactions results in different slopes
+
+</div>
+
 ## Section 4: Indicators in both Interactions and Main Effects
 
 As we have now seen, it's possible to use qualitative variables to denote groups of similar measurements, and specify different linear relationships for each of these groups through a multiple linear model. We have seen that using qualitative information as a main effect yields relationships with different intercepts, while using it in an interaction term yields relationships with different slopes.
@@ -904,6 +952,7 @@ question("Which estimated value from the above model represents the mean Amazon 
          allow_retry = TRUE)
 ```
 
+
 ### Customizing the Relationship
 
 If you look closely at the model estimates, you will notice that the slope for the interaction of `Pieces` and the theme Friends is very small and close to 0. We also noticed through our explorations that the themes Friends and City had almost the same slope in their respective simple linear models. So  you might wonder whether it's necessary to estimate a value for this slope at all.
@@ -956,15 +1005,33 @@ lego$Theme == "DUPLO\xae"
 In this model, we should now have a separate intercept for City, Friends and DUPLO, and a separate slope for only DUPLO (as we had noted earlier that City and Friends had the same slope). This doesn't change the estimates by much and there is no harm in fitting the model with the extra estimates. But if you are ever interested in cleaning up your model to remove estimates close to 0, this is one option for you.
 
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to manipulate and summarize qualitative variables
+
+* To use R to isolate specific variables in a dataset 
+
+* To use R to estimate and plot simple linear relationships among data subgroups
+
+* To use R to describe how the use of indicator variables as main effects and interactions results in different intercepts and slopes
+
+* To extend the interpretation of the estimated coefficients of simple linear models for use with qualitative groups 
+
+</div>
+
 ## Wrap-up
 
-To put it all together, explore how the simple linear model compares to the complete interaction model both graphically and in terms of the RSS below. Which model do you think more accurately describes the `lego` data? 
+We will now put together all of these ideas using new predictors in the Lego dataset. To predict `Amazon_Price`, we will use `Pages`, the number of pages in the instruction booklet, and `Size`, the size of the set, which takes two values -- "Large" and "Small". 
+
+
+Explore how the simple linear model compares to the complete interaction model both graphically and in terms of the RSS below. Which model do you think more accurately describes the `lego` data? 
 
 ```{r, context="render", echo=FALSE}
 withMathJax()
 radioButtons("model", "Select a model:", 
-             c("$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$",
-               "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}+ \\hat{\\beta_2}\\text{Theme} + \\hat{\\beta_3}\\text{Pieces}\\times\\text{Theme}$$")
+             c("Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$",
+               "Mod2 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$")
              )
 
 plotOutput("plot")
@@ -975,28 +1042,26 @@ tableOutput("table")
 
     output$plot <- renderPlot({
       
-      if(input$model == "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$"){
-        mod <- lm(Amazon_Price ~ Pieces, data=lego)
-        p <- ggplot(data = lego, aes(x = Pieces, y = Amazon_Price, color=Theme)) + geom_point() +
-              geom_abline(intercept=coef(mod)[1], slope=coef(mod)[2])
+      if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$"){
+        mod <- lm(Amazon_Price ~ Pages, data=lego)
+        p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
+              geom_abline(intercept=coef(mod)[1], slope=coef(mod)[2]) + scale_color_manual(values=c('#063970', '#A69943'))
         
         
       }
       else{
        
-      city <- lego[lego$Theme == "City",]
-      duplo <- lego[lego$Theme == "DUPLO\xae", ]
-      friends <- lego[lego$Theme == "Friends", ]
-      slr_city <- lm(Amazon_Price ~ Pieces, data = city)
-      slr_duplo <- lm(Amazon_Price ~ Pieces, data = duplo)
-      slr_friends <- lm(Amazon_Price ~ Pieces, data = friends)
-      
-      mod <- lm(Amazon_Price ~ Pieces*Theme, data=lego)
+      small <- lego[lego$Size == "Small",]
+      large <- lego[lego$Size == "Large", ]
+      slr_small <- lm(Amazon_Price ~ Pages, data = small)
+      slr_large <- lm(Amazon_Price ~ Pages, data = large)
+
+      mod <- lm(Amazon_Price ~ Pages*Size, data=lego)
               
-      p <- ggplot(data = lego, aes(x = Pieces, y = Amazon_Price, color=Theme)) + geom_point() +
-                geom_abline(intercept=coef(slr_city)[1], slope=coef(slr_city)[2]) + 
-                geom_abline(intercept=coef(slr_duplo)[1], slope=coef(slr_duplo)[2]) +
-                geom_abline(intercept=coef(slr_friends)[1], slope=coef(slr_friends)[2])
+      p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
+                geom_abline(intercept=coef(slr_small)[1], slope=coef(slr_small)[2], color="#A69943") +
+                geom_abline(intercept=coef(slr_large)[1], slope=coef(slr_large)[2], color="#063970") +
+                scale_color_manual(values=c('#063970', '#A69943'))
       }
       
       p
@@ -1006,11 +1071,11 @@ tableOutput("table")
 
 
 output$table <- renderTable({
-  if(input$model == "$$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pieces}$$"){
+  if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$"){
      mod <- lm(Amazon_Price ~ Pieces, data=lego)
   }
   else{
-    mod <- lm(Amazon_Price ~ Pieces*Theme, data=lego)
+    mod <- lm(Amazon_Price ~ Pieces*Size, data=lego)
   }
     RSS <- sum(resid(mod)^2)
     
@@ -1018,11 +1083,10 @@ output$table <- renderTable({
 })
 ```
 
+```{r q13, echo=FALSE}
+question("Which model best describes the relationship",
+         answer("The simple linear model.", message = "Take another look at the RSS. "),
+         answer("The interaction model", message="Correct! Not only is the RSS lower, but the lines follow the data points much more closely.", correct=T),
+         allow_retry = T)
+```
 
-Congratulations, you have completed this module! Hopefully by now, you are familiar with:
-
-* Manipulating qualitative data
-
-* Including qualitative variables in regression models and interpreting their effects on the response
-
-* Including interaction terms in a linear model and interpreting their effects on the response
