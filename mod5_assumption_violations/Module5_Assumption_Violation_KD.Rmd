@@ -1613,7 +1613,7 @@ Hopefully, you see how important it is to verify that assumptions hold in all in
 In this section, we use plots to visualize assumption violations, learning what to look out for when attempting to fit a linear model.
 
 ### Understanding Homoscedasticity
-As we learned, for homoscedasticity, the variance of the error term must be constant and consequently independent of the predictors. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). If the assumption holds, you should expect:
+As we learnt, for homoscedasticity, the variance of the error term must be constant and consequently independent of the predictors. To determine if the assumption holds, we tend to use diagnostic plots such as Residual Plots where Residual values ( ${r_i = y_i - \hat{y}_i}$ ) are plotted against the Fitted values (X). If the assumption holds, you should expect:
 
 1. The residuals should look random and display no clear trends.
 
@@ -1762,7 +1762,58 @@ output$modelStats <- renderTable({
 
 In the plot above, we observe that the true relationship in non-linear, and fitting the data to a linear model is inappropriate.
 
+### Understanding Independence Among Predictors
+As we learnt, multicollinearity can influence coefficient estimates and affect the validity of the model. If predictors are correlated with one another, our model may fail to capture the unique contributions of eahc predictor. 
+
+So, what should you be on the lookout for when evaluating the Independence among predictors assumption?
+
+1. The X-X scatter plots, across all combinations of predictor pairings, should show little to no discernible patterns with respect to the apparent relationship. In particular, watch out for snake like patterns! They often indicate high levels of multicollinarity  
+
+2. Alternatively, a low (near zero) correlation coefficient would indicate a weak or no linear relationship among the predictors. 
+
+In the plot below, you may observe occurrences of multicollinearity.
+
+
+```{r, context="server"}
+
+output$independencePlot <- renderPlot({
+  set.seed(302) # Ensure reproducibility
+  
+  # Simulated data
+  x1 <- rnorm(500)
+  x2 <- x1 + rnorm(500, sd = 0.5)  # correlated with x1
+  x3 <- rnorm(500)  # independent
+  data <- data.frame(x1, x2, x3)
+  
+  # Create a scatter plot matrix
+  pairs(data, main = "Scatter Plot Matrix for Independence Violation",
+        pch = 21, lower.panel = NULL)
+})
+```
+
+```{r, context="render", echo = FALSE}
+ fluidPage(
+     tags$h1("Violating Independence Among Predictors Assumption (Multicollinearity)", style = "font-size: 18px;"),
+
+    fluidRow(
+        plotOutput("independencePlot")
+    )
+)
+
+```
+
+```{r q15, include=TRUE}
+question("In the plot above, is there an occurance of multicollinearity?",
+         answer("The relationship between Predictors X1 and X3 indicate multicollinearity.", message="Predictors X1 and X3 appear to be unrelated as expressed by the random scatter. Try again!"),
+         answer("The relationship between Predictors X1 and X2 indicate multicollinearity.", correct = TRUE, message="We observe the descernible pattern of a linear relationship among predictors X1 and X2 such that they are influenced by one another."),
+         answer("The relationship between Predictors X2 and X3 indicate multicollinearity.", message="Predictors X2 and X3 appear to be unrelated as expressed by the random scatter. Try again!"),
+         answer("There is no occurance of multicollinearity.", message="Two of the predictors appear to influence one another. Try again!"),
+         allow_retry = TRUE
+)
+```
+
 Great job! Now that you know what to look for in the plots, you are better equipped to identify when an assumption is violated. Keep up the good work!
+
 
 ## Test Space
 
@@ -1903,8 +1954,6 @@ fluidPage(
 
 
 ```
-
-## Test xyz
 
 ## Wrap-Up
 
