@@ -52,11 +52,17 @@ options(tutorial.storage = list(
 
 ## Introduction
 
-In this module, you will: 
+Welcome to Module 5: **Interpretation and Use of Indicators and Interactions**. In this module, you will learn: 
 
-* Investigate the consequences of violating the assumptions of linear regression, specifically confidence intervals of coefficients. 
+* To use R to generate data from a population with specified properties. 
 
-* Run a simulation to see how different samples produce different estimates. 
+* To use R to describe how a simulation is used to understand statistical properties of estimators
+
+* To adapt existing simulation code in R to study violated assumptions of linear regression models. 
+
+* To explain how violations of model assumptions change the coverage of confidence intervals of coefficients. 
+
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
 
 ## Section 1 - Setting up a simulation
 
@@ -315,6 +321,12 @@ for(i in 1:num_runs){
 # ---
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+</div>
 
 ### Part 1.3: Estimating the Confidence Interval Coverage
 
@@ -455,6 +467,14 @@ sum(Beta0CI[,1] <=1 & Beta0CI[,2] >=1)/num_runs
 # ---
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+* To describe how a simulation is used to understand statistical properties of estimators. 
+
+</div>
 
 ## Section 2 - Violated Homoscedasticity/Non-Constant Variance
 
@@ -679,6 +699,16 @@ question(sprintf("Compared to what you saw for the coverage of $X_1$ when all as
 )
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+* To describe how a simulation is used to understand statistical properties of estimators. 
+
+* To adapt existing simulation code in R to study violated Homoscedasticity 
+
+</div>
 
 ## Section 3 - Violated Linearity/Model Misspecification
 
@@ -950,6 +980,7 @@ question("Based on these averages, which of the following statements is TRUE?",
 ```
 
 
+
 ### Part 3.2: Incorrect functional form
 
 We can also violate this assumption by changing the functional form of at least one of the predictors. Recall that the linearity assumption states that a linear relationship exists between the response and predictors, and that it specifically includes predictors as they have been added to the fitted model. This means that if we fit a model assuming that the true relationship is $$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon$$ but in fact the true relationship is $$Y = \beta_0 + \beta_1 X_1^2 + \beta_2 X_2^2  + \epsilon,$$ we would violate the linearity assumption.
@@ -1064,6 +1095,17 @@ question("What do you notice about the average value of the estimated coefficien
          allow_retry = TRUE
 )
 ```
+
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+* To describe how a simulation is used to understand statistical properties of estimators. 
+
+* To adapt existing simulation code in R to study violated Homoscedasticity and Violated Linearity/Model misspecification. 
+
+</div>
 
 ## Section 4 - Violated Independent/Uncorrelated Errors
 As we saw from the previous two sections, if we violate either the assumptions of linearity or the assumption of constant variance, we end up with estimates of coefficients that don't behave as we would expect them to. We end up with incorrect coverage of our confidence intervals and bias in our estimates of the coefficients.
@@ -1369,6 +1411,17 @@ question("What do you notice about the coverage?",
 )
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+* To describe how a simulation is used to understand statistical properties of estimators. 
+
+* To adapt existing simulation code in R to study violated Homoscedasticity, Violated Linearity/Model misspecification, and Uncorrelated Errors.  
+
+</div>
+
 ## Section 5 - Violated Normality
 In our final section, we will examine how the normality assumption relates to the sampling distributions of our estimators of the coefficients. Recall that a **<mark>sampling distribution</mark>** describes how estimates of coefficients will change depending on the sample used. We can mimic the concept of a sampling distribution with our simulation, since we take many samples when we loop through our code.
 
@@ -1591,6 +1644,17 @@ question("What about the sampling distribution has changed now that Normality is
          allow_retry = TRUE
 )
 ```
+
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to generate data from a population with specified properties. 
+
+* To describe how a simulation is used to understand statistical properties of estimators. 
+
+* To adapt existing simulation code in R to study violated Homoscedasticity, Violated Linearity/Model misspecification, Uncorrelated Errors, and Normality. 
+
+</div>
 
 ## Conclusion
 

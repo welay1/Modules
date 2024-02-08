@@ -1,9 +1,9 @@
 ---
 title: "Interpretation and Use of Indicators and Interactions"
 output: 
-  learnr::tutorial:
-   progressive: true
-   allow_skip: true
+ learnr::tutorial:
+  progressive: true
+  allow_skip: true
 runtime: shiny_prerendered
 ---
 
@@ -45,7 +45,7 @@ Remember that if you get stuck on a coding exercise, you can click the **Hints**
 
 ## Motivation
 
-We have already seen that a simple linear model estimates the population relationship between a predictor and a response using a sample. The population relationship is $Y = \beta_0 + \beta_1 X + \epsilon$, and we use the process of <mark>least squares</mark> to estimate $\hat{y} = \hat{\beta_0} + \hat{\beta_1}X$, where $\hat{\beta_0}$ is the intercept and $\hat{\beta_1}$ is the slope. 
+We have already seen that a simple linear model estimates the population relationship between a predictor and a response using a sample. The population relationship is $Y = \beta_0 + \beta_1 X + \epsilon$, and we use the process of least squares  to estimate $\hat{y} = \hat{\beta_0} + \hat{\beta_1}X$, where $\hat{\beta_0}$ is the intercept and $\hat{\beta_1}$ is the slope. 
 
 
 We know that we can extend simple linear regression to model more complex relationships of the form $Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p + \epsilon$. While we have only seen quantitative (numerical) predictors so far, we can also include qualitative (categorical) predictors in linear regression models. 
@@ -58,11 +58,11 @@ First, we will learn how we can include qualitative variables in a linear model.
 
 To do this, we will work with a LEGO dataset (called `lego`). This dataset contains information on 75 LEGO brick sets sold on Amazon. The response variable of interest will be `Amazon_Price`, the price that the set was sold on Amazon. We have a number of different possible predictors in our data:
 
-  - `Theme`: The theme of the set, one of Duplo, Friends, or City
-  - `Pieces`: The number of pieces in each set
-  - `rating`: The rating (on a scale of 1 to 5) of each set.
+ - `Theme`: The theme of the set, one of Duplo, Friends, or City
+ - `Pieces`: The number of pieces in each set
+ - `rating`: The rating (on a scale of 1 to 5) of each set.
 
-To know whether a variable is qualitative, we have to check the levels of the variable. <mark>Levels</mark> are all possible values a variable can take. 
+To know whether a variable is qualitative, we have to check the levels of the variable. Levels  are all possible values a variable can take. 
 
 In the code chunk below, identify the levels of the variables `Theme`, `Pieces`, and `rating`, and the number of observations in each level. You can do this using the `table()` function, with the syntax `table(data$variable)`. 
 
@@ -90,12 +90,12 @@ We need to decide whether to treat these variables as numeric or qualitative bas
 
 ```{r q1, echo=F}
 question("Which predictor(s) should be treated as a qualitative predictor?",
-         answer("Only Theme is qualitative", message="While Theme is definitely qualitative (since it has categories), it is not the only one."),
-         answer("Both Theme and rating are qualitative", correct=T, message="Theme is qualitative (since it has  categories). Rating is also qualitative as the values represent a quality (a score)."),
-         answer("Both Theme and Pieces are qualitative", message="Pieces here is numerical (discrete) and it does not measure any underlying quality, but rather counts a quantity."),
-         answer("All three variables are qualitative", message="Pieces here is numerical (discrete) and it does not measure any underlying quality, but rather counts a quantity."),
-         answer("None of the variables are qualitative", message="At least one variable is qualitative."),
-         allow_retry = T)
+     answer("Only Theme is qualitative", message="While Theme is definitely qualitative (since it has categories), it is not the only one."),
+     answer("Both Theme and rating are qualitative", correct=T, message="Theme is qualitative (since it has categories). Rating is also qualitative as the values represent a quality (a score)."),
+     answer("Both Theme and Pieces are qualitative", message="Pieces here is numerical (discrete) and it does not measure any underlying quality, but rather counts a quantity."),
+     answer("All three variables are qualitative", message="Pieces here is numerical (discrete) and it does not measure any underlying quality, but rather counts a quantity."),
+     answer("None of the variables are qualitative", message="At least one variable is qualitative."),
+     allow_retry = T)
 ```
 
 
@@ -105,9 +105,9 @@ While informative, qualitative variables can be difficult to work with. Sometime
 
 ### Named Categories
 
-Qualitative predictors may often have levels that are names or words (called a <mark>string</mark> or <mark>character</mark> data type). For example, `Theme` has levels that are words. We may want to use Theme to predict Price, but how do we include character data types in a linear model? 
+Qualitative predictors may often have levels that are names or words (called a string or character data type). For example, `Theme` has levels that are words. We may want to use Theme to predict Price, but how do we include character data types in a linear model? 
 
-Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being <mark>subsetting</mark>. To subset is to select only certain levels of the variable, and we can use true/false conditions to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. To perform the subsetting action, we use the syntax `variable[variable == value]` or `variable[variable != value]`. 
+Sometimes, it is useful to manipulate qualitative data to make it easier to use. We will cover a few methods of data manipulation, with the first being subsetting . To subset is to select only certain levels of the variable, and we can use true/false conditions to check which rows contain certain values. We use `variable == "value"` to check this, with two equals signs. We can also check whether a certain row does not hold a specific value by using `variable != "value"`. To perform the subsetting action, we use the syntax `variable[variable == value]` or `variable[variable != value]`. 
 
 Below, fill in the two lines of code that 1) subsets Theme to only have values equal to City, and 2) subsets Theme to only have values that are *not* Friends.
 
@@ -148,7 +148,7 @@ We could also achieve the same result of collecting only rows that are not Frien
 lego$Theme[lego$Theme == "City" | lego$Theme == "DUPLO\xae"]
 ```
 
-The next important skill is to turn qualitative variables, which take character values, into <mark>indicator variables</mark>, which take $0$ or $1$ only. This is useful for understanding how R treats qualitative information when used in a linear model. The `Theme` variable has 3 possible values: `City`, `Friends`, `DUPLO\xae`. Creating an indicator variable is similar to subsetting, but instead of removing rows that do not meet the condition, it creates a new column that takes $1$ if the condition is met, and $0$ if the condition is not met. 
+The next important skill is to turn qualitative variables, which take character values, into indicator variables , which take $0$ or $1$ only. This is useful for understanding how R treats qualitative information when used in a linear model. The `Theme` variable has 3 possible values: `City`, `Friends`, `DUPLO\xae`. Creating an indicator variable is similar to subsetting, but instead of removing rows that do not meet the condition, it creates a new column that takes $1$ if the condition is met, and $0$ if the condition is not met. 
 
 We can create these new indicator variables using `ifelse()` functions. These functions ask the question "Is this row equal to this value?", and what to do if the answer is yes, and then what to do if the answer is no. In our case, we would say `ifelse(lego$Theme == "DUPLO\xae", 1, 0)` which says if the value is DUPLO\\xae, assign it a value of 1, otherwise give it a value 0. Try this for the City value and the Friends value.
 
@@ -217,20 +217,20 @@ grade_this_code()
 
 Notice that the coefficients are labelled with values of the qualitative predictor `Theme`, but only two out of the three levels are present. 
 
-This is because the intercept is actually equal to the average value of `Amazon_Price` among the City sets: E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="City"])`. 
+This is because the intercept is actually equal to the average value of `Amazon_Price` among the City sets: E(Y | X = "City") = `r mean(lego$Amazon_Price[lego$Theme=="City"])`. 
 
-The slope for Friends is the **difference** between the mean Amazon Price of City sets and Friends sets: E(Y | X = "Friends") - E(Y | X = "City") =  `r mean(lego$Amazon_Price[lego$Theme=="Friends"]) - mean(lego$Amazon_Price[lego$Theme=="City"])`. The same is true of the slope for DUPLO\\xae.  
+The slope for Friends is the **difference** between the mean Amazon Price of City sets and Friends sets: E(Y | X = "Friends") - E(Y | X = "City") = `r mean(lego$Amazon_Price[lego$Theme=="Friends"]) - mean(lego$Amazon_Price[lego$Theme=="City"])`. The same is true of the slope for DUPLO\\xae. 
 
 We could have also fit the exact same model using indicator variables (0's and 1's) for the different levels of `Theme`, we would just need to include more than one predictor.
 
 
 ```{r q2, echo=F}
 question("What is the minimum amount of indicator variables necessary to replicate the model above?",
-         answer("Just one for City", message="City was represented by the intercept in the model, so we don't need an indicator for it."),
-         answer("Just one for Friends", message="If we only had an indicator for Friends, we would be missing something to give us a slope for DUPLO/xae."),
-         answer("One for Friends and one for DUPLO/xae", correct=T, message="The indicator for Friends gives us a slope for Friends. The indicator for DUPLO/xae gives us its slope. When both of these indicators take the value 0, we know that the only other possible value is City and the intercept gives us that information. So this would be all we need."),
-         answer("One for Friends, one for DUPLO/xae, and one for City", message="When an indicator is 0, we know the value must be something else. When the indicator for Friends is 0, we know the value is either City or DUPLO/xae. When we also have an indicator for DUPLO/xae and it is 0, then the only possible value of Theme is City. Therefore, we don't actually need 3 indicators for 3 levels. Two gives us all the information we need."),
-         allow_retry = TRUE)
+     answer("Just one for City", message="City was represented by the intercept in the model, so we don't need an indicator for it."),
+     answer("Just one for Friends", message="If we only had an indicator for Friends, we would be missing something to give us a slope for DUPLO/xae."),
+     answer("One for Friends and one for DUPLO/xae", correct=T, message="The indicator for Friends gives us a slope for Friends. The indicator for DUPLO/xae gives us its slope. When both of these indicators take the value 0, we know that the only other possible value is City and the intercept gives us that information. So this would be all we need."),
+     answer("One for Friends, one for DUPLO/xae, and one for City", message="When an indicator is 0, we know the value must be something else. When the indicator for Friends is 0, we know the value is either City or DUPLO/xae. When we also have an indicator for DUPLO/xae and it is 0, then the only possible value of Theme is City. Therefore, we don't actually need 3 indicators for 3 levels. Two gives us all the information we need."),
+     allow_retry = TRUE)
 ```
 
 
@@ -255,10 +255,10 @@ grade_this_code()
 
 ```{r q3, echo=F}
 question("How would we interpret the slope in this model?",
-         answer("The expected change in the Amazon Price for a one-unit increase in the rating of the set.", correct=TRUE, message="This has all the proper elements of an interpretation: the average or expected value in the response and a one-unit increase in the predictor."),
-         answer("When the rating is increased, we see a set change in the Amazon Price of the set.", message="In this case, we are missing both the notion of the mean Amazon Price and the one-unit increase in the predictor."),
-         answer("On average, a LEGO set will have a set change in its Amazon Price when the rating is also changed.", message="In this case, we are missing the one-unit increase in the predictor portion of the interpretation."),
-         allow_retry = TRUE)
+     answer("The expected change in the Amazon Price for a one-unit increase in the rating of the set.", correct=TRUE, message="This has all the proper elements of an interpretation: the average or expected value in the response and a one-unit increase in the predictor."),
+     answer("When the rating is increased, we see a set change in the Amazon Price of the set.", message="In this case, we are missing both the notion of the mean Amazon Price and the one-unit increase in the predictor."),
+     answer("On average, a LEGO set will have a set change in its Amazon Price when the rating is also changed.", message="In this case, we are missing the one-unit increase in the predictor portion of the interpretation."),
+     allow_retry = TRUE)
 ```
 
 *However* -- does it make sense to treat `rating` as a numerical predictor? It is inherently a qualitative measurement -- the set is rated on "goodness". It also may not make sense to assume that, if we compare sets with a rating of 1 and 2, it would necessarily have the same effect on the mean Amazon Price as sets with ratings of 4 and 5 (i.e. the price change may differ for different ratings). Therefore, it is best to treat `rating` as a categorical predictor.
@@ -287,11 +287,11 @@ Notice again that only 4 out of the 5 levels are present. This is because the in
 
 ```{r q4, echo=F}
 question("LEGO sets with which rating have a lower Amazon Price compared to a set with a rating of 1?",
-         answer("Only sets with a rating of 3.", message="Ratings with positive coefficients actually tell us that sets with these ratings have a higher Amazon Price than a set with a rating of 1."),
-         answer("Only sets with a rating of 3 and 5.", message="Ratings with positive coefficients actually tell us that sets with these ratings have a higher Amazon Price than a set with a rating of 1."),
-         answer("Only sets with a rating of 2.", message="Good idea to select an option with a negative coefficient, but it's not the only negative coefficient present."),
-         answer("Only sets with a rating of 2 and 4.", correct=T, message="Since the intercept is the average Amazon Price for a set with rating of 1, coefficients that are negative tell us that sets with those ratings have lower average Amazon Prices compared to this reference."),
-         allow_retry = T)
+     answer("Only sets with a rating of 3.", message="Ratings with positive coefficients actually tell us that sets with these ratings have a higher Amazon Price than a set with a rating of 1."),
+     answer("Only sets with a rating of 3 and 5.", message="Ratings with positive coefficients actually tell us that sets with these ratings have a higher Amazon Price than a set with a rating of 1."),
+     answer("Only sets with a rating of 2.", message="Good idea to select an option with a negative coefficient, but it's not the only negative coefficient present."),
+     answer("Only sets with a rating of 2 and 4.", correct=T, message="Since the intercept is the average Amazon Price for a set with rating of 1, coefficients that are negative tell us that sets with those ratings have lower average Amazon Prices compared to this reference."),
+     allow_retry = T)
 ```
 
 The results of a model that uses ratings as a categorical predictor shows us that, compared to a rating of 1, sets with other ratings change the mean Amazon Price by different amounts, so it may not be reasonable to treat this predictor as continuous with a constant effect on the response.
@@ -423,11 +423,11 @@ Notice that the intercept for the City model is about 7 units lower than Friends
 
 ```{r q5, echo=F}
 question("Which of the statements is true regarding the estimated slopes and intercepts of the two simple linear models?",
-         answer("We estimate substantially different slopes in each group.", message="The slopes should be very similar, differing only by about 0.01, so this would not be considered a substantial difference."),
-         answer("There is no difference in the relationship between Amazon Price and Pieces in the two set Themes.", message="Our output should show that at least one estimated coefficient is different between the two models."),
-         answer("The City sets have a completely different relationship between Amazon Price and Pieces than the Friends sets.", message="Our output should show that we have some estimates that are similar enough that they have either a slope or intercept in common."),
-         answer("The average Amazon Price for a set with no pieces is substantially different between city sets and friends sets.", correct=T, message="This states that the intercepts are different, which is what we observe in our output."),
-         allow_retry = T)
+     answer("We estimate substantially different slopes in each group.", message="The slopes should be very similar, differing only by about 0.01, so this would not be considered a substantial difference."),
+     answer("There is no difference in the relationship between Amazon Price and Pieces in the two set Themes.", message="Our output should show that at least one estimated coefficient is different between the two models."),
+     answer("The City sets have a completely different relationship between Amazon Price and Pieces than the Friends sets.", message="Our output should show that we have some estimates that are similar enough that they have either a slope or intercept in common."),
+     answer("The average Amazon Price for a set with no pieces is substantially different between city sets and friends sets.", correct=T, message="This states that the intercepts are different, which is what we observe in our output."),
+     allow_retry = T)
 ```
 
 ### Adding the Set Themes as a Predictor
@@ -532,7 +532,7 @@ grade_this_code()
 
 You should notice that your intercept in the multiple linear model is estimated as $10.02$ with an estimated slope for Friends of $-7.32$.
 
-Notice that the intercept of $10.02$ is the mean Amazon Price for a "City" set with 0 pieces. Recall that the intercept from the simple linear model for City was $9.4$. Therefore, the intercept for the multiple linear model is very similar to the intercept from the corresponding simple model.  
+Notice that the intercept of $10.02$ is the mean Amazon Price for a "City" set with 0 pieces. Recall that the intercept from the simple linear model for City was $9.4$. Therefore, the intercept for the multiple linear model is very similar to the intercept from the corresponding simple model. 
 
 Remember that `ThemeFriends` represents an indicator variable that takes 1 if a set has theme "Friends" and 0 otherwise. This coefficient is interpreted as the difference in the average Amazon Price for a Friends set with a fixed number of pieces compared to a City set. With a value of $-7.32$, this means for a set with $n$ pieces, the mean Amazon Price for Friends sets is \$7.32 lower than City sets. 
 
@@ -541,11 +541,11 @@ Remember that in the simple linear models, the intercept for City was about 7 un
 
 ```{r q6, echo=F}
 question("When using a categorical predictor as a main effect (i.e. alone as a predictor) in a multiple linear model, what type of relationship are we estimating?",
-         answer("A parallel relationship, where the lines will never cross", correct=T, message="This is exactly what we have seen! We get parallel lines with similar slopes but different intercepts."),
-         answer("A divergent relationship, where lines cross and appear to begin from a common place.", message="With a nearly common slope, we are not allowing the lines to cross so it cannot be divergent."),
-         answer("A coincident relationship, where the lines are identical.", message="Since we have different intercepts for the groups, we cannot have identical relationships."),
-         answer("An unrelated relationship, where the lines may cross but ultimately appear to have nothing in common.", message="Since we appear to have similar slopes, the relationship have something in common so this would not be unrelated."),
-         allow_retry = T)
+     answer("A parallel relationship, where the lines will never cross", correct=T, message="This is exactly what we have seen! We get parallel lines with similar slopes but different intercepts."),
+     answer("A divergent relationship, where lines cross and appear to begin from a common place.", message="With a nearly common slope, we are not allowing the lines to cross so it cannot be divergent."),
+     answer("A coincident relationship, where the lines are identical.", message="Since we have different intercepts for the groups, we cannot have identical relationships."),
+     answer("An unrelated relationship, where the lines may cross but ultimately appear to have nothing in common.", message="Since we appear to have similar slopes, the relationship have something in common so this would not be unrelated."),
+     allow_retry = T)
 ```
 
 <div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
@@ -691,11 +691,11 @@ duplo
 
 ```{r q7, echo=F}
 question("Which of the statements is true regarding the estimated slopes and intercepts of the two simple linear models?",
-         answer("We estimate substantially different intercepts in each group.", message="The intercepts should be very similar, differing only by about 0.01, so this would not be considered a substantial difference."),
-         answer("There is no difference in the relationship between Amazon Price and Pieces in the two set Themes.", message="Our output should show that at least one estimated coefficient is different between the two models."),
-         answer("The City sets have a completely different relationship between Amazon Price and Pieces than the DUPLO sets.", message="Our output should show that we have some estimates that are similar enough that they have either a slope or intercept in common."),
-         answer("The average Amazon Price for a set with an extra piece is substantially different between City sets and DUPLO sets.", correct=T, message="This states that the slopes are different, which is what we observe in our output."),
-         allow_retry = T)
+     answer("We estimate substantially different intercepts in each group.", message="The intercepts should be very similar, differing only by about 0.01, so this would not be considered a substantial difference."),
+     answer("There is no difference in the relationship between Amazon Price and Pieces in the two set Themes.", message="Our output should show that at least one estimated coefficient is different between the two models."),
+     answer("The City sets have a completely different relationship between Amazon Price and Pieces than the DUPLO sets.", message="Our output should show that we have some estimates that are similar enough that they have either a slope or intercept in common."),
+     answer("The average Amazon Price for a set with an extra piece is substantially different between City sets and DUPLO sets.", correct=T, message="This states that the slopes are different, which is what we observe in our output."),
+     allow_retry = T)
 ```
 
 ### Adding the Set Themes in an Interaction
@@ -780,7 +780,7 @@ We did not need to fit two separate simple linear models to be able to estimate 
 
 When we fit an interaction in a multiple linear model, we do so with the following syntax: `lm(y_variable ~ predictor1 + predictor2:predictor1, data=dataset)`. This makes it so that the effect of predictor1 changes depending on which group of predictor2 we are looking at.
 
-Try this now using `Amazon_Price` as the response, `Pieces` as predictor1 and `Theme` as  predictor2, on the dataset `noFriends.`
+Try this now using `Amazon_Price` as the response, `Pieces` as predictor1 and `Theme` as predictor2, on the dataset `noFriends.`
 
 ```{r mlr2, exercise=TRUE, exercise.setup="mlr2_setup"}
 lm(Amazon_Price ~ Pieces + ____, data = ____)
@@ -802,11 +802,11 @@ You should notice that the slope that is estimated on the interaction term `Them
 
 ```{r q8, echo=F}
 question("When using a categorical predictor as part of an interaction in a multiple linear model, what type of relationship are we estimating?",
-         answer("A parallel relationship, where the lines will never cross", message="We would see parallel lines if we had different intercepts. Here we see the same intercept so it must be a different rellationship."),
-         answer("A divergent relationship, where lines cross and appear to begin from a common place.", message="With a common intercept and different slopes, we get divergent lines.", correct=T),
-         answer("A coincident relationship, where the lines are identical.", message="Since we have different slopes for the groups, we cannot have identical relationships."),
-         answer("An unrelated relationship, where the lines may cross but ultimately appear to have nothing in common.", message="Since we appear to have similar intercepts, the relationship have something in common so this would not be unrelated."),
-         allow_retry = T)
+     answer("A parallel relationship, where the lines will never cross", message="We would see parallel lines if we had different intercepts. Here we see the same intercept so it must be a different rellationship."),
+     answer("A divergent relationship, where lines cross and appear to begin from a common place.", message="With a common intercept and different slopes, we get divergent lines.", correct=T),
+     answer("A coincident relationship, where the lines are identical.", message="Since we have different slopes for the groups, we cannot have identical relationships."),
+     answer("An unrelated relationship, where the lines may cross but ultimately appear to have nothing in common.", message="Since we appear to have similar intercepts, the relationship have something in common so this would not be unrelated."),
+     allow_retry = T)
 ```
 
 
@@ -865,7 +865,7 @@ grade_this_code()
 lego[lego$Theme == "DUPLO\xae", ]
 ```
 
-What you probably see from the results is that the relationship between `Amazon_Price` and `Pieces` is different depending on the Theme (they have both different slopes and intercepts). To fit this relationship using a single model, we would have to include both a main effect AND an interaction term to create this difference. We would do this by specifying a model with the form `lm(response ~  predictor1 + predictor2 + predictor1:predictor2)`, or perhaps more simply `lm(response ~ predictor1*predictor2)`.
+What you probably see from the results is that the relationship between `Amazon_Price` and `Pieces` is different depending on the Theme (they have both different slopes and intercepts). To fit this relationship using a single model, we would have to include both a main effect AND an interaction term to create this difference. We would do this by specifying a model with the form `lm(response ~ predictor1 + predictor2 + predictor1:predictor2)`, or perhaps more simply `lm(response ~ predictor1*predictor2)`.
 
 Try both versions below, making sure to use a dataset that excludes the City sets.
 
@@ -892,7 +892,7 @@ grade_this_code()
 
 ```{r mlr3-hint-1}
 # the more explicit way is
-lm(response ~  predictor1 + predictor2 + predictor1:predictor2)
+lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
 # while the simpler way is
 lm(response ~ predictor1*predictor2)
 # where predictor1 = Pieces and predictor2 = Theme
@@ -900,7 +900,7 @@ lm(response ~ predictor1*predictor2)
 
 ```{r mlr3-hint-2}
 # the more explicit way is
-lm(response ~  predictor1 + predictor2 + predictor1:predictor2)
+lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
 # while the simpler way is
 lm(response ~ predictor1*predictor2)
 # where predictor1 = Pieces and predictor2 = Theme
@@ -911,11 +911,11 @@ lego[lego$Theme != "Friends", ]
 
 ```{r q9, echo=FALSE}
 question("Which estimated value from the above models represents the difference in the mean Amazon Price for a Friends set with 0 Pieces compared to a DUPLO set?",
-         answer("9.5546", message="This value corresponds to the intercept for a DUPLO set."),
-         answer("0.7141", message="This value corresponds to the slope of Pieces for a DUPLO set."),
-         answer("-6.1517", message="Great job!", correct=TRUE),
-         answer("-0.5883", message="This value corresponds to the slope of Pieces for a Friends set."),
-         allow_retry = TRUE)
+     answer("9.5546", message="This value corresponds to the intercept for a DUPLO set."),
+     answer("0.7141", message="This value corresponds to the slope of Pieces for a DUPLO set."),
+     answer("-6.1517", message="Great job!", correct=TRUE),
+     answer("-0.5883", message="This value corresponds to the slope of Pieces for a Friends set."),
+     allow_retry = TRUE)
 ```
 
 
@@ -937,7 +937,7 @@ grade_this_code()
 
 ```{r mlr4-hint}
 # the more explicit way is
-lm(response ~  predictor1 + predictor2 + predictor1:predictor2)
+lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
 # while the simpler way is
 lm(response ~ predictor1*predictor2)
 # where predictor1 = Pieces and predictor2 = Theme
@@ -945,27 +945,27 @@ lm(response ~ predictor1*predictor2)
 
 ```{r q10, echo=FALSE}
 question("Which estimated value from the above model represents the mean Amazon Price for a City set with no Pieces?",
-         answer("0.117102", message="This would be the difference in mean Price for a DUPLO set compared to a City set with no Pieces."),
-         answer("9.437468", message="Great job! Our comparison or reference level in this model is the City set as it's the one that isn't labelled.", correct=TRUE),
-         answer("-6.034602", message="This would be the difference in mean Price for a Friends set compared to a City set with no Pieces."),
-         answer("None of the above", message="All levels of the Theme variable are present in the model if we have not excluded them in our data =  statement."),
-         allow_retry = TRUE)
+     answer("0.117102", message="This would be the difference in mean Price for a DUPLO set compared to a City set with no Pieces."),
+     answer("9.437468", message="Great job! Our comparison or reference level in this model is the City set as it's the one that isn't labelled.", correct=TRUE),
+     answer("-6.034602", message="This would be the difference in mean Price for a Friends set compared to a City set with no Pieces."),
+     answer("None of the above", message="All levels of the Theme variable are present in the model if we have not excluded them in our data = statement."),
+     allow_retry = TRUE)
 ```
 
 
 ### Customizing the Relationship
 
-If you look closely at the model estimates, you will notice that the slope for the interaction of `Pieces` and the theme Friends is very small and close to 0. We also noticed through our explorations that the themes Friends and City had almost the same slope in their respective simple linear models. So  you might wonder whether it's necessary to estimate a value for this slope at all.
+If you look closely at the model estimates, you will notice that the slope for the interaction of `Pieces` and the theme Friends is very small and close to 0. We also noticed through our explorations that the themes Friends and City had almost the same slope in their respective simple linear models. So you might wonder whether it's necessary to estimate a value for this slope at all.
 
 It's definitely possible (as we'll see below), but most of the time, it's easier to leave the qualitative variables as they are, rather than change them to individual indicator variables. But since we've learned how to do this in Section 1, we can apply the same technique here.
 
 First we will separate the qualitative variable into indicators. Then we can fit a multiple linear model that will only interact Pieces with the DUPLO set and not with the Friends set.
 ```{r q11, echo=FALSE}
 question("Which indicator variables should we use to have the same reference level as the previous model?",
-         answer("City and Friends", message="City was the reference level, so to make the model comparable, we will let City be represented by zeros."),
-         answer("City and DUPLO", message="City was the reference level, so to make the model comparable, we will let City be represented by zeros."),
-         answer("Friends and DUPLO", message="Since City is the reference level, we will continue to use it as our reference or 0 values.", correct=T),
-         allow_retry = T)
+     answer("City and Friends", message="City was the reference level, so to make the model comparable, we will let City be represented by zeros."),
+     answer("City and DUPLO", message="City was the reference level, so to make the model comparable, we will let City be represented by zeros."),
+     answer("Friends and DUPLO", message="Since City is the reference level, we will continue to use it as our reference or 0 values.", correct=T),
+     allow_retry = T)
 ```
 
 ```{r model, exercise=TRUE}
@@ -1030,9 +1030,9 @@ Explore how the simple linear model compares to the complete interaction model b
 ```{r, context="render", echo=FALSE}
 withMathJax()
 radioButtons("model", "Select a model:", 
-             c("Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$",
-               "Mod2 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$")
-             )
+       c("Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$",
+        "Mod2 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$")
+       )
 
 plotOutput("plot")
 tableOutput("table")
@@ -1040,53 +1040,53 @@ tableOutput("table")
 
 ```{r, context="server"}
 
-    output$plot <- renderPlot({
-      
-      if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$"){
-        mod <- lm(Amazon_Price ~ Pages, data=lego)
-        p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
-              geom_abline(intercept=coef(mod)[1], slope=coef(mod)[2]) + scale_color_manual(values=c('#063970', '#A69943'))
-        
-        
-      }
-      else{
-       
-      small <- lego[lego$Size == "Small",]
-      large <- lego[lego$Size == "Large", ]
-      slr_small <- lm(Amazon_Price ~ Pages, data = small)
-      slr_large <- lm(Amazon_Price ~ Pages, data = large)
-
-      mod <- lm(Amazon_Price ~ Pages*Size, data=lego)
-              
-      p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
-                geom_abline(intercept=coef(slr_small)[1], slope=coef(slr_small)[2], color="#A69943") +
-                geom_abline(intercept=coef(slr_large)[1], slope=coef(slr_large)[2], color="#063970") +
-                scale_color_manual(values=c('#063970', '#A69943'))
-      }
-      
-      p
+  output$plot <- renderPlot({
+   
+   if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$"){
+    mod <- lm(Amazon_Price ~ Pages, data=lego)
+    p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
+       geom_abline(intercept=coef(mod)[1], slope=coef(mod)[2]) + scale_color_manual(values=c('#063970', '#A69943'))
     
+    
+   }
+   else{
+    
+   small <- lego[lego$Size == "Small",]
+   large <- lego[lego$Size == "Large", ]
+   slr_small <- lm(Amazon_Price ~ Pages, data = small)
+   slr_large <- lm(Amazon_Price ~ Pages, data = large)
+
+   mod <- lm(Amazon_Price ~ Pages*Size, data=lego)
+       
+   p <- ggplot(data = lego, aes(x = Pages, y = Amazon_Price, color=Size)) + geom_point() +
+        geom_abline(intercept=coef(slr_small)[1], slope=coef(slr_small)[2], color="#A69943") +
+        geom_abline(intercept=coef(slr_large)[1], slope=coef(slr_large)[2], color="#063970") +
+        scale_color_manual(values=c('#063970', '#A69943'))
+   }
+   
+   p
+  
 
 })
 
 
 output$table <- renderTable({
-  if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$"){
-     mod <- lm(Amazon_Price ~ Pieces, data=lego)
-  }
-  else{
-    mod <- lm(Amazon_Price ~ Pieces*Size, data=lego)
-  }
-    RSS <- sum(resid(mod)^2)
-    
-    data.frame(RSS = round(RSS, 2))
+ if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$"){
+   mod <- lm(Amazon_Price ~ Pieces, data=lego)
+ }
+ else{
+  mod <- lm(Amazon_Price ~ Pieces*Size, data=lego)
+ }
+  RSS <- sum(resid(mod)^2)
+  
+  data.frame(RSS = round(RSS, 2))
 })
 ```
 
 ```{r q13, echo=FALSE}
 question("Which model best describes the relationship",
-         answer("The simple linear model.", message = "Take another look at the RSS. "),
-         answer("The interaction model", message="Correct! Not only is the RSS lower, but the lines follow the data points much more closely.", correct=T),
-         allow_retry = T)
+     answer("The simple linear model.", message = "Take another look at the RSS. "),
+     answer("The interaction model", message="Correct! Not only is the RSS lower, but the lines follow the data points much more closely.", correct=T),
+     allow_retry = T)
 ```
 

@@ -24,11 +24,17 @@ set.seed(302)
 
 ## Introduction
 
-In this module, you will practice:
+Welcome to Module 1: **Interpreting Simple Linear Models**. In this module, you will learn: 
 
-* Making plots like histograms, boxplots, and scatterplots using `R`
-* Modelling the conditional distribution between an independent $X$ and dependent $Y$
-* Constructing the line of best fit using the Least Squares method
+* To use R statistical software to import data, and to visualize distributions and relationships between variables. 
+
+* To manipulate data in R to summarize and visualize conditional distributions and conditional means. 
+
+* To connect the concept of a "line of best fit" to conditional distributions
+
+* To interpret the slope of a line of best fit using appropriate statistical terminology
+
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help.
 
 
 ## Background: Help your friend understand her cleaning business
@@ -162,6 +168,12 @@ question("What can be said about the distribution of each variable of interest?"
 )
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to import data, and visualize distributions of variables. 
+
+</div>
 
 ### Part 1.2: Visualizing the Association Between Variables:
 
@@ -239,6 +251,14 @@ question("How would you describe the association?",
 ```
 
 Congrats on finishing the first section! In the next one, we'll explore if the mean number of rooms cleaned varies with different crew sizes. 
+
+
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to import data, and visualize distributions of and associations between variables. 
+
+</div>
 
 ## Section 2: The conditional distribution of Rooms by Crew Size
 
@@ -385,6 +405,13 @@ question("What do you notice about the relationship between the means as X (Crew
 )
 ```
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to import data, and visualize distributions of and associations between variables. 
+* To manipulate data in R to summarize and visualize conditional distributions and conditional means. 
+
+</div>
 
 ## Section 3. Effect of Increasing CrewSize on Average Rooms Cleaned
 
@@ -440,7 +467,6 @@ question("Well done! You have now found the average difference between the conse
          answer("I have no idea what this value means", message = "That's alright. Think about a line equation, y = mx + b, and how we normally talk about the meaning of the value m."), allow_retry = TRUE
 )
 ```
-
 
 
 ### Part 3.2 The Line of Best Fit:
@@ -501,6 +527,15 @@ question("What do you notice about the line of best fit in this plot?",
 
 An important aspect of the line of best fit is that it is *singular* and *unique.* In the next section, we will explain why this is true.  
 
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
+
+* To use R to import data, and visualize distributions of and associations between variables. 
+* To manipulate data in R to summarize and visualize conditional distributions and conditional means. 
+
+* To interpret the slope of a line of best fit using appropriate statistical terminology.
+
+</div>
 ## Section 4: Constructing the Line of Best Fit
 
 In the previous section, we defined the line of best fit as: $$y = -1.04 + 3.96x.$$  This equation represents a distinct linear relationship derived from the data. The coefficients (-1.04 and 3.96) were determined using the *Least Squares Method*, where we find the line that minimizes the cumulative squared deviations between each observed data point and its corresponding point on the line.
@@ -579,12 +614,17 @@ question("Which of the below statements is most correct about the line of best f
 
 ## Wrap-Up
 
-Congratulations -- You have successfully completed this learning module! By now, you should be familiar with:
+<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
+By now, you should be know how:
 
-* Making plots like histograms, boxplots, and scatterplots using `R`
-* Modelling the conditional distribution between an independent $X$ and dependent $Y$
-* Constructing the line of best fit using the Least Squares method
+* To use R to import data, and visualize distributions of and associations between variables. 
+* To manipulate data in R to summarize and visualize conditional distributions and conditional means. 
 
+* To connect the concept of a line of best fit trend to a visual representation of conditional distributions.
+
+* To interpret the slope of a line of best fir using appropriate statistical terminology.
+
+</div>
 
 
 
