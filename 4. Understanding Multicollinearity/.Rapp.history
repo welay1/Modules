@@ -1,0 +1,65 @@
+sig2 <- rchisq(1, df = 1) ## The true error variance
+sig2
+1.5^2
+diag(rchisq(3, df = 4))
+library(MASS)#
+library(car)#
+## Simulation for correlated predictors ###
+set.seed(1002656486)#
+nsample <- 50; nsim <- 100#
+sig2 <- rchisq(1, df = 1) ## The true error variance#
+bet <- c(rnorm(3, 0, 1), 0) ## 4 values of beta that is beta0, beta1, beta2, beta3 = 0#
+muvec <- rnorm(3, 0, 1)#
+sigmat <- diag(rchisq(3, df = 4))#
+X <- mvrnorm(nsample, mu = muvec, Sigma = sigmat); cor(X[,1], X[,2])
+nsample <- 50; nsim <- 100#
+sig2 <- rchisq(1, df = 1) ## The true error variance#
+bet <- c(rnorm(3, 0, 1), 0) ## 4 values of beta that is beta0, beta1, beta2, beta3 = 0#
+muvec <- rnorm(3, 0, 1)#
+sigmat <- diag(rchisq(3, df = 4))#
+X <- mvrnorm(nsample, mu = muvec, Sigma = sigmat); cor(X[,1], X[,2])
+nsample <- 50; nsim <- 100#
+sig2 <- rchisq(1, df = 1) ## The true error variance#
+bet <- c(rnorm(3, 0, 1), 0) ## 4 values of beta that is beta0, beta1, beta2, beta3 = 0#
+muvec <- rnorm(3, 0, 1)#
+sigmat <- diag(rchisq(3, df = 4))#
+X <- mvrnorm(nsample, mu = muvec, Sigma = sigmat); cor(X[,1], X[,2])
+nsample <- 50; nsim <- 100#
+sig2 <- rchisq(1, df = 1) ## The true error variance#
+bet <- c(rnorm(3, 0, 1), 0) ## 4 values of beta that is beta0, beta1, beta2, beta3 = 0#
+muvec <- rnorm(3, 0, 1)#
+sigmat <- diag(rchisq(3, df = 4))#
+X <- mvrnorm(nsample, mu = muvec, Sigma = sigmat); cor(X[,1], X[,2])
+nsample <- 50; nsim <- 100#
+sig2 <- rchisq(1, df = 1) ## The true error variance#
+bet <- c(rnorm(3, 0, 1), 0) ## 4 values of beta that is beta0, beta1, beta2, beta3 = 0#
+muvec <- rnorm(3, 0, 1)#
+sigmat <- diag(rchisq(3, df = 4))#
+X <- mvrnorm(nsample, mu = muvec, Sigma = sigmat); cor(X[,1], X[,2])#
+Xmat <- cbind(1, X)#
+## Simulate the response ###
+bets <- matrix(NA, ncol = length(bet), nrow = nsim)#
+bets.biased <- matrix(NA, ncol = length(bet) - 1, nrow = nsim)#
+for(i in 1:nsim){#
+Y <- Xmat%*%bet + rnorm(nsample)#
+model1 <- lm(Y ~ X[,1])#
+model2 <- lm(Y ~ X[,2])#
+model3 <- lm(Y ~ X[,3])#
+### Store the biased estimates of the betas ###
+bets.biased[i,] <- c(coef(model1)[2], coef(model2)[2], coef(model3)[2])#
+model <- lm(Y ~ X)#
+bets[i,] <- coef(model)#
+}#
+### Calculate the means of the slope estimates ###
+## Beta 1#
+paste0("True Value: ", bet[2])#
+paste0("Mean of beta1 estimates from MLR: ", colMeans(bets)[2])#
+paste0("Mean of beta1 estimates from SLR: ", colMeans(bets.biased)[1])#
+## Beta 2#
+paste0("True Value: ", bet[3])#
+paste0("Mean of beta1 estimates from MLR: ", colMeans(bets)[3])#
+paste0("Mean of beta1 estimates from SLR: ", colMeans(bets.biased)[2])#
+## Beta 3#
+paste0("True Value: ", bet[4])#
+paste0("Mean of beta1 estimates from MLR: ", colMeans(bets)[4])#
+paste0("Mean of beta1 estimates from SLR: ", colMeans(bets.biased)[3])
