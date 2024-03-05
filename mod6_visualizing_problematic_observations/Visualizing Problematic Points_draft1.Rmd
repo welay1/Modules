@@ -1,0 +1,1405 @@
+---
+title: "Visualizing Problematic Observations"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(learnr)
+library(ggplot2)
+
+options(tutorial.storage = list(
+  save_object = function(...){},
+  get_object = function(...) NULL,
+  get_objects = function(...) list(),
+  remove_all_objects = function(...){}))
+```
+
+## Introduction
+
+In this module, we will investigate the impact that certain **extreme** or **problematic** observations has on a fitted simple linear regression relationship.
+
+We will be using the dataset "cars" contained in R. This dataset includes two variables:
+
+- Speed (mph): speed that a car was travelling prior to stopping
+- Distance: the distance until the car arrived at a complete stop.
+
+In each part of this module, you will be asked to add a new observation to the dataset and investigate the impact of this change on the fitted linear regression relationship.
+
+### Exploratory data analysis
+
+We will attach the dataset and look at the summary and dimension of this dataset. This will tell us the centre and spread of each variable, as well as how many observations we have and in which column of the data each variable is stored.
+
+#### Descriptive Statistics
+```{r}
+# load the dataset "car" 
+attach(cars)
+```
+
+Now, let's first look at the 5-number summary of the variables stored in cars.
+```{r EDA_1, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r EDA_1-hint}
+# you can use the function "summary()" to get some statistics about your dataset
+
+```
+
+
+```{r EDA_1-solution}
+summary(cars)
+```
+
+Let's now also take a look at the dimension of the dataset 'cars.' Dimensions refer to the number of rows and columns in the dataset. In a statistical context, rows represent individual observations or data points, while columns represent variables or attributes associated with each observation
+```{r EDA_2, exercise = TRUE, exercise.lines = 3}
+
+```
+
+```{r EDA_2-hint}
+# you can use the function "dim()" to get the dimension of your dataset "cars"
+
+```
+
+```{r EDA_2-solution}
+dim(cars)
+```
+
+
+#### The regression
+Now that we've examined the summary and dimensions of the 'cars' dataset, we're ready to explore the relationship between Speed (X) and Distance (Y).Let's first fit a linear regression to estimate how speed affects distance.
+
+To proceed, please fill in the blanks of the following code and run the regression.
+```{r EDA_3, exercise = TRUE, exercise.lines = 4}
+model1 <- lm(  ~  , data = )
+summary(model1)
+```
+
+```{r EDA_3-hint-1}
+# you can use lm(response variable ~ predictor, data = the name of your dataset) to fit a simple linear regression between your predictor and response variable 
+
+```
+
+```{r EDA_3-hint-2}
+# you can use the function "summary" to view your summary of your linear regression
+
+```
+
+```{r EDA_3-solution}
+model1 <- lm(dist ~ speed, data = cars)
+summary(model1)
+```
+
+```{r, include=FALSE}
+#model 1
+model1 <- lm(dist ~ speed, data = cars)
+
+#model 2
+cars[51,] <- c(40, 120)
+model2 <- lm(dist ~ speed, data=cars)
+
+# model3 
+cars[51,] <- c(40, 60)
+model3 <- lm(dist ~ speed, data=cars)
+
+# model4
+cars[51,] <- c(20, 0)
+model4 <- lm(dist ~ speed, data=cars)
+
+# model5
+cars[51,] <- c(40, 0)
+model5 <- lm(dist ~ speed, data=cars)
+```
+
+
+Another (visual) way to observe the association between two variables is through a scatterplot. After fitting a simple linear regression between Speed (X) and Distance (Y), we can enhance our understanding by plotting these variables and overlaying the estimated regression line on the graph.
+
+```{r EDA_4.setup, include=FALSE}
+model1 <- lm(dist ~ speed, data = cars)
+```
+
+```{r EDA_4, exercise = TRUE, exercise.lines = 6, exercise.setup = "EDA_4.setup"}
+ggplot() + 
+  geom_point(data = cars, aes(x = "[insert x-variable]", y = "[insert y-variable]")) +
+  geom_abline(intercept = "[insert intercept from the regression model]", slope ="[insert slope from the regression model]", col = "blue")
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+```{r EDA_4-hint-1}
+# Which variable should be the independent variable and 
+# which one should be the dependent variable in your scatterplot?
+```
+
+```{r EDA_4-hint-2}
+# You can extract the estimated intercept and slope and use them as intercept and slope 
+# inside of the "geom_abline" function to add your estimated linear regression to the scatterplot
+```
+
+
+```{r EDA_4-hint-3}
+# The coef(model name) gives both estimated intercept and slope, 
+# so you can use index to extract estimated intercept and slope individually
+```
+
+```{r EDA_4-solution}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = "blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+```{r trend, echo=FALSE}
+question("What trend do you notice in the scatterplot above (Figure 1)?",
+         answer("As speed increases, the average of the distance also increases.", correct = TRUE, message = "We can see a postitive association between X (speed) and Y (distance)"),
+         answer("As speed increases, the average of the distance also decreases.", message = "Incorrect, the association between X (speed) and Y (distance) is postitive instead of negative"), 
+         answer("As speed increases, the average of the distance stays the same.", message = "Incorrect, We can see a postitive association between X (speed) and Y (distance)"),
+         answer("There is no obvious trend shown in the scatterplot.", message = "Incorrect, the postitive association between X (speed) and Y (distance) is quite obvious in the scatterplot"), allow_retry = TRUE)
+```
+
+
+## Problematic Observations 1: Leverage Points
+
+The first kind of problematic observation to identify is called a **leverage point**. It is loosely defined as an observation that is extreme or unusual from the rest of the data because it has an abnormally large or small value of the predictor.
+
+```{r LP_MC1, echo=FALSE}
+question("When would you expect a leverage point to impact the estimated regression coefficients of a model?",
+         answer("Always", message = ""),
+         answer("Sometimes", correct = TRUE, message = "Well done!"), 
+         answer("Never", message = "Incorrect, the reason why this option is incorrect"),
+         allow_retry = TRUE)
+```
+
+_________________________
+
+Let's visualize this type of observation by changing one of our observations to make it a leverage point. Since the dataset has Speed in column 1 and Distance in column 2, we will need to be sure we assign the right values in the right places. Create a new row (row 51) in cars by assigning a new Speed measurement of 40 and a new Distance measurement of 120.
+
+```{r LP1, exercise = TRUE, exercise.lines = 3}
+# assign row 51 a value of 40 and 120
+cars[51,] <- 
+```
+
+```{r LP1-hint-1}
+# data Speed is in column 1 and Distance is in column 2
+```
+
+
+```{r LP1-solution}
+cars[51,] <- c(40, 120)
+```
+
+```{r, include=FALSE}
+cars[51,] <- c(40, 120)
+```
+
+
+
+Next, fit a new linear model using speed as predictor and dist as response using our updated data. Make a scatterplot of these variables and add two regression lines to this plot:
+
+  - one line in blue that represents the original regression relationship (recall that this information was stored in model1)
+  - one line in red that represents the new regression relationship
+
+```{r ex1, exercise = TRUE, exercise.lines = 5}
+
+# fit the linear regression relationship with updated dataset cars
+model2 <- lm( ~ , data=)
+# view the summary of the fitted model2
+summary()
+# view the summary of the fitted model1 
+summary()
+
+```
+
+```{r ex1-hint-1}
+# Remember, Distance is the y-variable and speed is the x-variable
+```
+
+
+```{r ex1-solution}
+# fit the linear regression relationship with updated dataset cars
+model2 <- lm(dist ~ speed, data=cars)
+# view the summary of the fitted model2
+summary(model2)
+# view the summary of the fitted model1 
+summary(model1)
+```
+
+```{r LP2.setup, include=FALSE}
+attach(cars)
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(40, 120)
+model2 <- lm(dist ~ speed, data=cars)
+```
+
+
+```{r LP2, exercise = TRUE, exercise.lines = 10, exercise.setup = "LP2.setup"}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = "[insert x-variable]", y = "[insert y-variable]"), col = "red") + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x = 30,y = 70,label="Fitted linear regression \n using the updated dataset", col = "red")+
+  geom_abline(intercept = "replace here by your answers", slope = "replace here by your answers", col = 'red') +
+  annotate("text",x = 22.5,y = 102,label = "Fitted linear regression \n using the original dataset", col = "blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+```{r LP2-hint-1}
+# Use the geom_point function to highlight the observation on row 51
+```
+
+
+```{r LP2-hint-2}
+# Please extract the estimated intercept and slope from the new model (model2) 
+# and put them in the right places inside of the function geom_abline
+```
+
+
+```{r LP2-solution}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = cars$speed[51], y = cars$dist[51]), col = "red") + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x= 30,y= 70,label="Fitted linear regression \n using the updated dataset", col="red")+
+  geom_abline(intercept = coef(model2)[1], slope = coef(model2)[2], col = 'red') +
+  annotate("text",x=22.5,y=102,label="Fitted linear regression \n using the original dataset", col="blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+```{r LP_MC2, echo=FALSE}
+question("Looking at both the model summaries (model 1 and model 2) as well as the scatterplot, which of the options below seems most true?",
+         answer("Model 2 exhibits a substantially different relationship between Speed and Distance compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("Model 2 overall seems to estimate a similar regression coefficients compared to model 1.", correct = TRUE, message = "Well done!"), 
+         answer("Model 2 exhibits more variability in the estimates of the regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("More than one of these is true.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         allow_retry = TRUE)
+```
+
+____________________________
+
+Let's modify observation 51 again, but this time assign it a Speed of 40 and a Distance of 60. Repeat the process of fitting a new estimated regression relationship and plotting this relationship on a scatterplot.
+
+```{r LP4.setup, include=FALSE}
+attach(cars)
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(40, 60)
+model3 <- lm(dist ~ speed, data=cars)
+```
+
+```{r LP3, exercise = TRUE, exercise.lines = 3}
+# assign row 51 a value of 40 and 60
+cars[51,] <- 
+```
+
+```{r LP3-hint-1}
+# data Speed is in column 1 and Distance is in column 2
+```
+
+
+```{r LP3-solution}
+# assign observation 51 a speed of 40 and a distance of 60
+cars[51,] <- c(40, 60)
+```
+
+
+```{r LP4, exercise = TRUE, exercise.lines = 7, exercise.setup = "LP4.setup"}
+# fit the linear regression relationship and view the summary
+model3 <- lm( "replace here by your answer" ~ "replace here by your answer", data=cars)
+summary(model3)
+
+# Also show the summary of model1 where we used the original dataset to fit the model 
+summary("replace here by your answer")
+
+```
+
+```{r LP4-hint-1}
+# "dist" is the response variable and "speed" is the predictor
+```
+
+```{r LP4-hint-2}
+# we used the original dataset to fit the first model, and named it "model1"
+```
+
+
+```{r LP4-solution}
+# fit the linear regression relationship and view the summary
+model3 <- lm(dist ~ speed, data=cars)
+summary(model3)
+
+# show the summary of model1 as well
+summary(model1)
+```
+
+
+```{r LP5, exercise = TRUE, exercise.lines = 10, exercise.setup = "LP4.setup"}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = "replace here by your answer", y = "replace here by your answer"), col = "red") + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x = 30,y = 70,label="Fitted linear regression \n using the updated dataset", col = "red")+
+  geom_abline(intercept = "replace here by your answer", slope = "replace here by your answer", col = 'red') +
+  annotate("text",x = 22.5,y = 102,label = "Fitted linear regression \n using the original dataset", col = "blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+```{r LP5-hint-1}
+# Please use geom_point function to highlight the observation on row 51
+```
+
+
+```{r LP5-hint-2}
+# Please extract the estimated intercept and slope from the new model (model3) 
+# and put them in the right places inside of the function geom_abline
+```
+
+
+```{r LP5-solution}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = cars$speed[51], y = cars$dist[51]), col = "red") + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x= 34,y= 70,label="Fitted linear regression \n using the updated dataset", col="red")+
+  geom_abline(intercept = coef(model3)[1], slope = coef(model3)[2], col = 'red') +
+  annotate("text",x=22.5,y=102,label="Fitted linear regression \n using the original dataset", col="blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 2. The Association between Speed and Distance")
+```
+
+
+```{r LP_MC3, echo=FALSE}
+question("Looking at both the model summaries (model 1 and model 3) as well as the scatterplot, which of the options below seems most true?",
+         answer("Model 3 exhibits a substantially different relationship between Speed and Distance compared to model 1.", correct = TRUE, message = "Well done!"),
+         answer("Model 3 overall seems to estimate a similar regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."), 
+         answer("Model 3 exhibits more variability in both estimates of the regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("More than one of these is true.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         allow_retry = TRUE)
+```
+
+_______________________________
+
+
+```{r LP_MC4, echo=FALSE}
+question("What is different about the two observations we changed for Model 2 and Model 3?",
+         answer("They differ only in their predictor (i.e. speed) values", message = "Incorrect, please go back and take a look at how you updated the dataset."),
+         answer("They differ only in their response (i.e. distance) values.", correct = TRUE, message = "Well done!"), 
+         answer("There is no different between these observations.", message = "Incorrect, please go back and take a look at how you updated the dataset."),
+         answer("Both the response and predictor values have changed", message = "Incorrect, please go back and take a look at how you updated the dataset."),
+         allow_retry = TRUE)
+```
+
+
+Both of the observations we looked at were leverage points because their predictor values were very different from most of the other data points (especially far from the average predictor value).
+
+However, only one of them significantly changed the regression line that we calculated from the data.
+
+This tells us that while not all leverage points affect how we estimate the regression relationship, they all have the possibility to do so.
+
+
+## Problematic Observations 2: Outlier Points
+
+You are probably familiar with the concept of a statistical outlier. In linear regression, we use the term **outlier** to denote a very specific type of extreme/unusual observation in our data. An **outlier** is an observation that that deviates significantly from the regression pattern observed in the rest of the data. This often means that the response value is significantly higher or lower than what we typically see in the data.
+
+
+```{r OP_MC1, echo=FALSE}
+question("Would you expect an outlier point to impact the estimated regression coefficients of a model?",
+         answer("Always", message = "Incorrect, please try this question again."),
+         answer("Sometimes.", correct = TRUE, message = "Well done!"), 
+         answer("Never", message = "Incorrect, please try this question again."),
+         allow_retry = TRUE)
+```
+
+
+In this section, we will visualize the impact of outlier points on the estimated regression relationship between Speed (X) and Distance (Y). Since we already fit a model to the unmodified data earlier (model 1), we will jump to modifying a single observation to visualize the impact to this regresstion relationship.
+
+_______________________________
+
+First, we will assign our observation 51 a Speed value of 20 and a Distance value of 0. Then we will fit a linear regression model and add this estimated relationship to a scatterplot along with the relationship from model 1. 
+
+
+```{r OP1, exercise = TRUE, exercise.lines = 3}
+# assign row 51 a value of 20 and 0
+cars[51,] <- 
+```
+
+```{r OP1-hint-1}
+# data Speed is in column 1 and Distance is in column 2
+```
+
+
+```{r OP1-solution}
+# assign observation 51 a speed of 40 and a distance of 60
+cars[51,] <- c(20, 0)
+```
+
+
+
+```{r OP2.setup, include=FALSE}
+attach(cars)
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(20, 0)
+```
+
+
+
+```{r OP2, exercise = TRUE, exercise.lines = 7, exercise.setup = "OP2.setup"}
+# fit the linear regression relationship and view the summary
+model4 <- lm( "replace here by your answer" ~ "replace here by your answer", data=cars)
+summary(model4)
+
+# Also show the summary of model1 where we used the original dataset to fit the model 
+summary("replace here by your answer")
+
+```
+
+```{r OP2-hint-1}
+# "dist" is the response variable and "speed" is the predictor
+```
+
+```{r OP2-hint-2}
+# we used the original dataset to fit the first model, and named it "model1"
+```
+
+
+```{r OP2-solution}
+# fit the linear regression relationship and view the summary
+model4 <- lm(dist ~ speed, data=cars)
+summary(model4)
+
+# show the summary of model1 as well
+summary(model1)
+```
+
+
+
+```{r OP3.setup, include=FALSE}
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(20, 0)
+model4 <- lm(dist ~ speed, data=cars)
+```
+
+
+```{r OP3, exercise = TRUE, exercise.lines = 10, exercise.setup = "OP3.setup"}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = "replace here by your answer", y = "replace here by your answer"), col = "red", pch = 20) + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x = 18,y = 25, label="Fitted linear regression \n using the updated dataset", col = "red")+
+  geom_abline(intercept = "replace here by your answer", slope = "replace here by your answer", col = 'red') +
+  annotate("text",x = 19, y = 80, label = "Fitted linear regression \n using the original dataset", col = "blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+```{r OP3-hint-1}
+# Please use geom_point function to highlight the observation on row 51
+```
+
+
+```{r OP3-hint-2}
+# Please extract the estimated intercept and slope from the new model (model4) 
+# and put them in the right places inside of the function geom_abline
+```
+
+
+```{r OP3-solution}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = cars$speed[51], y = cars$dist[51]), col = "red", pch = 20) + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x= 18,y= 25,label="Fitted linear regression \n using the updated dataset", col="red")+
+  geom_abline(intercept = coef(model4)[1], slope = coef(model4)[2], col = 'red') +
+  annotate("text",x=19,y=80,label="Fitted linear regression \n using the original dataset", col="blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 1. The Association between Speed and Distance")
+```
+
+
+
+
+
+```{r OP_MC2, echo=FALSE}
+question("Looking at both the model summaries (model 1 and model 4) as well as the scatterplot, which of the options below seems most true?",
+         answer("Model 4 exhibits a substantially different relationship between Speed and Distance compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("Model 4 overall seems to estimate a similar regression coefficients compared to model 1.", correct = TRUE, message = "Well done!"), 
+         answer("Model 4 exhibits more variability in both estimates of the regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("More than one of these options seems true.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         allow_retry = TRUE)
+```
+
+
+_______________________________
+
+Now, we will set observation 51 to have a speed value of 40 and a distance value of 0. Then, draw the same plot again, with the original relationship from Model 1 and the new relationship we obtain using this new value.
+
+
+```{r OP4, exercise = TRUE, exercise.lines = 3}
+# assign row 51 a value of 40 and 0
+cars[51,] <- 
+```
+
+```{r OP4-hint-1}
+# data Speed is in column 1 and Distance is in column 2
+```
+
+
+```{r OP4-solution}
+# assign observation 51 a speed of 40 and a distance of 60
+cars[51,] <- c(40, 0)
+```
+
+
+
+```{r OP5.setup, include=FALSE}
+attach(cars)
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(40, 0)
+```
+
+
+
+```{r OP5, exercise = TRUE, exercise.lines = 7, exercise.setup = "OP5.setup"}
+# fit the linear regression relationship and view the summary
+model5 <- lm( "replace here by your answer" ~ "replace here by your answer", data=cars)
+summary(model5)
+
+# Also show the summary of model1 where we used the original dataset to fit the model 
+summary("replace here by your answer")
+
+```
+
+```{r OP5-hint-1}
+# "dist" is the response variable and "speed" is the predictor
+```
+
+```{r OP5-hint-2}
+# we used the original dataset to fit the first model, and named it "model1"
+```
+
+
+```{r OP5-solution}
+# fit the linear regression relationship and view the summary
+model5 <- lm(dist ~ speed, data=cars)
+summary(model5)
+
+# show the summary of model1 as well
+summary(model1)
+```
+
+
+
+```{r OP6.setup, include=FALSE}
+attach(cars)
+model1 <- lm(dist ~ speed, data = cars)
+cars[51,] <- c(40, 0)
+model5 <- lm(dist ~ speed, data=cars)
+```
+
+
+```{r OP6, exercise = TRUE, exercise.lines = 10, exercise.setup = "OP6.setup"}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = "replace here by your answer", y = "replace here by your answer"), col = "red", pch = 20) + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x = 20, y = 25, label="Fitted linear regression \n using the updated dataset", col = "red")+
+  geom_abline(intercept = "replace here by your answer", slope = "replace here by your answer", col = 'red') +
+  annotate("text",x = 15, y = 82, label = "Fitted linear regression \n using the original dataset", col = "blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 2. The Association between Speed and Distance")
+```
+
+
+```{r OP6-hint-1}
+# Please use geom_point function to highlight the observation on row 51
+```
+
+
+```{r OP6-hint-2}
+# Please extract the estimated intercept and slope from the new model (model5) 
+# and put them in the right places inside of the function geom_abline
+```
+
+
+```{r OP6-solution}
+ggplot() + 
+  geom_point(data = cars, aes(x = speed, y = dist))+
+  geom_point(aes(x = cars$speed[51], y = cars$dist[51]), col = "red", pch = 20) + 
+  geom_abline(intercept = coef(model1)[1], slope = coef(model1)[2], col = 'blue') +
+  annotate("text",x= 20,y= 25,label="Fitted linear regression \n using the updated dataset", col="red")+
+  geom_abline(intercept = coef(model5)[1], slope = coef(model5)[2], col = 'red') +
+  annotate("text",x=15,y=82,label="Fitted linear regression \n using the original dataset", col="blue")+
+  labs(x = "Speed",y ="Distance", title = "Figure 2. The Association between Speed and Distance")
+```
+
+
+
+
+
+```{r OP_MC3, echo=FALSE}
+question("Looking at both the model summaries (model 1 and model 5) as well as the scatterplot, which of the options below seems most true?",
+         answer("Model 5 exhibits a substantially different relationship between Speed and Distance compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("Model 5 overall seems to estimate a similar regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."), 
+         answer("Model 5 exhibits substantially more variability in both estimates of the regression coefficients compared to model 1.", message = "Incorrect, please go back and take a look at the model summaries and scatterplot."),
+         answer("More than one of these options seems true.",  correct = TRUE, message = "Well done!"),
+         allow_retry = TRUE)
+```
+
+
+_______________________________
+
+
+```{r OP_MC4, echo=FALSE}
+question("What is different about the two observations we changed for Model 4 and Model 5?",
+         answer("They differ only in their predictor (i.e. speed) values", correct = TRUE, message = "Well done!"),
+         answer("They differ only in their response (i.e. distance) values", message = "Incorrect, please go back and take a look at the scatterplot."), 
+         answer("There is no different between these observations", message = "Incorrect, please go back and take a look at the scatterplot."),
+         answer("Both the response and predictor values have changed", message = "Incorrect, please go back and take a look at the scatterplot."), allow_retry = TRUE)
+```
+
+
+Both of the observations we created in the data were outlier points as they had unusual/extreme values of their response measurement (distance). However, like before, only one of the two observations had a noticeable impact on the estimated regression relationship, and this observation happened to be located farther from the mean of Speed than the other. Both observations however did yield large standard errors of the regression coefficients. This tells us that some outlier points impact the estimated regression relationship strongly, but all increase the standard error of the estimated coefficients. 
+
+We shall see next that observations which strongly impact a single estimated coefficient, the estimated regression relationship or a fitted value are considered influential observations.
+
+## Problematic Observations 3: Influential Points
+
+The last type of observation that is considered problematic in linear regression is an **influential point**. There are 3 ways in which an observation can be influential:
+
+* it influences ALL the estimated coefficients of the regression relationship/influences the model fit overall
+* it influences at least one but not all estimated coefficients of the regression relationship
+* it influences its own predicted/fitted value
+
+All 3 of these types of influential observations can be detected by looking at a model in which this observation was used in estimating the relationship (e.g. Models 2, 3, 4 and 5) and comparing aspects of this model to one where this observation was NOT used to estimate the relationship (e.g. Model 1). 
+
+```{r IP_MC1, echo=FALSE}
+question("Which of these options is correct regarding the Empirical Rule (i.e. 68-95-99.7% rule)?",
+         answer("95% of all observations from any distribution must fall within 2 standard deviations of the mean.", message = "Incorrect, please try this question again."),
+         answer("Only 0.3% of all observations in a Normal distribution should be larger than 3 standard deviations above the mean.", message = "Incorrect, please try this question again."), 
+         answer("Observations could be considered rare if they fall 3 standard deviations away from the mean of a Normal distribution.",  correct = TRUE, message = "Well done!"), allow_retry = TRUE)
+```
+
+
+In this section, we will visualize the impact of each these influential points by again revewing the observations we modified in our dataset and comparing the results back to Model 1.
+
+_______________________________
+
+### Influential on an Estimated Coefficient
+
+The first type of influential observation we will look at is one that is influential on at least one $\hat{\beta}_j$. 
+
+
+```{r, echo=F}
+# not a piece of code that students should modify (just used for the MCQ)
+par(mfrow=c(2,2))
+cars[51,] <- c(40, 120)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance", xlim=c(0,40),
+     ylim=c(0,140), main="Model 2 (leverage point)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model2)[1], b=coef(model2)[2], col="red")
+
+cars[51,] <- c(40,60)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140), main="Model 3 (leverage and maybe outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model3)[1], b=coef(model3)[2], col="red")
+
+cars[51,] <- c(20,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140), main="Model 4 (outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model4)[1], b=coef(model4)[2], col="red")
+
+cars[51,] <- c(40,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140), main="Model 5 (leverage and outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model5)[1], b=coef(model5)[2], col="red")
+```
+
+
+
+
+```{r IP1_MC1, echo=FALSE}
+question("Looking at each scatterplot we have made thus far, which model do you think has an observation (the red dot) that is influential on the slope of the estimated regression model (i.e. in which model does the red slope look substantially different from the blue slope)?",
+         answer("Only Model 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("Model 5 and Model 3 ", correct = TRUE, message = "Well done!"), 
+         answer("Models 2, 3, and 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("All of the above models", message = "Incorrect, please go back and take a look at each scatterplot."), allow_retry = TRUE)
+```
+
+
+To verify whether each point is this type of influential observation, we need to compare the estimated slope from Model 1 with the estimated slope in each other model, while adjusting for how much variability in the estimated slope we expect from the sampling distribution. This standard error (representing sampling variability) is given to us in our summary output for a model.
+
+In the below code chunk, extract 3 pieces of information from the model summaries we have already used:
+  - the estimated slope from Model 1
+  - the standard error for the estimated slope from Model 5
+  - the estimated slope from Model 5.
+
+We will then compare the slopes by taking their difference and standardizing by the standard error (i.e. $\frac{\hat{\beta}_{Model5} - \hat{\beta}_{Model1}}{SE(\hat{\beta}_{Model5})}$). This is the same process as computing a z-score:
+
+
+
+```{r IP1.1.setup, include=FALSE}
+#model 1
+model1 <- lm(dist ~ speed, data = cars)
+
+#model 2
+cars[51,] <- c(40, 120)
+model2 <- lm(dist ~ speed, data=cars)
+
+# model3 
+cars[51,] <- c(40, 60)
+model3 <- lm(dist ~ speed, data=cars)
+
+# model4
+cars[51,] <- c(20, 0)
+model4 <- lm(dist ~ speed, data=cars)
+
+# model5
+cars[51,] <- c(40, 0)
+model5 <- lm(dist ~ speed, data=cars)
+
+beta1 <- coef(model1)[2]
+
+
+new1 <- data.frame(speed = 40)
+new2 <- data.frame(speed = 20)
+```
+
+
+```{r IP1_1, exercise = TRUE, exercise.lines = 14, exercise.setup = "IP1.1.setup"}
+# extract the estimated slope from Model 1
+beta1 <- coef(model1)[2]
+
+# extract the estimated slope from Model 5
+beta5 <- 
+
+# extract the standard error of the slope from Model 5
+se5 <- summary(model5)$coefficients[ , ]
+
+# standardize the slope from Model 5 according to above
+(beta5 - beta1)/se5
+```
+
+```{r IP1_1-hint-1}
+# use "coef" function to extract coefficient estimate on model5
+```
+
+```{r IP1_1-hint-2}
+# the standard error of the slope from Model 5 is stored in a matrix
+```
+
+```{r IP1_1-solution}
+# extract the estimated slope from Model 1
+beta1 <- coef(model1)[2]
+
+# extract the estimated slope from Model 5
+beta5 <- coef(model5)[2]
+
+# extract the standard error of the slope from Model 5
+se5 <- summary(model5)$coefficients[2,2]
+
+# standardize the slope from Model 5 according to above
+(beta5 - beta1)/se5
+
+```
+
+
+
+```{r IP1_MC2, echo=FALSE}
+question("Comparing this to the Empirical Rule (aka the 68-95-99.7% rule), would we consider this to be an unusual value?",
+         answer("Yes", correct = TRUE, message = "Well done!"),
+         answer("No", message = "Incorrect, please try this question again."), allow_retry = TRUE)
+```
+
+
+_______________________________
+
+
+Do the same process for Models 2, 3, and 4 to determine whether there is an unusually large difference between the estimated slopes of Models 2, 3 and 4 compared to Model 1 (i.e. $\frac{\hat{\beta}_{Modelj} - \hat{\beta}_{Model1}}{SE(\hat{\beta}_{Modelj})}$ for each model j = 2, 3, 4).
+
+
+```{r IP1_2, exercise = TRUE, exercise.lines = 6, exercise.setup = "IP1.1.setup"}
+beta2 <- coef(model2)[ ]
+se2 <- summary(model2)$coefficients[ , ]
+(beta2 - beta1)/se2
+```
+
+```{r IP1_2-hint-1}
+# use the right index to extract coefficient estimate on model2
+```
+
+```{r IP1_2-hint-2}
+# Remember we want to isolate coefficients and dimension/content of what is stored.
+# So please use the right index to extract the standard deviation on model5
+```
+
+
+```{r IP1_2-solution}
+# extract the slope and standard error for Model 3 and compute the `z-score'
+beta2 <- coef(model2)[2]
+se2 <- summary(model2)$coefficients[2,2]
+(beta2 - beta1)/se2
+```
+
+
+
+
+```{r IP1_3, exercise = TRUE, exercise.lines = 6, exercise.setup = "IP1.1.setup"}
+beta3 <- 
+se3 <- 
+(beta3 - beta1)/se3
+```
+
+```{r IP1_3-hint-1}
+# use "coef" function and the right index to extract coefficient estimate on model3
+```
+
+```{r IP1_3-hint-2}
+# Remember we want to look in the model sumary and the coefficents "box."
+```
+
+```{r IP1_3-solution}
+# extract the slope and standard error for Model 3 and compute the `z-score'
+beta3 <- coef(model3)[2]
+se3 <- summary(model3)$coefficients[2,2]
+(beta3 - beta1)/se3
+```
+
+
+
+
+```{r IP1_4, exercise = TRUE, exercise.lines = 6, exercise.setup = "IP1.1.setup"}
+beta4 <- 
+se4 <- 
+
+```
+
+```{r IP1_4-hint-1}
+# use "coef" function and the right index to extract coefficient estimate on model3
+```
+
+```{r IP1_4-hint-2}
+# Remember we want to look in the model sumary and the coefficents "box."
+```
+
+
+```{r IP1_4-hint-3}
+# Please check the formula above R chunck to compute the "z-score."
+```
+
+
+```{r IP1_4-solution}
+# extract the slope and standard error for Model 3 and compute the `z-score'
+beta4 <- coef(model4)[2]
+se4 <- summary(model4)$coefficients[2,2]
+(beta4 - beta1)/se4
+```
+
+
+
+Based on these results, we see that Model 5 (and to a lesser degree Model 4) each have a change in their slope (compared to Model 1) that appears to be unusually large/small (more than 2 standard errors). While we don't formally use the Empirical Rule to decide which observations create a substantial change in the estimated coefficients, the overall principle is similar:
+
+  1. find the difference in the model estimates between a model with all the observations (model 2, 3, 4 or 5) and a model with one observation removed (model 1)
+  2. scale this difference using the standard error of the estimated coefficient in the larger model to account for expected variation between samples
+  3. use a specified cutoff/threshold to determine whether this scaled difference in estimates is too large and indicates the model estimate changed substantially due to this one observation.
+
+We could use this same process for the intercept as well, to determine whether any one observations influences the estimate of the intercept substantially. We will see a similar process for the next type of influential observations.
+
+_________________________________________
+
+### Influential on its own Prediction
+
+The next type of influential observation is one that is influential on its own fitted/predicted value $\hat{y}_i$. This means that an observation that is influential in this way will provide a predicted value for itself in one model (e.g. Model 5) that is very different than a predicted value for itself from a model in which this observation was not used to fit the model (e.g. Model 1). 
+
+To begin, we can review our 5 models again (model 1 is the blue line in each plot, and the red line corresponds to each new model we fit by adding a new observation):
+
+
+```{r, echo=F}
+# not a piece of code that students should modify (just used for the MCQ)
+par(mfrow=c(2,2))
+cars[51,] <- c(40, 120)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance", xlim=c(0,40),
+     ylim=c(0,140), main="Model 2 (leverage point)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model2)[1], b=coef(model2)[2], col="red")
+
+cars[51,] <- c(40,60)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 3 (leverage and maybe outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model3)[1], b=coef(model3)[2], col="red")
+
+cars[51,] <- c(20,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 4 (outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model4)[1], b=coef(model4)[2], col="red")
+
+cars[51,] <- c(40,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 5 (leverage and outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model5)[1], b=coef(model5)[2], col="red")
+```
+
+
+
+
+```{r IP2_MC1, echo=FALSE}
+question("Consider the predicted/fitted value that each model would predict for the red dots in each picture. For which model (2,3,4 or 5) might a prediction for the red observation be quite different compared to a prediction from Model 1?",
+         answer("Only Model 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("Model 5 and Model 3", correct = TRUE, message = "Well done!"), 
+         answer("Models 2, 3, and 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("All of the above models", message = "Incorrect, please go back and take a look at each scatterplot."), allow_retry = TRUE)
+```
+
+
+
+*Recall that a predicted/fitted value for an observation uses the same value of the predictor as the observation we are predicting for, but provides a response value equal to where that observation falls on the estimated regression surface.*
+
+Since it's difficult to visualize from inspection of graphs, we can conduct a similar process to locating observations that substantially change the estimated slope. For this, we again need 3 pieces of information from our models:
+
+  - the fitted/predicted value for our observation using a model where this observation was used (e.g. Models 2, 3, 4, 5)
+  - the fitted/predicted value for our observation using a model where this observation was NOT used (i.e. Model 1)
+  - the standard error in this prediction/fitted value from the model where this observation was NOT used (i.e. Model 1)
+
+All of these components are not directly found in the summary of the fitted model, but rather require that we use the predict() function to extract them. To review the syntax of this function, see this walkthrough:  [https://www.digitalocean.com/community/tutorials/predict-function-in-r](https://www.digitalocean.com/community/tutorials/predict-function-in-r). We will require that the function report the standard errors as well, by adding an option to the function se.fit=TRUE. 
+
+Here is an example of how this should be done.
+
+```{r}
+# for model 2, our Speed value was 40
+new <- data.frame(speed = 40)
+
+# use "predict" function to get a prediction of the distance when the speed is 40
+# (using the estimated coefficients of Model 2)
+yhat2 <- predict(model2, new)
+
+# get all prediction info from Model 1
+p1 <- predict(model1, new, se.fit=T)
+
+# extract the predicted value for the distance when the speed is 40 using model 1
+yhat1 <- p1$fit
+
+# extract the standard error
+se1 <- p1$se.fit
+
+# look at the values we have
+c(yhat1, yhat2, se1)
+```
+
+To compare the predictions from both Model 1 and Model 2 above while taking into account the expected variation in predictions, we will compute the difference (Model 2 - Model 1) and divide by the standard error. We can compare this as well to the Empirical Rule.
+
+```{r}
+# take the difference between prediction in Model 2 to Model 1, divide by SE
+(yhat2 - yhat1)/se1
+```
+
+
+
+
+```{r IP2_MC2, echo=FALSE}
+question("If we compare this standardized difference to the Empirical Rule, would we decide that the difference in predictions is substantial?",
+         answer("Yes", message = "Incorrect, please try this question again."),
+         answer("No", correct = TRUE, message = "Well done!"), 
+         allow_retry = TRUE)
+```
+
+
+
+Now let's do the same thing for the remaining models and the observation we created for each.
+
+* In Model 3, speed was set to 40
+* In Model 4, speed was set to 20
+* In Model 5, speed was set to 40
+
+
+
+```{r IP2_1, exercise = TRUE, exercise.lines = 10, exercise.setup = "IP1.1.setup"}
+# create the data frame containing X values we wish to predict at
+new1 <- data.frame(speed = 40)
+new2 <- 
+
+# find the standardized difference in predictions for model 3
+p1 <- predict("replace here by your answer", "replace here by your answer", se.fit=T)
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat3 <- predict(model3, new1)
+
+(yhat3 - yhat1)/se1 
+```
+
+```{r IP2_1-hint-1}
+# follow the code "new1 <- data.frame(speed = 40)" to create a new dataframe with speed equal to 20,
+# and save it under the variable new2.
+```
+
+```{r IP2_1-hint-2}
+# p1 <- predict("replace here by your answer", "replace here by your answer", se.fit=T)
+# We want to predict using model1 here, and to match the observation to what was used for model3
+```
+
+```{r IP2_1-solution}
+# create the data frame containing X values we wish to predict at
+new1 <- data.frame(speed = 40)
+new2 <- data.frame(speed = 20)
+
+# find the standardized difference in predictions for model 3
+p1 <- predict(model1, new1, se.fit=T)
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat3 <- predict(model3, new1)
+
+(yhat3 - yhat1)/se1
+```
+
+
+
+
+
+
+```{r IP2_2, exercise = TRUE, exercise.lines = 10, exercise.setup = "IP1.1.setup"}
+# find the standardized difference in predictions for model 4
+p1 <- predict(model1, new2, se.fit=T)
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat4 <- predict("replace here by your answer", "replace here by your answer")
+
+(yhat4 - yhat1)/se1
+```
+
+```{r IP2_2-hint-1}
+# We are using model4 and predicting for speed = 20
+```
+
+```{r IP2_2-solution}
+# find the standardized difference in predictions for model 4
+p1 <- predict(model1, new2, se.fit=T)
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat4 <- predict(model4, new2)
+
+(yhat4 - yhat1)/se1
+```
+
+
+
+
+
+
+
+
+```{r IP2_3, exercise = TRUE, exercise.lines = 10, exercise.setup = "IP1.1.setup"}
+# find the standardized difference in predictions for model 5
+p1 <- predict("replace here by your answer", "replace here by your answer", "replace here by your answer")
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat5 <- predict(model5, new1)
+
+"replace here by your answer"
+```
+
+
+```{r IP2_3-hint-1}
+# We are predicting speed = 40 using model1
+```
+
+```{r IP2_3-hint-2}
+# Be sure we are also calculating standard errors on prediction
+```
+
+```{r IP2_3-hint-3}
+# Refer to the ealier in the code chunk for an example 
+```
+
+```{r IP2_3-solution}
+# find the standardized difference in predictions for model 5
+p1 <- predict(model1, new1, se.fit=T)
+yhat1 <- p1$fit
+se1 <- p1$se.fit
+yhat5 <- predict(model5, new1)
+
+(yhat5 - yhat1)/se1
+```
+
+Based on these results and using the Empirical rule as a guide to define unusual differences, we see that for Models 3 and 5, we have relatively large differences in the predictions for our red observations depending on whether or not that observation was used to fit the model. Again, when we are formally detecting this type of influential observation, we do not use the Empirical Rule, but rather a more strict cutoff value, so in reality, all 4 red observations are influential observations for their respective models. The process for detecting observations that are influential on their own prediction is the same as what we did here:
+
+  1. find the difference in the prediction of this observation between a model with all the observations used (model 2, 3, 4 or 5) and a model with this observation removed (model 1)
+  2. scale this difference using the standard error of the prediction in the smaller model to account for expected variation between samples
+  3. use a specified cutoff/threshold to determine whether this scaled difference in predictions is too large and indicates the model prediction for this observation changed substantially because of this observation.
+
+Our final type of influential observation will also look at differences between a model that uses ALL the observations and one that removes a single observation to understand the impact that this removed observation has on the overall fit of the model.
+
+_______________________________________
+
+### Influential on the Estimated Relationship Overall
+
+The final type of influential observation is one that influences the entire estimated regression relationship substantially, rather than a single aspect of it (e.g. a single estimated coefficient or single predicted value). It's common to have observations that are classified as at least one of the other two influential types, but won't be influential overall. This is because the impact that a single observation would have to be very large in order to have an overall impact on the estimated relationship.
+
+Let's visualize our 5 models again, and 4 observations (highlighted in red) that represent different kinds of problematic points.
+
+```{r, echo=F}
+# not a piece of code that students should modify (just used for the MCQ)
+par(mfrow=c(2,2))
+cars[51,] <- c(40, 120)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance", xlim=c(0,40),
+     ylim=c(0,140), main="Model 2 (leverage point)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model2)[1], b=coef(model2)[2], col="red")
+
+cars[51,] <- c(40,60)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 3 (leverage and maybe outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model3)[1], b=coef(model3)[2], col="red")
+
+cars[51,] <- c(20,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 4 (outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model4)[1], b=coef(model4)[2], col="red")
+
+cars[51,] <- c(40,0)
+plot(cars$dist ~ cars$speed, xlab="Speed (mph)", ylab="Distance",
+     ylim=c(0,140),main="Model 5 (leverage and outlier)")
+points(cars$dist[51]~cars$speed[51], col="red", pch=16)
+abline(a=coef(model1)[1], b=coef(model1)[2], col="blue")
+abline(a=coef(model5)[1], b=coef(model5)[2], col="red")
+```
+
+
+
+
+
+```{r IP3_MC1, echo=FALSE}
+question("For which model (2,3,4 or 5) might the red observation be substantially changing the overall regression relationship (e.g. both the intercept and slope) compared to Model 1?",
+         answer("Only Model 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("Model 5 and Model 3", correct = TRUE, message = "Well done!"), 
+         answer("Models 2, 3, and 5", message = "Incorrect, please go back and take a look at each scatterplot."),
+         answer("All of the above models", message = "Incorrect, please go back and take a look at each scatterplot."), allow_retry = TRUE)
+```
+
+
+______________________________
+
+
+
+Since, as before, it is difficult to confidently identify these types of influential points by graphical inspection, we can compare the differences between a model that uses this observation to estimate the relationship to a model that does not use the observation. However, the process we use for this comparison will be different than the previous two influential points. In this case, we will be comparing **sums of squares** representing different sources of variability in order to decide if an observation is influential in this way.
+
+
+**
+A. If $Y_1$ and $Y_2$ are both independent Normal random variables, then $Y_1 - Y_2$ must also be a Normal random variable.      
+B. If we have $n$ independent and identically distributed Normal random variables $Y_i$, then $\sum_{i=1}^{n}Y_i^2$ will be a Chi-squared random variable.  
+C. If we have that $Y_1$ is a Chi-square random variable with degrees of freedom $n$, and $Y_2$ is a Chi-square random variable with degrees of freedom $m$, then $\frac{\frac{Y_1}{n}}{\frac{Y_2}{m}}$ follows an F distribution.     
+D. More than one of these statements is true.
+**
+
+
+```{r IP3_MC2, echo=FALSE}
+question("Think back to prerequisite courses that discussed the distributions of various functions of random variables (e.g. STA257). Which statement above is true regarding the distributions of functions of random variables?",
+         answer("A", message = "Please also think about other options."),
+         answer("B", message = "Please also think about other options."), 
+         answer("C", message = "Please also think about other options."),
+         answer("D", correct = TRUE, message = "Well done! In fact, all are true and together derive the F distribution"), allow_retry = TRUE)
+```
+
+
+
+
+
+______________________________________
+
+Based on the theory of linear regression models, this tells us that we can compare two different sources of variation to each other, as long as we adjust/standardize them by their degree of freedom. By creating a ratio of variation in the fitted values between the two models and variation we expect from our observations around the regression relationship, we get a measure that tells us **how much more variable the two models are in their fitted values due to one observation compared to what would be expected as natural variability**.
+
+To evaluate the differences we observe in ALL fitted values of our model that are due to the presence of a single observation based on the amount of variation we expect in our observations around the regression relationship, we need to extract 3 sets of information:
+  - predicted values for all 51 observations (including the red one) from Model 1
+  - predicted values for all 51 observations (including the red one) from Model 5
+  - the estimated error variance from Model 5
+
+
+By taking a ratio of sum of squares we can say that ratios that seem large tell us that the differences in fitted values from the two models are abnormal relative to the amount of expected variation around the regression relationship. We can see how this works below:
+
+```{r}
+# the data for Model 5
+cars[51,] <- c(40,0)
+
+# get predictions for all 51 observations from model 5
+p5 <- predict(model5, as.data.frame(cars))
+
+# get predictions for all 51 observations from model 1
+p1 <- predict(model1, as.data.frame(cars))
+
+# extract estimated error variance from model 5
+errorvar5 <- summary(model5)$sigma^2
+
+```
+
+
+Now we can decide whether our red observation from Model 5 (observation 51) is this kind of influential point by finding the ratio $\frac{\sum(p5 - p1)^2}{2s^2}$, where the 2 corresponds to the degrees of freedom from the squared difference of fitted values in the numerator.
+
+
+```{r}
+# find the ratio of sums of squares
+sum((p5 - p1)^2)/(2*errorvar5)
+```
+
+```{r IP3_MC3, echo=FALSE}
+question("This value above tells us that the variation in fitted values due to our one red observation is about 6 times larger than the variation of the data around the estimated regression relationship",
+         answer("True", correct = TRUE, message = "Well done!"),
+         answer("False", message = "Incorrect, please try this question again."), 
+         allow_retry = TRUE)
+```
+
+Let's compute the same ratio for our other models (models 2, 3 and 4). Remember that we need:
+
+* to use the data that matches whichever of models 2, 3 or 4 we are looking at
+* to get predictions on all observations in this data in both model 1 and whichever of model 2, 3, or 4 we are working with
+* to extract the estimated error variance from whichever of model 2, 3, or 4 we are working with
+
+
+
+```{r IP3_1, exercise = TRUE, exercise.lines = 10, exercise.setup = "IP1.1.setup"}
+##### identifying observation 51 for model 2
+# make sure we have the right data
+cars[51,] <- c(40, 120)
+
+# extract predictions for this data in model 1 and model 2
+p1 <- predict(model1, as.data.frame(cars))
+p2 <- predict(model2, "replace here by your answer")
+
+# extract error variance from model 2
+errorvar2 <- summary(model2)$"replace here by your answer"
+
+# compute the ratio
+sum((p2-p1)^2)/(2*errorvar2)
+```
+
+```{r IP3_1-hint-1}
+# We want a prediction for all observations in the data
+```
+
+```{r IP3_1-hint-2}
+# sigma is stored as "sigma" and should be squared
+```
+
+
+```{r IP3_1-solution}
+##### identifying observation 51 for model 2
+# make sure we have the right data
+cars[51,] <- c(40, 120)
+
+# extract predictions for this data in model 1 and model 2
+p1 <- predict(model1, as.data.frame(cars))
+p2 <- predict(model2, as.data.frame(cars))
+
+# extract error variance from model 2
+errorvar2 <- summary(model2)$sigma^2
+
+# compute the ratio
+sum((p2-p1)^2)/(2*errorvar2)
+```
+
+
+
+
+```{r IP3_2, exercise = TRUE, exercise.lines = 30, exercise.setup = "IP1.1.setup"}
+##### identifying observation 51 for model 3
+# make sure we have the right data
+cars[51,] <- c(40,60)
+
+# extract predictions for this data in model 1 and model 3
+p1 <- 
+p3 <- 
+
+# extract error variance from model 3
+errorvar3 <- 
+# compute the ratio
+
+
+
+##### identifying observation 51 for model 4
+# make sure we have the right data
+cars[51,] <- c(20,0)
+
+# extract predictions for this data in model 1 and model 4
+p1 <- 
+p4 <- 
+
+# extract error variance from model 4
+errorvar4 <- 
+# compute the ratio
+
+```
+
+```{r IP3_2-hint-1}
+# Refer to the previous R chunk and follow the same procedure to complete this question
+```
+
+```{r IP3_2-solution}
+##### identifying observation 51 for model 3
+# make sure we have the right data
+cars[51,] <- c(40,60)
+
+# extract predictions for this data in model 1 and model 3
+p1 <- predict(model1, as.data.frame(cars))
+p3 <- predict(model3, as.data.frame(cars))
+
+# extract error variance from model 3
+errorvar3 <- summary(model3)$sigma^2
+# compute the ratio
+sum((p3-p1)^2)/(2*errorvar3)
+
+
+##### identifying observation 51 for model 4
+# make sure we have the right data
+cars[51,] <- c(20,0)
+
+# extract predictions for this data in model 1 and model 4
+p1 <- predict(model1, as.data.frame(cars))
+p4 <- predict(model4, as.data.frame(cars))
+
+# extract error variance from model 4
+errorvar4 <- summary(model4)$sigma^2
+# compute the ratio
+sum((p4-p1)^2)/(2*errorvar4)
+```
+
+
+
+```{r IP3_MC4, echo=FALSE}
+question("For which model (2,3,4 or 5) might the red observation be substantially changing the overall regression relationship (e.g. both the intercept and slope) compared to Model 1?",
+         answer("Only Model 5", message = "Incorrect, please try this question again."),
+         answer("Model 5 and Model 3 ", correct = TRUE, message = "Well done!"), 
+         answer("Models 2, 3, and 5",   message = "Incorrect, please try this question again."), 
+         answer("All of the above models", message = "Incorrect, please try this question again."), 
+         allow_retry = TRUE)
+```
+
+
+_______________________________
+
+Based on the previous results, it seems as if our red observations in Models 3 and 5 were influential on the overall estimation of the regression relationship. An influential point can be influential in any or all of the three ways we've discussed, and an influential point can also be an outlier and/or a leverage point as well, but will not necessarily have to be leverage or outlier. What we have seen is that the chances that an observation is deemed influential in at least one way increases if that observation seems quite distant from the X information (i.e. a leverage point) and also does not seem to follow the trend of the remaining data (i.e. outlier).
+
+The purpose of identifying these observations is so that we better understand whether we could be obtaining an estimated relationship between X and Y that may be influenced by one or a small handful of observations. We do not correct these but rather we note them as a limitation, since we understand that in a different sample of data that did not include these observations, we may have estimated a different relationship.
+
+
+```{r IP3_MC5, echo=FALSE}
+question("Which of the below statements is true regarding problematic observations?",
+         answer("An influential observation must always be a leverage observation.", message = "Incorrect, please try this question again."),
+         answer("A leverage observation will always substantially impact some aspect of the estimated regression relationship.", message = "Incorrect, please try this question again."), 
+         answer("An outlier will always be influential to the estimated regression relationship.",   message = "Incorrect, please try this question again."), 
+         answer("An influential observation (of any type) does not have to be either an outlier, a leverage point or both.", correct = TRUE, message = "Well done!"), 
+         allow_retry = TRUE)
+```
+
