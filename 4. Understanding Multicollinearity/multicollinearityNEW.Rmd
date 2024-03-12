@@ -29,6 +29,7 @@ package.check <- lapply(
 
 library(tidyverse)
 library(learnr)
+library(lessR)
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -56,13 +57,15 @@ Remember that if you get stuck on a coding exercise, you can click the **Hints**
 
 ## Motivation
 
-In this module, we will explore our ability to make inferences when we have two or more predictors that are correlated to one another. We will simulate a dataset in which we know the true relationship between our response ($Y$) and our predictors ($X_1, X_2, X_3$), and we are able to decide how correlated we wish our predictors to be. When two or more predictors are correlated to each other, we say we have **multicollinearity** present in our model.
+In this module, we will explore our ability to make inferences when we have two or more predictors that are correlated to one another. We will simulate a dataset in which we know the true relationship between our response ($Y$) and our predictors ($X_1, X_2, X_3$), and we will choose how correlated the predictors will be. When two or more predictors are correlated to each other, we say we have **multicollinearity** present in our model.
 
 ## Section 0: Understanding Correlation
 
-First, we will review correlation and the correlation coefficient, $r$. Recall that the correlation coefficient measures the strength of linear relationship between two variables, $X$ and $Y$, and is calculated as $r=\frac{\Sigma[(x_i-\bar{x})(y_i-\bar{y})]}{\sqrt{\Sigma(x_i-\bar{x})^2*\Sigma(y_i-\bar{y})^2}}$.The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a strong negative relationship, and values near $1$ denoting a strong positive relationship. Values near 0 denote weaker relationships. 
+First, we will review correlation and the correlation coefficient, $r$. 
 
-TODO: Message for the first one
+Recall that the correlation coefficient measures the strength of linear relationship between two variables, $X$ and $Y$, and is calculated as $r=\frac{\Sigma[(x_i-\bar{x})(y_i-\bar{y})]}{\sqrt{\Sigma(x_i-\bar{x})^2*\Sigma(y_i-\bar{y})^2}}$.
+
+The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a strong negative relationship, and values near $1$ denoting a strong positive relationship. Values near 0 denote weaker relationships. 
 
 ```{r q0, include=TRUE}
 question("Which statement is true regarding correlation between two measurements?",
@@ -76,7 +79,9 @@ question("Which statement is true regarding correlation between two measurements
 
 ## Section 1: Creating the dataset
 
-We will start by simulating a dataset where we get to select the true values of the coefficients ($\beta$). We will create our dataset so that our predictors will be uncorrelated to each other (the ideal scenario). We will be trying to estimate a model using 3 predictors, where the true relationship is $$Y = 1  + 2X_1 + 3X_2 + 0X_3 + \epsilon, \quad \epsilon \sim N(0, 2.25).$$ 
+To begin, we will simulate a dataset where we select the true values of the coefficients ($\beta$). 
+
+First we will create a dataset such that our predictors will be uncorrelated to each other. We will be trying to estimate a model using 3 predictors, where the true relationship is $$Y = 1  + 2X_1 + 3X_2 + 0X_3 + \epsilon, \quad \epsilon \sim N(0, 2.25).$$ 
 
 ```{r q1, include=TRUE}
 question("Which of the below statements is correct regarding this true relationship?",
@@ -144,7 +149,7 @@ question("Why might it be possible to observe a sample correlation that is non-z
 
 Lastly, we can use this information to generate our errors and our response variable to be able to fit linear regression models in the next section. To do this, we should use the true relationship that was given at the top of this section.
 
-```{r confint1_setup, include=FALSE}
+```{r confint1-setup, include=FALSE}
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -198,9 +203,9 @@ grade_this_code()
 
 ## Section 2: Fitting Simple Linear Models 
 
-Now that we have decided on our true population relationship between $Y$ and predictors $X_1, X_2$, and $X_3$ and "collected" a sample of data from the population, we can begin to use this data to estimate the true relationship. To understand how each predictor individually relates to the response, we can fit three separate simple linear models, using each predictor one at a time. 
+Now that we have decided on our true population relationship between $Y$ and predictors $X_1, X_2$, and $X_3$ and "collected" a sample of data from the population, we can use this data to estimate the true relationship. To understand how each predictor individually relates to the response, we can fit three separate simple linear models, using each predictor at a time. 
 
-```{r q4_setup, include=FALSE}
+```{r q4-setup, include=FALSE}
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -230,10 +235,9 @@ model2a <- ____
 # Fit a simple linear model using X3 as the predictor
 model3a <- ____
 
-# Uncomment one at a time to view summaries
-#summary(model1)
-#summary(model2)
-#summary(model3)
+summary(model1a)
+summary(model2a)
+summary(model3a)
 ```
 
 ```{r q4-solution, eval=FALSE}
@@ -259,7 +263,7 @@ grade_this_code()
 ```{r q4MCQ, include=TRUE}
 question("Which statement is true regarding the three simple linear models?",
          answer("The estimated slope in each model is not equal to the corresponding slope in the true relationship", correct = TRUE),
-         answer("In only one of the true relationship and the simple linear model using $X_3$, $X_3$ has no linear association with $Y$."),
+         answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$."),
          answer("The estimate of the error variance matches the true error variance in the population."),
          answer("None of the options are true."),
          message = "A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)"
@@ -271,7 +275,7 @@ question("Which statement is true regarding the three simple linear models?",
 To visualize the estimated coefficient for each of $X_1, X_2$ and $X_3$ from the 3 separate simple linear models, we can make a plot that displays the estimated coefficients as points and places a confidence interval around each in the vertical direction. We can then compare the results from the separate SLRs to an estimated relationship from a multiple linear model. We will extract the 95% confidence interval of each slope using the confint() function. We will also extract the estimated coefficients using the coef() function.
 
 
-```{r linearity1_setup, include=FALSE}
+```{r linearity1-setup, include=FALSE}
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -364,12 +368,15 @@ confint(MLRa)[2:4,]
 Now we will plot the information we have extracted from the models. We will add the estimates as points and the bounds of confidence intervals as endpoints of a line. A horizontal line will also be added to represent the predictor having no effect on the response. By merging the coefficients and the confidence intervals from all models into a single storage element, it allows us to draw this plot more efficiently by using a for loop.
 
 To draw this plot, you will need to add 
-  - the correct x-axis and y-axis elements to the plot function
-  - the horizontal line at 0 as a dashed line
-  - the vertical lines representing the confidence intervals for each slope.
+
+  * the correct x-axis and y-axis elements to the plot function
+  
+  * the horizontal line at 0 as a dashed line
+  
+  * the vertical lines representing the confidence intervals for each slope
   
   
-```{r linearity2_setup, include=FALSE}
+```{r linearity2-setup, include=FALSE}
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -493,7 +500,7 @@ abline(h=0, lty="dashed")
 confints[i,]
 ```
 
-This plot allows us to visually investigate the relationship present between certain predictors and the response, as well as compare the estimates from the simple linear models to those from the multiple linear model. It also allows us to view quickly the variation in each estimate as well as whether that slope is significantly different from 0.
+This plot allows us to visually investigate the relationship between individual predictors and the response, as well as compare the estimates from the simple linear models to those from the multiple linear model. It also allows us to view quickly the variation in each estimate as well as whether that slope is significantly different from 0.
 
 ```{r q7, include=TRUE}
 question("Why are the confidence intervals on the coefficient of each predictor narrower in the multiple linear model compared to the separate simple linear models?",
@@ -772,7 +779,7 @@ confints[i,]
 ```
 
 ```{r q9, include=TRUE}
-question("Based on the outputs, What do you notice about the estimates of the slopes now?",
+question("Based on the outputs, what do you notice about the estimates of the slopes now?",
          answer("Some slope estimates in the simple linear models are very different from the true values. "),
          answer("The widths of the confidence intervals in the multiple linear model are much wider."),
          answer("$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$."),
@@ -786,7 +793,7 @@ We have seen some drastic changes in how our models use the data to estimate the
 
 If we compare the standard errors we estimate from each model, we can see how the correlation changes the standard errors. This can be visualized with  Bar Chart using the BarChart() function in the lessR package. We need to define the groups (each model's slope estimate) and the value we wish to plot (the standard errors of each model's slope estimate).
 
-```{r corr2_setup, include=FALSE}
+```{r corr2-setup, include=FALSE}
 # fill in the values from above:
 n = 50
 errorvar = 2.25
