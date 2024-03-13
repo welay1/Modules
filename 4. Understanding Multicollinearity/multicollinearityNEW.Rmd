@@ -9,14 +9,10 @@ runtime: shiny_prerendered
 
 
 ```{r setup, include=FALSE}
-install.packages("remotes", repos = "https://cloud.r-project.org/")
+#install.packages("remotes", repos = "https://cloud.r-project.org/")
 
-
-library(remotes)
-remotes::install_github("rstudio/learnr", force=TRUE)
-remotes::install_github("rstudio/gradethis", force =TRUE)
-
-packages_needed <- c("tidyverse","learnr", "MASS", "lessR", "gradethis")
+# These are the packages you will need for this activity
+packages_needed <- c("tidyverse","learnr", "MASS")
 
 package.check <- lapply(
   packages_needed,
@@ -27,9 +23,23 @@ package.check <- lapply(
   }
 )
 
+# Credit: package.check based on a helpful post from Vikram Baliga https://vbaliga.github.io/verify-that-r-packages-are-installed-and-loaded/
+
+#remotes::install_github("rstudio/gradethis")
+
+
 library(tidyverse)
+library(shiny)
+library(ggplot2)
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+install.packages("broom")
+library(broom)
 library(learnr)
-library(lessR)
+library(remotes)
+library(gradethis)
+
+gradethis::gradethis_setup()
+
 
 knitr::opts_chunk$set(echo = FALSE)
 
@@ -38,7 +48,6 @@ options(tutorial.storage = list(
   get_object = function(...) NULL,
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
-
 set.seed(302)
 ```
 
@@ -49,25 +58,27 @@ Welcome to Module 6: **Impact of Multicollinearity**. In this module, you will l
 
   * To use R to generate both independent and correlated variables
 
-  * To use R to visualize confidence intervals of coefficients from both simple and multiple linear models. 
+  * To use R to visualize confidence intervals of coefficients from both simple and multiple linear regression models. 
 
-  * To explain how increasingly correlated predictors change the widths of confidence intervals for both simple and multiple linear models. 
+  * To explain how highly correlated predictors change the widths of confidence intervals for both simple and multiple linear regression models. 
 
-  * To explain how unmeasured confounders might impact estimated coefficients in a linear model.  
+  * To explain how unobserved confounders might impact estimated coefficients in a linear regression model.  
 
-Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help! 
 
 ## Motivation
 
-In this module, we will explore our ability to make inferences when we have two or more predictors that are correlated to one another. We will simulate a dataset in which we know the true relationship between our response ($Y$) and our predictors ($X_1, X_2, X_3$), and we will choose how correlated the predictors will be. When two or more predictors are correlated to each other, we say we have **multicollinearity** present in our model.
+In this module, we will explore our ability to make inferences when we have two or more predictors that are correlated to one another. We will simulate a dataset in which we know the true relationship between our response ($Y$) and our predictors ($X_1, X_2, X_3$), and we will choose how correlated the predictors will be. 
+
+When two or more predictors are correlated to each other, we say we have **multicollinearity** present in our model.
 
 ## Section 0: Understanding Correlation
 
-First, we will review correlation and the correlation coefficient, $r$. 
+First, we will review correlation and the corresponding correlation coefficient, $r$. 
 
 Recall that the correlation coefficient measures the strength of linear relationship between two variables, $X$ and $Y$, and is calculated as $r=\frac{\Sigma[(x_i-\bar{x})(y_i-\bar{y})]}{\sqrt{\Sigma(x_i-\bar{x})^2*\Sigma(y_i-\bar{y})^2}}$.
 
-The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a strong negative relationship, and values near $1$ denoting a strong positive relationship. Values near 0 denote weaker relationships. 
+The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a strong negative linear relationship, and values near $1$ denoting a strong positive linear relationship. Values near 0 denote weaker linear relationships. 
 
 ```{r q0, include=TRUE}
 question("Which statement is true regarding correlation between two measurements?",
@@ -75,11 +86,11 @@ question("Which statement is true regarding correlation between two measurements
          answer("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.",correct = TRUE),
          answer("The correlation coefficient can be used to describe the association between 3 or more measurements.", message="The correlation coefficient can only be used to describe the association between two measurements. "),
          answer("None of these options are true."),
-         message = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association."
+         message = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", allow_retry = TRUE
 )
 ```
 
-## Section 1: Creating the dataset
+## Section 1: Creating the Dataset
 
 To begin, we will simulate a dataset where we select the true values of the coefficients ($\beta$). 
 
@@ -88,18 +99,30 @@ First we will create a dataset such that our predictors will be uncorrelated to 
 ```{r q1, include=TRUE}
 question("Which of the below statements is correct regarding this true relationship?",
          answer("$X_3$ has no linear association to $Y$."),
-         answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", message="To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant."),
+         answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", message="To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant and express the relationship as an on average effect."),
          answer("On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", correct = TRUE),
          answer("All of the statements are true."),
-         message = "This is true since the coefficient in the true model of X1 is 2."
+         message = "This is true since the coefficient in the true model of X1 is 2.", allow_retry = TRUE
 )
 ```
 
-To begin, we will set all our fixed values for how we would like to generate our data. This includes the error variance in the population ($\sigma^2 = 2.25$), the true regression coefficients $((\beta_0, \beta_1, \beta_2, \beta_3) = (1, 2, 3, 0))$, the sample size ($n = 50$), and the covariance matrix for the 3 predictors we will create. The covariance matrix takes the form
+To begin, we will set all our fixed values for how we would like to generate our data. This includes:
+
+  * The error variance in the population as $\sigma^2 = 2.25$.
+  
+  * The true regression coefficients where $(\beta_0, \beta_1, \beta_2, \beta_3) = (1, 2, 3, 0)$.
+  
+  * The sample size as $n = 50$.
+  
+  * The covariance matrix for the 3 predictors we will create. 
+
+The covariance matrix takes the form
 $$\Sigma = \begin{pmatrix} 1 & 0 & 0\\
                           0 & 1 & 0\\
                           0 & 0 & 1 \end{pmatrix}$$
-where the values on the main diagonal are the variances of each predictor in the population, and the off-diagonal elements are the covariances between any two predictors. Once these values are set up, we can "sample" our predictors from the population in which each predictor distribution has a mean of 0. When the predictors have been created, check the correlation between them to ensure we have nearly uncorrelated predictors.
+where the values on the main diagonal are the variances of each predictor in the population, and the off-diagonal elements are the covariances between any two predictors. **Note:** A value of 0 in the off-diagonal elements implies no instance of collinearity across the respective predictors.
+
+Once these values are set up, we can "sample" our predictors from the population in which each predictor distribution has a mean of 0. When the predictors have been created, check the correlation between them to ensure we have nearly uncorrelated predictors.
 
 Below, fill in the the lines of code such that we sample the data using the information above. The `diag()` function takes a vector of $m$ diagonal elements and creates an $m \times m$ matrix where all off-diagonal elements are 0. 
 
@@ -142,7 +165,11 @@ grade_this_code()
 ```
 
 ```{r sim1-hint-1}
-# The input for Sigma in mvrnorm function needs a covariance matrix of dimension 3*3, which we already created
+# ---
+
+# The input for Sigma in mvrnorm function needs a covariance matrix of dimension 3*3, which we already created.
+
+# ---
 ```
 
 ```{r q2, include=TRUE}
@@ -150,11 +177,11 @@ question("Why might it be possible to observe a sample correlation that is non-z
          answer("The population has uncorrelated predictors, but the sample may not.", correct = TRUE),
          answer("We did not set up our code correctly for the population."),
          answer("The sampling process did not function correctly."),
-         answer("None of these options.")
+         answer("None of these options."), allow_retry = TRUE
 )
 ```
 
-Lastly, we can use this information to generate our errors and our response variable to be able to fit linear regression models in the next section. To do this, we should use the true relationship that was given at the top of this section.
+Lastly, we can use this information to generate our errors and our response variable to be able to fit linear regression models in the next section. To do this, we use the true relationship that was given at the top of this section.
 
 ```{r confint1-setup, include=FALSE}
 # set the seed for reproducibility
@@ -214,7 +241,11 @@ grade_this_code()
 ```
 
 ```{r confint1-hint-1}
-# Keep in mind that the last parameter in the rnorm function is standard deviation rather than variance
+# ---
+
+# Keep in mind that the last parameter in the rnorm function is standard deviation rather than variance.
+
+# ---
 ```
 
 ## Section 2: Fitting Simple Linear Models 
@@ -288,16 +319,16 @@ grade_this_code()
 ```{r q4MCQ, include=TRUE}
 question("Which statement is true regarding the three simple linear models?",
          answer("The estimated slope in each model is not equal to the corresponding slope in the true relationship", correct = TRUE),
-         answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", message = "The relationship may be weak, but it appears nonzero."),
+         answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", message = "While the relationship may be weak, it appears to be nonzero."),
          answer("The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", "Recall that the error variance in the population is 2.25."),
          answer("None of the options are true."),
-         message = "A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)"
+         message = "Option A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)", allow_retry = TRUE
 )
 ```
 
-## Section 3: Fit multiple linear models & Visualize Significance of Estimates
+## Section 3: Fit Multiple Linear Models & Visualize Significance of Estimates
 
-To visualize the estimated coefficient for each of $X_1, X_2$ and $X_3$ from the 3 separate simple linear models, we can make a plot that displays the estimated coefficients as points and places a confidence interval around each in the vertical direction. We can then compare the results from the separate SLRs to an estimated relationship from a multiple linear model. We will extract the 95% confidence interval of each slope using the confint() function. We will also extract the estimated coefficients using the coef() function.
+To visualize the estimated coefficient for each of $X_1, X_2$ and $X_3$ from the 3 separate simple linear models, we can make a plot that displays the estimated coefficients as points and places a confidence interval around each in the vertical direction. We can then compare the results from the separate SLRs to an estimated relationship from a multiple linear model. Next, we will extract the 95% confidence interval of each slope using the confint() function. Finally, we will also extract the estimated coefficients using the coef() function.
 
 
 ```{r linearity1-setup, include=FALSE}
@@ -393,21 +424,25 @@ grade_this_code()
 ```
 
 ```{r linearity1-hint-1}
-# Be sure we are not extract the intercept information for coefficients 
+#---
+
+# Be sure we are not extracting the intercept information for coefficients 
 # and confidence intervals. You may find the following command helpful
 coef(MLRa)[2:4]
 confint(MLRa)[2:4,]
+
+#---
 ```
 
-Now we will plot the information we have extracted from the models. We will add the estimates as points and the bounds of confidence intervals as endpoints of a line. A horizontal line will also be added to represent the predictor having no effect on the response. By merging the coefficients and the confidence intervals from all models into a single storage element, it allows us to draw this plot more efficiently by using a for loop.
+Now we will plot the information we have extracted from the models. The estimates will be added as points with the confidence intervals bounds represented as endpoints of a line. Additionally, a dashed line is included for reference to a 0 coefficient. By merging the coefficients and the confidence intervals from all models into a single storage element, it allows us to draw this plot more efficiently by using a for loop.
 
-To draw this plot, you will need to add 
+As such, to draw this plot, you will need to add: 
 
-  * the correct x-axis and y-axis elements to the plot function
+  * the correct x-axis and y-axis elements to the plot function.
   
-  * the horizontal line at 0 as a dashed line
+  * the horizontal line at 0 as a dashed line.
   
-  * the vertical lines representing the confidence intervals for each slope
+  * the vertical lines representing the confidence intervals for each slope.
   
   
 ```{r linearity2-setup, include=FALSE}
@@ -527,23 +562,52 @@ grade_this_code()
 ```
 
 ```{r linearity2-hint-1}
+#---
+
 # For the plot function, values on y are our estimated coefficients and values 
 # on x are the positions
 plot(coefs ~ xposition, ...)
+
+#---
 ```
 
 ```{r linearity2-hint-2}
+#---
+
 # For the abline function h is the value that gives the horizontal straight line
 abline(h=0, lty="dashed")
+
+#---
+
+# For the plot function, values on y are our estimated coefficients and values 
+# on x are the positions
+plot(coefs ~ xposition, ...)
+
+#---
 ```
 
 ```{r linearity2-hint-3}
+#---
+
 # The second argument of the lines function needs a lower bound and the upper 
 # bound of the line segment as a single vector input
 confints[i,]
+
+#---
+
+# For the abline function h is the value that gives the horizontal straight line
+abline(h=0, lty="dashed")
+
+#---
+
+# For the plot function, values on y are our estimated coefficients and values 
+# on x are the positions
+plot(coefs ~ xposition, ...)
+
+#---
 ```
 
-This plot allows us to visually investigate the relationship between individual predictors and the response, as well as compare the estimates from the simple linear models to those from the multiple linear model. It also allows us to view quickly the variation in each estimate as well as whether that slope is significantly different from 0.
+This plot allows us to visualise the relationship between individual predictors and the response, as well as compare the estimates from the simple linear models to those from the multiple linear model. It also allows us to quickly view the variation in each estimate as well as whether that slope is significantly different from 0.
 
 ```{r q7, include=TRUE}
 question("Why are the confidence intervals on the coefficient of each predictor narrower in the multiple linear model compared to the separate simple linear models?",
@@ -561,7 +625,7 @@ In this section, we will now introduce a correlation between two of our predicto
 
 To begin, we will consider only moderate correlation (0.5) between them and investigate the impact of this on the estimates and confidence interval widths (i.e. length of the bar) from simple linear models and the multiple linear model.
 
-First we need to generate predictors with this correlation included. Since we already created a covariance matrix without correlation, we simply need to replace the values in positions [1,2] and [2,1] with our correlation. Then, generate our predictors anew using this covariance matrix. Continue generating the rest of the data as before (no changes need to be made). 
+First we need to generate predictors with this correlation included. Since we already created a covariance matrix without correlation, we simply need to replace the values in positions [1,2] and [2,1] with our correlation. Then, generate our predictors (again) using the new covariance matrix. Continue generating the rest of the data as before (no changes need to be made). 
 
 ```{r q81, exercise = TRUE, exercise.lines = 25}
 # set the seed for reproducibility
@@ -680,20 +744,48 @@ grade_this_code()
 ```
 
 ```{r q81-hint-1}
+#---
+
 # The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
 covariance[1,2] <- covariance[2,1] <- 0.5
+
+#---
 ```
 
 ```{r q81-hint-2}
+#---
+
 # y needs to be generated from true relationship. Make sure to include the error.
 y <- Xmat %*% betas + e
+
+#---
+
+# The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
+covariance[1,2] <- covariance[2,1] <- 0.5
+
+#---
+
 ```
 
 ```{r q81-hint-3}
+#---
+
 # The second argument of the lines function needs a lower bound and the upper 
 # bound of the line segment as a single vector input and remember CI information 
 # is stored in rows
 confints[i,]
+
+#---
+
+# y needs to be generated from true relationship. Make sure to include the error.
+y <- Xmat %*% betas + e
+
+#---
+
+# The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
+covariance[1,2] <- covariance[2,1] <- 0.5
+
+#---
 ```
 
 
@@ -702,7 +794,7 @@ question("Does there appear to be much difference in the widths of the confidenc
          answer("Yes."),
          answer("No."),
          answer("Not totally sure.", correct = TRUE),
-         message = "With moderate correlation, we generally don't see too much of a difference in the widths of the confidence intervals compared to when no correlation was present (although it generally depends on your data - sometimes it can be noticeable and other times it won't). We do still observe that the MLR confidence intervals are narrower than the SLR ones due to the fact we are specifying the correct model and therefore the error variance is being estimated more precisely (because we are explaining more variation in the response with more predictors)."
+         message = "With moderate correlation, we generally don't see too much of a difference in the widths of the confidence intervals compared to when no correlation was present (although it generally depends on your data - sometimes it can be noticeable and other times it won't). We do still observe that the MLR confidence intervals are narrower than the SLR ones due to the fact we are specifying the correct model and therefore the error variance is being estimated more precisely (because we are explaining more variation in the response with more predictors).", allow_retry = TRUE
 )
 ```
 
@@ -817,20 +909,47 @@ grade_this_code()
 ```
 
 ```{r corr1-hint-1}
+#---
+
 # The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
 covariance[1,2] <- covariance[2,1] <- 0.98
+
+#---
 ```
 
 ```{r corr1-hint-2}
+#--- 
+
 # The syntax of the mvrnorm function can be found in the link below
 https://www.rdocumentation.org/packages/rockchalk/versions/1.8.157/topics/mvrnorm
+
+#---
+
+# The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
+covariance[1,2] <- covariance[2,1] <- 0.98
+
+#---
 ```
 
 ```{r corr1-hint-3}
+#---
+
 # The second argument of the lines function needs a lower bound and the upper 
 # bound of the line segment as a single vector input and remember CI information 
 # is stored in rows
 confints[i,]
+
+#--- 
+
+# The syntax of the mvrnorm function can be found in the link below
+https://www.rdocumentation.org/packages/rockchalk/versions/1.8.157/topics/mvrnorm
+
+#---
+
+# The covariance matrix covariance[1,2], covariance[2,1] should set to the new correlation value
+covariance[1,2] <- covariance[2,1] <- 0.98
+
+#---
 ```
 
 ```{r q9, include=TRUE}
@@ -840,7 +959,7 @@ question("Based on the outputs, what do you notice about the estimates of the sl
          answer("$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$."),
          answer("$X_1$ and $X_2$ appear to have the same estimated slope in the simple linear models. "),
          answer("More than one of these are true.", correct = TRUE),
-         message = "All options listed here are true"
+         message = "All options listed here are true", allow_retry = TRUE
 )
 ```
 
@@ -936,10 +1055,14 @@ grade_this_code()
 ```
 
 ```{r corr2-hint-1}
+#--- 
+
 # You may find the following hints helpful
 # 1. Use same method to isolate SEs from MLR
 # 2. Remember we only want slope and no intercept of MLR
 # 3. Standard errors are stored in column 2
+
+#--- 
 ```
 
 
@@ -948,7 +1071,7 @@ question("Approximately how many times higher are the bars for the slopes of $X_
          answer("About 5 times higher.", correct = TRUE),
          answer("About 10 times higher."),
          answer("About 15 times higher."),
-         answer("About 20 times higher.")
+         answer("About 20 times higher."), allow_retry = TRUE
 )
 ```
 
@@ -1068,14 +1191,28 @@ grade_this_code()
 ```
 
 ```{r q110-hint-1}
+#---
+
 # When creating the covariance matrix, we need to add value of new correlation and want diagonals to represent variances of 1
 covariance <- matrix(rep(0.9, 9), nrow=3, ncol=3)
 diag(covariance) <- c(1,1,1)
+
+#---
 ```
 
 ```{r q110-hint-2}
+#---
+
 # For the plot function, we want a plot of estimates at the position we've assigned
 # for each model
+
+#---
+
+# When creating the covariance matrix, we need to add value of new correlation and want diagonals to represent variances of 1
+covariance <- matrix(rep(0.9, 9), nrow=3, ncol=3)
+diag(covariance) <- c(1,1,1)
+
+#---
 ```
 
 ```{r q11, include=TRUE}
@@ -1083,11 +1220,11 @@ question("Which model(s) seem to be estimating the true association of each pred
          answer("The multiple linear model. ", correct = TRUE),
          answer("Simple model with $X_1$.", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)"),
          answer("Simple model with $X_2$. ", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)"),
-         answer("Simple model with $X_3$. ", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)")
+         answer("Simple model with $X_3$. ", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)"), allow_retry = TRUE
 )
 ```
 
-It appears that even with a correlation of 0.9 among all three of the predictors, the multiple linear model still estimates the correct relationship (more or less) with slightly wider confidence intervals around the estimates. So we still see the impact of correlation on inflating the standard errors (in this case, by about a factor of 2).
+It appears that even with a correlation of 0.9 among all three of the predictors, the multiple linear model still estimates the correct relationship (more or less) with slightly wider confidence intervals around the estimates. So we still see *the impact of correlation on inflating the standard errors* (in this case, by about a factor of 2).
 
 Will this always be the case? If we increase the correlation to 0.98, will we still obtain estimates that appear to reflect the true association? Repeat the previous part but now set the correlation to 0.98.
 
@@ -1201,20 +1338,34 @@ grade_this_code()
 ```
 
 ```{r q120-hint-1}
+#---
+
 # When creating the covariance matrix, we need to add value of new correlation and want diagonals to represent variances of 1
 covariance <- matrix(rep(0.98, 9), nrow=3, ncol=3)
 diag(covariance) <- c(1,1,1)
+
+#---
 ```
 
 ```{r q120-hint-2}
+#---
+
 # The abline function will let you draw a horizontal line with input h 
+
+#---
+
+# When creating the covariance matrix, we need to add value of new correlation and want diagonals to represent variances of 1
+covariance <- matrix(rep(0.98, 9), nrow=3, ncol=3)
+diag(covariance) <- c(1,1,1)
+
+#---
 ```
 
 ```{r q12, include=TRUE}
 question("Do any of these models appear to estimate the correct association of each predictor to the response?",
          answer("Yes"),
          answer("No", correct = TRUE),
-         message = "So when all predictors are correlated to one another, it appears as if, in addition to the inflated variances visible in the wide confidence intervals, we also struggle to capture the true relationships present in the population."
+         message = "So when all predictors are correlated to one another, it appears as if, in addition to the inflated variances visible in the wide confidence intervals, we also struggle to capture the true relationships present in the population.", allow_retry = TRUE
 )
 ```
 
@@ -1299,14 +1450,27 @@ grade_this_code()
 ```
 
 ```{r q13-hint-1}
+#---
+
 # When creating that Xmat matrix, remember to add an intercept column using cbind() function
 Xmat <- cbind(1, X)
+
+#---
 ```
 
 ```{r q13-hint-2}
+#---
+
 # When fitting the SLR and MLE models 
 # 1. Remember to select the column in X corresponding to the predictor you want to use
 # 2. Recall that we don't want to use X1 in the MLR model
+
+#---
+
+# When creating that Xmat matrix, remember to add an intercept column using cbind() function
+Xmat <- cbind(1, X)
+
+#---
 ```
 
 
@@ -1315,7 +1479,7 @@ question("Which of the below is true regarding these two simple linear models?",
          answer("The slope of $X_3$ is significantly different from 0. "),
          answer("The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have."),
          answer("The slope of $X_2$ seems to be an reasonable estimate while the slope of $X_3$ seems to be biased."),
-         answer("More than one of these is true.", correct = TRUE)
+         answer("More than one of these is true.", correct = TRUE), allow_retry = TRUE
 )
 ```
 
@@ -1408,8 +1572,12 @@ for(i in 1:5){
 ```
 
 ```{r q14-hint-1}
+#---
+
 # For the xposition, since we aren't estimating x1, we don't need a position for it in MLR model
 xposition <- c(1,2,3,6,7)
+
+#---
 ```
 
 ```{r q14MCQ, include=TRUE}
@@ -1417,10 +1585,17 @@ question("Which true association does the slope of $X_3$ from the multiple linea
          answer("The association between $X_1$ and $Y$.", correct = TRUE),
          answer("The association between $X_2$ and $Y$."),
          answer("The association between $X_3$ and $Y$."),
-         answer("None of the above.")
+         answer("None of the above."), allow_retry = TRUE
 )
 ```
 
 What we have just seen is an effect called an **unmeasured confounder** effect. It occurs when there is a strong correlation between predictors, but the predictor that is truly associated with the response is not measured and therefore cannot be included in a model. Due to the correlation, the predictor that is correlated with this variable, when included in the model, will capture the effect of this variable. This is because the correlation between them implies that they represent something similar and thus by omitting one, the effect is still captured by the variable that is included. 
 
 This can be misleading because, contextually, it may not make sense for the variable that is used as a predictor to have this effect/association with $Y$. When this is observed in a model (e.g. an association that contextually does not make sense or agree with existing literature), it usually highlights that this variable is correlated with something that was unmeasured. This is a separate issue compared to **multicollinearity**, which only happens when predictors that are actually included in the model together happen to be highly correlated.
+
+## Conclusion
+
+## Wrap-Up
+Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
+
+

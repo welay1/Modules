@@ -1656,22 +1656,6 @@ By now, you should be know how:
 
 </div>
 
-## Conclusion
-
-With any statistical tool you might use, it's important to recognize that they all depend on certain assumptions being true regarding where the data originated. Since we only see a sample of that population, we always need to check that these assumptions hold, in order for valid inference about that population to be made. The goal of this module was to get you to see that when assumptions do not hold, our tools do not tell us the correct information, which can lead us to make mistakes in how we use those tools. We focused primarily on looking at the impact on coverage and on the sampling distribution, but other areas of inference would likewise be affected.
-
-```{r q14, include=TRUE}
-question("What types of mistakes could we make if we use inferential tools without checking assumptions?",
-         answer("We might conclude an effect is significant when it isn't.", message="This is true since p-values are directly linked to the sampling distribution. But it's not the only true option."),
-         answer("We might obtain an estimate of a quantity that is far from being true.", message="This is true since we've seen that violated assumptions can lead to biased estimation. But it's not the only true option."),
-         answer("We might have more confidence in our results and process than we should.", message="This is true since we saw that violated assumptions lead to lower coverage. meaning we will have more confidence than we should. But it's not the only true option."),
-         answer("All of the options are potential mistakes.", correct = TRUE, message="Bias means the centre of the sampling distribution isn't in the correct place, which means our confidence intervals are less likely to capture the truth. Further, if sampling distributions are not as they should be, we will compute incorrect p-values and thus make decisions regarding significance that may be incorrect."),
-         allow_retry = TRUE
-)
-```
-
-Hopefully, you see how important it is to verify that assumptions hold in all inferential tools. There are many ways to verify the assumptions and to correct or at minimum improve them if needed. But it is most important to know that statistical tools depend on assumptions and to recognize that if assumptions do not hold, the statistical tool should not be used. 
-
 ## Visualizing Assumption Violations
 
 In this section, we use plots to visualize assumption violations, learning what to look out for when attempting to fit a linear model.
@@ -1879,145 +1863,23 @@ question("In the plot above, is there an occurance of multicollinearity?",
 Great job! Now that you know what to look for in the plots, you are better equipped to identify when an assumption is violated. Keep up the good work!
 
 
-## Test Space
 
-```{r, context = "server"}
-#### For Independence Among Predictors
-output$independencePlot <- renderPlot({
-  set.seed(302) # Ensure reproducibility
-  
-  # Simulated data
-  x1 <- rnorm(500)
-  x2 <- x1 + rnorm(500, sd = 0.5)  # correlated with x1
-  x3 <- rnorm(500)  # independent
-  data <- data.frame(x1, x2, x3)
-  
-  # Create a scatter plot matrix
-  pairs(data, main = "Scatter Plot Matrix for Independence Violation",
-        pch = 21, lower.panel = NULL)
-})
 
-#### For Homoscedasticity
+## Conclusion
 
-# Conditional UI for the variance multiplier
-    output$varianceMultiplierUI <- renderUI({
-        if (input$plotType == "Homoscedasticity") {
-            sliderInput("varianceMultiplier", "Variance Multiplier:",
-                        min = 0, max = 10, value = 0, step =2)
-        }
-    })
+With any statistical tool you might use, it's important to recognize that they all depend on certain assumptions being true regarding where the data originated. Since we only see a sample of that population, we always need to check that these assumptions hold, in order for valid inference about that population to be made. The goal of this module was to get you to see that when assumptions do not hold, our tools do not tell us the correct information, which can lead us to make mistakes in how we use those tools. We focused primarily on looking at the impact on coverage and on the sampling distribution, but other areas of inference would likewise be affected.
 
-output$homoscedasticityPlot <- renderPlot({
-  print(paste("Variance Multiplier:", input$varianceMultiplier))
-
-  set.seed(302) # Ensure reproducibility
-
-  # Simulated data
-  x <- rnorm(500)
-  # Generate non-constant variance for y
-  variance <- 1 + input$varianceMultiplier * abs(x)
-  # Generate y values based on the specified variance
-  e <- rnorm(500, sd = sqrt(variance))
-  y <- 1 + 4 * x + e
-  
-  # Fit a linear model
-  model <- lm(y ~ x)
-  
-  # Plot y vs. x and include the line of best fit
-  ggplot(data.frame(x, y), aes(x, y)) +
-    geom_point() +
-    geom_smooth(method = "lm", se = FALSE, color = "red", linetype = "dashed") +
-    labs(x = "Predictor (x)", y = "Response (y)",
-         title = "Y-X Plot Showing Heteroscedasticity") +
-    theme_minimal()
-})
-
-#### Plotting for Linearity
-
-# Conditional UI for the model type
-output$modelTypeUI <- renderUI({
-    if (input$plotType == "Linearity") {
-        selectInput("modelType", "Model Type:",
-                    choices = c("Linear", "Quadratic", "Cubic"), selected = "Linear")
-    }
-})
-
-set.seed(301)
-x <- runif(100, 0, 10)
-y <- 1 + 5 * x^3 + rnorm(100, 0, 200)  # Generating data with a cubic trend
-data <- data.frame(
-  x = x,
-  y = y)
-
-    
-# Reactive expression for fitted model and prediction function
-fittedModelAndPredict <- reactive({
-  if (input$modelType == "Linear") {
-    lm(y ~ x, data = data)
-  } else if (input$modelType == "Quadratic") {
-    lm(y ~ poly(x, 2), data = data)
-  } else{
-    lm(y ~ poly(x, 3), data = data)
-  }
-})
-
-y_range <- c(-800, 5000)
-
-# Render the plot output
-output$linearPlot <- renderPlot({
-  model <- fittedModel()
-  ggplot(data, aes(x = x, y = y)) +
-    geom_point() +
-    geom_smooth(method = "lm", formula = y ~ poly(x, 
-      ifelse(input$modelType == "Linear", 1, 
-        ifelse(input$modelType == "Quadratic", 2, 
-          ifelse(input$modelType == "Cubic", 3, 1)))), 
-      se = FALSE, colour = "red") +
-    labs(title = paste("Model Type:", input$modelType), x = "X", y = "Y") +  ylim(y_range[1], y_range[2]) +
-    theme_minimal()
-})
-
-# Model statistics for Linearity
-output$modelStats <- renderTable({
-    if (input$plotType == "Linearity") {
-        model <- fittedModelAndPredict()$model
-        broom::glance(model)[, c("r.squared")]
-    }
-})
-    
-output$plotUI <- renderUI({
-    if (input$plotType == "Independence") {
-        plotOutput("independencePlot")
-    } else if (input$plotType == "Homoscedasticity") {
-        plotOutput("homoscedasticityPlot")
-    } else if (input$plotType == "Linearity") {
-        plotOutput("linearPlot")
-    }
-})
+```{r q14, include=TRUE}
+question("What types of mistakes could we make if we use inferential tools without checking assumptions?",
+         answer("We might conclude an effect is significant when it isn't.", message="This is true since p-values are directly linked to the sampling distribution. But it's not the only true option."),
+         answer("We might obtain an estimate of a quantity that is far from being true.", message="This is true since we've seen that violated assumptions can lead to biased estimation. But it's not the only true option."),
+         answer("We might have more confidence in our results and process than we should.", message="This is true since we saw that violated assumptions lead to lower coverage. meaning we will have more confidence than we should. But it's not the only true option."),
+         answer("All of the options are potential mistakes.", correct = TRUE, message="Bias means the centre of the sampling distribution isn't in the correct place, which means our confidence intervals are less likely to capture the truth. Further, if sampling distributions are not as they should be, we will compute incorrect p-values and thus make decisions regarding significance that may be incorrect."),
+         allow_retry = TRUE
+)
 ```
 
-```{r, context = "render"}
-
-fluidPage(
-    titlePanel("Assumption Violations"),
-
-    sidebarLayout(
-        sidebarPanel(
-            selectInput("plotType", "Select Plot Type:",
-                        choices = c("Linearity", "Homoscedasticity", "Independence")),
-
-            uiOutput("varianceMultiplierUI"),
-            uiOutput("modelTypeUI")
-        ),
-
-        mainPanel(
-            uiOutput("plotUI"),
-            )
-        )
-    )
-
-
-```
+Hopefully, you see how important it is to verify that assumptions hold in all inferential tools. There are many ways to verify the assumptions and to correct or at minimum improve them if needed. But it is most important to know that statistical tools depend on assumptions and to recognize that if assumptions do not hold, the statistical tool should not be used. 
 
 ## Wrap-Up
 
