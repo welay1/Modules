@@ -18,18 +18,33 @@ options(tutorial.storage = list(
 
 ## Introduction
 
-In this module, we will investigate the impact that certain **extreme** or **problematic** observations has on a fitted simple linear regression relationship.
+Welcome to Module 4: Visualising Problematic Observations. In this module:
 
-We will be using the dataset "cars" contained in R. This dataset includes two variables:
+
+* Use R to display different simple linear models and highlight individual observations. 
+
+* Use R to fit linear models on subsets of the data. 
+
+* Describe the difference between **leverage**, **outlier**, and **influential** points in terms of their data values. 
+
+* Describe the difference between **leverage**, **outlier**, and **influential** points in terms of their impact on the estimated regression line. 
+
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help! 
+
+## Motivation
+In this module, we will explore how and when different types of problematic point influence regressions estimates/coefficients. Through exercises, we will add individual data points representing the types of problematic points to our data set, allowing us to infer which and when certain datapoints appear to change our estimates. 
+
+By visualising linear models with and without suspected problematic points, we can identify the type of **problematic point**.
+
+
+## Section 0: Exploratory Data Analysis
+
+We will attach the dataset and look at the summary and dimension of this dataset. This will tell us the centre and spread of each variable, as well as how many observations we have and in which column of the data each variable is stored.
+
+For context, we will be using the dataset "cars" contained in R. This dataset includes two variables:
 
 - Speed (mph): speed that a car was travelling prior to stopping
 - Distance: the distance until the car arrived at a complete stop.
-
-In each part of this module, you will be asked to add a new observation to the dataset and investigate the impact of this change on the fitted linear regression relationship.
-
-### Exploratory data analysis
-
-We will attach the dataset and look at the summary and dimension of this dataset. This will tell us the centre and spread of each variable, as well as how many observations we have and in which column of the data each variable is stored.
 
 #### Descriptive Statistics
 ```{r}
@@ -43,8 +58,11 @@ Now, let's first look at the 5-number summary of the variables stored in cars.
 ```
 
 ```{r EDA_1-hint}
+#---
+
 # you can use the function "summary()" to get some statistics about your dataset
 
+#---
 ```
 
 
@@ -52,14 +70,17 @@ Now, let's first look at the 5-number summary of the variables stored in cars.
 summary(cars)
 ```
 
-Let's now also take a look at the dimension of the dataset 'cars.' Dimensions refer to the number of rows and columns in the dataset. In a statistical context, rows represent individual observations or data points, while columns represent variables or attributes associated with each observation
+Let's now also take a look at the dimension of the dataset 'cars.' *Dimensions* refer to the number of rows and columns in the dataset. Recall that in a statistical context, rows represent individual observations or data points, while columns represent variables or attributes associated with each observation.
 ```{r EDA_2, exercise = TRUE, exercise.lines = 3}
 
 ```
 
 ```{r EDA_2-hint}
+#---
+
 # you can use the function "dim()" to get the dimension of your dataset "cars"
 
+#---
 ```
 
 ```{r EDA_2-solution}
@@ -68,7 +89,7 @@ dim(cars)
 
 
 #### The regression
-Now that we've examined the summary and dimensions of the 'cars' dataset, we're ready to explore the relationship between Speed (X) and Distance (Y).Let's first fit a linear regression to estimate how speed affects distance.
+Now that we've examined the summary and dimensions of the 'cars' dataset, we're ready to explore the relationship between Speed (X) and Distance (Y). Let's first fit a linear regression to estimate how speed affects distance.
 
 To proceed, please fill in the blanks of the following code and run the regression.
 ```{r EDA_3, exercise = TRUE, exercise.lines = 4}
@@ -77,13 +98,24 @@ summary(model1)
 ```
 
 ```{r EDA_3-hint-1}
-# you can use lm(response variable ~ predictor, data = the name of your dataset) to fit a simple linear regression between your predictor and response variable 
+#---
+
+# you can use lm(response variable ~ predictor, data = the name of your dataset) to fit a simple linear regression between your predictor and response variable
+
+#---
 
 ```
 
 ```{r EDA_3-hint-2}
+#---
+
 # you can use the function "summary" to view your summary of your linear regression
 
+#---
+
+# you can use lm(response variable ~ predictor, data = the name of your dataset) to fit a simple linear regression between your predictor and response variable
+
+#---
 ```
 
 ```{r EDA_3-solution}
@@ -113,7 +145,7 @@ model5 <- lm(dist ~ speed, data=cars)
 ```
 
 
-Another (visual) way to observe the association between two variables is through a scatterplot. After fitting a simple linear regression between Speed (X) and Distance (Y), we can enhance our understanding by plotting these variables and overlaying the estimated regression line on the graph.
+Another way to observe (visualise) the association between two variables is through a scatterplot. After fitting a simple linear regression between Speed (X) and Distance (Y), we can improve our understanding by plotting these variables and overlaying the estimated regression line on the graph.
 
 ```{r EDA_4.setup, include=FALSE}
 model1 <- lm(dist ~ speed, data = cars)
@@ -127,19 +159,46 @@ ggplot() +
 ```
 
 ```{r EDA_4-hint-1}
+#---
+
 # Which variable should be the independent variable and 
 # which one should be the dependent variable in your scatterplot?
+
+#---
 ```
 
 ```{r EDA_4-hint-2}
+#---
+
 # You can extract the estimated intercept and slope and use them as intercept and slope 
 # inside of the "geom_abline" function to add your estimated linear regression to the scatterplot
+
+#---
+
+# Which variable should be the independent variable and 
+# which one should be the dependent variable in your scatterplot?
+
+#---
 ```
 
 
 ```{r EDA_4-hint-3}
+#--- 
+
 # The coef(model name) gives both estimated intercept and slope, 
 # so you can use index to extract estimated intercept and slope individually
+
+#---
+
+# You can extract the estimated intercept and slope and use them as intercept and slope 
+# inside of the "geom_abline" function to add your estimated linear regression to the scatterplot
+
+#---
+
+# Which variable should be the independent variable and 
+# which one should be the dependent variable in your scatterplot?
+
+#---
 ```
 
 ```{r EDA_4-solution}
@@ -159,7 +218,7 @@ question("What trend do you notice in the scatterplot above (Figure 1)?",
 ```
 
 
-## Problematic Observations 1: Leverage Points
+## Section 1: Leverage Points
 
 The first kind of problematic observation to identify is called a **leverage point**. It is loosely defined as an observation that is extreme or unusual from the rest of the data because it has an abnormally large or small value of the predictor.
 
@@ -173,7 +232,9 @@ question("When would you expect a leverage point to impact the estimated regress
 
 _________________________
 
-Let's visualize this type of observation by changing one of our observations to make it a leverage point. Since the dataset has Speed in column 1 and Distance in column 2, we will need to be sure we assign the right values in the right places. Create a new row (row 51) in cars by assigning a new Speed measurement of 40 and a new Distance measurement of 120.
+Let's visualize this type of observation by changing one of our observations to make it a leverage point. Since the dataset has Speed in column 1 and Distance in column 2, we will need to be sure we assign the right values in the right places. 
+
+Create a new row (row 51) in cars by assigning a new Speed measurement of 40 and a new Distance measurement of 120.
 
 ```{r LP1, exercise = TRUE, exercise.lines = 3}
 # assign row 51 a value of 40 and 120
@@ -181,9 +242,24 @@ cars[51,] <-
 ```
 
 ```{r LP1-hint-1}
+#---
+
 # data Speed is in column 1 and Distance is in column 2
+
+#---
 ```
 
+```{r LP1-hint-2}
+#---
+
+# Use a vector to assign values
+
+#---
+
+# data Speed is in column 1 and Distance is in column 2
+
+#---
+```
 
 ```{r LP1-solution}
 cars[51,] <- c(40, 120)
@@ -197,8 +273,8 @@ cars[51,] <- c(40, 120)
 
 Next, fit a new linear model using speed as predictor and dist as response using our updated data. Make a scatterplot of these variables and add two regression lines to this plot:
 
-  - one line in blue that represents the original regression relationship (recall that this information was stored in model1)
-  - one line in red that represents the new regression relationship
+  - a blue line that represents the original regression relationship (recall that this information was stored in *model1*).
+  - a red line that represents the new regression relationship.
 
 ```{r ex1, exercise = TRUE, exercise.lines = 5}
 
@@ -212,7 +288,11 @@ summary()
 ```
 
 ```{r ex1-hint-1}
+#---
+
 # Remember, Distance is the y-variable and speed is the x-variable
+
+#---
 ```
 
 
@@ -246,13 +326,25 @@ ggplot() +
 
 
 ```{r LP2-hint-1}
+#---
+
 # Use the geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
 ```{r LP2-hint-2}
-# Please extract the estimated intercept and slope from the new model (model2) 
+#---
+
+# Extract the estimated intercept and slope from the new model (model2) 
 # and put them in the right places inside of the function geom_abline
+
+#---
+
+# Use the geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
@@ -294,7 +386,11 @@ cars[51,] <-
 ```
 
 ```{r LP3-hint-1}
+#---
+
 # data Speed is in column 1 and Distance is in column 2
+
+#---
 ```
 
 
@@ -315,11 +411,23 @@ summary("replace here by your answer")
 ```
 
 ```{r LP4-hint-1}
+#---
+
 # "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 ```{r LP4-hint-2}
+#---
+
 # we used the original dataset to fit the first model, and named it "model1"
+
+#---
+
+# "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 
@@ -346,13 +454,26 @@ ggplot() +
 
 
 ```{r LP5-hint-1}
-# Please use geom_point function to highlight the observation on row 51
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
+
 ```
 
 
 ```{r LP5-hint-2}
-# Please extract the estimated intercept and slope from the new model (model3) 
+#---
+
+# Extract the estimated intercept and slope from the new model (model3) 
 # and put them in the right places inside of the function geom_abline
+
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
@@ -397,7 +518,7 @@ However, only one of them significantly changed the regression line that we calc
 This tells us that while not all leverage points affect how we estimate the regression relationship, they all have the possibility to do so.
 
 
-## Problematic Observations 2: Outlier Points
+## Section 2: Outlier Points
 
 You are probably familiar with the concept of a statistical outlier. In linear regression, we use the term **outlier** to denote a very specific type of extreme/unusual observation in our data. An **outlier** is an observation that that deviates significantly from the regression pattern observed in the rest of the data. This often means that the response value is significantly higher or lower than what we typically see in the data.
 
@@ -424,12 +545,17 @@ cars[51,] <-
 ```
 
 ```{r OP1-hint-1}
+#---
+
 # data Speed is in column 1 and Distance is in column 2
+
+#---
+
 ```
 
 
 ```{r OP1-solution}
-# assign observation 51 a speed of 40 and a distance of 60
+# assign observation 51 a speed of 20 and a distance of 0
 cars[51,] <- c(20, 0)
 ```
 
@@ -454,11 +580,23 @@ summary("replace here by your answer")
 ```
 
 ```{r OP2-hint-1}
+#---
+
 # "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 ```{r OP2-hint-2}
+#---
+
 # we used the original dataset to fit the first model, and named it "model1"
+
+#---
+
+# "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 
@@ -493,13 +631,25 @@ ggplot() +
 
 
 ```{r OP3-hint-1}
-# Please use geom_point function to highlight the observation on row 51
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
 ```{r OP3-hint-2}
-# Please extract the estimated intercept and slope from the new model (model4) 
+#---
+
+# Extract the estimated intercept and slope from the new model (model4) 
 # and put them in the right places inside of the function geom_abline
+
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
@@ -539,12 +689,16 @@ cars[51,] <-
 ```
 
 ```{r OP4-hint-1}
+#---
+
 # data Speed is in column 1 and Distance is in column 2
+
+#---
 ```
 
 
 ```{r OP4-solution}
-# assign observation 51 a speed of 40 and a distance of 60
+# assign observation 51 a speed of 40 and a distance of 0
 cars[51,] <- c(40, 0)
 ```
 
@@ -569,11 +723,23 @@ summary("replace here by your answer")
 ```
 
 ```{r OP5-hint-1}
+#---
+
 # "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 ```{r OP5-hint-2}
+#---
+
 # we used the original dataset to fit the first model, and named it "model1"
+
+#---
+
+# "dist" is the response variable and "speed" is the predictor
+
+#---
 ```
 
 
@@ -609,13 +775,25 @@ ggplot() +
 
 
 ```{r OP6-hint-1}
-# Please use geom_point function to highlight the observation on row 51
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
 ```{r OP6-hint-2}
-# Please extract the estimated intercept and slope from the new model (model5) 
+#---
+
+# Extract the estimated intercept and slope from the new model (model5) 
 # and put them in the right places inside of the function geom_abline
+
+#---
+
+# Use geom_point function to highlight the observation on row 51
+
+#---
 ```
 
 
@@ -660,15 +838,15 @@ Both of the observations we created in the data were outlier points as they had 
 
 We shall see next that observations which strongly impact a single estimated coefficient, the estimated regression relationship or a fitted value are considered influential observations.
 
-## Problematic Observations 3: Influential Points
+## Section 3: Influential Points
 
 The last type of observation that is considered problematic in linear regression is an **influential point**. There are 3 ways in which an observation can be influential:
 
-* it influences ALL the estimated coefficients of the regression relationship/influences the model fit overall
-* it influences at least one but not all estimated coefficients of the regression relationship
-* it influences its own predicted/fitted value
+* it influences **ALL** the estimated coefficients of the regression, influencing the model fit overall
+* it influences **at least one** but not all estimated coefficients of the regression relationship
+* it influences its **own predicted/fitted value**
 
-All 3 of these types of influential observations can be detected by looking at a model in which this observation was used in estimating the relationship (e.g. Models 2, 3, 4 and 5) and comparing aspects of this model to one where this observation was NOT used to estimate the relationship (e.g. Model 1). 
+Through a comparative analysis, all 3 of these types of influential observations can be detected by looking at a model in which this observation was used in estimating the relationship (e.g. Models 2, 3, 4 and 5) and comparing aspects of this model to one where this observation was NOT used to estimate the relationship (e.g. Model 1). 
 
 ```{r IP_MC1, echo=FALSE}
 question("Which of these options is correct regarding the Empirical Rule (i.e. 68-95-99.7% rule)?",
@@ -678,7 +856,7 @@ question("Which of these options is correct regarding the Empirical Rule (i.e. 6
 ```
 
 
-In this section, we will visualize the impact of each these influential points by again revewing the observations we modified in our dataset and comparing the results back to Model 1.
+In this section, we will visualize the impact of each these influential points by again reviewing the observations we modified in our dataset and comparing the results back to Model 1.
 
 _______________________________
 
@@ -1403,3 +1581,8 @@ question("Which of the below statements is true regarding problematic observatio
          allow_retry = TRUE)
 ```
 
+
+## Conclusion
+
+## Wrap-Up
+Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
