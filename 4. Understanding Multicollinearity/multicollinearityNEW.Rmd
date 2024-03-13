@@ -38,6 +38,8 @@ options(tutorial.storage = list(
   get_object = function(...) NULL,
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
+
+set.seed(302)
 ```
 
 ## Introduction
@@ -69,9 +71,9 @@ The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a
 
 ```{r q0, include=TRUE}
 question("Which statement is true regarding correlation between two measurements?",
-         answer("The correlation coefficient tells us whether these measurements are linearly related."),
+         answer("The correlation coefficient tells us whether these measurements are linearly related.", message="We must know that two coefficients are linearly related to correctly interpret the correlation coefficient. "),
          answer("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.",correct = TRUE),
-         answer("The correlation coefficient can be used to describe the association between 3 or more measurements."),
+         answer("The correlation coefficient can be used to describe the association between 3 or more measurements.", message="The correlation coefficient can only be used to describe the association between two measurements. "),
          answer("None of these options are true."),
          message = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association."
 )
@@ -86,7 +88,7 @@ First we will create a dataset such that our predictors will be uncorrelated to 
 ```{r q1, include=TRUE}
 question("Which of the below statements is correct regarding this true relationship?",
          answer("$X_3$ has no linear association to $Y$."),
-         answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$."),
+         answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", message="To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant."),
          answer("On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", correct = TRUE),
          answer("All of the statements are true."),
          message = "This is true since the coefficient in the true model of X1 is 2."
@@ -102,6 +104,8 @@ where the values on the main diagonal are the variances of each predictor in the
 Below, fill in the the lines of code such that we sample the data using the information above. The `diag()` function takes a vector of $m$ diagonal elements and creates an $m \times m$ matrix where all off-diagonal elements are 0. 
 
 ```{r sim1, exercise = TRUE, exercise.lines = 20}
+# set the seed for reproducibility
+set.seed(302)
 
 # fill in the values from above:
 n = ____
@@ -117,6 +121,9 @@ cor(X)
 ```
 
 ```{r sim1-solution, eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -150,6 +157,9 @@ question("Why might it be possible to observe a sample correlation that is non-z
 Lastly, we can use this information to generate our errors and our response variable to be able to fit linear regression models in the next section. To do this, we should use the true relationship that was given at the top of this section.
 
 ```{r confint1-setup, include=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -164,6 +174,9 @@ cor(X)
 ```
 
 ```{r confint1, exercise = TRUE, exercise.lines = 30}
+# set the seed for reproducibility
+set.seed(302)
+
 # generate the random errors for these data from a Normal(0, 2.25)
 e <- rnorm(n, ____, ____)
 
@@ -179,6 +192,9 @@ summary(y)
 ```
 
 ```{r confint1-solution, eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # generate the random errors for these data from a Normal(0, 2.25)
 e <- rnorm(n, 0, sqrt(2.25))
 
@@ -206,6 +222,9 @@ grade_this_code()
 Now that we have decided on our true population relationship between $Y$ and predictors $X_1, X_2$, and $X_3$ and "collected" a sample of data from the population, we can use this data to estimate the true relationship. To understand how each predictor individually relates to the response, we can fit three separate simple linear models, using each predictor at a time. 
 
 ```{r q4-setup, include=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -226,6 +245,9 @@ y <- Xmat %*% betas + e
 ```
 
 ```{r q4, exercise = TRUE, exercise.lines = 30}
+# set the seed for reproducibility
+set.seed(302)
+
 # Fit a simple linear model using X1 as the predictor
 model1a <- lm(y ~ X[,1])
 
@@ -241,6 +263,9 @@ summary(model3a)
 ```
 
 ```{r q4-solution, eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # Fit a simple linear model using X1 as the predictor
 model1a <- lm(y ~ X[,1])
 
@@ -263,8 +288,8 @@ grade_this_code()
 ```{r q4MCQ, include=TRUE}
 question("Which statement is true regarding the three simple linear models?",
          answer("The estimated slope in each model is not equal to the corresponding slope in the true relationship", correct = TRUE),
-         answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$."),
-         answer("The estimate of the error variance matches the true error variance in the population."),
+         answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", message = "The relationship may be weak, but it appears nonzero."),
+         answer("The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", "Recall that the error variance in the population is 2.25."),
          answer("None of the options are true."),
          message = "A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)"
 )
@@ -276,6 +301,9 @@ To visualize the estimated coefficient for each of $X_1, X_2$ and $X_3$ from the
 
 
 ```{r linearity1-setup, include=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -305,6 +333,9 @@ model3a <- lm(y ~ X[,3])
 ```
 
 ```{r linearity1, exercise = TRUE, exercise.lines = 25}
+# set the seed for reproducibility
+set.seed(302)
+
 # Fit a multiple linear model which includes all 3 predictors
 MLRa <- lm(y ~ X)
 
@@ -330,6 +361,9 @@ confints <- rbind(x1confint, x2confint, x3confint, MLRconfints)
 ```
 
 ```{r, linearity1-solution,  eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # Fit a multiple linear model which includes all 3 predictors
 MLRa <- lm(y ~ X)
 
@@ -377,6 +411,9 @@ To draw this plot, you will need to add
   
   
 ```{r linearity2-setup, include=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 # fill in the values from above:
 n = 50
 errorvar = 2.25
@@ -428,6 +465,9 @@ confints <- rbind(x1confint, x2confint, x3confint, MLRconfints)
 ``` 
 
 ```{r linearity2, exercise = TRUE, exercise.lines = 25}
+# set the seed for reproducibility
+set.seed(302)
+
 #plot the point estimates on a plot, where the position on the x-axis will be 
 # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
 xposition <- c(1,2,3,6,7,8)
@@ -454,6 +494,9 @@ for(i in 1:6){
 ```
 
 ```{r, linearity2-solution, eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 #plot the point estimates on a plot, where the position on the x-axis will be 
 # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
 xposition <- c(1,2,3,6,7,8)
@@ -504,9 +547,9 @@ This plot allows us to visually investigate the relationship between individual 
 
 ```{r q7, include=TRUE}
 question("Why are the confidence intervals on the coefficient of each predictor narrower in the multiple linear model compared to the separate simple linear models?",
-         answer("The predictors we generated are strongly correlated."),
-         answer("The error variance is not estimated correctly in the simple linear models."),
-         answer("The true relationship is not estimated correctly in the simple linear models."),
+         answer("The predictors we generated are strongly correlated.", message="This is correct, but consider the error variance and the estimated coefficients in the simple models. "),
+         answer("The error variance is not estimated correctly in the simple linear models.", message="This is correct, but consider how the predictors are associated and the error variance of the simple linear models. "),
+         answer("The true relationship is not estimated correctly in the simple linear models.", message = "This is correct, but consider how the predictors are associated and the estimated coefficients in the simple linear models."),
          answer("More than one option is correct.", correct = TRUE),
          message = "Both betas and sigma are not estimated correctly in the simple linear regression model"
 )
@@ -521,6 +564,9 @@ To begin, we will consider only moderate correlation (0.5) between them and inve
 First we need to generate predictors with this correlation included. Since we already created a covariance matrix without correlation, we simply need to replace the values in positions [1,2] and [2,1] with our correlation. Then, generate our predictors anew using this covariance matrix. Continue generating the rest of the data as before (no changes need to be made). 
 
 ```{r q81, exercise = TRUE, exercise.lines = 25}
+# set the seed for reproducibility
+set.seed(302)
+
 n = 50
 betas <- c(1,2,3,0)
 e <- rnorm(n, 0, sqrt(2.25))
@@ -577,6 +623,9 @@ for(i in 1:6){
 ```
 
 ```{r, q81-solution}
+# set the seed for reproducibility
+set.seed(302)
+
 n = 50
 betas <- c(1,2,3,0)
 e <- rnorm(n, 0, sqrt(2.25))
@@ -659,6 +708,9 @@ question("Does there appear to be much difference in the widths of the confidenc
 
 What if we had very strong correlation present between $X_1$ and $X_2$? Update the R code below to add a correlation of 0.98 between these two predictors. Fill in the blanks below.
 ```{r corr1, exercise = TRUE, exercise.lines = 30}
+# set the seed for reproducibility
+set.seed(302)
+
 n = 50
 betas <- c(1,2,3,0)
 e <- rnorm(n, 0, sqrt(2.25))
@@ -710,6 +762,9 @@ for(i in ____){
 ```
 
 ```{r, corr1-solution, eval=FALSE}
+# set the seed for reproducibility
+set.seed(302)
+
 covariance <- diag(c(1,1,1))
 covariance[1,2] <- covariance[2,1] <- 0.98
 # re-generate our predictors with this new covariance matrix
@@ -794,77 +849,12 @@ We have seen some drastic changes in how our models use the data to estimate the
 If we compare the standard errors we estimate from each model, we can see how the correlation changes the standard errors. This can be visualized with  Bar Chart using the BarChart() function in the lessR package. We need to define the groups (each model's slope estimate) and the value we wish to plot (the standard errors of each model's slope estimate).
 
 ```{r corr2-setup, include=FALSE}
-# fill in the values from above:
+# set the seed for reproducibility
+set.seed(302)
+
 n = 50
-errorvar = 2.25
 betas <- c(1,2,3,0)
-covariance <- diag(c(1,1,1))
-
-# generate/sample the predictors using a multivariate Normal distribution
-X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)
-
-# generate the random errors for these data from a Normal(0, 2.25)
 e <- rnorm(n, 0, sqrt(2.25))
-
-# update your X vector to include an intercept column
-Xmat <- cbind(1, X)
-
-# use the above two components to generate a response variable
-y <- Xmat %*% betas + e
-
-# Fit a simple linear model using X1 as the predictor
-model1a <- lm(y ~ X[,1])
-
-# Fit a simple linaer model using X2 as the predictor
-model2a <- lm(y ~ X[,2])
-
-# Fit a simple linear model using X3 as the predictor
-model3a <- lm(y ~ X[,3])
-
-MLRa <- lm(y ~ X)
-
-# Extract the slope coefficients from all 4 models
-SLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])
-MLRcoefs <- coef(MLRa)[2:4]
-
-# relabel to values more intuitively
-names(SLRcoefs) <- c("X1", "X2", "X3")
-names(MLRcoefs) <- c("X1", "X2", "X3")
-
-# Extract confidence intervals (95%) from each simple linear model
-x1confint <- confint(model1a)[2,]
-x2confint <- confint(model2a)[2,]
-x3confint <- confint(model3a)[2,]
-
-# extract the confidence intervals of the 3 slopes from the MLR
-MLRconfints <- confint(MLRa)[2:4,]
-
-# create a combined coefficients vector and combined CI matrix
-coefs <- c(SLRcoefs, MLRcoefs)
-confints <- rbind(x1confint, x2confint, x3confint, MLRconfints)
-
-xposition <- c(1,2,3,6,7,8)
-plot(coefs ~ xposition,
-     type="p", ylim=c(-3, 6), xlim=c(0,8), bty="n", xaxt="n",
-     ylab="", xlab="")
-
-# add the horizontal line of no effect at 0
-abline(h=0, lty="dashed")
-
-# adds a label to distinguish the points
-text(2, 5.5, "Coefficients in SLRs")
-text(7, 5.5, "Coefficients in MLR")
-
-# loop to add confidence intervals and labels to plot
-for(i in 1:6){
-    # get the x position to plot at
-    x <- xposition[i]
-    # adds a label to distinguish the points
-    text(x, -2.75, names(coefs)[i])
-    # plots a vertical lines for the CI of each point
-    lines(c(x,x), confints[i,], lwd=3)
-}
-
 covariance <- diag(c(1,1,1))
 covariance[1,2] <- covariance[2,1] <- 0.98
 # re-generate our predictors with this new covariance matrix
@@ -914,7 +904,6 @@ for(i in 1:6){
 ```
 
 ```{r corr2, exercise = TRUE, exercise.lines = 35}
-
 # extract standard errors of each slope from MLR model and SLR models
 ses <- c(summary(model1c)$coef[2,2], ____,
          summary(model2c)$coef[2,2], ____,
@@ -963,12 +952,12 @@ question("Approximately how many times higher are the bars for the slopes of $X_
 )
 ```
 
-So when we have predictors in a model that are highly correlated, our model will incorrectly estimate the standard errors of those coefficients. Specifically we see that the standard errors are **inflated** by a certain amount relative to how correlated those predictors are.
+So when we have predictors in a model that are highly correlated, our model will incorrectly estimate the standard errors of those coefficients. We see that the standard errors are **inflated** by a certain amount relative to how correlated those predictors are.
 
 ## Section 5: Impact of All Predictors Being Correlated
 In this section, we will now introduce a correlation between all predictors.
 
-To understand the impact of all predictors being correlated when fitting a multiple linear model, we can consider a similar approach to visualizing these. We can first start with generating data in which all 3 predictors have a correlation of 0.9 and then fitting separate simple linear models and a multiple linear model. We shall also extract the estimated slopes from all models as well as the confidence intervals for those slopes. Finally, we will make a plot that displays the confidence intervals from all models.
+Our approach will be similar to the simple linear model setup. We can first start with generating data in which all 3 predictors have a correlation of 0.9 and then fitting separate simple linear models and a multiple linear model. We shall also extract the estimated slopes from all models as well as the confidence intervals for those slopes. Finally, we will make a plot that displays the confidence intervals from all models.
 
 ```{r q110, exercise = TRUE, exercise.lines = 30}
 n = 50
@@ -1023,6 +1012,9 @@ for(i in 1:6){
 ```
 
 ```{r q110-solution, eval=FALSE}
+n = 50
+betas <- c(1,2,3,0)
+e <- rnorm(n, 0, sqrt(2.25))
 # first create a matrix of 0.9 everywhere, then change the diagonal to be 1
 covariance <- matrix(rep(0.9, 9), nrow=3, ncol=3)
 diag(covariance) <- c(1,1,1)
@@ -1089,9 +1081,9 @@ diag(covariance) <- c(1,1,1)
 ```{r q11, include=TRUE}
 question("Which model(s) seem to be estimating the true association of each predictor with the response?",
          answer("The multiple linear model. ", correct = TRUE),
-         answer("Simple model with $X_1$."),
-         answer("Simple model with $X_2$. "),
-         answer("Simple model with $X_3$. ")
+         answer("Simple model with $X_1$.", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)"),
+         answer("Simple model with $X_2$. ", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)"),
+         answer("Simple model with $X_3$. ", message = "Remember that the beta coefficients should be beta=c(1, 2, 3, 0)")
 )
 ```
 
@@ -1152,6 +1144,9 @@ for(i in 1:6){
 ```
 
 ```{r q120-solution}
+n = 50
+betas <- c(1,2,3,0)
+e <- rnorm(n, 0, sqrt(2.25))
 # first create a matrix of 0.9 everywhere, then change the diagonal to be 1
 covariance <- matrix(rep(0.98, 9), nrow=3, ncol=3)
 diag(covariance) <- c(1,1,1)
@@ -1228,10 +1223,10 @@ In this section, we will now introduce a correlation between two of our predicto
 
 Recall that the true population relationship between the response and the three predictors is $$Y = 1  + 2X_1 + 3X_2 + 0X_3 + \epsilon, \quad \epsilon \sim N(0, 2.25).$$ This tells us that only $X_3$ has no association with the response in the presence of the other two predictors. 
 
-For this section, we will set elements [1,3] and [3,1] in the covariance matrix to be 0.9, giving us predictors that are generate with a strong correlation between $X_1$ and $X_3$. We will still fit 3 separate simple linear models, but will now fit a multiple linear model using only $X_2$ and $X_3$. We will extract the slopes and confidence intervals from each model again. At the end, print the summary of the simple linear model with $X_2$ and the simple linear model with $X_3$.
+For this section, we will set elements [1,3] and [3,1] in the covariance matrix to be 0.9, giving us predictors that are generated with a strong correlation between $X_1$ and $X_3$. We will still fit 3 separate simple linear models, but will now fit a multiple linear model using only $X_2$ and $X_3$. We will extract the slopes and confidence intervals from each model again. At the end, print the summary of the simple linear model with $X_2$ and the simple linear model with $X_3$.
 
 
-```{r q13-1, exercise = TRUE, exercise.lines = 30}
+```{r q13, exercise = TRUE, exercise.lines = 30}
 n = 50
 betas <- c(1,2,3,0)
 e <- rnorm(n, 0, sqrt(2.25))
@@ -1303,19 +1298,19 @@ grade_this_code()
 
 ```
 
-```{r q13-1-hint-1}
+```{r q13-hint-1}
 # When creating that Xmat matrix, remember to add an intercept column using cbind() function
 Xmat <- cbind(1, X)
 ```
 
-```{r q13-1-hint-2}
+```{r q13-hint-2}
 # When fitting the SLR and MLE models 
 # 1. Remember to select the column in X corresponding to the predictor you want to use
 # 2. Recall that we don't want to use X1 in the MLR model
 ```
 
 
-```{r q13, include=TRUE}
+```{r q13MCQ, include=TRUE}
 question("Which of the below is true regarding these two simple linear models?",
          answer("The slope of $X_3$ is significantly different from 0. "),
          answer("The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have."),

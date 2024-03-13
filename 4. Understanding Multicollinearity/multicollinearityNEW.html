@@ -206,7 +206,10 @@ all off-diagonal elements are 0.</p>
 <div class="tutorial-exercise" data-label="sim1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="20"
 data-pipe="|&gt;">
-<pre class="text"><code># fill in the values from above:
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# fill in the values from above:
 n = ____
 errorvar = ____
 betas &lt;- c(____,____,____,____)
@@ -222,7 +225,10 @@ cor(X)</code></pre>
 <div class="tutorial-exercise-support" data-label="sim1-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># fill in the values from above:
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# fill in the values from above:
 n = 50
 errorvar = 2.25
 betas &lt;- c(1,2,3,0)
@@ -254,7 +260,10 @@ at the top of this section.</p>
 <div class="tutorial-exercise" data-label="confint1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="30"
 data-pipe="|&gt;">
-<pre class="text"><code># generate the random errors for these data from a Normal(0, 2.25)
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# generate the random errors for these data from a Normal(0, 2.25)
 e &lt;- rnorm(n, ____, ____)
 
 # update your X vector to include an intercept column
@@ -270,7 +279,10 @@ summary(y)</code></pre>
 <div class="tutorial-exercise-support" data-label="confint1-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># generate the random errors for these data from a Normal(0, 2.25)
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# generate the random errors for these data from a Normal(0, 2.25)
 e &lt;- rnorm(n, 0, sqrt(2.25))
 
 # update your X vector to include an intercept column
@@ -302,7 +314,10 @@ a time.</p>
 <div class="tutorial-exercise" data-label="q4" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="30"
 data-pipe="|&gt;">
-<pre class="text"><code># Fit a simple linear model using X1 as the predictor
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# Fit a simple linear model using X1 as the predictor
 model1a &lt;- lm(y ~ X[,1])
 
 # Fit a simple linaer model using X2 as the predictor
@@ -319,7 +334,10 @@ summary(model3a)</code></pre>
 <div class="tutorial-exercise-support" data-label="q4-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># Fit a simple linear model using X1 as the predictor
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# Fit a simple linear model using X1 as the predictor
 model1a &lt;- lm(y ~ X[,1])
 
 # Fit a simple linaer model using X2 as the predictor
@@ -360,7 +378,10 @@ function.</p>
 <div class="tutorial-exercise" data-label="linearity1"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="25" data-pipe="|&gt;">
-<pre class="text"><code># Fit a multiple linear model which includes all 3 predictors
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# Fit a multiple linear model which includes all 3 predictors
 MLRa &lt;- lm(y ~ X)
 
 # Extract the slope coefficients from all 4 models
@@ -387,7 +408,10 @@ confints &lt;- rbind(x1confint, x2confint, x3confint, MLRconfints)</code></pre>
 <div class="tutorial-exercise-support" data-label="linearity1-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># Fit a multiple linear model which includes all 3 predictors
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+# Fit a multiple linear model which includes all 3 predictors
 MLRa &lt;- lm(y ~ X)
 
 # Extract the slope coefficients from all 4 models
@@ -436,7 +460,10 @@ slope</p></li>
 <div class="tutorial-exercise" data-label="linearity2"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="25" data-pipe="|&gt;">
-<pre class="text"><code>#plot the point estimates on a plot, where the position on the x-axis will be 
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+#plot the point estimates on a plot, where the position on the x-axis will be 
 # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
 xposition &lt;- c(1,2,3,6,7,8)
 plot(____,
@@ -464,7 +491,10 @@ for(i in 1:6){
 <div class="tutorial-exercise-support" data-label="linearity2-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>#plot the point estimates on a plot, where the position on the x-axis will be 
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+#plot the point estimates on a plot, where the position on the x-axis will be 
 # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
 xposition &lt;- c(1,2,3,6,7,8)
 plot(coefs ~ xposition,
@@ -543,7 +573,10 @@ need to be made).</p>
 <div class="tutorial-exercise" data-label="q81" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="25"
 data-pipe="|&gt;">
-<pre class="text"><code>n = 50
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+n = 50
 betas &lt;- c(1,2,3,0)
 e &lt;- rnorm(n, 0, sqrt(2.25))
 # replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation
@@ -601,7 +634,10 @@ for(i in 1:6){
 <div class="tutorial-exercise-support" data-label="q81-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>n = 50
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+n = 50
 betas &lt;- c(1,2,3,0)
 e &lt;- rnorm(n, 0, sqrt(2.25))
 # replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation
@@ -685,7 +721,10 @@ below.
 <div class="tutorial-exercise" data-label="corr1" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="30"
 data-pipe="|&gt;">
-<pre class="text"><code>n = 50
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+n = 50
 betas &lt;- c(1,2,3,0)
 e &lt;- rnorm(n, 0, sqrt(2.25))
 covariance &lt;- diag(c(1,1,1))
@@ -738,7 +777,10 @@ for(i in ____){
 <div class="tutorial-exercise-support" data-label="corr1-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code>covariance &lt;- diag(c(1,1,1))
+<pre class="text"><code># set the seed for reproducibility
+set.seed(302)
+
+covariance &lt;- diag(c(1,1,1))
 covariance[1,2] &lt;- covariance[2,1] &lt;- 0.98
 # re-generate our predictors with this new covariance matrix
 X &lt;- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)
@@ -877,7 +919,7 @@ data-lines="0" data-pipe="|&gt;">
 </div>
 <p>So when we have predictors in a model that are highly correlated, our
 model will incorrectly estimate the standard errors of those
-coefficients. Specifically we see that the standard errors are
+coefficients. We see that the standard errors are
 <strong>inflated</strong> by a certain amount relative to how correlated
 those predictors are.</p>
 </div>
@@ -886,14 +928,13 @@ class="section level2">
 <h2>Section 5: Impact of All Predictors Being Correlated</h2>
 <p>In this section, we will now introduce a correlation between all
 predictors.</p>
-<p>To understand the impact of all predictors being correlated when
-fitting a multiple linear model, we can consider a similar approach to
-visualizing these. We can first start with generating data in which all
-3 predictors have a correlation of 0.9 and then fitting separate simple
-linear models and a multiple linear model. We shall also extract the
-estimated slopes from all models as well as the confidence intervals for
-those slopes. Finally, we will make a plot that displays the confidence
-intervals from all models.</p>
+<p>Our approach will be similar to the simple linear model setup. We can
+first start with generating data in which all 3 predictors have a
+correlation of 0.9 and then fitting separate simple linear models and a
+multiple linear model. We shall also extract the estimated slopes from
+all models as well as the confidence intervals for those slopes.
+Finally, we will make a plot that displays the confidence intervals from
+all models.</p>
 <div class="tutorial-exercise" data-label="q110" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="30"
 data-pipe="|&gt;">
@@ -951,7 +992,10 @@ for(i in 1:6){
 <div class="tutorial-exercise-support" data-label="q110-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># first create a matrix of 0.9 everywhere, then change the diagonal to be 1
+<pre class="text"><code>n = 50
+betas &lt;- c(1,2,3,0)
+e &lt;- rnorm(n, 0, sqrt(2.25))
+# first create a matrix of 0.9 everywhere, then change the diagonal to be 1
 covariance &lt;- matrix(rep(0.9, 9), nrow=3, ncol=3)
 diag(covariance) &lt;- c(1,1,1)
 # re-generate our predictors with this new covariance matrix
@@ -1086,7 +1130,10 @@ for(i in 1:6){
 <div class="tutorial-exercise-support" data-label="q120-solution"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
-<pre class="text"><code># first create a matrix of 0.9 everywhere, then change the diagonal to be 1
+<pre class="text"><code>n = 50
+betas &lt;- c(1,2,3,0)
+e &lt;- rnorm(n, 0, sqrt(2.25))
+# first create a matrix of 0.9 everywhere, then change the diagonal to be 1
 covariance &lt;- matrix(rep(0.98, 9), nrow=3, ncol=3)
 diag(covariance) &lt;- c(1,1,1)
 # re-generate our predictors with this new covariance matrix
@@ -1179,17 +1226,18 @@ tells us that only <span class="math inline">\(X_3\)</span> has no
 association with the response in the presence of the other two
 predictors.</p>
 <p>For this section, we will set elements [1,3] and [3,1] in the
-covariance matrix to be 0.9, giving us predictors that are generate with
-a strong correlation between <span class="math inline">\(X_1\)</span>
-and <span class="math inline">\(X_3\)</span>. We will still fit 3
-separate simple linear models, but will now fit a multiple linear model
-using only <span class="math inline">\(X_2\)</span> and <span
+covariance matrix to be 0.9, giving us predictors that are generated
+with a strong correlation between <span
+class="math inline">\(X_1\)</span> and <span
+class="math inline">\(X_3\)</span>. We will still fit 3 separate simple
+linear models, but will now fit a multiple linear model using only <span
+class="math inline">\(X_2\)</span> and <span
 class="math inline">\(X_3\)</span>. We will extract the slopes and
 confidence intervals from each model again. At the end, print the
 summary of the simple linear model with <span
 class="math inline">\(X_2\)</span> and the simple linear model with
 <span class="math inline">\(X_3\)</span>.</p>
-<div class="tutorial-exercise" data-label="q13-1" data-completion="1"
+<div class="tutorial-exercise" data-label="q13" data-completion="1"
 data-diagnostics="1" data-startover="1" data-lines="30"
 data-pipe="|&gt;">
 <pre class="text"><code>n = 50
@@ -1221,82 +1269,50 @@ confints &lt;- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e
 # print the model summaries for model2e and model3e
 summary(model2e)
 summary(model3e)</code></pre>
-<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":false,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
+<script type="application/json" data-ui-opts="1">{"engine":"r","has_checker":true,"caption":"<span data-i18n=\"text.enginecap\" data-i18n-opts=\"{&quot;engine&quot;:&quot;R&quot;}\">R Code<\/span>"}</script>
 </div>
-<pre><code>## 
-## Call:
-## lm(formula = y ~ X[, 2])
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -5.7150 -1.5968 -0.0643  1.5970  5.9666 
-## 
-## Coefficients:
-##             Estimate Std. Error t value      Pr(&gt;|t|)    
-## (Intercept)   1.4502     0.3686   3.934      0.000269 ***
-## X[, 2]        3.0473     0.4184   7.282 0.00000000272 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 2.594 on 48 degrees of freedom
-## Multiple R-squared:  0.5249, Adjusted R-squared:  0.515 
-## F-statistic: 53.03 on 1 and 48 DF,  p-value: 0.000000002718</code></pre>
-<pre><code>## 
-## Call:
-## lm(formula = y ~ X[, 3])
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -5.9963 -2.8039  0.4242  2.0812  5.8573 
-## 
-## Coefficients:
-##             Estimate Std. Error t value  Pr(&gt;|t|)    
-## (Intercept)   0.6731     0.4646   1.449     0.154    
-## X[, 3]        1.7127     0.3912   4.378 0.0000646 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 3.181 on 48 degrees of freedom
-## Multiple R-squared:  0.2853, Adjusted R-squared:  0.2704 
-## F-statistic: 19.16 on 1 and 48 DF,  p-value: 0.00006464</code></pre>
-<pre><code>## function (check_env) 
-## {
-##     if (is_empty_code(check_env[[&quot;.user_code&quot;]])) {
-##         return(grade_code_is_empty())
-##     }
-##     check_env[[&quot;.__correct&quot;]] &lt;- correct
-##     check_env[[&quot;.__incorrect&quot;]] &lt;- incorrect
-##     check_env[[&quot;.__action&quot;]] &lt;- action
-##     grade &lt;- with_options(list(gradethis.allow_partial_matching = allow_partial_matching, 
-##         gradethis.maybe_code_feedback = TRUE), grade_this({
-##         .message &lt;- code_feedback()
-##         if (is.null(.message)) {
-##             if (&quot;pass&quot; %in% get(&quot;.__action&quot;)) {
-##                 pass(get(&quot;.__correct&quot;))
-##             }
-##         }
-##         else {
-##             if (&quot;fail&quot; %in% get(&quot;.__action&quot;)) {
-##                 fail(get(&quot;.__incorrect&quot;), hint = FALSE)
-##             }
-##         }
-##         invisible(NULL)
-##     })(check_env))
-##     if (is.null(grade)) {
-##         return(invisible(NULL))
-##     }
-##     class(grade) &lt;- c(&quot;gradethis_graded_this_code&quot;, class(grade))
-##     grade
-## }
-## &lt;bytecode: 0x7fafd4cc6990&gt;
-## &lt;environment: 0x7fafd4cbdb18&gt;</code></pre>
-<div class="tutorial-exercise-support" data-label="q13-1-hint-1"
+<div class="tutorial-exercise-support" data-label="q13-solution"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code>n = 50
+betas &lt;- c(1,2,3,0)
+e &lt;- rnorm(n, 0, sqrt(2.25))
+# edit the covariance matrix to introduce the correlation
+covariance &lt;- diag(c(1,1,1))
+# edit the covariance matrix to introduce the correlation
+covariance &lt;- diag(c(1,1,1))
+covariance[1,3] &lt;- covariance[3,1] &lt;- 0.9
+
+# re-generate our predictors with this new covariance matrix
+X &lt;- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)
+# generate new responses
+Xmat &lt;- cbind(1, X)
+y &lt;- Xmat %*% betas + e
+
+# fit the SLR and MLE models and extract coefficients
+model1e &lt;- lm(y ~ X[,1])
+model2e &lt;- lm(y ~ X[,2])
+model3e &lt;- lm(y ~ X[,3])
+MLRe &lt;- lm(y ~ X[,-1])
+
+coefs &lt;- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])
+names(coefs) &lt;- c(&quot;X1&quot;, &quot;X2&quot;, &quot;X3&quot;, &quot;X2&quot;, &quot;X3&quot;)
+
+# extract confidence intervals of slopes in all 4 models
+confints &lt;- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],
+                  confint(MLRe)[2:3,])
+
+# print the model summaries for model1d and model3d
+summary(model2e)
+summary(model3e)</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="q13-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
 <pre class="text"><code># When creating that Xmat matrix, remember to add an intercept column using cbind() function
 Xmat &lt;- cbind(1, X)</code></pre>
 </div>
-<div class="tutorial-exercise-support" data-label="q13-1-hint-2"
+<div class="tutorial-exercise-support" data-label="q13-hint-2"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
 <pre class="text"><code># When fitting the SLR and MLE models 
@@ -1304,10 +1320,10 @@ data-lines="0" data-pipe="|&gt;">
 # 2. Recall that we don&#39;t want to use X1 in the MLR model</code></pre>
 </div>
 <div class="panel panel-default tutorial-question-container">
-<div data-label="q13" class="tutorial-question panel-body">
-<div id="q13-answer_container" class="shiny-html-output"></div>
-<div id="q13-message_container" class="shiny-html-output"></div>
-<div id="q13-action_button_container" class="shiny-html-output"></div>
+<div data-label="q13MCQ" class="tutorial-question panel-body">
+<div id="q13MCQ-answer_container" class="shiny-html-output"></div>
+<div id="q13MCQ-message_container" class="shiny-html-output"></div>
+<div id="q13MCQ-action_button_container" class="shiny-html-output"></div>
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
@@ -1435,6 +1451,8 @@ options(tutorial.storage = list(
   get_object = function(...) NULL,
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
+
+set.seed(302)
 </script>
 
 
@@ -1460,22 +1478,24 @@ session$onSessionEnded(function() {
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q0", question = structure("Which statement is true regarding correlation between two measurements?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_94aa0d2", 
+"character")), answers = list(structure(list(id = "lnr_ans_96deae7", 
     option = "The correlation coefficient tells us whether these measurements are linearly related.", 
     value = "The correlation coefficient tells us whether these measurements are linearly related.", 
     label = structure("The correlation coefficient tells us whether these measurements are linearly related.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a1af2b1", 
+    "character")), correct = FALSE, message = structure("We must know that two coefficients are linearly related to correctly interpret the correlation coefficient.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_feff7b0", 
     option = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", 
     value = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", 
     label = structure("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5a68733", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e8238d3", 
     option = "The correlation coefficient can be used to describe the association between 3 or more measurements.", 
     value = "The correlation coefficient can be used to describe the association between 3 or more measurements.", 
     label = structure("The correlation coefficient can be used to describe the association between 3 or more measurements.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b28cf3", 
+    "character")), correct = FALSE, message = structure("The correlation coefficient can only be used to describe the association between two measurements.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3475e80", 
     option = "None of these options are true.", value = "None of these options are true.", 
     label = structure("None of these options are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1487,27 +1507,28 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q0-answer", 
     question = "q0"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1418671574.33938, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1316533458.38694, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q1", question = structure("Which of the below statements is correct regarding this true relationship?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e96dad8", 
+"character")), answers = list(structure(list(id = "lnr_ans_9ab83d4", 
     option = "$X_3$ has no linear association to $Y$.", value = "$X_3$ has no linear association to $Y$.", 
     label = structure("\\(X_3\\) has no linear association to \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5e84cb3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ff1a7a3", 
     option = "In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", 
     value = "In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", 
     label = structure("In the presence of the other predictors, a one-unit increase in \\(X_2\\) yields a 3-unit increase in \\(Y\\).", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_afb6baf", 
+    "character")), correct = FALSE, message = structure("To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1277267", 
     option = "On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", 
     value = "On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", 
     label = structure("On average, when other predictors are held fixed, a one-unit increase in \\(X_1\\) increases \\(Y\\) by 2 units.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e1c0c", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c39baa", 
     option = "All of the statements are true.", value = "All of the statements are true.", 
     label = structure("All of the statements are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1519,7 +1540,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("This is true since the coefficient in the true model of X1 is 2.", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q1-answer", 
     question = "q1"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 2082030639.03048, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 811352140.622185, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1542,13 +1563,14 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "sim1", code = "\n# fill in the values from above:\nn = ____\nerrorvar = ____\nbetas <- c(____,____,____,____)\ncovariance <- diag(c(____,____,____))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = ____)\n\n# check the correlation between the predictors\ncor(X)", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "sim1", code = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = ____\nerrorvar = ____\nbetas <- c(____,____,____,____)\ncovariance <- diag(c(____,____,____))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = ____)\n\n# check the correlation between the predictors\ncor(X)", 
         opts = list(label = "\"sim1\"", exercise = "TRUE", exercise.lines = "20"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
-        label = "sim1-check")), solution = structure(c("# fill in the values from above:", 
+        label = "sim1-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "# fill in the values from above:", 
     "n = 50", "errorvar = 2.25", "betas <- c(1,2,3,0)", "covariance <- diag(c(1,1,1))", 
     "", "# generate/sample the predictors using a multivariate Normal distribution", 
     "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "", 
@@ -1573,9 +1595,10 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "sim1", exercise = TRUE, exercise.lines = 20, 
-        code = c("", "# fill in the values from above:", "n = ____", 
-        "errorvar = ____", "betas <- c(____,____,____,____)", 
-        "covariance <- diag(c(____,____,____))", "", "# generate/sample the predictors using a multivariate Normal distribution", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "# fill in the values from above:", "n = ____", "errorvar = ____", 
+        "betas <- c(____,____,____,____)", "covariance <- diag(c(____,____,____))", 
+        "", "# generate/sample the predictors using a multivariate Normal distribution", 
         "X <- mvrnorm(n, mu = c(0,0,0), Sigma = ____)", "", "# check the correlation between the predictors", 
         "cor(X)"), out.width.px = 624, out.height.px = 384, params.src = "sim1, exercise = TRUE, exercise.lines = 20", 
         fig.num = 0, exercise.df_print = "paged"), engine = "r", 
@@ -1585,22 +1608,22 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q2", question = structure("Why might it be possible to observe a sample correlation that is non-zero when we provided R with a covariance matrix with zero correlation?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_ea9d308", 
+"character")), answers = list(structure(list(id = "lnr_ans_a5a01f8", 
     option = "The population has uncorrelated predictors, but the sample may not.", 
     value = "The population has uncorrelated predictors, but the sample may not.", 
     label = structure("The population has uncorrelated predictors, but the sample may not.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dd5ab99", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3dc178", 
     option = "We did not set up our code correctly for the population.", 
     value = "We did not set up our code correctly for the population.", 
     label = structure("We did not set up our code correctly for the population.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ac122d2", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e88c443", 
     option = "The sampling process did not function correctly.", 
     value = "The sampling process did not function correctly.", 
     label = structure("The sampling process did not function correctly.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4b37472", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ed5312", 
     option = "None of these options.", value = "None of these options.", 
     label = structure("None of these options.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1611,7 +1634,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q2-answer", question = "q2"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1063668784.50469, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1757222876.68173, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1634,15 +1657,16 @@ learnr:::store_exercise_cache(structure(list(label = "confint1", global_setup = 
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# check the correlation between the predictors\ncor(X)", 
-    chunks = list(list(label = "confint1-setup", code = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# check the correlation between the predictors\ncor(X)", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# check the correlation between the predictors\ncor(X)", 
+    chunks = list(list(label = "confint1-setup", code = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# check the correlation between the predictors\ncor(X)", 
         opts = list(label = "\"confint1-setup\"", include = "FALSE"), 
-        engine = "r"), list(label = "confint1", code = "# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, ____, ____)\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# produce a summary of your response\nsummary(y)\n", 
+        engine = "r"), list(label = "confint1", code = "# set the seed for reproducibility\nset.seed(302)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, ____, ____)\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# produce a summary of your response\nsummary(y)\n", 
         opts = list(label = "\"confint1\"", exercise = "TRUE", 
             exercise.lines = "30"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
-        label = "confint1-check")), solution = structure(c("# generate the random errors for these data from a Normal(0, 2.25)", 
+        label = "confint1-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "# generate the random errors for these data from a Normal(0, 2.25)", 
     "e <- rnorm(n, 0, sqrt(2.25))", "", "# update your X vector to include an intercept column", 
     "Xmat <- cbind(1, X)", "", "# use the above two components to generate a response variable", 
     "y <- Xmat %*% betas + e", "", "# produce a summary of your response", 
@@ -1666,7 +1690,8 @@ learnr:::store_exercise_cache(structure(list(label = "confint1", global_setup = 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "confint1", exercise = TRUE, exercise.lines = 30, 
-        code = c("# generate the random errors for these data from a Normal(0, 2.25)", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "# generate the random errors for these data from a Normal(0, 2.25)", 
         "e <- rnorm(n, ____, ____)", "", "# update your X vector to include an intercept column", 
         "Xmat <- cbind(1, X)", "", "# use the above two components to generate a response variable", 
         "y <- Xmat %*% betas + e", "", "# produce a summary of your response", 
@@ -1695,15 +1720,16 @@ learnr:::store_exercise_cache(structure(list(label = "q4", global_setup = struct
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e", 
-    chunks = list(list(label = "q4-setup", code = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e", 
+    chunks = list(list(label = "q4-setup", code = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e", 
         opts = list(label = "\"q4-setup\"", include = "FALSE"), 
-        engine = "r"), list(label = "q4", code = "# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- ____\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- ____\n\nsummary(model1a)\nsummary(model2a)\nsummary(model3a)", 
+        engine = "r"), list(label = "q4", code = "# set the seed for reproducibility\nset.seed(302)\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- ____\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- ____\n\nsummary(model1a)\nsummary(model2a)\nsummary(model3a)", 
         opts = list(label = "\"q4\"", exercise = "TRUE", exercise.lines = "30"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
-        label = "q4-check")), solution = structure(c("# Fit a simple linear model using X1 as the predictor", 
+        label = "q4-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "# Fit a simple linear model using X1 as the predictor", 
     "model1a <- lm(y ~ X[,1])", "", "# Fit a simple linaer model using X2 as the predictor", 
     "model2a <- lm(y ~ X[,2])", "", "# Fit a simple linear model using X3 as the predictor", 
     "model3a <- lm(y ~ X[,3])", "", "# Uncomment one at a time to view summaries", 
@@ -1727,7 +1753,8 @@ learnr:::store_exercise_cache(structure(list(label = "q4", global_setup = struct
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        label = "q4", exercise = TRUE, exercise.lines = 30, code = c("# Fit a simple linear model using X1 as the predictor", 
+        label = "q4", exercise = TRUE, exercise.lines = 30, code = c("# set the seed for reproducibility", 
+        "set.seed(302)", "", "# Fit a simple linear model using X1 as the predictor", 
         "model1a <- lm(y ~ X[,1])", "", "# Fit a simple linaer model using X2 as the predictor", 
         "model2a <- ____", "", "# Fit a simple linear model using X3 as the predictor", 
         "model3a <- ____", "", "summary(model1a)", "summary(model2a)", 
@@ -1739,22 +1766,23 @@ learnr:::store_exercise_cache(structure(list(label = "q4", global_setup = struct
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q4MCQ", question = structure("Which statement is true regarding the three simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_3832b11", 
+"character")), answers = list(structure(list(id = "lnr_ans_a303d73", 
     option = "The estimated slope in each model is not equal to the corresponding slope in the true relationship", 
     value = "The estimated slope in each model is not equal to the corresponding slope in the true relationship", 
     label = structure("The estimated slope in each model is not equal to the corresponding slope in the true relationship", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dc77060", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_237e46a", 
     option = "In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", 
     value = "In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", 
     label = structure("In the simple linear model using \\(X_3\\), \\(X_3\\) has no linear association with \\(Y\\).", html = TRUE, class = c("html", 
+    "character")), correct = FALSE, message = structure("The relationship may be weak, but it appears nonzero.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8e4094", 
+    option = "The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", 
+    value = "The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", 
+    label = structure("The estimate of the error variance for the model using \\(X_1\\) matches the true error variance in the population.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f928b36", 
-    option = "The estimate of the error variance matches the true error variance in the population.", 
-    value = "The estimate of the error variance matches the true error variance in the population.", 
-    label = structure("The estimate of the error variance matches the true error variance in the population.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5e332da", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dd7a132", 
     option = "None of the options are true.", value = "None of the options are true.", 
     label = structure("None of the options are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1766,7 +1794,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q4MCQ-answer", 
     question = "q4MCQ"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1707762025.20476, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 293091673.363519, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1789,15 +1817,16 @@ learnr:::store_exercise_cache(structure(list(label = "linearity1", global_setup 
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])", 
-    chunks = list(list(label = "linearity1-setup", code = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])", 
+    chunks = list(list(label = "linearity1-setup", code = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])", 
         opts = list(label = "\"linearity1-setup\"", include = "FALSE"), 
-        engine = "r"), list(label = "linearity1", code = "# Fit a multiple linear model which includes all 3 predictors\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)____\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- ____\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
+        engine = "r"), list(label = "linearity1", code = "# set the seed for reproducibility\nset.seed(302)\n\n# Fit a multiple linear model which includes all 3 predictors\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)____\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- ____\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
         opts = list(label = "\"linearity1\"", exercise = "TRUE", 
             exercise.lines = "25"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
-        label = "linearity1-check")), solution = structure(c("# Fit a multiple linear model which includes all 3 predictors", 
+        label = "linearity1-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "# Fit a multiple linear model which includes all 3 predictors", 
     "MLRa <- lm(y ~ X)", "", "# Extract the slope coefficients from all 4 models", 
     "SLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])", 
     "MLRcoefs <- coef(MLRa)[2:4]", "", "# relabel to values more intuitively", 
@@ -1827,7 +1856,8 @@ learnr:::store_exercise_cache(structure(list(label = "linearity1", global_setup 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "linearity1", exercise = TRUE, exercise.lines = 25, 
-        code = c("# Fit a multiple linear model which includes all 3 predictors", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "# Fit a multiple linear model which includes all 3 predictors", 
         "MLRa <- lm(y ~ X)", "", "# Extract the slope coefficients from all 4 models", 
         "SLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])", 
         "MLRcoefs <- coef(MLRa)____", "", "# relabel to values more intuitively", 
@@ -1861,15 +1891,16 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
-    chunks = list(list(label = "linearity2-setup", code = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
+    chunks = list(list(label = "linearity2-setup", code = "# set the seed for reproducibility\nset.seed(302)\n\n# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)", 
         opts = list(label = "\"linearity2-setup\"", include = "FALSE"), 
-        engine = "r"), list(label = "linearity2", code = "#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(____,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=____, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), ____, lwd=3)\n}", 
+        engine = "r"), list(label = "linearity2", code = "# set the seed for reproducibility\nset.seed(302)\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(____,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=____, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), ____, lwd=3)\n}", 
         opts = list(label = "\"linearity2\"", exercise = "TRUE", 
             exercise.lines = "25"), engine = "r")), code_check = NULL, 
     error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
-        label = "linearity2-check")), solution = structure(c("#plot the point estimates on a plot, where the position on the x-axis will be ", 
+        label = "linearity2-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "#plot the point estimates on a plot, where the position on the x-axis will be ", 
     "# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values", 
     "xposition <- c(1,2,3,6,7,8)", "plot(coefs ~ xposition,", 
     "     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",", 
@@ -1901,7 +1932,8 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "linearity2", exercise = TRUE, exercise.lines = 25, 
-        code = c("#plot the point estimates on a plot, where the position on the x-axis will be ", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "#plot the point estimates on a plot, where the position on the x-axis will be ", 
         "# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values", 
         "xposition <- c(1,2,3,6,7,8)", "plot(____,", "     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",", 
         "     ylab=\"\", xlab=\"\")", "", "# add the horizontal line of no effect at 0", 
@@ -1920,22 +1952,25 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q7", question = structure("Why are the confidence intervals on the coefficient of each predictor narrower in the multiple linear model compared to the separate simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_1c7b7a8", 
+"character")), answers = list(structure(list(id = "lnr_ans_10746f7", 
     option = "The predictors we generated are strongly correlated.", 
     value = "The predictors we generated are strongly correlated.", 
     label = structure("The predictors we generated are strongly correlated.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b9829af", 
+    "character")), correct = FALSE, message = structure("This is correct, but consider the error variance and the estimated coefficients in the simple models.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cdf1675", 
     option = "The error variance is not estimated correctly in the simple linear models.", 
     value = "The error variance is not estimated correctly in the simple linear models.", 
     label = structure("The error variance is not estimated correctly in the simple linear models.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_37d6128", 
+    "character")), correct = FALSE, message = structure("This is correct, but consider how the predictors are associated and the error variance of the simple linear models.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41f2a4f", 
     option = "The true relationship is not estimated correctly in the simple linear models.", 
     value = "The true relationship is not estimated correctly in the simple linear models.", 
     label = structure("The true relationship is not estimated correctly in the simple linear models.", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_62748c8", 
+    "character")), correct = FALSE, message = structure("This is correct, but consider how the predictors are associated and the estimated coefficients in the simple linear models.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_faf43d3", 
     option = "More than one option is correct.", value = "More than one option is correct.", 
     label = structure("More than one option is correct.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1947,7 +1982,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("Both betas and sigma are not estimated correctly in the simple linear regression model", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q7-answer", 
     question = "q7"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1793413732.16488, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1096680292.98932, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1970,14 +2005,15 @@ learnr:::store_exercise_cache(structure(list(label = "q81", global_setup = struc
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "q81", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- ____\n\n# Now fit our models, like we did before (3 SLRs and 1 MLR), and extract the slope\n# coefficients in all 4 models, as well as the 95% confidence intervals.\n# fit the SLR and MLE models and extract coefficients\nmodel1b <- lm(y ~ X[,1])\nmodel2b <- lm(____)\nmodel3b <- lm(y ~ X[,3])\nMLRb <- lm(y ~ X)\n\ncoefs <- c(coef(model1b)[2], coef(model2b)[2], ____, ____)\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1b)[2,], confint(model2b)[2,], confint(model3b)[2,],\n                  confint(MLRb)[2:4,])\n\n# Finally, create the same type of plot as before, but using the information we \n# extracted from models fit on the new data with moderately correlated X1 and X2.\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), ____, lwd=3)\n}", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "q81", code = "# set the seed for reproducibility\nset.seed(302)\n\nn = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- ____\n\n# Now fit our models, like we did before (3 SLRs and 1 MLR), and extract the slope\n# coefficients in all 4 models, as well as the 95% confidence intervals.\n# fit the SLR and MLE models and extract coefficients\nmodel1b <- lm(y ~ X[,1])\nmodel2b <- lm(____)\nmodel3b <- lm(y ~ X[,3])\nMLRb <- lm(y ~ X)\n\ncoefs <- c(coef(model1b)[2], coef(model2b)[2], ____, ____)\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1b)[2,], confint(model2b)[2,], confint(model3b)[2,],\n                  confint(MLRb)[2:4,])\n\n# Finally, create the same type of plot as before, but using the information we \n# extracted from models fit on the new data with moderately correlated X1 and X2.\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), ____, lwd=3)\n}", 
         opts = list(label = "\"q81\"", exercise = "TRUE", exercise.lines = "25"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
-        label = "q81-check")), solution = structure(c("n = 50", 
-    "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", "# replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation", 
+        label = "q81-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
+    "# replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation", 
     "covariance <- diag(c(1,1,1))", "covariance[1,2] <- covariance[2,1] <- 0.5", 
     "# re-generate our predictors with this new covariance matrix", 
     "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "# generate new responses", 
@@ -2018,7 +2054,8 @@ learnr:::store_exercise_cache(structure(list(label = "q81", global_setup = struc
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "q81", exercise = TRUE, exercise.lines = 25, 
-        code = c("n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
         "# replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation", 
         "covariance <- diag(c(1,1,1))", "covariance[1,2] <- covariance[2,1] <- ____", 
         "# re-generate our predictors with this new covariance matrix", 
@@ -2053,13 +2090,13 @@ learnr:::store_exercise_cache(structure(list(label = "q81", global_setup = struc
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q8", question = structure("Does there appear to be much difference in the widths of the confidence intervals compared to when there was no correlation present in the predictors?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_31040a", 
+"character")), answers = list(structure(list(id = "lnr_ans_82a072a", 
     option = "Yes.", value = "Yes.", label = structure("Yes.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b12bf63", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_38cafc0", 
     option = "No.", value = "No.", label = structure("No.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b20d938", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bb56fec", 
     option = "Not totally sure.", value = "Not totally sure.", 
     label = structure("Not totally sure.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2071,7 +2108,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("With moderate correlation, we generally don’t see too much of a difference in the widths of the confidence intervals compared to when no correlation was present (although it generally depends on your data - sometimes it can be noticeable and other times it won’t). We do still observe that the MLR confidence intervals are narrower than the SLR ones due to the fact we are specifying the correct model and therefore the error variance is being estimated more precisely (because we are explaining more variation in the response with more predictors).", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q8-answer", 
     question = "q8"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 616287572.713019, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1815146989.15476, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2094,14 +2131,15 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "corr1", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(____, mu = ____, Sigma = ____)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in ____){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(____, ____, lwd=____)\n}", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "corr1", code = "# set the seed for reproducibility\nset.seed(302)\n\nn = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(____, mu = ____, Sigma = ____)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in ____){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(____, ____, lwd=____)\n}", 
         opts = list(label = "\"corr1\"", exercise = "TRUE", exercise.lines = "30"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
-        label = "corr1-check")), solution = structure(c("covariance <- diag(c(1,1,1))", 
-    "covariance[1,2] <- covariance[2,1] <- 0.98", "# re-generate our predictors with this new covariance matrix", 
+        label = "corr1-check")), solution = structure(c("# set the seed for reproducibility", 
+    "set.seed(302)", "", "covariance <- diag(c(1,1,1))", "covariance[1,2] <- covariance[2,1] <- 0.98", 
+    "# re-generate our predictors with this new covariance matrix", 
     "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "# generate new responses", 
     "Xmat <- cbind(1, X)", "y <- Xmat %*% betas + e", "", "# fit the SLR and MLE models and extract coefficients", 
     "model1c <- lm(y ~ X[,1])", "model2c <- lm(y ~ X[,2])", "model3c <- lm(y ~ X[,3])", 
@@ -2141,7 +2179,8 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "corr1", exercise = TRUE, exercise.lines = 30, 
-        code = c("n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
+        code = c("# set the seed for reproducibility", "set.seed(302)", 
+        "", "n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
         "covariance <- diag(c(1,1,1))", "covariance[1,2] <- covariance[2,1] <- ____", 
         "# re-generate our predictors with this new covariance matrix", 
         "X <- mvrnorm(____, mu = ____, Sigma = ____)", "# generate new responses", 
@@ -2173,27 +2212,27 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q9", question = structure("Based on the outputs, what do you notice about the estimates of the slopes now?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7b3097a", 
+"character")), answers = list(structure(list(id = "lnr_ans_c1b2559", 
     option = "Some slope estimates in the simple linear models are very different from the true values. ", 
     value = "Some slope estimates in the simple linear models are very different from the true values. ", 
     label = structure("Some slope estimates in the simple linear models are very different from the true values.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_92b2db7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1eace19", 
     option = "The widths of the confidence intervals in the multiple linear model are much wider.", 
     value = "The widths of the confidence intervals in the multiple linear model are much wider.", 
     label = structure("The widths of the confidence intervals in the multiple linear model are much wider.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_37bce91", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ddb0898", 
     option = "$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$.", 
     value = "$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$.", 
     label = structure("\\(X_1\\) no longer appears significantly different from 0 in the presence of \\(X_2\\) and \\(X_3\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a38e8b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a479dbb", 
     option = "$X_1$ and $X_2$ appear to have the same estimated slope in the simple linear models. ", 
     value = "$X_1$ and $X_2$ appear to have the same estimated slope in the simple linear models. ", 
     label = structure("\\(X_1\\) and \\(X_2\\) appear to have the same estimated slope in the simple linear models.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ffcb76b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2e95da3", 
     option = "More than one of these are true.", value = "More than one of these are true.", 
     label = structure("More than one of these are true.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2205,7 +2244,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("All options listed here are true", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q9-answer", 
     question = "q9"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1140441555.96894, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1312288718.38892, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2228,11 +2267,11 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)\n\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- 0.98\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n", 
-    chunks = list(list(label = "corr2-setup", code = "# fill in the values from above:\nn = 50\nerrorvar = 2.25\nbetas <- c(1,2,3,0)\ncovariance <- diag(c(1,1,1))\n\n# generate/sample the predictors using a multivariate Normal distribution\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n\n# generate the random errors for these data from a Normal(0, 2.25)\ne <- rnorm(n, 0, sqrt(2.25))\n\n# update your X vector to include an intercept column\nXmat <- cbind(1, X)\n\n# use the above two components to generate a response variable\ny <- Xmat %*% betas + e\n\n# Fit a simple linear model using X1 as the predictor\nmodel1a <- lm(y ~ X[,1])\n\n# Fit a simple linaer model using X2 as the predictor\nmodel2a <- lm(y ~ X[,2])\n\n# Fit a simple linear model using X3 as the predictor\nmodel3a <- lm(y ~ X[,3])\n\nMLRa <- lm(y ~ X)\n\n# Extract the slope coefficients from all 4 models\nSLRcoefs <- c(coef(model1a)[2], coef(model2a)[2], coef(model3a)[2])\nMLRcoefs <- coef(MLRa)[2:4]\n\n# relabel to values more intuitively\nnames(SLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\nnames(MLRcoefs) <- c(\"X1\", \"X2\", \"X3\")\n\n# Extract confidence intervals (95%) from each simple linear model\nx1confint <- confint(model1a)[2,]\nx2confint <- confint(model2a)[2,]\nx3confint <- confint(model3a)[2,]\n\n# extract the confidence intervals of the 3 slopes from the MLR\nMLRconfints <- confint(MLRa)[2:4,]\n\n# create a combined coefficients vector and combined CI matrix\ncoefs <- c(SLRcoefs, MLRcoefs)\nconfints <- rbind(x1confint, x2confint, x3confint, MLRconfints)\n\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 5.5, \"Coefficients in SLRs\")\ntext(7, 5.5, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- 0.98\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "# set the seed for reproducibility\nset.seed(302)\n\nn = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- 0.98\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n", 
+    chunks = list(list(label = "corr2-setup", code = "# set the seed for reproducibility\nset.seed(302)\n\nn = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\ncovariance <- diag(c(1,1,1))\ncovariance[1,2] <- covariance[2,1] <- 0.98\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1c <- lm(y ~ X[,1])\nmodel2c <- lm(y ~ X[,2])\nmodel3c <- lm(y ~ X[,3])\nMLRc <- lm(y ~ X)\n\ncoefs <- c(coef(model1c)[2], coef(model2c)[2], coef(model3c)[2], coef(MLRc)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1c)[2,], confint(model2c)[2,], confint(model3c)[2,],\n                  confint(MLRc)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}\n", 
         opts = list(label = "\"corr2-setup\"", include = "FALSE"), 
-        engine = "r"), list(label = "corr2", code = "\n# extract standard errors of each slope from MLR model and SLR models\nses <- c(summary(model1c)$coef[2,2], ____,\n         summary(model2c)$coef[2,2], ____,\n         summary(model3c)$coef[2,2], ____)\n\n# create group names\nnames <- c(\"X1 (SLR)\", \"X1 (MLR)\",\"X2 (SLR)\", \"X2 (MLR)\", \"X3 (SLR)\", \"X3 (MLR)\")\n\n# create the Bar Chart\nlibrary(lessR)\nBarChart(names, ses, data=data.frame(cbind(names, ____)), fill=c(\"purple\", \"purple\", \"cyan\", \"cyan\", \"orange\", \"orange\"))", 
+        engine = "r"), list(label = "corr2", code = "# extract standard errors of each slope from MLR model and SLR models\nses <- c(summary(model1c)$coef[2,2], ____,\n         summary(model2c)$coef[2,2], ____,\n         summary(model3c)$coef[2,2], ____)\n\n# create group names\nnames <- c(\"X1 (SLR)\", \"X1 (MLR)\",\"X2 (SLR)\", \"X2 (MLR)\", \"X3 (SLR)\", \"X3 (MLR)\")\n\n# create the Bar Chart\nlibrary(lessR)\nBarChart(names, ses, data=data.frame(cbind(names, ____)), fill=c(\"purple\", \"purple\", \"cyan\", \"cyan\", \"orange\", \"orange\"))", 
         opts = list(label = "\"corr2\"", exercise = "TRUE", exercise.lines = "35"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
@@ -2262,7 +2301,7 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
         label = "corr2", exercise = TRUE, exercise.lines = 35, 
-        code = c("", "# extract standard errors of each slope from MLR model and SLR models", 
+        code = c("# extract standard errors of each slope from MLR model and SLR models", 
         "ses <- c(summary(model1c)$coef[2,2], ____,", "         summary(model2c)$coef[2,2], ____,", 
         "         summary(model3c)$coef[2,2], ____)", "", "# create group names", 
         "names <- c(\"X1 (SLR)\", \"X1 (MLR)\",\"X2 (SLR)\", \"X2 (MLR)\", \"X3 (SLR)\", \"X3 (MLR)\")", 
@@ -2274,19 +2313,19 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q10", question = structure("Approximately how many times higher are the bars for the slopes of \\(X_1\\) and \\(X_2\\) in the MLR model compared to the bars for the same slopes in the SLR model?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_b74eb92", 
+"character")), answers = list(structure(list(id = "lnr_ans_2f54d48", 
     option = "About 5 times higher.", value = "About 5 times higher.", 
     label = structure("About 5 times higher.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_814e02d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f493438", 
     option = "About 10 times higher.", value = "About 10 times higher.", 
     label = structure("About 10 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d2ec6cc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_df45c64", 
     option = "About 15 times higher.", value = "About 15 times higher.", 
     label = structure("About 15 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f15627", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_93808cc", 
     option = "About 20 times higher.", value = "About 20 times higher.", 
     label = structure("About 20 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2297,7 +2336,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q10-answer", question = "q10"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1769039630.67623, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 556225345.740987, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2321,13 +2360,14 @@ learnr:::store_exercise_cache(structure(list(label = "q110", global_setup = stru
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "q110", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# first create a matrix of 0.9 everywhere, then change the diagonal to be 1\ncovariance <- matrix(rep(____, ____), nrow=3, ncol=3)\ndiag(covariance) <- c(____,____,____)\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1d <- lm(y ~ X[,1])\nmodel2d <- lm(y ~ X[,2])\nmodel3d <- lm(y ~ X[,3])\nMLRd <- lm(y ~ X)\n\ncoefs <- c(coef(model1d)[2], coef(model2d)[2], coef(model3d)[2], coef(MLRd)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1d)[2,], confint(model2d)[2,], confint(model3d)[2,],\n                  confint(MLRd)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(____ ~ ____,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- ____\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "q110", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# first create a matrix of 0.9 everywhere, then change the diagonal to be 1\ncovariance <- matrix(rep(____, ____), nrow=3, ncol=3)\ndiag(covariance) <- c(____,____,____)\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1d <- lm(y ~ X[,1])\nmodel2d <- lm(y ~ X[,2])\nmodel3d <- lm(y ~ X[,3])\nMLRd <- lm(y ~ X)\n\ncoefs <- c(coef(model1d)[2], coef(model2d)[2], coef(model3d)[2], coef(MLRd)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1d)[2,], confint(model2d)[2,], confint(model3d)[2,],\n                  confint(MLRd)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(____ ~ ____,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- ____\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}", 
         opts = list(label = "\"q110\"", exercise = "TRUE", exercise.lines = "30"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure("grade_this_code()", chunk_opts = list(
-        label = "q110-check")), solution = structure(c("# first create a matrix of 0.9 everywhere, then change the diagonal to be 1", 
+        label = "q110-check")), solution = structure(c("n = 50", 
+    "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", "# first create a matrix of 0.9 everywhere, then change the diagonal to be 1", 
     "covariance <- matrix(rep(0.9, 9), nrow=3, ncol=3)", "diag(covariance) <- c(1,1,1)", 
     "# re-generate our predictors with this new covariance matrix", 
     "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "# generate new responses", 
@@ -2401,22 +2441,25 @@ learnr:::store_exercise_cache(structure(list(label = "q110", global_setup = stru
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q11", question = structure("Which model(s) seem to be estimating the true association of each predictor with the response?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_12f2e96", 
+"character")), answers = list(structure(list(id = "lnr_ans_514dd6", 
     option = "The multiple linear model. ", value = "The multiple linear model. ", 
     label = structure("The multiple linear model.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_99ceacc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2e933ff", 
     option = "Simple model with $X_1$.", value = "Simple model with $X_1$.", 
     label = structure("Simple model with \\(X_1\\).", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_beb0ebe", 
+    "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_987230a", 
     option = "Simple model with $X_2$. ", value = "Simple model with $X_2$. ", 
     label = structure("Simple model with \\(X_2\\).", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2641bea", 
+    "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c2bbe9", 
     option = "Simple model with $X_3$. ", value = "Simple model with $X_3$. ", 
     label = structure("Simple model with \\(X_3\\).", html = TRUE, class = c("html", 
-    "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
+    "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
 "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
 "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
@@ -2424,7 +2467,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q11-answer", question = "q11"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 1222792568.43059, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1548525976.77891, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2448,13 +2491,14 @@ learnr:::store_exercise_cache(structure(list(label = "q120", global_setup = stru
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "q120", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# first create a matrix of 0.98 everywhere, then change the diagonal to be 1\ncovariance <- matrix(rep(____, 9), nrow=3, ncol=3)\ndiag(covariance) <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1d <- lm(y ~ X[,1])\nmodel2d <- lm(y ~ X[,2])\nmodel3d <- lm(y ~ X[,3])\nMLRd <- lm(y ~ X)\n\ncoefs <- c(coef(model1d)[2], coef(model2d)[2], coef(model3d)[2], coef(MLRd)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1d)[2,], confint(model2d)[2,], confint(model3d)[2,],\n                  confint(MLRd)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=____, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(____)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "q120", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# first create a matrix of 0.98 everywhere, then change the diagonal to be 1\ncovariance <- matrix(rep(____, 9), nrow=3, ncol=3)\ndiag(covariance) <- ____\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1d <- lm(y ~ X[,1])\nmodel2d <- lm(y ~ X[,2])\nmodel3d <- lm(y ~ X[,3])\nMLRd <- lm(y ~ X)\n\ncoefs <- c(coef(model1d)[2], coef(model2d)[2], coef(model3d)[2], coef(MLRd)[2:4])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X1\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1d)[2,], confint(model2d)[2,], confint(model3d)[2,],\n                  confint(MLRd)[2:4,])\n\n\n#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7,8 for the MLR values\nxposition <- c(1,2,3,6,7,8)\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,8), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=____, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(7, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:6){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(____)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}", 
         opts = list(label = "\"q120\"", exercise = "TRUE", exercise.lines = "30"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
     check = structure(c("grade_this_code()", ""), chunk_opts = list(
-        label = "q120-check")), solution = structure(c("# first create a matrix of 0.9 everywhere, then change the diagonal to be 1", 
+        label = "q120-check")), solution = structure(c("n = 50", 
+    "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", "# first create a matrix of 0.9 everywhere, then change the diagonal to be 1", 
     "covariance <- matrix(rep(0.98, 9), nrow=3, ncol=3)", "diag(covariance) <- c(1,1,1)", 
     "# re-generate our predictors with this new covariance matrix", 
     "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "# generate new responses", 
@@ -2527,10 +2571,10 @@ learnr:::store_exercise_cache(structure(list(label = "q120", global_setup = stru
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q12", question = structure("Do any of these models appear to estimate the correct association of each predictor to the response?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_7db7e62", 
+"character")), answers = list(structure(list(id = "lnr_ans_ac144c3", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1cf2368", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c9656c8", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -2541,20 +2585,20 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("So when all predictors are correlated to one another, it appears as if, in addition to the inflated variances visible in the wide confidence intervals, we also struggle to capture the true relationships present in the population.", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q12-answer", 
     question = "q12"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 262451473.877787, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 350230489.836911, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
 
 <script type="application/shiny-prerendered" data-context="server">
-`tutorial-exercise-q13-1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q13-1-code-editor`)), session)
-output$`tutorial-exercise-q13-1-output` <- renderUI({
-  `tutorial-exercise-q13-1-result`()
+`tutorial-exercise-q13-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-q13-code-editor`)), session)
+output$`tutorial-exercise-q13-output` <- renderUI({
+  `tutorial-exercise-q13-result`()
 })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::store_exercise_cache(structure(list(label = "q13-1", global_setup = structure(c("install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
+learnr:::store_exercise_cache(structure(list(label = "q13", global_setup = structure(c("install.packages(\"remotes\", repos = \"https://cloud.r-project.org/\")", 
 "", "", "library(remotes)", "remotes::install_github(\"rstudio/learnr\", force=TRUE)", 
 "remotes::install_github(\"rstudio/gradethis\", force =TRUE)", 
 "", "packages_needed <- c(\"tidyverse\",\"learnr\", \"MASS\", \"lessR\", \"gradethis\")", 
@@ -2564,12 +2608,27 @@ learnr:::store_exercise_cache(structure(list(label = "q13-1", global_setup = str
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = NULL, chunks = list(
-    list(label = "q13-1", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,3] <- covariance[3,1] <- ____\n\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <-  ____\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1e <- lm(y ~ ____)\nmodel2e <- lm(y ~ ____)\nmodel3e <- lm(y ~ ____)\nMLRe <- lm(y ~ ____)\n\ncoefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],\n                  confint(MLRe)[2:3,])\n\n# print the model summaries for model2e and model3e\nsummary(model2e)\nsummary(model3e)\n", 
-        opts = list(label = "\"q13-1\"", exercise = "TRUE", exercise.lines = "30"), 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "q13", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,3] <- covariance[3,1] <- ____\n\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <-  ____\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1e <- lm(y ~ ____)\nmodel2e <- lm(y ~ ____)\nmodel3e <- lm(y ~ ____)\nMLRe <- lm(y ~ ____)\n\ncoefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],\n                  confint(MLRe)[2:3,])\n\n# print the model summaries for model2e and model3e\nsummary(model2e)\nsummary(model3e)\n", 
+        opts = list(label = "\"q13\"", exercise = "TRUE", exercise.lines = "30"), 
         engine = "r")), code_check = NULL, error_check = NULL, 
-    check = NULL, solution = NULL, tests = NULL, options = list(
+    check = structure(c("grade_this_code()", ""), chunk_opts = list(
+        label = "q13-check")), solution = structure(c("n = 50", 
+    "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", "# edit the covariance matrix to introduce the correlation", 
+    "covariance <- diag(c(1,1,1))", "# edit the covariance matrix to introduce the correlation", 
+    "covariance <- diag(c(1,1,1))", "covariance[1,3] <- covariance[3,1] <- 0.9", 
+    "", "# re-generate our predictors with this new covariance matrix", 
+    "X <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)", "# generate new responses", 
+    "Xmat <- cbind(1, X)", "y <- Xmat %*% betas + e", "", "# fit the SLR and MLE models and extract coefficients", 
+    "model1e <- lm(y ~ X[,1])", "model2e <- lm(y ~ X[,2])", "model3e <- lm(y ~ X[,3])", 
+    "MLRe <- lm(y ~ X[,-1])", "", "coefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])", 
+    "names(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")", 
+    "", "# extract confidence intervals of slopes in all 4 models", 
+    "confints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],", 
+    "                  confint(MLRe)[2:3,])", "", "# print the model summaries for model1d and model3d", 
+    "summary(model2e)", "summary(model3e)"), chunk_opts = list(
+        label = "q13-solution")), tests = NULL, options = list(
         eval = FALSE, echo = TRUE, results = "markup", tidy = FALSE, 
         tidy.opts = NULL, collapse = FALSE, prompt = FALSE, comment = NA, 
         highlight = FALSE, size = "normalsize", background = "#F7F7F7", 
@@ -2587,7 +2646,7 @@ learnr:::store_exercise_cache(structure(list(label = "q13-1", global_setup = str
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (label = NULL, solution_code = NULL, user_code = NULL, \n    check_code = NULL, envir_result = NULL, evaluate_result = NULL, \n    envir_prep = NULL, last_value = NULL, stage = NULL, ..., \n    solution_eval_fn = NULL) \n{\n    (utils::getFromNamespace(\"check_exercise\", \"gradethis\"))(label = label, \n        solution_code = solution_code, user_code = user_code, \n        check_code = check_code, envir_result = envir_result, \n        evaluate_result = evaluate_result, envir_prep = envir_prep, \n        last_value = last_value, stage = stage, ...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        label = "q13-1", exercise = TRUE, exercise.lines = 30, 
+        label = "q13", exercise = TRUE, exercise.lines = 30, 
         code = c("n = 50", "betas <- c(1,2,3,0)", "e <- rnorm(n, 0, sqrt(2.25))", 
         "# edit the covariance matrix to introduce the correlation", 
         "covariance <- diag(c(1,1,1))", "covariance[1,3] <- covariance[3,1] <- ____", 
@@ -2603,30 +2662,30 @@ learnr:::store_exercise_cache(structure(list(label = "q13-1", global_setup = str
         "confints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],", 
         "                  confint(MLRe)[2:3,])", "", "# print the model summaries for model2e and model3e", 
         "summary(model2e)", "summary(model3e)", ""), out.width.px = 624, 
-        out.height.px = 384, params.src = "q13-1, exercise = TRUE, exercise.lines = 30", 
+        out.height.px = 384, params.src = "q13, exercise = TRUE, exercise.lines = 30", 
         fig.num = 0, exercise.df_print = "paged"), engine = "r", 
     version = "4"), class = c("r", "tutorial_exercise")))
 </script>
 
 
 <script type="application/shiny-prerendered" data-context="server">
-learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q13", question = structure("Which of the below is true regarding these two simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_fa85db4", 
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q13MCQ", question = structure("Which of the below is true regarding these two simple linear models?", html = TRUE, class = c("html", 
+"character")), answers = list(structure(list(id = "lnr_ans_be50b6b", 
     option = "The slope of $X_3$ is significantly different from 0. ", 
     value = "The slope of $X_3$ is significantly different from 0. ", 
     label = structure("The slope of \\(X_3\\) is significantly different from 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_96afb6a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1d8e8bc", 
     option = "The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have.", 
     value = "The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have.", 
     label = structure("The slopes \\(X_3\\) seems to indicate the same association (more or less) with \\(Y\\) as \\(X_1\\) should have.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_731d54f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_992e242", 
     option = "The slope of $X_2$ seems to be an reasonable estimate while the slope of $X_3$ seems to be biased.", 
     value = "The slope of $X_2$ seems to be an reasonable estimate while the slope of $X_3$ seems to be biased.", 
     label = structure("The slope of \\(X_2\\) seems to be an reasonable estimate while the slope of \\(X_3\\) seems to be biased.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9694538", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b326c6e", 
     option = "More than one of these is true.", value = "More than one of these is true.", 
     label = structure("More than one of these is true.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2636,8 +2695,8 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
-    answer = "q13-answer", question = "q13"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 26014821.4878859, 
+    answer = "q13MCQ-answer", question = "q13MCQ"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1082226400.49605, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2661,8 +2720,8 @@ learnr:::store_exercise_cache(structure(list(label = "q14", global_setup = struc
 "library(lessR)", "", "knitr::opts_chunk$set(echo = FALSE)", 
 "", "options(tutorial.storage = list(", "  save_object = function(...){},", 
 "  get_object = function(...) NULL,", "  get_objects = function(...) list(),", 
-"  remove_all_objects = function(...){}))"), chunk_opts = list(
-    label = "setup", include = FALSE)), setup = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,3] <- covariance[3,1] <- 0.9\n\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1e <- lm(y ~ X[,1])\nmodel2e <- lm(y ~ X[,2])\nmodel3e <- lm(y ~ X[,3])\nMLRe <- lm(y ~ X[,-1])\n\ncoefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],\n                  confint(MLRe)[2:3,])\n\n# print the model summaries for model1d and model3d\nsummary(model2e)\nsummary(model3e)", 
+"  remove_all_objects = function(...){}))", "", "set.seed(302)"
+), chunk_opts = list(label = "setup", include = FALSE)), setup = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,3] <- covariance[3,1] <- 0.9\n\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1e <- lm(y ~ X[,1])\nmodel2e <- lm(y ~ X[,2])\nmodel3e <- lm(y ~ X[,3])\nMLRe <- lm(y ~ X[,-1])\n\ncoefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],\n                  confint(MLRe)[2:3,])\n\n# print the model summaries for model1d and model3d\nsummary(model2e)\nsummary(model3e)", 
     chunks = list(list(label = "q14-setup", code = "n = 50\nbetas <- c(1,2,3,0)\ne <- rnorm(n, 0, sqrt(2.25))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\n# edit the covariance matrix to introduce the correlation\ncovariance <- diag(c(1,1,1))\ncovariance[1,3] <- covariance[3,1] <- 0.9\n\n# re-generate our predictors with this new covariance matrix\nX <- mvrnorm(n, mu = c(0,0,0), Sigma = covariance)\n# generate new responses\nXmat <- cbind(1, X)\ny <- Xmat %*% betas + e\n\n# fit the SLR and MLE models and extract coefficients\nmodel1e <- lm(y ~ X[,1])\nmodel2e <- lm(y ~ X[,2])\nmodel3e <- lm(y ~ X[,3])\nMLRe <- lm(y ~ X[,-1])\n\ncoefs <- c(coef(model1e)[2], coef(model2e)[2], coef(model3e)[2], coef(MLRe)[2:3])\nnames(coefs) <- c(\"X1\", \"X2\", \"X3\", \"X2\", \"X3\")\n\n# extract confidence intervals of slopes in all 4 models\nconfints <- rbind(confint(model1e)[2,], confint(model2e)[2,], confint(model3e)[2,],\n                  confint(MLRe)[2:3,])\n\n# print the model summaries for model1d and model3d\nsummary(model2e)\nsummary(model3e)", 
         opts = list(label = "\"q14-setup\""), engine = "r"), 
         list(label = "q14", code = "#plot the point estimates on a plot, where the position on the x-axis will be \n# 1, 2, 3 for the SLR values and 6,7 for the MLR values\nxposition <- ____\nplot(coefs ~ xposition,\n     type=\"p\", ylim=c(-3, 6), xlim=c(0,7), bty=\"n\", xaxt=\"n\",\n     ylab=\"\", xlab=\"\")\n\n# add the horizontal line of no effect at 0\nabline(h=0, lty=\"dashed\")\n\n# adds a label to distinguish the points\ntext(2, 6, \"Coefficients in SLRs\")\ntext(6, 6, \"Coefficients in MLR\")\n\n# loop to add confidence intervals and labels to plot\nfor(i in 1:5){\n    # get the x position to plot at\n    x <- xposition[i]\n    # adds a label to distinguish the points\n    text(x, -2.75, names(coefs)[i])\n    # plots a vertical lines for the CI of each point\n    lines(c(x,x), confints[i,], lwd=3)\n}", 
@@ -2716,19 +2775,19 @@ learnr:::store_exercise_cache(structure(list(label = "q14", global_setup = struc
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q14MCQ", question = structure("Which true association does the slope of \\(X_3\\) from the multiple linear model represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_8027d96", 
+"character")), answers = list(structure(list(id = "lnr_ans_aeef56e", 
     option = "The association between $X_1$ and $Y$.", value = "The association between $X_1$ and $Y$.", 
     label = structure("The association between \\(X_1\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d117a85", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d4db5d", 
     option = "The association between $X_2$ and $Y$.", value = "The association between $X_2$ and $Y$.", 
     label = structure("The association between \\(X_2\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7a0022d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_493400c", 
     option = "The association between $X_3$ and $Y$.", value = "The association between $X_3$ and $Y$.", 
     label = structure("The association between \\(X_3\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3adbd97", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5779cc", 
     option = "None of the above.", value = "None of the above.", 
     label = structure("None of the above.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2739,7 +2798,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q14MCQ-answer", question = "q14MCQ"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = FALSE, seed = 524256660.255874, 
+    random_answer_order = FALSE, allow_retry = FALSE, seed = 1300214971.89454, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2751,7 +2810,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","deldir","DEoptimR","desc","digest","dplyr","ellipse","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","interp","jpeg","jquerylib","jsonlite","knitr","later","lattice","latticeExtra","leaps","learnr","lessR","lifecycle","lubridate","magrittr","markdown","MASS","methods","mime","munsell","openxlsx","pillar","pkgbuild","pkgconfig","png","prettyunits","processx","promises","ps","purrr","R6","RColorBrewer","Rcpp","readr","remotes","rlang","rmarkdown","robustbase","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml","zip"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.0","0.6.1","1.0.8","3.7.3","2.3.1","3.6.2","2.1-0","1.9.1","4.3.0","1.5.2","5.0.1","4.3.0","1.0-9","1.0-14","1.4.2","0.6.34","1.1.2","0.5.0","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.2","1.7.0","0.2.14","4.3.0","4.3.0","4.3.0","0.3.3","1.1.3","0.5.7","1.6.4","1.6.14","1.1-4","0.1-10","0.1.4","1.8.8","1.45","1.3.2","0.21-8","0.6-30","3.1","0.11.5.9000","4.3.0","1.0.4","1.9.2","2.0.3","1.12","7.3-60.0.1","4.3.0","0.12","0.5.0","4.2.5.2","1.9.0","1.4.0","2.0.3","0.1-8","1.1.1","3.8.1","1.2.1","1.7.5","1.0.2","2.5.1","1.1-3","1.0.12","2.1.4","2.4.2.1","1.1.3","2.26","0.99-0","2.0.4","0.15.0","0.4.8","1.2.1","1.8.0","4.3.0","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.0","0.4.0","1.2.4","4.3.0","0.6.5","3.0.0","0.42","1.8-4","2.3.8","2.3.0"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","deldir","DEoptimR","desc","digest","dplyr","ellipse","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","interp","jpeg","jquerylib","jsonlite","knitr","later","lattice","latticeExtra","leaps","learnr","lessR","lifecycle","lubridate","magrittr","markdown","MASS","methods","mime","munsell","openxlsx","pillar","pkgbuild","pkgconfig","png","prettyunits","processx","promises","ps","purrr","R6","RColorBrewer","Rcpp","readr","remotes","rlang","rmarkdown","robustbase","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml","zip"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.0","0.6.1","1.0.8","3.7.3","2.3.1","3.6.2","2.1-0","1.9.1","4.3.0","1.5.2","5.0.1","4.3.0","1.0-9","1.0-14","1.4.2","0.6.35","1.1.2","0.5.0","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.2","1.7.0","0.2.14","4.3.0","4.3.0","4.3.0","0.3.3","1.1.3","0.5.7","1.6.4","1.6.14","1.1-4","0.1-10","0.1.4","1.8.8","1.45","1.3.2","0.21-8","0.6-30","3.1","0.11.5.9000","4.3.0","1.0.4","1.9.2","2.0.3","1.12","7.3-60.0.1","4.3.0","0.12","0.5.0","4.2.5.2","1.9.0","1.4.0","2.0.3","0.1-8","1.1.1","3.8.1","1.2.1","1.7.5","1.0.2","2.5.1","1.1-3","1.0.12","2.1.4","2.4.2.1","1.1.3","2.26","0.99-0","2.0.4","0.15.0","0.4.8","1.2.1","1.8.0","4.3.0","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.0","0.4.0","1.2.4","4.3.0","0.6.5","3.0.0","0.42","1.8-4","2.3.8","2.3.0"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
