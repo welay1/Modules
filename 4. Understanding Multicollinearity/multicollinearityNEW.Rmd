@@ -98,7 +98,7 @@ First we will create a dataset such that our predictors will be uncorrelated to 
 
 ```{r q1, include=TRUE}
 question("Which of the below statements is correct regarding this true relationship?",
-         answer("$X_3$ has no linear association to $Y$."),
+         answer("$X_3$ has no linear association to $Y$.", message="You're on the right track, but remember we are interpreting this in the context of a multiple linear model."),
          answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", message="To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant and express the relationship as an on average effect."),
          answer("On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", correct = TRUE),
          answer("All of the statements are true."),
