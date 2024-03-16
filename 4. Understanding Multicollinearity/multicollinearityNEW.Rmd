@@ -83,10 +83,10 @@ The value of $r$ falls in the range of $[-1,1]$ with values near $-1$ denoting a
 ```{r q0, include=TRUE}
 question("Which statement is true regarding correlation between two measurements?",
          answer("The correlation coefficient tells us whether these measurements are linearly related.", message="We must know that two coefficients are linearly related to correctly interpret the correlation coefficient. "),
-         answer("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.",correct = TRUE),
+         answer("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.",correct = TRUE,message = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association."),
          answer("The correlation coefficient can be used to describe the association between 3 or more measurements.", message="The correlation coefficient can only be used to describe the association between two measurements. "),
          answer("None of these options are true."),
-         message = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", allow_retry = TRUE
+        allow_retry = TRUE
 )
 ```
 
@@ -100,9 +100,9 @@ First we will create a dataset such that our predictors will be uncorrelated to 
 question("Which of the below statements is correct regarding this true relationship?",
          answer("$X_3$ has no linear association to $Y$.", message="You're on the right track, but remember we are interpreting this in the context of a multiple linear model."),
          answer("In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", message="To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant and express the relationship as an on average effect."),
-         answer("On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", correct = TRUE),
+         answer("On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", correct = TRUE, message = "This is true since the coefficient in the true model of X1 is 2."),
          answer("All of the statements are true."),
-         message = "This is true since the coefficient in the true model of X1 is 2.", allow_retry = TRUE
+        allow_retry = TRUE
 )
 ```
 
@@ -318,11 +318,11 @@ grade_this_code()
 
 ```{r q4MCQ, include=TRUE}
 question("Which statement is true regarding the three simple linear models?",
-         answer("The estimated slope in each model is not equal to the corresponding slope in the true relationship", correct = TRUE),
+         answer("The estimated slope in each model is not equal to the corresponding slope in the true relationship", correct = TRUE,  message = "Option A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)"),
          answer("In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", message = "While the relationship may be weak, it appears to be nonzero."),
          answer("The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", "Recall that the error variance in the population is 2.25."),
          answer("None of the options are true."),
-         message = "Option A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)", allow_retry = TRUE
+        allow_retry = TRUE
 )
 ```
 
@@ -1595,6 +1595,135 @@ This can be misleading because, contextually, it may not make sense for the vari
 
 ## Conclusion
 
+To summarize the work we have done so far in this module, we will construct a new population relationship and induce various amounts of correlation between the predicts. 
+
+Consider a population relationship of $$Y=0.5 + 4X_1+10X_2+\epsilon, \epsilon \sim N(0, 1.5)$$.
+
+Using the tool below, select different covariance matrices to induce different amounts of correlation between the predictors $X_1$ and $X_2$.
+
+
+```{r, context="render", echo=FALSE}
+withMathJax()
+radioButtons("corr", "Select the correlation to induce", 
+       c("$$\\Sigma = \\begin{pmatrix} 1 & 0 \\\\
+                          0 & 1 \\end{pmatrix}$$", 
+         "$$\\Sigma = \\begin{pmatrix} 1 & -0.9 \\\\
+                        -0.9 & 1 \\end{pmatrix}$$", 
+         "$$\\Sigma = \\begin{pmatrix} 1 & -0.5 \\\\
+                          -0.5 & 1 \\end{pmatrix}$$", 
+         "$$\\Sigma = \\begin{pmatrix} 1 & -0.2 \\\\
+                          -0.2 & 1 \\end{pmatrix}$$", 
+         "$$\\Sigma = \\begin{pmatrix} 1 & 0.2 \\\\
+                          0.2 & 1 \\end{pmatrix}$$",
+         "$$\\Sigma = \\begin{pmatrix} 1 & 0.5 \\\\
+                          0.5 & 1 \\end{pmatrix}$$",
+         "$$\\Sigma = \\begin{pmatrix} 1 & 0.9 \\\\
+                          0.9 & 1 \\end{pmatrix}$$")
+       )
+
+plotOutput("plot")
+```
+
+
+```{r, context="server"}
+
+  output$plot <- renderPlot({
+    
+    
+plt_function <- function(corr_input){
+    set.seed(302)
+
+    n = 50
+    betas <- c(0.5, 4, 10)
+    e <- rnorm(n, 0, sqrt(1.5))
+    # replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation
+    covariance <- diag(c(1,1))
+    covariance[1,2] <- covariance[2,1] <- corr_input
+    # re-generate our predictors with this new covariance matrix
+    X <- mvrnorm(n, mu = c(0,0), Sigma = covariance)
+    # generate new responses
+    Xmat <- cbind(1, X)
+    y <- Xmat %*% betas + e
+    
+    # fit the SLR and MLE models and extract coefficients
+    model1c <- lm(y ~ X[,1])
+    model2c <- lm(y ~ X[,2])
+    MLRc <- lm(y ~ X)
+    
+    coefs <- c(coef(model1c)[2], coef(model2c)[2], coef(MLRc)[2:3])
+    names(coefs) <- c("X1", "X2", "X1", "X2")
+    
+    # extract confidence intervals of slopes in all 4 models
+    confints <- rbind(confint(model1c)[2,], confint(model2c)[2,],
+                      confint(MLRc)[2:3,])
+    
+    
+    #plot the point estimates on a plot, where the position on the x-axis will be 
+    # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
+    xposition <- c(1,2,6,7)
+    plot(coefs ~ xposition,
+         type="p", ylim=c(-10, 20), xlim=c(0,8), bty="n", xaxt="n",
+         ylab="", xlab="")
+    
+    # add the horizontal line of no effect at 0
+    abline(h=0, lty="dashed")
+    
+    # adds a label to distinguish the points
+    text(2, 20, "Coefficients in SLRs")
+    text(7, 20, "Coefficients in MLR")
+    
+    # loop to add confidence intervals and labels to plot
+    for(i in 1:4){
+        # get the x position to plot at
+        x <- xposition[i]
+        # adds a label to distinguish the points
+        text(x, -2.75, names(coefs)[i])
+        # plots a vertical lines for the CI of each point
+        lines(c(x,x), confints[i,], lwd=3)
+    }
+}
+   
+   if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0 \\\\
+                          0 & 1 \\end{pmatrix}$$"){
+     plt_function(0)
+   }
+   else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.9 \\\\
+                        -0.9 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.9)
+   }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.5 \\\\
+                          -0.5 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.5)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.2 \\\\
+                          -0.2 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.2)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.2 \\\\
+                          0.2 & 1 \\end{pmatrix}$$"){
+     plt_function(0.2)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.5 \\\\
+                          0.5 & 1 \\end{pmatrix}$$"){
+     plt_function(0.5)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.9 \\\\
+                          0.9 & 1 \\end{pmatrix}$$"){
+     plt_function(0.9)
+   }
+
+})
+```
+
+
+```{r FinalMCQ, echo=FALSE}
+question("Using the example above, which statement is true regarding how correlation impacts simple linear models and multiple linear models?",
+      answer("The direction of the correlation impacts predicted coefficients in the simple linear model."), 
+     answer("The strength of the correlation impacts predicted coefficients in the simple linear model."),
+     answer("The confidence intervals for predictors in the multiple linear model are larger when the absolute value of the correlation is larger."),
+     answer("The predictors in the multiple linear model are more robust against multicollinearity than the simple linear model."), 
+     allow_retry = T)
+```
 ## Wrap-Up
 Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
 

@@ -1576,6 +1576,66 @@ model together happen to be highly correlated.</p>
 </div>
 <div id="section-conclusion" class="section level2">
 <h2>Conclusion</h2>
+<p><insert text explaining the interactive piece></p>
+<p>Consider a population relationship of <span
+class="math display">\[Y=0.5 + 4X_1+10X_2+\epsilon, \epsilon \sim N(0,
+1.5)\]</span></p>
+<script>if (window.MathJax) MathJax.Hub.Queue(["Typeset", MathJax.Hub]);</script>
+<div id="corr" class="form-group shiny-input-radiogroup shiny-input-container" role="radiogroup" aria-labelledby="corr-label">
+<label class="control-label" id="corr-label" for="corr">Select the correlation to induce</label>
+<div class="shiny-options-group">
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; 0 \\&#10;                          0 &amp; 1 \end{pmatrix}$$" checked="checked"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; 0 \\
+                          0 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; -0.9 \\&#10;                        -0.9 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; -0.9 \\
+                        -0.9 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; -0.5 \\&#10;                          -0.5 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; -0.5 \\
+                          -0.5 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; -0.2 \\&#10;                          -0.2 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; -0.2 \\
+                          -0.2 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; 0.2 \\&#10;                          0.2 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; 0.2 \\
+                          0.2 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; 0.5 \\&#10;                          0.5 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; 0.5 \\
+                          0.5 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="corr" value="$$\Sigma = \begin{pmatrix} 1 &amp; 0.9 \\&#10;                          0.9 &amp; 1 \end{pmatrix}$$"/>
+<span>$$\Sigma = \begin{pmatrix} 1 &amp; 0.9 \\
+                          0.9 &amp; 1 \end{pmatrix}$$</span>
+</label>
+</div>
+</div>
+</div>
+<div class="shiny-plot-output html-fill-item" id="plot" style="width:100%;height:400px;"></div>
 </div>
 <div id="section-wrap-up" class="section level2">
 <h2>Wrap-Up</h2>
@@ -1657,14 +1717,15 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
     option = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", 
     value = "If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", 
     label = structure("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", html = TRUE, class = c("html", 
-    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e8238d3", 
+    "character")), correct = TRUE, message = structure("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b2f8501", 
     option = "The correlation coefficient can be used to describe the association between 3 or more measurements.", 
     value = "The correlation coefficient can be used to describe the association between 3 or more measurements.", 
     label = structure("The correlation coefficient can be used to describe the association between 3 or more measurements.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("The correlation coefficient can only be used to describe the association between two measurements.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3475e80", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dfcea27", 
     option = "None of these options are true.", value = "None of these options are true.", 
     label = structure("None of these options are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1673,33 +1734,33 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
 "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), message = structure("If the measurements are strongly linearly related, then a linear regression model can be used to represent this association.", html = TRUE, class = c("html", 
-"character")), post_message = NULL), ids = list(answer = "q0-answer", 
-    question = "q0"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1316533458.38694, options = list()), class = c("learnr_radio", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "q0-answer", question = "q0"), loading = NULL, random_answer_order = FALSE, 
+    allow_retry = TRUE, seed = 1444123169.32753, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q1", question = structure("Which of the below statements is correct regarding this true relationship?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_9ab83d4", 
+"character")), answers = list(structure(list(id = "lnr_ans_9cf169a", 
     option = "$X_3$ has no linear association to $Y$.", value = "$X_3$ has no linear association to $Y$.", 
     label = structure("\\(X_3\\) has no linear association to \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("You’re on the right track, but remember we are interpreting this in the context of a multiple linear model.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_42f6e0b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d9fccda", 
     option = "In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", 
     value = "In the presence of the other predictors, a one-unit increase in $X_2$ yields a 3-unit increase in $Y$.", 
     label = structure("In the presence of the other predictors, a one-unit increase in \\(X_2\\) yields a 3-unit increase in \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("To interpret a single coefficient in a multiple linear model, we must hold all other predictors constant and express the relationship as an on average effect.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b97f6e7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1277267", 
     option = "On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", 
     value = "On average, when other predictors are held fixed, a one-unit increase in $X_1$ increases $Y$ by 2 units.", 
     label = structure("On average, when other predictors are held fixed, a one-unit increase in \\(X_1\\) increases \\(Y\\) by 2 units.", html = TRUE, class = c("html", 
-    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a7de46", 
+    "character")), correct = TRUE, message = structure("This is true since the coefficient in the true model of X1 is 2.", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f964833", 
     option = "All of the statements are true.", value = "All of the statements are true.", 
     label = structure("All of the statements are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1708,10 +1769,9 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
 "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), message = structure("This is true since the coefficient in the true model of X1 is 2.", html = TRUE, class = c("html", 
-"character")), post_message = NULL), ids = list(answer = "q1-answer", 
-    question = "q1"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 811352140.622185, options = list()), class = c("learnr_radio", 
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "q1-answer", question = "q1"), loading = NULL, random_answer_order = FALSE, 
+    allow_retry = TRUE, seed = 272944505.3729, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -1780,22 +1840,22 @@ learnr:::store_exercise_cache(structure(list(label = "sim1", global_setup = stru
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q2", question = structure("Why might it be possible to observe a sample correlation that is non-zero when we provided R with a covariance matrix with zero correlation?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a5a01f8", 
+"character")), answers = list(structure(list(id = "lnr_ans_60b880a", 
     option = "The population has uncorrelated predictors, but the sample may not.", 
     value = "The population has uncorrelated predictors, but the sample may not.", 
     label = structure("The population has uncorrelated predictors, but the sample may not.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3dc178", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f4b0a8", 
     option = "We did not set up our code correctly for the population.", 
     value = "We did not set up our code correctly for the population.", 
     label = structure("We did not set up our code correctly for the population.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e88c443", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a88dbaa", 
     option = "The sampling process did not function correctly.", 
     value = "The sampling process did not function correctly.", 
     label = structure("The sampling process did not function correctly.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ed5312", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_86cee19", 
     option = "None of these options.", value = "None of these options.", 
     label = structure("None of these options.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1806,7 +1866,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q2-answer", question = "q2"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1757222876.68173, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 595250646.722815, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -1945,23 +2005,24 @@ learnr:::store_exercise_cache(structure(list(label = "q4", global_setup = struct
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q4MCQ", question = structure("Which statement is true regarding the three simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a303d73", 
+"character")), answers = list(structure(list(id = "lnr_ans_911a9ca", 
     option = "The estimated slope in each model is not equal to the corresponding slope in the true relationship", 
     value = "The estimated slope in each model is not equal to the corresponding slope in the true relationship", 
     label = structure("The estimated slope in each model is not equal to the corresponding slope in the true relationship", html = TRUE, class = c("html", 
-    "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_237e46a", 
+    "character")), correct = TRUE, message = structure("Option A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)", html = TRUE, class = c("html", 
+    "character")), type = "literal"), class = c("tutorial_question_answer", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1f129ea", 
     option = "In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", 
     value = "In the simple linear model using $X_3$, $X_3$ has no linear association with $Y$.", 
     label = structure("In the simple linear model using \\(X_3\\), \\(X_3\\) has no linear association with \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("While the relationship may be weak, it appears to be nonzero.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b8e4094", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_133d868", 
     option = "The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", 
     value = "The estimate of the error variance for the model using $X_1$ matches the true error variance in the population.", 
     label = structure("The estimate of the error variance for the model using \\(X_1\\) matches the true error variance in the population.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_dd7a132", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3397419", 
     option = "None of the options are true.", value = "None of the options are true.", 
     label = structure("None of the options are true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -1970,11 +2031,11 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
 "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
-"character")), message = structure("Option A is correct since the true relationship is (beta_0, beta_1, beta_2, beta_3) = (1, 2, 3, 0)", html = TRUE, class = c("html", 
-"character")), post_message = NULL), ids = list(answer = "q4MCQ-answer", 
-    question = "q4MCQ"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 293091673.363519, options = list()), class = c("learnr_radio", 
-"tutorial_question")), session = session)
+"character")), message = NULL, post_message = NULL), ids = list(
+    answer = "q4MCQ-answer", question = "q4MCQ"), loading = NULL, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 763407906.644511, 
+    options = list()), class = c("learnr_radio", "tutorial_question"
+)), session = session)
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -2136,25 +2197,25 @@ learnr:::store_exercise_cache(structure(list(label = "linearity2", global_setup 
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q7", question = structure("Why are the confidence intervals on the coefficient of each predictor narrower in the multiple linear model compared to the separate simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_10746f7", 
+"character")), answers = list(structure(list(id = "lnr_ans_d5a03c1", 
     option = "The predictors we generated are strongly correlated.", 
     value = "The predictors we generated are strongly correlated.", 
     label = structure("The predictors we generated are strongly correlated.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is correct, but consider the error variance and the estimated coefficients in the simple models.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cdf1675", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41f2a4f", 
     option = "The error variance is not estimated correctly in the simple linear models.", 
     value = "The error variance is not estimated correctly in the simple linear models.", 
     label = structure("The error variance is not estimated correctly in the simple linear models.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is correct, but consider how the predictors are associated and the error variance of the simple linear models.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41f2a4f", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_faf43d3", 
     option = "The true relationship is not estimated correctly in the simple linear models.", 
     value = "The true relationship is not estimated correctly in the simple linear models.", 
     label = structure("The true relationship is not estimated correctly in the simple linear models.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("This is correct, but consider how the predictors are associated and the estimated coefficients in the simple linear models.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_faf43d3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4839827", 
     option = "More than one option is correct.", value = "More than one option is correct.", 
     label = structure("More than one option is correct.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2166,7 +2227,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("Both betas and sigma are not estimated correctly in the simple linear regression model", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q7-answer", 
     question = "q7"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = FALSE, seed = 1096680292.98932, options = list()), class = c("learnr_radio", 
+    allow_retry = FALSE, seed = 1248519659.41861, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2277,13 +2338,13 @@ learnr:::store_exercise_cache(structure(list(label = "q81", global_setup = struc
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q8", question = structure("Does there appear to be much difference in the widths of the confidence intervals compared to when there was no correlation present in the predictors?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_82a072a", 
+"character")), answers = list(structure(list(id = "lnr_ans_5f37c28", 
     option = "Yes.", value = "Yes.", label = structure("Yes.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_38cafc0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c62fe8d", 
     option = "No.", value = "No.", label = structure("No.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bb56fec", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3682ac1", 
     option = "Not totally sure.", value = "Not totally sure.", 
     label = structure("Not totally sure.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2295,7 +2356,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("With moderate correlation, we generally don’t see too much of a difference in the widths of the confidence intervals compared to when no correlation was present (although it generally depends on your data - sometimes it can be noticeable and other times it won’t). We do still observe that the MLR confidence intervals are narrower than the SLR ones due to the fact we are specifying the correct model and therefore the error variance is being estimated more precisely (because we are explaining more variation in the response with more predictors).", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q8-answer", 
     question = "q8"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1815146989.15476, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1859667140.13403, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2400,27 +2461,27 @@ learnr:::store_exercise_cache(structure(list(label = "corr1", global_setup = str
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q9", question = structure("Based on the outputs, what do you notice about the estimates of the slopes now?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_c1b2559", 
+"character")), answers = list(structure(list(id = "lnr_ans_3d22d39", 
     option = "Some slope estimates in the simple linear models are very different from the true values. ", 
     value = "Some slope estimates in the simple linear models are very different from the true values. ", 
     label = structure("Some slope estimates in the simple linear models are very different from the true values.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1eace19", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_112adcd", 
     option = "The widths of the confidence intervals in the multiple linear model are much wider.", 
     value = "The widths of the confidence intervals in the multiple linear model are much wider.", 
     label = structure("The widths of the confidence intervals in the multiple linear model are much wider.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ddb0898", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3c32349", 
     option = "$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$.", 
     value = "$X_1$ no longer appears significantly different from 0 in the presence of $X_2$ and $X_3$.", 
     label = structure("\\(X_1\\) no longer appears significantly different from 0 in the presence of \\(X_2\\) and \\(X_3\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a479dbb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b915dde", 
     option = "$X_1$ and $X_2$ appear to have the same estimated slope in the simple linear models. ", 
     value = "$X_1$ and $X_2$ appear to have the same estimated slope in the simple linear models. ", 
     label = structure("\\(X_1\\) and \\(X_2\\) appear to have the same estimated slope in the simple linear models.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2e95da3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_58c391f", 
     option = "More than one of these are true.", value = "More than one of these are true.", 
     label = structure("More than one of these are true.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2432,7 +2493,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("All options listed here are true", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q9-answer", 
     question = "q9"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 1312288718.38892, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 223544641.895904, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
 
@@ -2505,19 +2566,19 @@ learnr:::store_exercise_cache(structure(list(label = "corr2", global_setup = str
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q10", question = structure("Approximately how many times higher are the bars for the slopes of \\(X_1\\) and \\(X_2\\) in the MLR model compared to the bars for the same slopes in the SLR model?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_2f54d48", 
+"character")), answers = list(structure(list(id = "lnr_ans_84aec8f", 
     option = "About 5 times higher.", value = "About 5 times higher.", 
     label = structure("About 5 times higher.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f493438", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc1204d", 
     option = "About 10 times higher.", value = "About 10 times higher.", 
     label = structure("About 10 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_df45c64", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a9a3c47", 
     option = "About 15 times higher.", value = "About 15 times higher.", 
     label = structure("About 15 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_93808cc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_26b20d3", 
     option = "About 20 times higher.", value = "About 20 times higher.", 
     label = structure("About 20 times higher.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2528,7 +2589,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q10-answer", question = "q10"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 556225345.740987, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1875268026.12676, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2634,21 +2695,21 @@ learnr:::store_exercise_cache(structure(list(label = "q110", global_setup = stru
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q11", question = structure("Which model(s) seem to be estimating the true association of each predictor with the response?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_514dd6", 
+"character")), answers = list(structure(list(id = "lnr_ans_b849dc7", 
     option = "The multiple linear model. ", value = "The multiple linear model. ", 
     label = structure("The multiple linear model.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2e933ff", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3f197bd", 
     option = "Simple model with $X_1$.", value = "Simple model with $X_1$.", 
     label = structure("Simple model with \\(X_1\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_987230a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_768f20d", 
     option = "Simple model with $X_2$. ", value = "Simple model with $X_2$. ", 
     label = structure("Simple model with \\(X_2\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7c2bbe9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_70934a3", 
     option = "Simple model with $X_3$. ", value = "Simple model with $X_3$. ", 
     label = structure("Simple model with \\(X_3\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Remember that the beta coefficients should be beta=c(1, 2, 3, 0)", html = TRUE, class = c("html", 
@@ -2660,7 +2721,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q11-answer", question = "q11"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1548525976.77891, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1245027592.42024, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2767,10 +2828,10 @@ learnr:::store_exercise_cache(structure(list(label = "q120", global_setup = stru
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q12", question = structure("Do any of these models appear to estimate the correct association of each predictor to the response?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_ac144c3", 
+"character")), answers = list(structure(list(id = "lnr_ans_838465d", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c9656c8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4fcf750", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
 "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
@@ -2781,7 +2842,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), message = structure("So when all predictors are correlated to one another, it appears as if, in addition to the inflated variances visible in the wide confidence intervals, we also struggle to capture the true relationships present in the population.", html = TRUE, class = c("html", 
 "character")), post_message = NULL), ids = list(answer = "q12-answer", 
     question = "q12"), loading = NULL, random_answer_order = FALSE, 
-    allow_retry = TRUE, seed = 350230489.836911, options = list()), class = c("learnr_radio", 
+    allow_retry = TRUE, seed = 1103709253.98605, options = list()), class = c("learnr_radio", 
 "tutorial_question")), session = session)
 </script>
  
@@ -2867,22 +2928,22 @@ learnr:::store_exercise_cache(structure(list(label = "q13", global_setup = struc
  
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q13MCQ", question = structure("Which of the below is true regarding these two simple linear models?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_be50b6b", 
+"character")), answers = list(structure(list(id = "lnr_ans_96b6899", 
     option = "The slope of $X_3$ is significantly different from 0. ", 
     value = "The slope of $X_3$ is significantly different from 0. ", 
     label = structure("The slope of \\(X_3\\) is significantly different from 0.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1d8e8bc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_96b8e73", 
     option = "The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have.", 
     value = "The slopes $X_3$ seems to indicate the same association (more or less) with $Y$ as $X_1$ should have.", 
     label = structure("The slopes \\(X_3\\) seems to indicate the same association (more or less) with \\(Y\\) as \\(X_1\\) should have.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_992e242", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e904a", 
     option = "The slope of $X_2$ seems to be an reasonable estimate while the slope of $X_3$ seems to be biased.", 
     value = "The slope of $X_2$ seems to be an reasonable estimate while the slope of $X_3$ seems to be biased.", 
     label = structure("The slope of \\(X_2\\) seems to be an reasonable estimate while the slope of \\(X_3\\) seems to be biased.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b326c6e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8102edc", 
     option = "More than one of these is true.", value = "More than one of these is true.", 
     label = structure("More than one of these is true.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2893,7 +2954,7 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q13MCQ-answer", question = "q13MCQ"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1082226400.49605, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 2055293881.54293, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
@@ -2976,19 +3037,19 @@ learnr:::store_exercise_cache(structure(list(label = "q14", global_setup = struc
 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "q14MCQ", question = structure("Which true association does the slope of \\(X_3\\) from the multiple linear model represent?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_aeef56e", 
+"character")), answers = list(structure(list(id = "lnr_ans_478debd", 
     option = "The association between $X_1$ and $Y$.", value = "The association between $X_1$ and $Y$.", 
     label = structure("The association between \\(X_1\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3d4db5d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_429ba08", 
     option = "The association between $X_2$ and $Y$.", value = "The association between $X_2$ and $Y$.", 
     label = structure("The association between \\(X_2\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_493400c", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c2b9013", 
     option = "The association between $X_3$ and $Y$.", value = "The association between $X_3$ and $Y$.", 
     label = structure("The association between \\(X_3\\) and \\(Y\\).", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d5779cc", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_aec0620", 
     option = "None of the above.", value = "None of the above.", 
     label = structure("None of the above.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = NULL, type = "literal"), class = c("tutorial_question_answer", 
@@ -2999,9 +3060,99 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "q14MCQ-answer", question = "q14MCQ"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1300214971.89454, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 56957832.4734769, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+
+  output$plot <- renderPlot({
+    
+    
+plt_function <- function(corr_input){
+    set.seed(302)
+
+    n = 50
+    betas <- c(0.5, 4, 10)
+    e <- rnorm(n, 0, sqrt(1.5))
+    # replace elements [1,2] and [2,1] with 0.5 to incorporate the correlation
+    covariance <- diag(c(1,1))
+    covariance[1,2] <- covariance[2,1] <- corr_input
+    # re-generate our predictors with this new covariance matrix
+    X <- mvrnorm(n, mu = c(0,0), Sigma = covariance)
+    # generate new responses
+    Xmat <- cbind(1, X)
+    y <- Xmat %*% betas + e
+    
+    # fit the SLR and MLE models and extract coefficients
+    model1c <- lm(y ~ X[,1])
+    model2c <- lm(y ~ X[,2])
+    MLRc <- lm(y ~ X)
+    
+    coefs <- c(coef(model1c)[2], coef(model2c)[2], coef(MLRc)[2:3])
+    names(coefs) <- c("X1", "X2", "X1", "X2")
+    
+    # extract confidence intervals of slopes in all 4 models
+    confints <- rbind(confint(model1c)[2,], confint(model2c)[2,],
+                      confint(MLRc)[2:3,])
+    
+    
+    #plot the point estimates on a plot, where the position on the x-axis will be 
+    # 1, 2, 3 for the SLR values and 6,7,8 for the MLR values
+    xposition <- c(1,2,6,7)
+    plot(coefs ~ xposition,
+         type="p", ylim=c(-3, 20), xlim=c(0,8), bty="n", xaxt="n",
+         ylab="", xlab="")
+    
+    # add the horizontal line of no effect at 0
+    abline(h=0, lty="dashed")
+    
+    # adds a label to distinguish the points
+    text(2, 20, "Coefficients in SLRs")
+    text(7, 20, "Coefficients in MLR")
+    
+    # loop to add confidence intervals and labels to plot
+    for(i in 1:4){
+        # get the x position to plot at
+        x <- xposition[i]
+        # adds a label to distinguish the points
+        text(x, -2.75, names(coefs)[i])
+        # plots a vertical lines for the CI of each point
+        lines(c(x,x), confints[i,], lwd=3)
+    }
+}
+   
+   if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0 \\\\
+                          0 & 1 \\end{pmatrix}$$"){
+     plt_function(0)
+   }
+   else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.9 \\\\
+                        -0.9 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.9)
+   }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.5 \\\\
+                          -0.5 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.5)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.2 \\\\
+                          -0.2 & 1 \\end{pmatrix}$$"){
+     plt_function(-0.2)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.2 \\\\
+                          0.2 & 1 \\end{pmatrix}$$"){
+     plt_function(0.2)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.5 \\\\
+                          0.5 & 1 \\end{pmatrix}$$"){
+     plt_function(0.5)
+    }
+    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.9 \\\\
+                          0.9 & 1 \\end{pmatrix}$$"){
+     plt_function(0.9)
+   }
+
+})
 </script>
 </p>
 <!--html_preserve-->
