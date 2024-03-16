@@ -1721,7 +1721,8 @@ question("Using the example above, which statement is true regarding how correla
       answer("The direction of the correlation impacts predicted coefficients in the simple linear model."), 
      answer("The strength of the correlation impacts predicted coefficients in the simple linear model."),
      answer("The confidence intervals for predictors in the multiple linear model are larger when the absolute value of the correlation is larger."),
-     answer("The predictors in the multiple linear model are more robust against multicollinearity than the simple linear model."), 
+     answer("The predictors in the multiple linear model are more robust against multicollinearity than the simple linear model."),
+     answer("All of the above are correct.", correct=TRUE)
      allow_retry = T)
 ```
 ## Wrap-Up
