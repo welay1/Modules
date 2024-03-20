@@ -1600,7 +1600,7 @@ output$interactivePlot <- renderPlot({
   model1 <- lm(dist ~ speed, data = cars)
   modelnew <- lm(dist ~ speed, data = new_dataset)
    
-   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.2) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.2) + theme_minimal() +xlim(0,35) +ylim(0,150)
+   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.1) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.1) + theme_minimal() +xlim(0,35) +ylim(0,150)
 })
 ```
 
