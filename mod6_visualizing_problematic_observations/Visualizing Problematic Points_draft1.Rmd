@@ -1588,6 +1588,54 @@ question("Which of the below statements is true regarding problematic observatio
          allow_retry = TRUE)
 ```
 
+## Section 4: Interactive Exercise
+
+```{r, context="server"}
+output$interactivePlot <- renderPlot({
+  #new coordinate
+  library(ggplot2)
+  new_point <- data.frame(speed = input$new_x, dist = input$new_y)
+  new_dataset <- rbind(cars, new_point)
+   
+  model1 <- lm(dist ~ speed, data = cars)
+  modelnew <- lm(dist ~ speed, data = new_dataset)
+   
+   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.2) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.2) + theme_minimal() +xlim(0,35) +ylim(0,150)
+})
+```
+
+```{r, context="render", echo = FALSE}
+fluidPage(
+  titlePanel("Leverage or Outlier Point?"),
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("new_x", "New Point X Coordinate:", min = 0, max = 35, value = 15, step = 5),
+      sliderInput("new_y", "New Point Y Coordinate:", min = 0, max = 150, value = 45, step = 5)
+    ),
+    mainPanel(
+      plotOutput("interactivePlot")
+    )
+  )
+)
+```
+
+```{r}
+# 
+# library(ggplot2)
+#  new_point <- data.frame(speed = 40, dist = 200)
+#    new_dataset <- rbind(cars, new_point)
+#    
+#    model1 <- lm(dist ~ speed, data = cars)
+#    modelnew <- lm(dist ~ speed, data = new_dataset)
+#    
+#    p <- ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.2) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.2) + theme_minimal() +xlim(0,35) +ylim(0,150)
+#    
+#    print(p)
+
+```
+
+
+
 
 ## Conclusion
 
