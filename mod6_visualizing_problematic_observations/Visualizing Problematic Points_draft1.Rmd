@@ -18,7 +18,7 @@ options(tutorial.storage = list(
 
 ## Introduction
 
-Welcome to Module 4: Visualising Problematic Observations. In this module:
+Welcome to Module 6: Visualising Problematic Observations. In this module:
 
 
 * Use R to display different simple linear models and highlight individual observations. 
@@ -224,10 +224,11 @@ The first kind of problematic observation to identify is called a **leverage poi
 
 ```{r LP_MC1, echo=FALSE}
 question("When would you expect a leverage point to impact the estimated regression coefficients of a model?",
-         answer("Always", message = ""),
-         answer("Sometimes", correct = TRUE, message = "Well done!"), 
-         answer("Never", message = "Incorrect, the reason why this option is incorrect"),
-         allow_retry = TRUE)
+  answer("Always", message = "Incorrect. Not all leverage points have a significant impact on regression coefficients; it depends on whether they also are outliers affecting the model's slope."),
+  answer("Sometimes", correct = TRUE, message = "Well done! Leverage points can impact the estimated regression coefficients, but this generally happens if they significantly differ in value from the rest of the data and are outliers."),
+  answer("Never", message = "Incorrect. While not all leverage points affect regression coefficients, there are instances where their impact is significant, especially if they are outliers."),
+  allow_retry = TRUE
+)
 ```
 
 _________________________
@@ -238,7 +239,7 @@ Create a new row (row 51) in cars by assigning a new Speed measurement of 40 and
 
 ```{r LP1, exercise = TRUE, exercise.lines = 3}
 # assign row 51 a value of 40 and 120
-cars[51,] <- 
+cars[51, ] <- 
 ```
 
 ```{r LP1-hint-1}
@@ -266,7 +267,7 @@ cars[51,] <- c(40, 120)
 ```
 
 ```{r, include=FALSE}
-cars[51,] <- c(40, 120)
+#cars[51,] <- c(40, 120)
 ```
 
 
@@ -510,12 +511,17 @@ question("What is different about the two observations we changed for Model 2 an
          allow_retry = TRUE)
 ```
 
-
 Both of the observations we looked at were leverage points because their predictor values were very different from most of the other data points (especially far from the average predictor value).
 
 However, only one of them significantly changed the regression line that we calculated from the data.
 
-This tells us that while not all leverage points affect how we estimate the regression relationship, they all have the possibility to do so.
+This tells us that while not all leverage points directly affect how we estimate the regression relationship, they all possess the potential to do so, particularly when they also serve as outliers. Leverage points have a high influence on the estimation of regression coefficients due to their position in the data space, but their impact becomes especially pronounced if they deviate significantly from the model's predicted values, thereby becoming outliers.
+
+In essence, understanding leverage points necessitates considering not just their position or leverage but also their potential to be outliers!
+
+Therefore, it is crucial to recognize that leverage points and outliers are not mutually exclusive concepts but are interrelated aspects that together shape the accuracy and interpretation of regression analyses.
+
+As we transition to a focused discussion on outliers, it is important to keep this in mind.
 
 
 ## Section 2: Outlier Points
@@ -525,10 +531,11 @@ You are probably familiar with the concept of a statistical outlier. In linear r
 
 ```{r OP_MC1, echo=FALSE}
 question("Would you expect an outlier point to impact the estimated regression coefficients of a model?",
-         answer("Always", message = "Incorrect, please try this question again."),
-         answer("Sometimes.", correct = TRUE, message = "Well done!"), 
-         answer("Never", message = "Incorrect, please try this question again."),
-         allow_retry = TRUE)
+  answer("Always", message = "Incorrect. While outliers can have a significant impact, their effect on regression coefficients depends on their position relative to the rest of the data and the robustness of the regression method used."),
+  answer("Sometimes", correct = TRUE, message = "Well done! Outliers can impact the estimated regression coefficients if they significantly deviate from other data points, especially in small samples or with certain types of regression analysis."),
+  answer("Never", message = "Incorrect. Outliers can and do affect regression coefficients under certain conditions, such as when they are significantly distant from the bulk of the data, potentially skewing the analysis."),
+  allow_retry = TRUE
+)
 ```
 
 
@@ -836,7 +843,7 @@ question("What is different about the two observations we changed for Model 4 an
 
 Both of the observations we created in the data were outlier points as they had unusual/extreme values of their response measurement (distance). However, like before, only one of the two observations had a noticeable impact on the estimated regression relationship, and this observation happened to be located farther from the mean of Speed than the other. Both observations however did yield large standard errors of the regression coefficients. This tells us that some outlier points impact the estimated regression relationship strongly, but all increase the standard error of the estimated coefficients. 
 
-We shall see next that observations which strongly impact a single estimated coefficient, the estimated regression relationship or a fitted value are considered influential observations.
+In our next discussion, we'll explore how observations that significantly impact an estimated coefficient, the overall estimated regression relationship, or a specific fitted value are classified as influential observations.
 
 ## Section 3: Influential Points
 
