@@ -1633,8 +1633,27 @@ relationship.</p>
 </div>
 <div id="section-section-4-interactive-exercise" class="section level2">
 <h2>Section 4: Interactive Exercise</h2>
+<p>In this section, we will use the interactive plot to not only
+visualise problematic points, but also see how they influence regression
+coefficients.</p>
+<div id="section-leverage-point-outlier-point-or-both"
+class="section level3">
+<h3>Leverage point, Outlier point, or both?</h3>
+<p>Concept Check:</p>
+<ul>
+<li><p>Recall a point is considered to have high leverage if it has an
+extreme x-value. Additionally, it’s important to keep in mind that
+“extreme” can also be refer to a x-value that is far from the main
+cluster/cloud of data points in the predictor space.</p></li>
+<li><p>Recall a point is considered an outlier if the response y
+deviates fromt the general trend of the rest of the data.</p></li>
+</ul>
+<p>The interactive plot below allows you to toggle the x and y-value of
+the red point. The purporse of this exercise is to see how the presence
+of the red point influences the regression coefficients and when to
+categorise it as a type of problematic point.</p>
 <div class="container-fluid">
-<h2>Leverage or Outlier Point?</h2>
+<h2>Interactive Plot</h2>
 <div class="row">
 <div class="col-sm-4">
 <form class="well" role="complementary">
@@ -1644,7 +1663,7 @@ relationship.</p>
 </div>
 <div class="form-group shiny-input-container">
 <label class="control-label" id="new_y-label" for="new_y">New Point Y Coordinate:</label>
-<input class="js-range-slider" id="new_y" data-skin="shiny" data-min="0" data-max="150" data-from="45" data-step="5" data-grid="true" data-grid-num="10" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
+<input class="js-range-slider" id="new_y" data-skin="shiny" data-min="0" data-max="140" data-from="40" data-step="5" data-grid="true" data-grid-num="9.33333333333333" data-grid-snap="false" data-prettify-separator="," data-prettify-enabled="true" data-keyboard="true" data-data-type="number"/>
 </div>
 </form>
 </div>
@@ -1653,25 +1672,83 @@ relationship.</p>
 </div>
 </div>
 </div>
-<pre class="r"><code># 
-# library(ggplot2)
-#  new_point &lt;- data.frame(speed = 40, dist = 200)
-#    new_dataset &lt;- rbind(cars, new_point)
-#    
-#    model1 &lt;- lm(dist ~ speed, data = cars)
-#    modelnew &lt;- lm(dist ~ speed, data = new_dataset)
-#    
-#    p &lt;- ggplot() + geom_point(data=cars, color = &quot;blue&quot;, aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = &quot;red&quot;, size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = &quot;lm&quot;, colour = &quot;blue&quot;, aes(x = speed, y=dist), fill= &quot;blue&quot;, alpha = 0.2) + geom_smooth(data=new_dataset, method = &quot;lm&quot;, colour = &quot;red&quot;, aes(x = speed, y=dist), fill =&quot;red&quot;, alpha = 0.2) + theme_minimal() +xlim(0,35) +ylim(0,150)
-#    
-#    print(p)</code></pre>
+<p>With the default addition of the red point at
+<strong>(15,40)</strong>, our regression coefficients are minimally
+impacted. This is because the corresponding x and y value of the red
+point fall not only within the domain and range of the original data,
+but also don’t really differ from the original points (blue). In other
+words, you could think of the point as being part of the original
+data.</p>
+<p>Did you know that a problematic point can present itself as
+<strong><em>both</em></strong> an outlier and leverage point?</p>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="interactive_q1" class="tutorial-question panel-body">
+<div id="interactive_q1-answer_container" class="shiny-html-output"></div>
+<div id="interactive_q1-message_container" class="shiny-html-output"></div>
+<div id="interactive_q1-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
-<div id="section-conclusion" class="section level2">
-<h2>Conclusion</h2>
+</div>
+<hr />
+<div class="panel panel-default tutorial-question-container">
+<div data-label="interactive_q2" class="tutorial-question panel-body">
+<div id="interactive_q2-answer_container" class="shiny-html-output"></div>
+<div id="interactive_q2-message_container" class="shiny-html-output"></div>
+<div id="interactive_q2-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+<div class="panel panel-default tutorial-question-container">
+<div data-label="interactive_q3" class="tutorial-question panel-body">
+<div id="interactive_q3-answer_container" class="shiny-html-output"></div>
+<div id="interactive_q3-message_container" class="shiny-html-output"></div>
+<div id="interactive_q3-action_button_container" class="shiny-html-output"></div>
+<script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
+</div>
+</div>
+</div>
 </div>
 <div id="section-wrap-up" class="section level2">
 <h2>Wrap-Up</h2>
 <p>Congratulations – You have successfully completed this learning
-module! By now, you should be familiar with: 
+module! By now, you should be familiar with the following notions and
+their applications using R:</p>
+<ul>
+<li><p><strong>Leverage Points</strong>: Comprehend the concept of
+leverage as it relates to data points that have the potential to
+disproportionately influence the slope of the regression line due to
+their position in the data distribution.</p></li>
+<li><p><strong>Outliers</strong>: Identify outliers based on their
+deviation from the expected data pattern or trend. Understanding
+outliers involves recognizing their presence and evaluating their impact
+on the overall data analysis.</p></li>
+<li><p><strong>Influential Points</strong>: Distinguish influential
+points by their ability to significantly alter the estimated regression
+line. This involves an appreciation of how these points, through their
+leverage or outlying nature, can affect the conclusions drawn from the
+linear model analysis.</p></li>
+<li><p><strong>Understanding The Difference:</strong> These three
+notions can be distinguished both relative to their data points as well
+to their respective impact on the regression line. Leverage points are
+characterized by their extreme values in the predictor variables,
+potentially skewing the regression line’s slope even if their response
+values are within a normal range. Outliers, on the other hand, have
+response values that significantly deviate from the pattern predicted by
+the model, affecting the regression line’s accuracy if not identified
+and handled appropriately. Influential points are a broader category
+that may include both high leverage points and outliers; these are data
+points that, due to their unique position or value, significantly affect
+the regression model’s parameters</p></li>
+<li><p><strong>Interrelationship of Leverage and Outliers</strong>:
+Lastly, it’s crucial to recognize that leverage and outliers are not
+necessarily mutually exclusive concepts. In certain instances, a data
+point can simultaneously possess high leverage and be an outlier. This
+dual nature means that when a data point with higher leverage (making it
+a leverage point) also deviates significantly from the expected outcome
+(making it an outlier as well), it can have an amplified effect on the
+analysis.</p></li>
+</ul>
+<p>
 <script type="application/shiny-prerendered" data-context="server-start">
 library(tidyverse)
 library(learnr)
@@ -1683,35 +1760,35 @@ options(tutorial.storage = list(
   get_objects = function(...) list(),
   remove_all_objects = function(...){}))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::register_http_handlers(session, metadata = NULL)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::prepare_tutorial_state(session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::i18n_observe_tutorial_language(input, session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 session$onSessionEnded(function() {
         learnr:::event_trigger(session, "session_stop")
       })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-EDA_1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-EDA_1-code-editor`)), session)
 output$`tutorial-exercise-EDA_1-output` <- renderUI({
   `tutorial-exercise-EDA_1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "EDA_1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -1744,15 +1821,15 @@ learnr:::store_exercise_cache(structure(list(label = "EDA_1", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-EDA_2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-EDA_2-code-editor`)), session)
 output$`tutorial-exercise-EDA_2-output` <- renderUI({
   `tutorial-exercise-EDA_2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "EDA_2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -1785,15 +1862,15 @@ learnr:::store_exercise_cache(structure(list(label = "EDA_2", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-EDA_3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-EDA_3-code-editor`)), session)
 output$`tutorial-exercise-EDA_3-output` <- renderUI({
   `tutorial-exercise-EDA_3-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "EDA_3", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -1828,15 +1905,15 @@ learnr:::store_exercise_cache(structure(list(label = "EDA_3", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-EDA_4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-EDA_4-code-editor`)), session)
 output$`tutorial-exercise-EDA_4-output` <- renderUI({
   `tutorial-exercise-EDA_4-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "EDA_4", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -1878,29 +1955,28 @@ learnr:::store_exercise_cache(structure(list(label = "EDA_4", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "trend", question = structure("What trend do you notice in the scatterplot above (Figure 1)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a7e4262", 
+"character")), answers = list(structure(list(id = "lnr_ans_4e7625f", 
     option = "As speed increases, the average of the distance also increases.", 
     value = "As speed increases, the average of the distance also increases.", 
     label = structure("As speed increases, the average of the distance also increases.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("We can see a postitive association between X (speed) and Y (distance)", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1990b9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_21fa1ee", 
     option = "As speed increases, the average of the distance also decreases.", 
     value = "As speed increases, the average of the distance also decreases.", 
     label = structure("As speed increases, the average of the distance also decreases.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, the association between X (speed) and Y (distance) is postitive instead of negative", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_947e216", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ad946b0", 
     option = "As speed increases, the average of the distance stays the same.", 
     value = "As speed increases, the average of the distance stays the same.", 
     label = structure("As speed increases, the average of the distance stays the same.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, We can see a postitive association between X (speed) and Y (distance)", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_63ae227", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1c62527", 
     option = "There is no obvious trend shown in the scatterplot.", 
     value = "There is no obvious trend shown in the scatterplot.", 
     label = structure("There is no obvious trend shown in the scatterplot.", html = TRUE, class = c("html", 
@@ -1913,22 +1989,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "trend-answer", question = "trend"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 240531397.887994, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1388773579.3533, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "LP_MC1", question = structure("When would you expect a leverage point to impact the estimated regression coefficients of a model?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_dfb1eb8", 
+"character")), answers = list(structure(list(id = "lnr_ans_d7f8ce3", 
     option = "Always", value = "Always", label = structure("Always", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect. Not all leverage points have a significant impact on regression coefficients; it depends on whether they also are outliers affecting the model’s slope.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3e65398", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_29e515a", 
     option = "Sometimes", value = "Sometimes", label = structure("Sometimes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done! Leverage points can impact the estimated regression coefficients, but this generally happens if they significantly differ in value from the rest of the data and are outliers.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_a01d988", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3274f48", 
     option = "Never", value = "Never", label = structure("Never", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect. While not all leverage points affect regression coefficients, there are instances where their impact is significant, especially if they are outliers.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -1939,19 +2016,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "LP_MC1-answer", question = "LP_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 21662898.9899124, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1890390936.61972, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-LP1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-LP1-code-editor`)), session)
 output$`tutorial-exercise-LP1-output` <- renderUI({
   `tutorial-exercise-LP1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "LP1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -1985,15 +2062,15 @@ learnr:::store_exercise_cache(structure(list(label = "LP1", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-ex1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-ex1-code-editor`)), session)
 output$`tutorial-exercise-ex1-output` <- renderUI({
   `tutorial-exercise-ex1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "ex1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2033,15 +2110,15 @@ learnr:::store_exercise_cache(structure(list(label = "ex1", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-LP2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-LP2-code-editor`)), session)
 output$`tutorial-exercise-LP2-output` <- renderUI({
   `tutorial-exercise-LP2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "LP2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2091,29 +2168,28 @@ learnr:::store_exercise_cache(structure(list(label = "LP2", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "LP_MC2", question = structure("Looking at both the model summaries (model 1 and model 2) as well as the scatterplot, which of the options below seems most true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_21054bf", 
+"character")), answers = list(structure(list(id = "lnr_ans_9ad25d9", 
     option = "Model 2 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     value = "Model 2 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     label = structure("Model 2 exhibits a substantially different relationship between Speed and Distance compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b7d1a95", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6a57985", 
     option = "Model 2 overall seems to estimate a similar regression coefficients compared to model 1.", 
     value = "Model 2 overall seems to estimate a similar regression coefficients compared to model 1.", 
     label = structure("Model 2 overall seems to estimate a similar regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9cd069b", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_736b4fc", 
     option = "Model 2 exhibits more variability in the estimates of the regression coefficients compared to model 1.", 
     value = "Model 2 exhibits more variability in the estimates of the regression coefficients compared to model 1.", 
     label = structure("Model 2 exhibits more variability in the estimates of the regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_609235d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_57adb5a", 
     option = "More than one of these is true.", value = "More than one of these is true.", 
     label = structure("More than one of these is true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
@@ -2125,19 +2201,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "LP_MC2-answer", question = "LP_MC2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1215972355.43377, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1265664573.41063, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-LP3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-LP3-code-editor`)), session)
 output$`tutorial-exercise-LP3-output` <- renderUI({
   `tutorial-exercise-LP3-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "LP3", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2172,15 +2248,15 @@ learnr:::store_exercise_cache(structure(list(label = "LP3", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-LP4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-LP4-code-editor`)), session)
 output$`tutorial-exercise-LP4-output` <- renderUI({
   `tutorial-exercise-LP4-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "LP4", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2222,15 +2298,15 @@ learnr:::store_exercise_cache(structure(list(label = "LP4", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-LP5-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-LP5-code-editor`)), session)
 output$`tutorial-exercise-LP5-output` <- renderUI({
   `tutorial-exercise-LP5-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "LP5", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2280,28 +2356,29 @@ learnr:::store_exercise_cache(structure(list(label = "LP5", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "LP_MC3", question = structure("Looking at both the model summaries (model 1 and model 3) as well as the scatterplot, which of the options below seems most true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_89717ac", 
+"character")), answers = list(structure(list(id = "lnr_ans_6e61a58", 
     option = "Model 3 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     value = "Model 3 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     label = structure("Model 3 exhibits a substantially different relationship between Speed and Distance compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8d25820", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_2f2db88", 
     option = "Model 3 overall seems to estimate a similar regression coefficients compared to model 1.", 
     value = "Model 3 overall seems to estimate a similar regression coefficients compared to model 1.", 
     label = structure("Model 3 overall seems to estimate a similar regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1fa9acb", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e32c514", 
     option = "Model 3 exhibits more variability in both estimates of the regression coefficients compared to model 1.", 
     value = "Model 3 exhibits more variability in both estimates of the regression coefficients compared to model 1.", 
     label = structure("Model 3 exhibits more variability in both estimates of the regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc7a6f8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_91c44ad", 
     option = "More than one of these is true.", value = "More than one of these is true.", 
     label = structure("More than one of these is true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
@@ -2313,33 +2390,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "LP_MC3-answer", question = "LP_MC3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1631548800.74025, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1084544245.49497, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "LP_MC4", question = structure("What is different about the two observations we changed for Model 2 and Model 3?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_913fa95", 
+"character")), answers = list(structure(list(id = "lnr_ans_9a8bb2b", 
     option = "They differ only in their predictor (i.e. speed) values", 
     value = "They differ only in their predictor (i.e. speed) values", 
     label = structure("They differ only in their predictor (i.e. speed) values", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at how you updated the dataset.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_734505e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d91f6d5", 
     option = "They differ only in their response (i.e. distance) values.", 
     value = "They differ only in their response (i.e. distance) values.", 
     label = structure("They differ only in their response (i.e. distance) values.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bf388a8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_87739d2", 
     option = "There is no different between these observations.", 
     value = "There is no different between these observations.", 
     label = structure("There is no different between these observations.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at how you updated the dataset.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bd7d164", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9451029", 
     option = "Both the response and predictor values have changed", 
     value = "Both the response and predictor values have changed", 
     label = structure("Both the response and predictor values have changed", html = TRUE, class = c("html", 
@@ -2352,22 +2428,23 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "LP_MC4-answer", question = "LP_MC4"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1240888381.42217, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 419863228.304486, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "OP_MC1", question = structure("Would you expect an outlier point to impact the estimated regression coefficients of a model?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e4daafe", 
+"character")), answers = list(structure(list(id = "lnr_ans_a036f11", 
     option = "Always", value = "Always", label = structure("Always", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect. While outliers can have a significant impact, their effect on regression coefficients depends on their position relative to the rest of the data and the robustness of the regression method used.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_40e0440", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_23c0e76", 
     option = "Sometimes", value = "Sometimes", label = structure("Sometimes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done! Outliers can impact the estimated regression coefficients if they significantly deviate from other data points, especially in small samples or with certain types of regression analysis.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1084215", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_43527c5", 
     option = "Never", value = "Never", label = structure("Never", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect. Outliers can and do affect regression coefficients under certain conditions, such as when they are significantly distant from the bulk of the data, potentially skewing the analysis.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -2378,19 +2455,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "OP_MC1-answer", question = "OP_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 617607053.712404, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 850866721.103784, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP1-code-editor`)), session)
 output$`tutorial-exercise-OP1-output` <- renderUI({
   `tutorial-exercise-OP1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2425,15 +2502,15 @@ learnr:::store_exercise_cache(structure(list(label = "OP1", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP2-code-editor`)), session)
 output$`tutorial-exercise-OP2-output` <- renderUI({
   `tutorial-exercise-OP2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2475,15 +2552,15 @@ learnr:::store_exercise_cache(structure(list(label = "OP2", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP3-code-editor`)), session)
 output$`tutorial-exercise-OP3-output` <- renderUI({
   `tutorial-exercise-OP3-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP3", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2533,29 +2610,28 @@ learnr:::store_exercise_cache(structure(list(label = "OP3", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "OP_MC2", question = structure("Looking at both the model summaries (model 1 and model 4) as well as the scatterplot, which of the options below seems most true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_e9b9238", 
+"character")), answers = list(structure(list(id = "lnr_ans_6cf09b6", 
     option = "Model 4 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     value = "Model 4 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     label = structure("Model 4 exhibits a substantially different relationship between Speed and Distance compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_431fbc3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4f9c2a5", 
     option = "Model 4 overall seems to estimate a similar regression coefficients compared to model 1.", 
     value = "Model 4 overall seems to estimate a similar regression coefficients compared to model 1.", 
     label = structure("Model 4 overall seems to estimate a similar regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_c4dcfa9", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9d38c67", 
     option = "Model 4 exhibits more variability in both estimates of the regression coefficients compared to model 1.", 
     value = "Model 4 exhibits more variability in both estimates of the regression coefficients compared to model 1.", 
     label = structure("Model 4 exhibits more variability in both estimates of the regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6ced4b7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_84c90c7", 
     option = "More than one of these options seems true.", value = "More than one of these options seems true.", 
     label = structure("More than one of these options seems true.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
@@ -2567,19 +2643,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "OP_MC2-answer", question = "OP_MC2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1070634427.00145, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 914645522.074085, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP4-code-editor`)), session)
 output$`tutorial-exercise-OP4-output` <- renderUI({
   `tutorial-exercise-OP4-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP4", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2614,15 +2690,15 @@ learnr:::store_exercise_cache(structure(list(label = "OP4", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP5-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP5-code-editor`)), session)
 output$`tutorial-exercise-OP5-output` <- renderUI({
   `tutorial-exercise-OP5-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP5", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2664,15 +2740,15 @@ learnr:::store_exercise_cache(structure(list(label = "OP5", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-OP6-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-OP6-code-editor`)), session)
 output$`tutorial-exercise-OP6-output` <- renderUI({
   `tutorial-exercise-OP6-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "OP6", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2722,28 +2798,29 @@ learnr:::store_exercise_cache(structure(list(label = "OP6", global_setup = struc
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "OP_MC3", question = structure("Looking at both the model summaries (model 1 and model 5) as well as the scatterplot, which of the options below seems most true?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_26dbb8b", 
+"character")), answers = list(structure(list(id = "lnr_ans_4721830", 
     option = "Model 5 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     value = "Model 5 exhibits a substantially different relationship between Speed and Distance compared to model 1.", 
     label = structure("Model 5 exhibits a substantially different relationship between Speed and Distance compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9099aba", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b1f91e0", 
     option = "Model 5 overall seems to estimate a similar regression coefficients compared to model 1.", 
     value = "Model 5 overall seems to estimate a similar regression coefficients compared to model 1.", 
     label = structure("Model 5 overall seems to estimate a similar regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_261ef89", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5cdfa31", 
     option = "Model 5 exhibits substantially more variability in both estimates of the regression coefficients compared to model 1.", 
     value = "Model 5 exhibits substantially more variability in both estimates of the regression coefficients compared to model 1.", 
     label = structure("Model 5 exhibits substantially more variability in both estimates of the regression coefficients compared to model 1.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the model summaries and scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_950b78e", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_afa10d9", 
     option = "More than one of these options seems true.", value = "More than one of these options seems true.", 
     label = structure("More than one of these options seems true.", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
@@ -2755,33 +2832,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "OP_MC3-answer", question = "OP_MC3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 885178731.087807, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1485500851.30826, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "OP_MC4", question = structure("What is different about the two observations we changed for Model 4 and Model 5?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_52f7435", 
+"character")), answers = list(structure(list(id = "lnr_ans_2118ec", 
     option = "They differ only in their predictor (i.e. speed) values", 
     value = "They differ only in their predictor (i.e. speed) values", 
     label = structure("They differ only in their predictor (i.e. speed) values", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d17f841", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cc3942f", 
     option = "They differ only in their response (i.e. distance) values", 
     value = "They differ only in their response (i.e. distance) values", 
     label = structure("They differ only in their response (i.e. distance) values", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_4879b00", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_71784f5", 
     option = "There is no different between these observations", 
     value = "There is no different between these observations", 
     label = structure("There is no different between these observations", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at the scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b574fc4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_13e5bee", 
     option = "Both the response and predictor values have changed", 
     value = "Both the response and predictor values have changed", 
     label = structure("Both the response and predictor values have changed", html = TRUE, class = c("html", 
@@ -2794,26 +2870,27 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "OP_MC4-answer", question = "OP_MC4"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 639301872.702302, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 88017970.9590134, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP_MC1", question = structure("Which of these options is correct regarding the Empirical Rule (i.e. 68-95-99.7% rule)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d0a3a4c", 
+"character")), answers = list(structure(list(id = "lnr_ans_e95c3f", 
     option = "95% of all observations from any distribution must fall within 2 standard deviations of the mean.", 
     value = "95% of all observations from any distribution must fall within 2 standard deviations of the mean.", 
     label = structure("95% of all observations from any distribution must fall within 2 standard deviations of the mean.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_902c34d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_969c6d9", 
     option = "Only 0.3% of all observations in a Normal distribution should be larger than 3 standard deviations above the mean.", 
     value = "Only 0.3% of all observations in a Normal distribution should be larger than 3 standard deviations above the mean.", 
     label = structure("Only 0.3% of all observations in a Normal distribution should be larger than 3 standard deviations above the mean.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_86dab56", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fba8fd0", 
     option = "Observations could be considered rare if they fall 3 standard deviations away from the mean of a Normal distribution.", 
     value = "Observations could be considered rare if they fall 3 standard deviations away from the mean of a Normal distribution.", 
     label = structure("Observations could be considered rare if they fall 3 standard deviations away from the mean of a Normal distribution.", html = TRUE, class = c("html", 
@@ -2826,29 +2903,28 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP_MC1-answer", question = "IP_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 559977754.23924, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 274189523.872321, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP1_MC1", question = structure("Looking at each scatterplot we have made thus far, which model do you think has an observation (the red dot) that is influential on the slope of the estimated regression model (i.e. in which model does the red slope look substantially different from the blue slope)?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_a56a283", 
+"character")), answers = list(structure(list(id = "lnr_ans_339a361", 
     option = "Only Model 5", value = "Only Model 5", label = structure("Only Model 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e45bed8", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_cedbb12", 
     option = "Model 5 and Model 3 ", value = "Model 5 and Model 3 ", 
     label = structure("Model 5 and Model 3", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_29ddcb4", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9d75e32", 
     option = "Models 2, 3, and 5", value = "Models 2, 3, and 5", 
     label = structure("Models 2, 3, and 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6e85c92", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_16707fb", 
     option = "All of the above models", value = "All of the above models", 
     label = structure("All of the above models", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
@@ -2860,19 +2936,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP1_MC1-answer", question = "IP1_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1004831691.53209, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 116437463.44578, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP1_1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP1_1-code-editor`)), session)
 output$`tutorial-exercise-IP1_1-output` <- renderUI({
   `tutorial-exercise-IP1_1-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP1_1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2916,14 +2992,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP1_1", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP1_MC2", question = structure("Comparing this to the Empirical Rule (aka the 68-95-99.7% rule), would we consider this to be an unusual value?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_c57a429", 
+"character")), answers = list(structure(list(id = "lnr_ans_c5b6d80", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc1a7f3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6fc435f", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -2934,19 +3011,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP1_MC2-answer", question = "IP1_MC2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 74075276.465506, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1068257007.50255, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP1_2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP1_2-code-editor`)), session)
 output$`tutorial-exercise-IP1_2-output` <- renderUI({
   `tutorial-exercise-IP1_2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP1_2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -2985,15 +3062,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP1_2", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP1_3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP1_3-code-editor`)), session)
 output$`tutorial-exercise-IP1_3-output` <- renderUI({
   `tutorial-exercise-IP1_3-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP1_3", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3032,15 +3109,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP1_3", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP1_4-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP1_4-code-editor`)), session)
 output$`tutorial-exercise-IP1_4-output` <- renderUI({
   `tutorial-exercise-IP1_4-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP1_4", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3079,25 +3156,24 @@ learnr:::store_exercise_cache(structure(list(label = "IP1_4", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP2_MC1", question = structure("Consider the predicted/fitted value that each model would predict for the red dots in each picture. For which model (2,3,4 or 5) might a prediction for the red observation be quite different compared to a prediction from Model 1?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_1b5ab98", 
+"character")), answers = list(structure(list(id = "lnr_ans_3260668", 
     option = "Only Model 5", value = "Only Model 5", label = structure("Only Model 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_d0bdbd7", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6808f71", 
     option = "Model 5 and Model 3", value = "Model 5 and Model 3", 
     label = structure("Model 5 and Model 3", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8873487", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f5f1d6d", 
     option = "Models 2, 3, and 5", value = "Models 2, 3, and 5", 
     label = structure("Models 2, 3, and 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b3f01d2", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f50be2a", 
     option = "All of the above models", value = "All of the above models", 
     label = structure("All of the above models", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
@@ -3109,18 +3185,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP2_MC1-answer", question = "IP2_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1731267531.19382, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 913317093.574704, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP2_MC2", question = structure("If we compare this standardized difference to the Empirical Rule, would we decide that the difference in predictions is substantial?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_1ea0e57", 
+"character")), answers = list(structure(list(id = "lnr_ans_c79247", 
     option = "Yes", value = "Yes", label = structure("Yes", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_965b2cf", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6e59d1", 
     option = "No", value = "No", label = structure("No", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -3131,19 +3208,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP2_MC2-answer", question = "IP2_MC2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 231310737.392288, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1569080858.76934, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP2_1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP2_1-code-editor`)), session)
 output$`tutorial-exercise-IP2_1-output` <- renderUI({
   `tutorial-exercise-IP2_1-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP2_1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3188,15 +3265,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP2_1", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP2_2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP2_2-code-editor`)), session)
 output$`tutorial-exercise-IP2_2-output` <- renderUI({
   `tutorial-exercise-IP2_2-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP2_2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3238,15 +3315,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP2_2", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP2_3-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP2_3-code-editor`)), session)
 output$`tutorial-exercise-IP2_3-output` <- renderUI({
   `tutorial-exercise-IP2_3-result`()
 })
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP2_3", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3288,25 +3365,24 @@ learnr:::store_exercise_cache(structure(list(label = "IP2_3", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP3_MC1", question = structure("For which model (2,3,4 or 5) might the red observation be substantially changing the overall regression relationship (e.g. both the intercept and slope) compared to Model 1?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_93d647e", 
+"character")), answers = list(structure(list(id = "lnr_ans_aa358a0", 
     option = "Only Model 5", value = "Only Model 5", label = structure("Only Model 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_220c468", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41f3739", 
     option = "Model 5 and Model 3", value = "Model 5 and Model 3", 
     label = structure("Model 5 and Model 3", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_77b15f3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_9728704", 
     option = "Models 2, 3, and 5", value = "Models 2, 3, and 5", 
     label = structure("Models 2, 3, and 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_3769d2d", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6e56838", 
     option = "All of the above models", value = "All of the above models", 
     label = structure("All of the above models", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please go back and take a look at each scatterplot.", html = TRUE, class = c("html", 
@@ -3318,26 +3394,27 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP3_MC1-answer", question = "IP3_MC1"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 425348846.301932, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 110228694.948671, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP3_MC2", question = structure("Think back to prerequisite courses that discussed the distributions of various functions of random variables (e.g. STA257). Which statement above is true regarding the distributions of functions of random variables?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_d6b54dd", 
+"character")), answers = list(structure(list(id = "lnr_ans_f9d2a4e", 
     option = "A", value = "A", label = structure("A", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Please also think about other options.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_ddb531c", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b879e28", 
     option = "B", value = "B", label = structure("B", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Please also think about other options.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_76ed82a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_7884629", 
     option = "C", value = "C", label = structure("C", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Please also think about other options.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_41219ac", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_5ab4cda", 
     option = "D", value = "D", label = structure("D", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done! In fact, all are true and together derive the F distribution", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -3348,19 +3425,18 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP3_MC2-answer", question = "IP3_MC2"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 525335838.755371, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 2082791554.53012, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP3_MC3", question = structure("This value above tells us that the variation in fitted values due to our one red observation is about 6 times larger than the variation of the data around the estimated regression relationship", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_302abe5", 
+"character")), answers = list(structure(list(id = "lnr_ans_a7952dc", 
     option = "True", value = "True", label = structure("True", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_1a83d0a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6567a20", 
     option = "False", value = "False", label = structure("False", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
@@ -3371,19 +3447,19 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP3_MC3-answer", question = "IP3_MC3"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1306271894.39172, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 633009292.705232, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP3_1-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP3_1-code-editor`)), session)
 output$`tutorial-exercise-IP3_1-output` <- renderUI({
   `tutorial-exercise-IP3_1-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP3_1", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3430,15 +3506,15 @@ learnr:::store_exercise_cache(structure(list(label = "IP3_1", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 `tutorial-exercise-IP3_2-result` <- learnr:::setup_exercise_handler(reactive(req(input$`tutorial-exercise-IP3_2-code-editor`)), session)
 output$`tutorial-exercise-IP3_2-output` <- renderUI({
   `tutorial-exercise-IP3_2-result`()
 })
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(label = "IP3_2", global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(ggplot2)", "", "options(tutorial.storage = list(", 
@@ -3492,24 +3568,25 @@ learnr:::store_exercise_cache(structure(list(label = "IP3_2", global_setup = str
     engine = "r", version = "4"), class = c("r", "tutorial_exercise"
 )))
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP3_MC4", question = structure("For which model (2,3,4 or 5) might the red observation be substantially changing the overall regression relationship (e.g. both the intercept and slope) compared to Model 1?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_f3cf0b6", 
+"character")), answers = list(structure(list(id = "lnr_ans_62de9", 
     option = "Only Model 5", value = "Only Model 5", label = structure("Only Model 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_18d098a", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_fc35f2c", 
     option = "Model 5 and Model 3 ", value = "Model 5 and Model 3 ", 
     label = structure("Model 5 and Model 3", html = TRUE, class = c("html", 
     "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_e64a2be", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b08307f", 
     option = "Models 2, 3, and 5", value = "Models 2, 3, and 5", 
     label = structure("Models 2, 3, and 5", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_21d2bb3", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_6462df1", 
     option = "All of the above models", value = "All of the above models", 
     label = structure("All of the above models", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
@@ -3521,33 +3598,32 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP3_MC4-answer", question = "IP3_MC4"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1272256848.90756, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1734250299.19243, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
-
-
+ 
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "IP3_MC5", question = structure("Which of the below statements is true regarding problematic observations?", html = TRUE, class = c("html", 
-"character")), answers = list(structure(list(id = "lnr_ans_5b5aa1e", 
+"character")), answers = list(structure(list(id = "lnr_ans_6696c15", 
     option = "An influential observation must always be a leverage observation.", 
     value = "An influential observation must always be a leverage observation.", 
     label = structure("An influential observation must always be a leverage observation.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_b71ec33", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_97f8842", 
     option = "A leverage observation will always substantially impact some aspect of the estimated regression relationship.", 
     value = "A leverage observation will always substantially impact some aspect of the estimated regression relationship.", 
     label = structure("A leverage observation will always substantially impact some aspect of the estimated regression relationship.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f0ab394", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_8c3f7e", 
     option = "An outlier will always be influential to the estimated regression relationship.", 
     value = "An outlier will always be influential to the estimated regression relationship.", 
     label = structure("An outlier will always be influential to the estimated regression relationship.", html = TRUE, class = c("html", 
     "character")), correct = FALSE, message = structure("Incorrect, please try this question again.", html = TRUE, class = c("html", 
     "character")), type = "literal"), class = c("tutorial_question_answer", 
-"tutorial_quiz_answer")), structure(list(id = "lnr_ans_58b73a0", 
+"tutorial_quiz_answer")), structure(list(id = "lnr_ans_f790b08", 
     option = "An influential observation (of any type) does not have to be either an outlier, a leverage point or both.", 
     value = "An influential observation (of any type) does not have to be either an outlier, a leverage point or both.", 
     label = structure("An influential observation (of any type) does not have to be either an outlier, a leverage point or both.", html = TRUE, class = c("html", 
@@ -3560,11 +3636,12 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
 "character")), message = NULL, post_message = NULL), ids = list(
     answer = "IP3_MC5-answer", question = "IP3_MC5"), loading = NULL, 
-    random_answer_order = FALSE, allow_retry = TRUE, seed = 1742360314.68865, 
+    random_answer_order = FALSE, allow_retry = TRUE, seed = 1251306946.41731, 
     options = list()), class = c("learnr_radio", "tutorial_question"
 )), session = session)
 </script>
- 
+
+
 <script type="application/shiny-prerendered" data-context="server">
 output$interactivePlot <- renderPlot({
   #new coordinate
@@ -3575,8 +3652,120 @@ output$interactivePlot <- renderPlot({
   model1 <- lm(dist ~ speed, data = cars)
   modelnew <- lm(dist ~ speed, data = new_dataset)
    
-   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.1) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.1) + theme_minimal() +xlim(0,35) +ylim(0,150)
+   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1, shape = 4) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.1, se = FALSE) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist ), fill ="red", alpha = 0.1, se = FALSE) + theme_minimal() +xlim(0,35) +ylim(0,150) + geom_text(data = data.frame(speed = 0, dist = 150), aes(label = paste("Original Model: ", paste("y =", round(coefficients(model1)[1], 2), "+", round(coefficients(model1)[2], 2) ,"x")), x = speed, y = dist), color = "blue", hjust = 0, vjust = 1) +
+  geom_text(data = data.frame(speed = 0, dist = 145), aes(label = paste("New Model: ", paste("y =", round(coefficients(modelnew)[1], 2), "+", round(coefficients(modelnew)[2], 2), "x")), x = speed, y = dist), color = "red", hjust = 0, vjust = 1) 
+
 })
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "interactive_q1", 
+    question = structure("Using what you know, and the interactive plot, which point do you think is both an outlier and a leverage point?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_5fafe57", 
+        option = "(15,140)", value = "(15,140)", label = structure("(15,140)", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is an outlier point as the response y deviates from the general trend of the rest of the data. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9f39118", 
+        option = "(35,40)", value = "(35,40)", label = structure("(35,40)", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is a leverage point as it has an extreme x-value. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_bc7cd54", 
+        option = "(0,140)", value = "(0,140)", label = structure("(0,140)", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_dbc6547", 
+        option = "(15,40)", value = "(15,40)", label = structure("(15,40)", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("This is not a problematic point. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "interactive_q1-answer", question = "interactive_q1"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1792012972.16553, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+
+
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "interactive_q2", 
+    question = structure("What can the point at (10,140) be categorised as?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_c46ffe2", 
+        option = "It is a leverage point causing minimal impact.", 
+        value = "It is a leverage point causing minimal impact.", 
+        label = structure("It is a leverage point causing minimal impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Recall that for a point to be considered a leverage point, in the case of a single predictor, it must have an extreme x value. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_4750fce", 
+        option = "It is a leverage point causing significant impact.", 
+        value = "It is a leverage point causing significant impact.", 
+        label = structure("It is a leverage point causing significant impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Recall that for a point to be considered a leverage point, in the case of a single predictor, it must have an extreme x value. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_fbbb99d", 
+        option = "It is an outlier point causing minimal impact.", 
+        value = "It is an outlier point causing minimal impact.", 
+        label = structure("It is an outlier point causing minimal impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("While this point is an outlier as the response y does not follow the general trend of the rest of the data, it impacts the regression coefficients. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_a9cbc2a", 
+        option = "It is an outlier point causing significant impact.", 
+        value = "It is an outlier point causing significant impact.", 
+        label = structure("It is an outlier point causing significant impact.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "interactive_q2-answer", question = "interactive_q2"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 1822799227.65119, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label = "interactive_q3", 
+    question = structure("What can the point at (0,35) be categorised as?", html = TRUE, class = c("html", 
+    "character")), answers = list(structure(list(id = "lnr_ans_48096be", 
+        option = "It is a leverage point causing minimal impact.", 
+        value = "It is a leverage point causing minimal impact.", 
+        label = structure("It is a leverage point causing minimal impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("While this point is a leverage point as it has an extreme x-value, it impacts the regression coefficients. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_9965e00", 
+        option = "It is a leverage point causing significant impact.", 
+        value = "It is a leverage point causing significant impact.", 
+        label = structure("It is a leverage point causing significant impact.", html = TRUE, class = c("html", 
+        "character")), correct = TRUE, message = structure("Well done!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_7f9c6ca", 
+        option = "It is an outlier point causing minimal impact.", 
+        value = "It is an outlier point causing minimal impact.", 
+        label = structure("It is an outlier point causing minimal impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Recall that for a point to be considered an outlier, the response y must deviate from the general trend of the rest of the data. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer")), structure(list(id = "lnr_ans_b1eb87d", 
+        option = "It is an outlier point causing significant impact.", 
+        value = "It is an outlier point causing significant impact.", 
+        label = structure("It is an outlier point causing significant impact.", html = TRUE, class = c("html", 
+        "character")), correct = FALSE, message = structure("Recall that for a point to be considered an outlier, the response y must deviate from the general trend of the rest of the data. Try again!", html = TRUE, class = c("html", 
+        "character")), type = "literal"), class = c("tutorial_question_answer", 
+    "tutorial_quiz_answer"))), button_labels = list(submit = structure("<span data-i18n=\"button.questionsubmit\">Submit Answer<\u002fspan>", html = TRUE, class = c("html", 
+    "character")), try_again = structure("<span data-i18n=\"button.questiontryagain\">Try Again<\u002fspan>", html = TRUE, class = c("html", 
+    "character"))), messages = list(correct = structure("Correct!", html = TRUE, class = c("html", 
+    "character")), try_again = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), incorrect = structure("Incorrect", html = TRUE, class = c("html", 
+    "character")), message = NULL, post_message = NULL), ids = list(
+        answer = "interactive_q3-answer", question = "interactive_q3"), 
+    loading = NULL, random_answer_order = FALSE, allow_retry = TRUE, 
+    seed = 407114580.810422, options = list()), class = c("learnr_radio", 
+"tutorial_question")), session = session)
 </script>
 </p>
 <!--html_preserve-->
