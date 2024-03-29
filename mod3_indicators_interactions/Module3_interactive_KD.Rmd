@@ -298,15 +298,6 @@ The results of a model that uses ratings as a categorical predictor shows us tha
 
 
 
-<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
-By now, you should be know how:
-
-* To use R to manipulate and summarize qualitative variables
-
-* To use R to isolate specific variables in a dataset 
-
-</div>
-
 
 
 ## Section 2: Indicators as Main Effects
@@ -548,18 +539,7 @@ question("When using a categorical predictor as a main effect (i.e. alone as a p
      allow_retry = T)
 ```
 
-<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
-By now, you should be know how:
 
-* To use R to manipulate and summarize qualitative variables
-
-* To use R to isolate specific variables in a dataset 
-
-* To use R to estimate and plot simple linear relationships among data subgroups
-
-* To use R to describe how the use of indicator variables as main effects result in different intercepts
-
-</div>
 
 
 ## Section 3: Indicators in Interaction Terms
@@ -811,22 +791,6 @@ question("When using a categorical predictor as part of an interaction in a mult
 
 
 
-
-<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
-By now, you should be know how:
-
-* To use R to manipulate and summarize qualitative variables
-
-* To use R to isolate specific variables in a dataset 
-
-* To use R to estimate and plot simple linear relationships among data subgroups
-
-* To use R to describe how the use of indicator variables as main effects results in different intercepts
-
-* To use R to describe how the use of indicator variables as interactions results in different slopes
-
-</div>
-
 ## Section 4: Indicators in both Interactions and Main Effects
 
 As we have now seen, it's possible to use qualitative variables to denote groups of similar measurements, and specify different linear relationships for each of these groups through a multiple linear model. We have seen that using qualitative information as a main effect yields relationships with different intercepts, while using it in an interaction term yields relationships with different slopes.
@@ -1004,21 +968,6 @@ lego$Theme == "DUPLO\xae"
 
 In this model, we should now have a separate intercept for City, Friends and DUPLO, and a separate slope for only DUPLO (as we had noted earlier that City and Friends had the same slope). This doesn't change the estimates by much and there is no harm in fitting the model with the extra estimates. But if you are ever interested in cleaning up your model to remove estimates close to 0, this is one option for you.
 
-
-<div style="background: rgb(173, 216, 230); color: black; border: 2px solid black; border-radius: 10px; padding:1em;text-align:center">
-By now, you should be know how:
-
-* To use R to manipulate and summarize qualitative variables
-
-* To use R to isolate specific variables in a dataset 
-
-* To use R to estimate and plot simple linear relationships among data subgroups
-
-* To use R to describe how the use of indicator variables as main effects and interactions results in different intercepts and slopes
-
-* To extend the interpretation of the estimated coefficients of simple linear models for use with qualitative groups 
-
-</div>
 
 ## Wrap-up
 

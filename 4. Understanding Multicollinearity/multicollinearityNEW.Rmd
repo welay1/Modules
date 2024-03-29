@@ -1585,8 +1585,7 @@ question("Which true association does the slope of $X_3$ from the multiple linea
          answer("The association between $X_1$ and $Y$.", correct = TRUE),
          answer("The association between $X_2$ and $Y$."),
          answer("The association between $X_3$ and $Y$."),
-         answer("None of the above."), allow_retry = TRUE
-)
+         answer("None of the above."), allow_retry = TRUE)
 ```
 
 What we have just seen is an effect called an **unmeasured confounder** effect. It occurs when there is a strong correlation between predictors, but the predictor that is truly associated with the response is not measured and therefore cannot be included in a model. Due to the correlation, the predictor that is correlated with this variable, when included in the model, will capture the effect of this variable. This is because the correlation between them implies that they represent something similar and thus by omitting one, the effect is still captured by the variable that is included. 
@@ -1604,21 +1603,14 @@ Using the tool below, select different covariance matrices to induce different a
 
 ```{r, context="render", echo=FALSE}
 withMathJax()
-radioButtons("corr", "Select the correlation to induce", 
-       c("$$\\Sigma = \\begin{pmatrix} 1 & 0 \\\\
-                          0 & 1 \\end{pmatrix}$$", 
-         "$$\\Sigma = \\begin{pmatrix} 1 & -0.9 \\\\
-                        -0.9 & 1 \\end{pmatrix}$$", 
-         "$$\\Sigma = \\begin{pmatrix} 1 & -0.5 \\\\
-                          -0.5 & 1 \\end{pmatrix}$$", 
-         "$$\\Sigma = \\begin{pmatrix} 1 & -0.2 \\\\
-                          -0.2 & 1 \\end{pmatrix}$$", 
-         "$$\\Sigma = \\begin{pmatrix} 1 & 0.2 \\\\
-                          0.2 & 1 \\end{pmatrix}$$",
-         "$$\\Sigma = \\begin{pmatrix} 1 & 0.5 \\\\
-                          0.5 & 1 \\end{pmatrix}$$",
-         "$$\\Sigma = \\begin{pmatrix} 1 & 0.9 \\\\
-                          0.9 & 1 \\end{pmatrix}$$")
+selectInput("corr", "Select the correlation between X1 and X2 to induce", 
+       c("-0.9", 
+         "-0.5", 
+         "-0.2", 
+         "0.0",
+         "0.2", 
+         "0.5", 
+         "0.9")
        )
 
 plotOutput("plot")
@@ -1683,32 +1675,25 @@ plt_function <- function(corr_input){
     }
 }
    
-   if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0 \\\\
-                          0 & 1 \\end{pmatrix}$$"){
+   if(input$corr == "0.0"){
      plt_function(0)
    }
-   else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.9 \\\\
-                        -0.9 & 1 \\end{pmatrix}$$"){
+   else if(input$corr == "-0.9"){
      plt_function(-0.9)
    }
-    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.5 \\\\
-                          -0.5 & 1 \\end{pmatrix}$$"){
+    else if(input$corr == "-0.5"){
      plt_function(-0.5)
     }
-    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & -0.2 \\\\
-                          -0.2 & 1 \\end{pmatrix}$$"){
+    else if(input$corr == "-0.2"){
      plt_function(-0.2)
     }
-    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.2 \\\\
-                          0.2 & 1 \\end{pmatrix}$$"){
+    else if(input$corr == "0.2"){
      plt_function(0.2)
     }
-    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.5 \\\\
-                          0.5 & 1 \\end{pmatrix}$$"){
+    else if(input$corr == "0.5"){
      plt_function(0.5)
     }
-    else if(input$corr == "$$\\Sigma = \\begin{pmatrix} 1 & 0.9 \\\\
-                          0.9 & 1 \\end{pmatrix}$$"){
+    else if(input$corr == "0.9"){
      plt_function(0.9)
    }
 
@@ -1722,7 +1707,7 @@ question("Using the example above, which statement is true regarding how correla
      answer("The strength of the correlation impacts predicted coefficients in the simple linear model."),
      answer("The confidence intervals for predictors in the multiple linear model are larger when the absolute value of the correlation is larger."),
      answer("The predictors in the multiple linear model are more robust against multicollinearity than the simple linear model."),
-     answer("All of the above are correct.", correct=TRUE)
+     answer("All of the above are correct.", correct=TRUE),
      allow_retry = T)
 ```
 ## Wrap-Up
