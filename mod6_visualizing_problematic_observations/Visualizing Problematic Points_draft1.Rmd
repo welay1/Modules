@@ -1635,9 +1635,16 @@ fluidPage(
 ```
 
 
-
-
-## Conclusion
-
 ## Wrap-Up
-Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
+Congratulations – You have successfully completed this learning module! By now, you should be familiar with the following notions and their applications using R:
+
+* **Leverage Points**: Comprehend the concept of leverage as it relates to data points that have the potential to disproportionately influence the slope of the regression line due to their position in the data distribution.
+
+* **Outliers**: Identify outliers based on their deviation from the expected data pattern or trend. Understanding outliers involves recognizing their presence and evaluating their impact on the overall data analysis.
+
+* **Influential Points**: Distinguish influential points by their ability to significantly alter the estimated regression line. This involves an appreciation of how these points, through their leverage or outlying nature, can affect the conclusions drawn from the linear model analysis.
+
+* **Understanding The Difference:** These three notions can be distinguished both relative to their data points as well to their respective impact on the regression line. Leverage points are characterized by their extreme values in the predictor variables, potentially skewing the regression line's slope even if their response values are within a normal range. Outliers, on the other hand, have response values that significantly deviate from the pattern predicted by the model, affecting the regression line's accuracy if not identified and handled appropriately. Influential points are a broader category that may include both high leverage points and outliers; these are data points that, due to their unique position or value, significantly affect the regression model's parameters
+
+* **Interrelationship of Leverage and Outliers**: Lastly, it's crucial to recognize that leverage and outliers are not necessarily mutually exclusive concepts. In certain instances, a data point can simultaneously possess high leverage and be an outlier. This dual nature means that when a data point with higher leverage (making it a leverage point) also deviates significantly from the expected outcome (making it an outlier as well), it can have an amplified effect on the analysis. 
+
