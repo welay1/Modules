@@ -1589,6 +1589,18 @@ question("Which of the below statements is true regarding problematic observatio
 ```
 
 ## Section 4: Interactive Exercise
+In this section, we will use the interactive plot to not only visualise problematic points, but also see how they influence regression coefficients. 
+
+### Leverage point, Outlier point, or both?
+
+Concept  Check:
+
+- Recall a point is considered to have high leverage if it has an extreme x-value. Additionally, it's important to keep in mind that "extreme" can also be refer to a x-value that is far from the main cluster/cloud of data points in the predictor space. 
+
+- Recall a point is considered an outlier if the response y deviates fromt the general trend of the rest of the data.
+
+
+The interactive plot below allows you to toggle the x and y-value of the red point. The purporse of this exercise is to see how the presence of the red point influences the regression coefficients and when to categorise it as a type of problematic point.
 
 ```{r, context="server"}
 output$interactivePlot <- renderPlot({
@@ -1600,17 +1612,19 @@ output$interactivePlot <- renderPlot({
   model1 <- lm(dist ~ speed, data = cars)
   modelnew <- lm(dist ~ speed, data = new_dataset)
    
-   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.1) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.1) + theme_minimal() +xlim(0,35) +ylim(0,150)
+   ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1, shape = 4) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.1, se = FALSE) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist ), fill ="red", alpha = 0.1, se = FALSE) + theme_minimal() +xlim(0,35) +ylim(0,150) + geom_text(data = data.frame(speed = 0, dist = 150), aes(label = paste("Original Model: ", paste("y =", round(coefficients(model1)[1], 2), "+", round(coefficients(model1)[2], 2) ,"x")), x = speed, y = dist), color = "blue", hjust = 0, vjust = 1) +
+  geom_text(data = data.frame(speed = 0, dist = 145), aes(label = paste("New Model: ", paste("y =", round(coefficients(modelnew)[1], 2), "+", round(coefficients(modelnew)[2], 2), "x")), x = speed, y = dist), color = "red", hjust = 0, vjust = 1) 
+
 })
 ```
 
 ```{r, context="render", echo = FALSE}
 fluidPage(
-  titlePanel("Leverage or Outlier Point?"),
+  titlePanel("Interactive Plot"),
   sidebarLayout(
     sidebarPanel(
       sliderInput("new_x", "New Point X Coordinate:", min = 0, max = 35, value = 15, step = 5),
-      sliderInput("new_y", "New Point Y Coordinate:", min = 0, max = 150, value = 45, step = 5)
+      sliderInput("new_y", "New Point Y Coordinate:", min = 0, max = 140, value = 40, step = 5)
     ),
     mainPanel(
       plotOutput("interactivePlot")
@@ -1618,26 +1632,49 @@ fluidPage(
   )
 )
 ```
+With the default addition of the red point at **(15,40)**, our regression coefficients are minimally impacted. This is because the corresponding x and y value of the red point fall not only within the domain and range of the original data, but also don't really differ from the original points (blue). In other words, you could think of the point as being part of the original data.
 
-```{r}
-# 
-# library(ggplot2)
-#  new_point <- data.frame(speed = 40, dist = 200)
-#    new_dataset <- rbind(cars, new_point)
-#    
-#    model1 <- lm(dist ~ speed, data = cars)
-#    modelnew <- lm(dist ~ speed, data = new_dataset)
-#    
-#    p <- ggplot() + geom_point(data=cars, color = "blue", aes(x = speed, y=dist), size = 1) + geom_point(data = new_point, color = "red", size = 2, aes(x = speed, y=dist)) + geom_smooth(data=cars, method = "lm", colour = "blue", aes(x = speed, y=dist), fill= "blue", alpha = 0.2) + geom_smooth(data=new_dataset, method = "lm", colour = "red", aes(x = speed, y=dist), fill ="red", alpha = 0.2) + theme_minimal() +xlim(0,35) +ylim(0,150)
-#    
-#    print(p)
+Did you know that a problematic point can present itself as ***both*** an outlier and leverage point?
 
+```{r interactive_q1, echo=FALSE}
+question("Using what you know, and the interactive plot, which point do you think is both an outlier and a leverage point?",
+         answer("(15,140)", message = "This is an outlier point as the response y deviates from the general trend of the rest of the data. Try again!"),
+         answer("(35,40)", message = "This is a leverage point as it has an extreme x-value. Try again!"), 
+         answer("(0,140)", correct = TRUE, message = "Well done!"), 
+         answer("(15,40)", message = "This is not a problematic point. Try again!"), 
+         allow_retry = TRUE)
 ```
 
+----------------------------------------
 
+```{r interactive_q2, echo=FALSE}
+question("What can the point at (10,140) be categorised as?",
+         answer("It is a leverage point causing minimal impact.", message = "Recall that for a point to be considered a leverage point, in the case of a single predictor, it must have an extreme x value. Try again!"),
+         answer("It is a leverage point causing significant impact.", message = "Recall that for a point to be considered a leverage point, in the case of a single predictor, it must have an extreme x value. Try again!"), 
+         answer("It is an outlier point causing minimal impact.", message = "While this point is an outlier as the response y does not follow the general trend of the rest of the data, it impacts the regression coefficients. Try again!"), 
+         answer("It is an outlier point causing significant impact.", correct = TRUE, message = "Well done!"), 
+         allow_retry = TRUE)
+```
 
-
-## Conclusion
+```{r interactive_q3, echo=FALSE}
+question("What can the point at (0,35) be categorised as?",
+         answer("It is a leverage point causing minimal impact.", message = "While this point is a leverage point as it has an extreme x-value, it impacts the regression coefficients. Try again!"),
+         answer("It is a leverage point causing significant impact.", correct = TRUE, message = "Well done!"), 
+         answer("It is an outlier point causing minimal impact.", message = "Recall that for a point to be considered an outlier, the response y must deviate from the general trend of the rest of the data. Try again!"), 
+         answer("It is an outlier point causing significant impact.", message = "Recall that for a point to be considered an outlier, the response y must deviate from the general trend of the rest of the data. Try again!"), 
+         allow_retry = TRUE)
+```
 
 ## Wrap-Up
-Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
+Congratulations – You have successfully completed this learning module! By now, you should be familiar with the following notions and their applications using R:
+
+* **Leverage Points**: Comprehend the concept of leverage as it relates to data points that have the potential to disproportionately influence the slope of the regression line due to their position in the data distribution.
+
+* **Outliers**: Identify outliers based on their deviation from the expected data pattern or trend. Understanding outliers involves recognizing their presence and evaluating their impact on the overall data analysis.
+
+* **Influential Points**: Distinguish influential points by their ability to significantly alter the estimated regression line. This involves an appreciation of how these points, through their leverage or outlying nature, can affect the conclusions drawn from the linear model analysis.
+
+* **Understanding The Difference:** These three notions can be distinguished both relative to their data points as well to their respective impact on the regression line. Leverage points are characterized by their extreme values in the predictor variables, potentially skewing the regression line's slope even if their response values are within a normal range. Outliers, on the other hand, have response values that significantly deviate from the pattern predicted by the model, affecting the regression line's accuracy if not identified and handled appropriately. Influential points are a broader category that may include both high leverage points and outliers; these are data points that, due to their unique position or value, significantly affect the regression model's parameters
+
+* **Interrelationship of Leverage and Outliers**: Lastly, it's crucial to recognize that leverage and outliers are not necessarily mutually exclusive concepts. In certain instances, a data point can simultaneously possess high leverage and be an outlier. This dual nature means that when a data point with higher leverage (making it a leverage point) also deviates significantly from the expected outcome (making it an outlier as well), it can have an amplified effect on the analysis. 
+
