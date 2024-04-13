@@ -1710,7 +1710,5 @@ question("Using the example above, which statement is true regarding how correla
      answer("All of the above are correct.", correct=TRUE),
      allow_retry = T)
 ```
-## Wrap-Up
-Congratulations – You have successfully completed this learning module! By now, you should be familiar with:
 
 

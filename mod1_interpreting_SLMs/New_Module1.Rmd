@@ -57,7 +57,7 @@ question("Which of the following is true about analyzing the business based on j
 
 
 ## Section 1: Loading and Visualizing the Sample Data
-The dataset for the month of February is named "CleaningData". It includes 100 observations and the following 3 variables:
+The dataset for the month of February is named "data". It includes 100 observations and the following 3 variables:
 
    - `Case`: observation number (identifier).
    - `CrewSize`: the number of members in a cleaning crew sent to a job.
@@ -67,7 +67,7 @@ In R, use the dollar sign (\$) after the dataset name to access a specific colum
 
 ### Part 1.1: Univariate Summaries of the Data:
 
-To begin, let's produce a 5-number summary of each variable in the data using the `summary()` function. The name of the dataset is "CleaningData" and it is loaded for you to use. You can type your code into the box below. If you get stuck, click the hint button to help.
+To begin, let's produce a 5-number summary of each variable in the data using the `summary()` function. The name of the dataset is "data" and it is loaded for you to use. You can type your code into the box below. If you get stuck, click the hint button to help.
 
 
 ```{r exercise1a, exercise=TRUE, exercise.lines = 3}
@@ -106,7 +106,7 @@ We can also show the distribution by creating a histogram for 'CrewSize' and a b
 
 
 
-```{r exercise1b, exercise = TRUE, exercise.lines = 8}
+```{r exercise1b, exercise = TRUE, exercise.lines = 5}
 # Create a histogram of CrewSize
 
 
@@ -176,7 +176,7 @@ Now we can visualize the sample data and estimate what association exists betwee
 ```{r plot, echo=FALSE}
 question("What type of plot should you draw for this sample?",
       answer("Histogram", message = "A histogram showcases the distribution of a single continuous variable, not the correlation or relationship between two."), 
-      answer("Barplot", message = "A barplot is designed to represent categorical data with respect to a continuous measure, making it inefective for showing the relationship between two continuous variables."), 
+      answer("Barplot", message = "A barplot is designed to represent categorical data with respect to a continuous measure, making it ineffective for showing the relationship between two continuous variables."), 
       answer("Scatterplot", correct = TRUE, message = "A scatterplot is ideal because it displays individual data points, revealing patterns, correlations, or relationships between two continuous variables."),
       answer("Boxplot", message = "A boxplot primarily visualizes the distribution and spread of a single variable and therefore doesn't effectively illustrate the relationship between two continuous variables."), allow_retry = TRUE
 )
@@ -188,7 +188,7 @@ Generate a scatterplot using "CrewSize" on the x-axis and "Rooms" on the y-axis,
 ```{r exercise1c, exercise = TRUE, exercise.lines = 5}
 ggplot(data, aes( ___ , ___ )) + 
   geom_point()+ 
-  labs(x = "CrewSize", y = "Rooms"), 
+  labs(x = "CrewSize", y = "Rooms", 
     title = "Figure 1. The association between Crew Size and Rooms Cleaned")
 
 ```
@@ -246,6 +246,17 @@ question("How would you describe the association?",
 
 Congrats on finishing the first section! In the next one, we'll explore if the mean number of rooms cleaned varies with different crew sizes. 
 
+<input type="checkbox" checked> To use R statistical software to import data, and to visualize distributions and relationships between variables.</input>
+
+<input type="checkbox" unchecked> To manipulate data in R to summarize and visualize conditional distributions and conditional means. </input>
+
+<input type="checkbox" unchecked> To connect the concept of a "line of best fit" to conditional distributions.</input>
+
+<input type="checkbox" unchecked> To interpret the slope of a line of best fit using appropriate statistical terminology.</input>
+
+
+
+
 
 ## Section 2: The conditional distribution of Rooms by Crew Size
 
@@ -287,7 +298,7 @@ grade_this_code()
 ```{r exercise2a-hint-1}
 # ---
 
-# We can use the unique() function to obtain the unique ouptuts of our data.
+# We can use the unique() function to obtain the unique outputs of our data.
 
 # For example, consider a variable "x" defined as:
 x <- c(1,2,3,2,1,2,1)
@@ -340,7 +351,7 @@ At this point, you should have obtained 5 averages of the number of Rooms, corre
 
 ### Part 2.3 Adding Conditional Averages of Rooms by CrewSize to Figure 1:
 
-In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained. We will color the conditional means <span style="color:green">**green**</span> to distinguish them.
+In Figure 1 of Section 1.2, we plotted CrewSize (x-axis) against Rooms (y-axis). Now, in this section, we'll integrate the five conditional means that we just obtained, which are stored in `ymeans`, for the unique Crew Sizes, which are stored in `uniqueX`. We will color the conditional means <span style="color:green">**green**</span> to distinguish them.
 
 
 ```{r setup_part2, include=F}
@@ -392,6 +403,14 @@ question("What do you notice about the relationship between the means as X (Crew
 )
 ```
 
+
+<input type="checkbox" checked> To use R statistical software to import data, and to visualize distributions and relationships between variables.</input>
+
+<input type="checkbox" checked> To manipulate data in R to summarize and visualize conditional distributions and conditional means. </input>
+
+<input type="checkbox" unchecked> To connect the concept of a "line of best fit" to conditional distributions.</input>
+
+<input type="checkbox" unchecked> To interpret the slope of a line of best fit using appropriate statistical terminology.</input>
 
 
 ## Section 3. Effect of Increasing CrewSize on Average Rooms Cleaned
@@ -501,23 +520,29 @@ grade_this_code()
 question("What do you notice about the line of best fit in this plot?",
          answer("The line of best fit seems to be placed as far as possible from all data points.", message = "The essence of the 'best fit' in linear regression is to minimize the total distance (often squared) between the line and each individual data point. The goal is for the line to represent the general trend of the data as closely as possible."),
          answer("The line of best fit could be just one among multiple lines that equally represent the data well.", message = "the 'best fit' in linear regression is mathematically derived to be the optimal line that minimizes the discrepancies between the line and the data points (we will see that in Section 4!). There is only one unique solution for a given set of data."), 
-         answer("The line of best fit has a very different slope compaerd to the 3.85 rate of change that we calculated in Section 3.1.", message = "The values are not so different. Keep in mind that the line of best fit is determined by a method that seeks to minimize overall error across all data points. This might yield a slope slightly different from a simple rate of change between specific points."),
+         answer("The line of best fit has a very different slope compared to the 3.85 rate of change that we calculated in Section 3.1.", message = "The values are not so different. Keep in mind that the line of best fit is determined by a method that seeks to minimize overall error across all data points. This might yield a slope slightly different from a simple rate of change between specific points."),
          answer("The line of best fit provides an average trend across all data points, allowing for predictions outside the current crew sizes.", correct = TRUE, message = "Exactly. While individual data points may vary, the line of best fit offers a general trend that can be used for predictive modeling, especially for crew sizes not represented in the current data."), allow_retry = TRUE
 )
 ```
 
 An important aspect of the line of best fit is that it is *singular* and *unique.* In the next section, we will explain why this is true.  
 
+<input type="checkbox" checked> To use R statistical software to import data, and to visualize distributions and relationships between variables.</input>
+
+<input type="checkbox" checked> To manipulate data in R to summarize and visualize conditional distributions and conditional means. </input>
+
+<input type="checkbox" checked> To connect the concept of a "line of best fit" to conditional distributions.</input>
+
+<input type="checkbox" unchecked> To interpret the slope of a line of best fit using appropriate statistical terminology.</input>
+
 
 ## Section 4: Constructing the Line of Best Fit
 
 In the previous section, we defined the line of best fit as: $$y = -1.04 + 3.96x.$$  This equation represents a distinct linear relationship derived from the data. The coefficients (-1.04 and 3.96) were determined using the *Least Squares Method*, where we find the line that minimizes the cumulative squared deviations between each observed data point and its corresponding point on the line.
 
-*Let's unpack that a little*: For each data point, we can compute a *residual*, which is the difference between the observed value (y) and the value predicted by our line ($\hat{y}=3.96x - 1.04$). The squaring part $(y - \hat{y})^2$ ensures that we account for these residuals in a consistent way, whether they are positive or negative, making our optimization problem easier.
+*Let's unpack that a little*: Remember that for each $x$, the value predicted by our line is the mean of its conditional distribution. Then, for each data point $(x, y)$, we can compute a *residual*, which is the difference between the observed $y$ and the value predicted by our line, or the mean of the conditional distribution of $x$($\hat{y}=3.96x - 1.04$). The squaring part $(y - \hat{y})^2$ ensures that we account for these residuals in a consistent way, whether they are positive or negative, making our optimization problem easier.
 
 First, we find the distance that each $y$ value is from our line. We then square these distances and then add them all up. This total is what we call the **residual sum of squares (RSS)**. The RSS is a number that measures the total discrepancy between our data and the line of best fit. It's like a scorecard; *the smaller the RSS, the better our line fits the data*. We want for the line that gives us the smallest RSS because that line fits our data the best. Minimizing this RSS yields a *unique* line that closely follows the data points and connects the estimated average rooms cleaned for each crew size.
-
-This process of minimizing the RSS will give a unique line that sits as close as possible to every data point, and happens to connect the estimated mean number of rooms at each crew size to each other.
 
 In the applet below, we've dispersed the cleaning data for visual clarity. Adjust the slope and intercept as you like. The applet will display the corresponding RSS and distance lines. 
 
@@ -584,9 +609,16 @@ question("Which of the below statements is most correct about the line of best f
 )
 ```
 
+<input type="checkbox" checked> To use R statistical software to import data, and to visualize distributions and relationships between variables.</input>
+
+<input type="checkbox" checked> To manipulate data in R to summarize and visualize conditional distributions and conditional means. </input>
+
+<input type="checkbox" checked> To connect the concept of a "line of best fit" to conditional distributions.</input>
+
+<input type="checkbox" checked> To interpret the slope of a line of best fit using appropriate statistical terminology.</input>
 
 ## Wrap-Up
-By now, you should be know how:
+You should now have an intuitive and visual understanding of a simple linear regression model as a method of estimating the conditional means. You should also understand the mathematics of the least-squares estimation. In addition, you have successfully learned the following: 
 
 * To use R to import data, and visualize distributions of and associations between variables.
 
@@ -595,6 +627,8 @@ By now, you should be know how:
 * To connect the concept of a line of best fit trend to a visual representation of conditional distributions.
 
 * To interpret the slope of a line of best fir using appropriate statistical terminology.
+
+
 
 
 
