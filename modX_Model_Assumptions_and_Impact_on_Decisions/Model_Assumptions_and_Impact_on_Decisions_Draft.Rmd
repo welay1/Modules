@@ -1,0 +1,200 @@
+---
+title: "Model_Assumptions_and_Impact_on_Decisions_Draft"
+output: 
+ learnr::tutorial:
+  progressive: true
+  allow_skip: true
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+install.packages("remotes", repos = "https://cloud.r-project.org/")
+
+
+options(tutorial.storage = list(
+  save_object = function(...){},
+  get_object = function(...) NULL,
+  get_objects = function(...) list(),
+  remove_all_objects = function(...){}))
+options(repos = "https://cloud.r-project.org/")
+
+
+#library(remotes)
+#remotes::install_github("rstudio/learnr", force=TRUE)
+#remotes::install_github("rstudio/gradethis", force =TRUE)
+
+#install.packages("mplot")
+library(tidyverse)
+library(learnr)
+library(ggplot2)
+library(gradethis)
+library(dplyr)
+library(mplot)
+
+set.seed(123)
+data(fev)
+FEV <- fev
+```
+
+
+
+
+## Introduction
+
+Welcome to Module X: **Model Assumptions and Thier Impacts on Decision Making**. In this module, you will learn: 
+
+* To use R for exploratory analysis to see predictor-response relationships.
+
+* To use R to construct residual plots, test assumptions, and use findings to refit models.
+
+* To use R to apply appropriate transformations to correct model assumptions.
+
+* To use your judgement in knowing when to remove predictors even if p-values suggest predictors are statistically insignificant (**not sure about this one :p**)
+
+Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
+
+## Motivation
+
+We have already seen how to test linear model assumptions and the consequences of violating them in a previous module.
+
+However, moving along this module, you'll come to realise that data doesn't always work the way you'd want it to! But don't fret, there are methods such as **variable transformations** that help us resolve issues with **assumption violations**. If variable transformations correct assumptions, we can apply our linear modelling knowledge and construct valid models. 
+
+As such, in this module we will explore how we can work with data offering non-linear relationships, apply variable tranformations while testing model assumptions, and how to correctly interpret coefficients in the transformed model.
+
+## Section 0: EDA - Summarising Data & Understanding Context
+
+For the purpose of this module, we will work with the Forced Expiratory Volume dataset (called `FEV`). For context, this dataset contains information about 654 individuals on 5 variables. The response variable of interest will be `fev` which is the forced expiratory volume (liters); roughly the amount of air an individual can exhale in the first second of a forceful breath.
+
+We have a number of different possible predictors in our data:
+
+ - `smoke`: An indicator/binary variable where a nonsmoker is 0, and smoker is 1.
+ - `sex`: An indicator/binary variable where a female is 0, and male is 1.
+ - `height`: Height (inches)
+ - `age`: Age (years)
+ 
+In the code chunk below, summarise the response variable `fev`.
+
+```{r e0_1, exercise=TRUE, exercise.lines=2}
+# add your code below
+summary(FEV$___)
+```
+
+```{r e0_1-solution, eval=FALSE}
+# add your code below
+#opt1 ----
+summary(FEV$fev)
+
+#opt2 ----
+fev %>% 
+summarise(Count = n(), Mean = mean(fev), "25th" = quantile(fev, 0.25), 
+"50th" = median(fev), "75th" = quantile(fev, 0.75))
+```
+
+```{r e0_1-check}
+grade_this_code()
+```
+
+```{r e0_1-hint-1}
+#---
+
+# remember you can also summarise using tidyverse:
+
+FEV %>% 
+summarise(Count = n(), Mean = mean(fev), "25th" = quantile(fev, ___), 
+"50th" = median(fev), "75th" = quantile(fev, ___))
+
+
+#---
+```
+
+In the portion below, you can explore the dataset by reviewing the relationship between `fev` and the predictors, as well as the summary of the predictors themselves.
+
+```{r, context="render", echo=FALSE}
+fluidPage(
+  titlePanel("Exploratory Data Analysis"),
+  
+  # Sidebar layout with input and output definitions
+  sidebarLayout(
+    sidebarPanel(
+      # Input: Select predictor
+      radioButtons("Predictor", "Select Predictor:",
+                   choices = c("smoke", "age", "height", "sex"),
+                   selected = "smoke"),
+      br(),
+      # Add more inputs for other predictors if needed
+    ), # <-- added comma here
+    mainPanel(
+     tabsetPanel(
+        tabPanel("Plot",
+                 plotOutput("plot")),
+        tabPanel("Summary",
+                 verbatimTextOutput("summary"))
+    ))))
+
+```
+
+
+```{r, context="server"}
+ output$plot <- renderPlot({
+    ggplot(FEV, aes_string(x = input$Predictor, y = "fev")) +
+      geom_point(color = "deeppink1") +
+      labs(x = input$Predictor, y = "Forced Expiratory Volume") + theme_minimal()
+  })
+  output$summary <- renderPrint({
+    summary(fev[[input$Predictor]])
+  })
+```
+
+While exploring you may have noticed some interesting trends among the predictors.
+
+```{r q0_1, echo=FALSE}
+question("Which response-predictor relationship(s) appears non-linear?",
+     answer("The relationship with `smoke`.", message="Try again! While you are correct that this relationship appears non-linear, you may be missing something else."),
+     answer("The relationship with `age`.", message="Try again! the relationship appears linear."),
+     answer("The relationship with `height`.", message="While you are correct that this relationship appears non-linear, you may be missing something else."),
+     answer("The relationship with `sex`.", message="Try again! the relationship appears linear."),
+     answer("They all appear linear.", message="Try again! Not all the relationships are linear."),
+     answer("None of the above.", message="Correct! Both relationships of `fev` with `smoking` and `height` appear non-linear. ", correct=T),
+     allow_retry = T)
+```
+
+Despite the well-established history of smoking and its adverse health effects, our exploratory analysis challenges the intuitive expectation of a negative linear relationship between smoking (`smoke`) and Forced Expiratory Volume (`fev`). Contrary to expectations, individuals who smoke exhibit FEV values that are distributed across the 50th percentile and above, extending even to the 75th percentile of `fev`! Surprisingly, we also observe considerable variability in `fev` among non-smokers.
+
+____________________________
+
+*As a rule of thumb*, for non-linear response-predictor relationships, it is worth seeing if other predictors may have underlying influences in the relationship.
+
+Therefore, create a scatterplot in the code chunk below between `height` and `fev` while colour coding for `smoke` status. This would help test if the relationship between the response and `height` varies by the smoker group.
+
+
+```{r e0_2, exercise=TRUE, exercise.lines=3}
+# add your code below
+ggplot(FEV, aes(x = ___, y = fev, color = ___)) +
+       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") 
++ scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
+```
+
+```{r e0_2-solution, eval=FALSE}
+# add your code below
+ggplot(FEV, aes(x = height, y = fev, color = factor(smoke))) +
+       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") 
++ scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
+```
+
+```{r e0_2-check}
+grade_this_code()
+```
+
+```{r e0_2-hint-1}
+#---
+
+#Given that we group by a binary variable, use:
+color = factor(___)
+
+#---
+```
+
+It appears that smoker status does influence the `fev ~ height` relationship as apparent in the plot above. If you were to draw lines of best fit separately for smokers and non smokers, the intercepts would appear different. This motivates us to build a model with `smoke` as an indicator, to capture a main effect.
+
+
+## Section 1:
