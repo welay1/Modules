@@ -113,16 +113,15 @@ In the portion below, you can explore the dataset by reviewing the relationship 
 fluidPage(
   titlePanel("Exploratory Data Analysis"),
   
-  # Sidebar layout with input and output definitions
+
   sidebarLayout(
     sidebarPanel(
-      # Input: Select predictor
       radioButtons("Predictor", "Select Predictor:",
                    choices = c("smoke", "age", "height", "sex"),
                    selected = "smoke"),
       br(),
-      # Add more inputs for other predictors if needed
-    ), # <-- added comma here
+      
+    ), 
     mainPanel(
      tabsetPanel(
         tabPanel("Plot",
