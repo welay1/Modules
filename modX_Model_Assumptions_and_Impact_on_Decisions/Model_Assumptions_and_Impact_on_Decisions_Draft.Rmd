@@ -166,7 +166,7 @@ ____________________________
 Therefore, create a scatterplot in the code chunk below between `height` and `fev` while colour coding for `smoke` status. This would help test if the relationship between the response and `height` varies by the smoker group.
 
 
-```{r e0_2, exercise=TRUE, exercise.lines=3}
+```{r e0_2, exercise=TRUE, exercise.lines=4}
 # add your code below
 ggplot(FEV, aes(x = ___, y = fev, color = ___)) +
        geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") 
@@ -176,8 +176,7 @@ ggplot(FEV, aes(x = ___, y = fev, color = ___)) +
 ```{r e0_2-solution, eval=FALSE}
 # add your code below
 ggplot(FEV, aes(x = height, y = fev, color = factor(smoke))) +
-       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") 
-+ scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
+       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") + scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
 ```
 
 ```{r e0_2-check}
@@ -197,3 +196,25 @@ It appears that smoker status does influence the `fev ~ height` relationship as 
 
 
 ## Section 1:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
