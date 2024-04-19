@@ -34,6 +34,8 @@ library(mplot)
 set.seed(123)
 data(fev)
 FEV <- fev
+fev_model <- lm(fev ~ smoke + height, data = FEV)
+
 ```
 
 
@@ -196,10 +198,50 @@ It appears that smoker status does influence the `fev ~ height` relationship as 
 
 
 ## Section 1:
+Build a linear model with `fev` as the response and `smoke` and `height` as predictors.
+Name your model 'fev_model', and summarize it
+
+```{r e1s2, exercise=TRUE, exercise.lines=4}
+"fev_model <- lm(y ~ x1+ x2 ,data =FEV)"
+```
+
+```{r e1s2-solution, eval=FALSE}
+# add your code below
+fev_model <- lm(fev ~ smoke + height, data = FEV)
+
+# Summarizing the model
+summary(fev_model)
+```
+
+```{r e1s2-check}
+grade_this_code()
+```
 
 
+```{r e2s2, exercise=TRUE, exercise.lines=4}
+plot(fev_model$fitted.values, resid(fev_model), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot")
+abline(h = 0, col = "red")
+```
+
+Plot the residuals versus fitted values to investigate assumptions
+```{r e2s2-solution, eval=FALSE}
+plot(fev_model$fitted.values, resid(fev_model), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot")
+abline(h = 0, col = "red")
+```
+
+```{r e2s2-check}
+grade_this_code()
+```
+
+*how do you link this plot to the height plot?*
 
 ## Section 2:
+
+
 
 
 ## Section 3:
