@@ -53,6 +53,8 @@ Welcome to Module X: **Model Assumptions and Thier Impacts on Decision Making**.
 
 * To use your judgement in knowing when to remove predictors even if p-values suggest predictors are statistically insignificant (**not sure about this one :p**)
 
+
+
 Remember that if you get stuck on a coding exercise, you can click the **Hints** button for help. 
 
 ## Motivation
@@ -262,6 +264,9 @@ In the code chunk below, run summaries of the original model and the transformed
 
 Our current models seem to be telling us that smoking either has a positive impact on lung function or no impact at all. However, this contradicts our prior knowledge about the negative effects of smoking on lung health. Sometimes when a model contradicts your beliefs, it means that there is sufficient evidence against that hypotheses. Tie this back to linear regression assumption that you are including all relevant variables, and not missing any important variables. (the Linearity assumption requires that we include predictors present in the true relationship in the linear model)
 
+(think about model in the greater context: how strong is the existing evidence vs what the model is telling you -- use your brain, be critical)
+
+
 Let's take another look at variables in our dataset, and see if there is anything else that we believe may impact lung function. We have prior knowledge that age can generally impact health, including lung function, so maybe this would be a good variable to include in our model. 
 
 In the code chunk below, add age as a predictor into the transformed model. 
@@ -272,7 +277,9 @@ In the code chunk below, add age as a predictor into the transformed model.
 Wrap-up about context 
 
 
+interactive: options to select transformations, highlighting what is happening to estimate/significance for smoking, show residual
 
+apply transformation -- compare residual and what happens to the coefficient
 
 
 

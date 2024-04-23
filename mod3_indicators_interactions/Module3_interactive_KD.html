@@ -138,12 +138,21 @@ squares to estimate <span class="math inline">\(\hat{y} = \hat{\beta_0}
 + \hat{\beta_1}X\)</span>, where <span
 class="math inline">\(\hat{\beta_0}\)</span> is the intercept and <span
 class="math inline">\(\hat{\beta_1}\)</span> is the slope.</p>
+<<<<<<< Updated upstream
 <p>Moving along the module, you may realise we can extend our simple
 linear regression to model more complex relationships of the form <span
 class="math inline">\(Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots +
 \beta_p X_p + \epsilon\)</span>. While we have only seen quantitative
 (numerical) predictors so far, we can also include qualitative
 (categorical) predictors in linear regression models.</p>
+=======
+<p>We know that we can extend simple linear regression to model more
+complex relationships of the form <span class="math inline">\(Y =
+\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \ldots + \beta_p X_p +
+\epsilon\)</span>. While we have only seen quantitative (numerical)
+predictors so far, we can also include qualitative (categorical)
+predictors in linear regression models.</p>
+>>>>>>> Stashed changes
 <p>In this module, we will explore how we can include qualitative
 predictors in a multiple linear model, and how to correctly interpret
 qualitative coefficients.</p>
@@ -518,11 +527,19 @@ or 5) relative to a rating of 1.</p>
 <script>if (Tutorial.triggerMathJax) Tutorial.triggerMathJax()</script>
 </div>
 </div>
+<<<<<<< Updated upstream
 <p>The results of a model that uses <code>rating</code> as a categorical
 predictor shows us that, compared to a rating of 1, sets with other
 ratings change the mean Amazon Price by different amounts, so it may not
 be reasonable to treat this predictor as continuous with a constant
 effect on the response.</p>
+=======
+<p>The results of a model that uses ratings as a categorical predictor
+shows us that, compared to a rating of 1, sets with other ratings change
+the mean Amazon Price by different amounts, so it may not be reasonable
+to treat this predictor as continuous with a constant effect on the
+response.</p>
+>>>>>>> Stashed changes
 </div>
 </div>
 <div id="section-section-2-indicators-as-main-effects"
@@ -1256,9 +1273,22 @@ lm(Amazon_Price ~ Pieces*Theme, data = lego[lego$Theme != &quot;City&quot;,])</c
 <div class="tutorial-exercise-support" data-label="mlr3-hint-1"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
+<<<<<<< Updated upstream
 <pre class="text"><code>#---
 
 # the more explicit way is
+=======
+<pre class="text"><code># the more explicit way is
+lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
+# while the simpler way is
+lm(response ~ predictor1*predictor2)
+# where predictor1 = Pieces and predictor2 = Theme</code></pre>
+</div>
+<div class="tutorial-exercise-support" data-label="mlr3-hint-2"
+data-completion="1" data-diagnostics="1" data-startover="1"
+data-lines="0" data-pipe="|&gt;">
+<pre class="text"><code># the more explicit way is
+>>>>>>> Stashed changes
 lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
 # while the simpler way is
 lm(response ~ predictor1*predictor2)
@@ -1318,9 +1348,13 @@ lm(Amazon_Price ~ Pieces*Theme, data = lego)</code></pre>
 <div class="tutorial-exercise-support" data-label="mlr4-hint"
 data-completion="1" data-diagnostics="1" data-startover="1"
 data-lines="0" data-pipe="|&gt;">
+<<<<<<< Updated upstream
 <pre class="text"><code>#---
 
 # the more explicit way is
+=======
+<pre class="text"><code># the more explicit way is
+>>>>>>> Stashed changes
 lm(response ~ predictor1 + predictor2 + predictor1:predictor2)
 # while the simpler way is
 lm(response ~ predictor1*predictor2)
@@ -1409,6 +1443,7 @@ lego$Theme == &quot;DUPLO\xae&quot;
 
 #---</code></pre>
 </div>
+<<<<<<< Updated upstream
 <p>In this model, we should now have a separate intercept for
 <code>City</code>, <code>Friends</code> and <code>DUPLO</code>, and a
 separate slope for only <code>DUPLO</code> (as we had noted earlier that
@@ -1417,6 +1452,14 @@ by much and there is no harm in fitting the model with the extra
 estimates. But if you are ever interested in cleaning up your model to
 remove estimates close to 0, this is one option for you.</p>
 </div>
+=======
+<p>In this model, we should now have a separate intercept for City,
+Friends and DUPLO, and a separate slope for only DUPLO (as we had noted
+earlier that City and Friends had the same slope). This doesn’t change
+the estimates by much and there is no harm in fitting the model with the
+extra estimates. But if you are ever interested in cleaning up your
+model to remove estimates close to 0, this is one option for you.</p>
+>>>>>>> Stashed changes
 </div>
 <div id="section-section-5-interactive-exercise" class="section level2">
 <h2>Section 5: Interactive Exercise</h2>
@@ -2953,6 +2996,7 @@ learnr:::store_exercise_cache(structure(list(label = "model", global_setup = str
 
 
 output$table <- renderTable({
+<<<<<<< Updated upstream
   if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}$$"){
     mod <- lm(Amazon_Price ~ Pieces, data=lego)
     RSS <- sum(resid(mod)^2)
@@ -2962,6 +3006,17 @@ output$table <- renderTable({
     RSS <- sum(resid(mod)^2)
     data.frame(Model = "Mod2", RSS = round(RSS, 2))
   }
+=======
+ if(input$model == "Mod1 = $$\\hat{Y} = \\hat{\\beta_0} + \\hat{\\beta_1}\\text{Pages}+ \\hat{\\beta_2}\\text{Size} + \\hat{\\beta_3}\\text{Pages}\\times\\text{Size}$$"){
+   mod <- lm(Amazon_Price ~ Pieces, data=lego)
+ }
+ else{
+  mod <- lm(Amazon_Price ~ Pieces*Size, data=lego)
+ }
+  RSS <- sum(resid(mod)^2)
+  
+  data.frame(RSS = round(RSS, 2))
+>>>>>>> Stashed changes
 })
 
 
@@ -2998,7 +3053,11 @@ learnr:::question_prerendered_chunk(structure(list(type = "learnr_radio", label 
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
+<<<<<<< Updated upstream
 {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","checkmate","cli","colorspace","commonmark","compiler","datasets","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","mathjaxr","methods","mime","munsell","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.2","0.7.0","1.0.8","2.3.1","3.6.2","2.1-0","1.9.1","4.3.2","4.3.2","0.6.35","1.1.4","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.4","1.7.0","0.2.14","4.3.2","4.3.2","4.3.2","0.3.4","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.45","1.3.2","0.11.5.9000","1.0.4","1.9.3","2.0.3","1.12","1.6-0","4.3.2","0.12","0.5.0","1.9.0","2.0.3","1.3.0","1.0.2","2.5.1","1.0.12","2.1.4","1.1.3","2.26","2.0.4","0.16.0","0.4.9","1.3.0","1.8.1.1","4.3.2","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.2","0.4.0","1.2.4","4.3.2","0.6.5","3.0.0","0.43","1.8-4","2.3.8"]}]}]}
+=======
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83]}},"value":[{"type":"character","attributes":{},"value":["backports","base","bslib","cachem","callr","checkmate","cli","colorspace","commonmark","compiler","crayon","curl","datasets","desc","digest","dplyr","ellipsis","evaluate","fansi","fastmap","fontawesome","forcats","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","mathjaxr","methods","mime","munsell","pillar","pkgbuild","pkgconfig","prettyunits","processx","promises","ps","purrr","R6","Rcpp","readr","remotes","rlang","rmarkdown","rprojroot","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utf8","utils","vctrs","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["1.4.1","4.3.0","0.7.0","1.0.8","3.7.3","2.3.1","3.6.2","2.1-0","1.9.1","4.3.0","1.5.2","5.0.1","4.3.0","1.4.2","0.6.35","1.1.2","0.3.2","0.23","1.0.6","1.1.1","0.5.2","1.0.0","0.1.3","3.4.2","1.7.0","0.2.14","4.3.0","4.3.0","4.3.0","0.3.3","1.1.3","0.5.8.1","1.6.4","1.6.15","0.1.4","1.8.8","1.45","1.3.2","0.11.5.9000","1.0.4","1.9.2","2.0.3","1.12","1.6-0","4.3.0","0.12","0.5.0","1.9.0","1.4.0","2.0.3","1.1.1","3.8.1","1.3.0","1.7.5","1.0.2","2.5.1","1.0.12","2.1.4","2.5.0","1.1.3","2.26","2.0.4","0.16.0","0.4.9","1.2.1","1.8.1.1","4.3.0","1.8.3","1.5.1","3.2.1","1.3.0","1.2.0","2.0.0","0.2.0","4.3.0","0.4.0","1.2.4","4.3.0","0.6.5","3.0.0","0.43","1.8-4","2.3.8"]}]}]}
+>>>>>>> Stashed changes
 </script>
 <!--/html_preserve-->
 </div>
