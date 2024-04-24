@@ -1,5 +1,5 @@
 ---
-title: "Model Assumptions and Impact on Decisions"
+title: "Model_Assumptions_and_Impact_on_Decisions_Draft"
 output: 
  learnr::tutorial:
   progressive: true
@@ -8,7 +8,7 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
-install.packages("remotes", repos = "https://cloud.r-project.org/")
+#install.packages("remotes", repos = "https://cloud.r-project.org/")
 
 
 options(tutorial.storage = list(
@@ -30,7 +30,6 @@ library(ggplot2)
 library(gradethis)
 library(dplyr)
 library(mplot)
-library(MASS)
 
 set.seed(123)
 data(fev)
@@ -201,15 +200,24 @@ It appears that smoker status does influence the `fev ~ height` relationship as 
 
 
 ## Section 1:
-Build a linear model with `fev` as the response and `smoke` and `height` as predictors.
-Name your model 'fev_model', and summarize it
+Start by building a linear model using fev as the response variable and smoke and height as predictors. This model will help us understand how smoking status and height can predict lung function, measured by forced expiratory volume (FEV).
 
 ```{r e1s2, exercise=TRUE, exercise.lines=4}
-"fev_model <- lm(y ~ x1+ x2 ,data =FEV)"
+```
+
+```{r e1s2-hint-1}
+#---
+
+# remember to use this form:
+
+fev_model <- lm(response variable ~ predictor1 + predictor2, data = FEV)
+
+# Summarizing the model
+summary(fev_model)
+#---
 ```
 
 ```{r e1s2-solution, eval=FALSE}
-# add your code below
 fev_model <- lm(fev ~ smoke + height, data = FEV)
 
 # Summarizing the model
@@ -220,15 +228,25 @@ summary(fev_model)
 grade_this_code()
 ```
 
+Great job! You've just built your first model! Understanding your model's summary can provide insights into how significant each predictor is for FEV. Now that you've built your model, it's crucial to check the linear regression assumptions. We'll start by plotting residuals versus fitted values. This plot helps us identify any patterns that might suggest our model is not fitting the data well (like a curving or fanning pattern).
+
 
 ```{r e2s2, exercise=TRUE, exercise.lines=4}
-plot(fev_model$fitted.values, resid(fev_model), 
+plot()
+```
+
+```{r e2s2-hint-1}
+#---
+
+# remember to include your model name in this form:
+
+plot( _ $fitted.values, resid(), 
      xlab = "Fitted values", ylab = "Residuals",
      main = "Residuals vs Fitted Plot")
 abline(h = 0, col = "red")
+#---
 ```
 
-Plot the residuals versus fitted values to investigate assumptions
 ```{r e2s2-solution, eval=FALSE}
 plot(fev_model$fitted.values, resid(fev_model), 
      xlab = "Fitted values", ylab = "Residuals",
@@ -240,105 +258,154 @@ abline(h = 0, col = "red")
 grade_this_code()
 ```
 
-*how do you link this plot to the height plot?*
+```{r q1_2, echo=FALSE}
+question("Which pattern do you observe in the Residuals vs Fitted plot?",
+     answer("There is a linear pattern.", message="Try again! While the red line is flat, this doesn't mean that the relationship is linear."),
+     answer("There is a fanning pattern", message="Yes! We observe that as the x-variable increases, the y-variable starts to fan away in both vertical directions. We will see how we can apply transformations to fix this.", correct= T),
+     answer("There is no relationship depicted", message="Try again, there is a specific pattern that you should notice in the plot."),
+     allow_retry = T)
+```
 
+
+In your regression analysis, you observed a curving pattern in the plot of residuals versus fitted values, as well as in the scatter plot of height against FEV. This curvature suggests that the relationship between height and FEV is not simply linear – as height increases, the effect on FEV does not increase at a constant rate.
+
+Including a squared term for height in your model (height²) allows you to model this curvature. Essentially, this squared term helps the model to adjust for changes in the slope of the relationship between height and FEV. It accounts for the possibility that FEV increases at a different rate when height changes, which a simple linear term (just height) cannot adequately capture.
+
+
+```{r e3s2, exercise=TRUE, exercise.lines=10}
+# Adding height squared to the model
+FEV$height2 <- FEV$height^2
+fev_model_2 <- lm(fev ~ smoke + height + height2, data = FEV)
+
+# Summarizing the new model
+summary(fev_model_2)
+
+plot()
+
+```
+
+```{r e3s2-hint-1}
+#---
+
+FEV$height2 <- FEV$height^2
+fev_model_2 <- lm(fev ~ smoke + height + __, data = FEV)
+
+# Summarizing the new model
+summary()
+
+plot(__$fitted.values, resid(__), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot for Modified Model")
+abline(h = 0, col = "red")
+
+#---
+```
+
+```{r e3s2-solution, eval=FALSE}
+FEV$height2 <- FEV$height^2
+fev_model_2 <- lm(fev ~ smoke + height + height2, data = FEV)
+
+# Summarizing the new model
+summary(fev_model_2)
+
+plot(fev_model_2$fitted.values, resid(fev_model_2), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot for Modified Model")
+abline(h = 0, col = "red")
+```
+
+```{r e3s2-check}
+grade_this_code()
+```
+
+Now, we'll use another method to address the fanning issue observed in the first residuals vs. fitted values plot. Fanning occurs when the variance of residuals changes with the level of the fitted values, which can violate the homoscedasticity assumption of linear regression. To correct this, we will use a Box-Cox transformation, which can help stabilize variance across different levels of fitted values.
+#boxcox (won't show up when I run the document)
+```{r}
+#library(MASS) 
+#boxcox_result <- boxcox(fev_model_2, lambda = seq(-2, 2, by = 0.1)) 
+#plot(boxcox_result)
+```
+After transforming fev, rebuild your model and check the residuals vs. fitted values plot again. This step is crucial to ensure that the transformation has effectively addressed the issue of fanning. Well done! Applying transformations like these can greatly improve your model's accuracy and the reliability of your inferences. Continue to explore and refine as necessary.
+
+```{r e4s2, exercise=TRUE, exercise.lines=10}
+FEV$log_fev <- log(FEV$fev)
+
+# Refit the model with transformed FEV
+fev_model_3 <- lm(log_fev ~ smoke + height + I(height^2), data = FEV)
+
+# Summarizing the new model
+summary(fev_model_3)
+
+plot()
+```
+
+```{r e4s2-hint-1}
+FEV$log_fev <- log(FEV$fev)
+
+# Refit the model with transformed FEV
+fev_model_3 <- lm(__ ~ smoke + height + __, data = FEV)
+
+# Summarizing the new model
+summary(__)
+
+plot(__$fitted.values, resid(__), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot for Transformed Model")
+abline(h = 0, col = "red")
+```
+
+```{r e4s2-solution, eval=FALSE}
+FEV$log_fev <- log(FEV$fev)
+
+# Refit the model with transformed FEV
+fev_model_3 <- lm(log_fev ~ smoke + height + I(height^2), data = FEV)
+
+# Summarizing the new model
+summary(fev_model_3)
+
+plot(fev_model_3$fitted.values, resid(fev_model_3), 
+     xlab = "Fitted values", ylab = "Residuals",
+     main = "Residuals vs Fitted Plot for Transformed Model")
+abline(h = 0, col = "red")
+
+```
 
 ## Section 2:
 
-```{r, include=FALSE}
-FEV$lnfev <- log(FEV$fev)
-log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
-summary(log_fev_model)
-```
-
-Recall the transformed model, which has the following summary: 
-
-```{r, echo=FALSE}
-summary(log_fev_model)
-```
-
-Interpreting the coefficients in this model may seem tricky, but the process is very similar to what you have been doing so far. 
-
-```{r qTransform, echo=FALSE}
-question("Which interpretation below is correct?",
-     answer("For a one-unit increase in height, FEV decreases by 0.052.", message="Recall the transformation applied and the variable it was applied to."),
-     answer("For a one-unit increase in smoke, FEV decreases by 0.007", message="Is the correct way to interpret a binary variable?"),
-     answer("For a one-unit increase in ln(height), FEV increases by 0.052", message="Recall the transformation applied and the variable it was applied to."),
-     answer("For participants that smoke, ln(FEV) decreases by 0.0068", message="", correct=T),
-     allow_retry = T)
-```
-
-The important rule when interpreting transformed models is that you must refer to variables in their transformed state. For example, if $x$ has been squared, you must interpret the impact in the context of a "one unit increase in $x^2$", not $x$ alone. 
-
-Now that we know how to interpret the coefficients in `log_fev_model`, we will compare this to the untransformed `fev_model` and the simple model `simple_model` to see what each tells us about the effect of smoking on FEV. 
-
-Run the code chunk below to produce summaries of `log_fev_model` and `fev_model`. 
-
-```{r modCompare, exercise=TRUE, exercise.lines=6}
-
-fev_model <- lm(fev ~ smoke + height, data = FEV)
-
-log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
-
-simple_model <- ___
-  
-summary(fev_model)
-summary(log_fev_model)
-summary(simple_model)
-```
 
 
-```{r modCompare-solution, eval=FALSE}
 
-fev_model <- lm(fev ~ smoke + height, data = FEV)
+## Section 3:
 
-log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
+Outline:
 
-simple_model <- lm(fev ~ smoke, data=FEV)
-  
-summary(fev_model)
-summary(log_fev_model)
-summary(simple_model)
-```
+Recap the transformed model. Interpreting coefficients in a transformed model may seem tricky, but it isn't so different from what we've been doing.
 
-```{r mcqCompare, echo=FALSE}
-question("Which of the following statements is correct",
-     answer("The simple model states that smoking statistically increases lung function.", message=""),
-     answer("The transformed model states that in the presence of height, smoking decreases lung function, but this effect is not significant.", message=""),
-     answer("The untransformed model states that in the presence of height, smoking increases lung function, but this effect is not significant.", message=""),
-     answer("All of the above are true", correct=T),
-     allow_retry = T)
-```
+First, we will interpet the smoking coefficient in both the simple linear model and the model with smoking and height as predictors. Notice the simple model says smoking increases lung function. 
 
-Another commonality is that all three models present findings that contradict what existing evidence overwhelmingly corroborates: that smoking has a **significant, negative impact** on lung function. <should I provide links?>
+In the code chunk below, run summaries of the original model and the transformed model. 
 
-Sometimes when a model contradicts existing evidence or prior beliefs, it can be a sign that you have discovered a previously unknown relationship, and that there may be strong evidence against that preexisting information. However, when a model contradicts a relationship as well-studied and well-documented as smoking and lung function, this may be a sign that we should revisit our model and ensure that we are truly meeting all model assumptions. 
+< code chunk > 
 
-Recall the Linearity/Model Specification Assumption, which requires that the model as fitted to the sample is in fact the true relationship in the population, with no missing or extraneous predictors. If the model you are building is not corroborating very well-researched facts, this may be a sign that you are violating linearity by either including unnecessary predictors or excluding something important. 
-
-Let's revisit the `FEV` dataset to see if there are any other variables we should include in this model. Run the chunk below to take a glimpse at the variables in `FEV`. 
+< MCQ >: Which of the following statements are true? 
+[statements about interpreting the smoking coefficient, in the context of height]
 
 
-```{r viewData, exercise=TRUE, exercise.lines=6}
-head(FEV)
-```
+Our current models seem to be telling us that smoking either has a positive impact on lung function or no impact at all. However, this contradicts our prior knowledge about the negative effects of smoking on lung health. Sometimes when a model contradicts your beliefs, it means that there is sufficient evidence against that hypotheses. Tie this back to linear regression assumption that you are including all relevant variables, and not missing any important variables. (the Linearity assumption requires that we include predictors present in the true relationship in the linear model)
 
-Using general knowledge, we can reasonably conclude that lung capacity is impacted by smoking and height, which means including this information in our model is probably important. Additionally, it is reasonable to assume that age also impacts lung capacity, as we know our health changes in many ways as we age. So, it is possible that `age` is a variable that should be included in our transformed model. 
-
-In the code chunk below, add `age` to the transformed model and run a summary. 
-
-```{r addAge, exercise=TRUE, exercise.lines=6}
-log_fev_model_age <- lm()
-summary(log_fev_model_age)
-```
+(think about model in the greater context: how strong is the existing evidence vs what the model is telling you -- use your brain, be critical)
 
 
-```{r addAge-solution, eval=FALSE}
-log_fev_model_age <- lm(lnfev ~ smoke + height + age, data=FEV)
-summary(log_fev_model_age)
-```
+Let's take another look at variables in our dataset, and see if there is anything else that we believe may impact lung function. We have prior knowledge that age can generally impact health, including lung function, so maybe this would be a good variable to include in our model. 
 
-Looking at the model summary, we can see that including age as a predictor means that smoking now has a significant, negative effect on the natural log of lung capacity, which corroborates what we would expect to find in existing research. 
+In the code chunk below, add age as a predictor into the transformed model. 
+<code chunk> 
 
-<blurb about thikning about the model in the greater context: how strong is the existing evidence vs what the model is telling you -- use your brain, be critical >
+< MCQ > : what conclusions can you draw from this model? 
 
+Wrap-up about context 
+
+
+interactive: options to select transformations, highlighting what is happening to estimate/significance for smoking, show residual
+
+apply transformation -- compare residual and what happens to the coefficient
