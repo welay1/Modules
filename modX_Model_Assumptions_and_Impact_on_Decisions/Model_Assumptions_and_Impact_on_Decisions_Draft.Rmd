@@ -1,5 +1,5 @@
 ---
-title: "Model_Assumptions_and_Impact_on_Decisions_Draft"
+title: "Model Assumptions and Impact on Decisions"
 output: 
  learnr::tutorial:
   progressive: true
@@ -30,6 +30,7 @@ library(ggplot2)
 library(gradethis)
 library(dplyr)
 library(mplot)
+library(MASS)
 
 set.seed(123)
 data(fev)
@@ -241,57 +242,103 @@ grade_this_code()
 
 *how do you link this plot to the height plot?*
 
+
 ## Section 2:
 
+```{r, include=FALSE}
+FEV$lnfev <- log(FEV$fev)
+log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
+summary(log_fev_model)
+```
+
+Recall the transformed model, which has the following summary: 
+
+```{r, echo=FALSE}
+summary(log_fev_model)
+```
+
+Interpreting the coefficients in this model may seem tricky, but the process is very similar to what you have been doing so far. 
+
+```{r qTransform, echo=FALSE}
+question("Which interpretation below is correct?",
+     answer("For a one-unit increase in height, FEV decreases by 0.052.", message="Recall the transformation applied and the variable it was applied to."),
+     answer("For a one-unit increase in smoke, FEV decreases by 0.007", message="Is the correct way to interpret a binary variable?"),
+     answer("For a one-unit increase in ln(height), FEV increases by 0.052", message="Recall the transformation applied and the variable it was applied to."),
+     answer("For participants that smoke, ln(FEV) decreases by 0.0068", message="", correct=T),
+     allow_retry = T)
+```
+
+The important rule when interpreting transformed models is that you must refer to variables in their transformed state. For example, if $x$ has been squared, you must interpret the impact in the context of a "one unit increase in $x^2$", not $x$ alone. 
+
+Now that we know how to interpret the coefficients in `log_fev_model`, we will compare this to the untransformed `fev_model` and the simple model `simple_model` to see what each tells us about the effect of smoking on FEV. 
+
+Run the code chunk below to produce summaries of `log_fev_model` and `fev_model`. 
+
+```{r modCompare, exercise=TRUE, exercise.lines=6}
+
+fev_model <- lm(fev ~ smoke + height, data = FEV)
+
+log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
+
+simple_model <- ___
+  
+summary(fev_model)
+summary(log_fev_model)
+summary(simple_model)
+```
 
 
+```{r modCompare-solution, eval=FALSE}
 
-## Section 3:
+fev_model <- lm(fev ~ smoke + height, data = FEV)
 
-Outline:
+log_fev_model <- lm(lnfev ~ smoke + height, data = FEV)
 
-Recap the transformed model. Interpreting coefficients in a transformed model may seem tricky, but it isn't so different from what we've been doing.
+simple_model <- lm(fev ~ smoke, data=FEV)
+  
+summary(fev_model)
+summary(log_fev_model)
+summary(simple_model)
+```
 
-First, we will interpet the smoking coefficient in both the simple linear model and the model with smoking and height as predictors. Notice the simple model says smoking increases lung function. 
+```{r mcqCompare, echo=FALSE}
+question("Which of the following statements is correct",
+     answer("The simple model states that smoking statistically increases lung function.", message=""),
+     answer("The transformed model states that in the presence of height, smoking decreases lung function, but this effect is not significant.", message=""),
+     answer("The untransformed model states that in the presence of height, smoking increases lung function, but this effect is not significant.", message=""),
+     answer("All of the above are true", correct=T),
+     allow_retry = T)
+```
 
-In the code chunk below, run summaries of the original model and the transformed model. 
+Another commonality is that all three models present findings that contradict what existing evidence overwhelmingly corroborates: that smoking has a **significant, negative impact** on lung function. <should I provide links?>
 
-< code chunk > 
+Sometimes when a model contradicts existing evidence or prior beliefs, it can be a sign that you have discovered a previously unknown relationship, and that there may be strong evidence against that preexisting information. However, when a model contradicts a relationship as well-studied and well-documented as smoking and lung function, this may be a sign that we should revisit our model and ensure that we are truly meeting all model assumptions. 
 
-< MCQ >: Which of the following statements are true? 
-[statements about interpreting the smoking coefficient, in the context of height]
+Recall the Linearity/Model Specification Assumption, which requires that the model as fitted to the sample is in fact the true relationship in the population, with no missing or extraneous predictors. If the model you are building is not corroborating very well-researched facts, this may be a sign that you are violating linearity by either including unnecessary predictors or excluding something important. 
 
-
-Our current models seem to be telling us that smoking either has a positive impact on lung function or no impact at all. However, this contradicts our prior knowledge about the negative effects of smoking on lung health. Sometimes when a model contradicts your beliefs, it means that there is sufficient evidence against that hypotheses. Tie this back to linear regression assumption that you are including all relevant variables, and not missing any important variables. (the Linearity assumption requires that we include predictors present in the true relationship in the linear model)
-
-(think about model in the greater context: how strong is the existing evidence vs what the model is telling you -- use your brain, be critical)
-
-
-Let's take another look at variables in our dataset, and see if there is anything else that we believe may impact lung function. We have prior knowledge that age can generally impact health, including lung function, so maybe this would be a good variable to include in our model. 
-
-In the code chunk below, add age as a predictor into the transformed model. 
-<code chunk> 
-
-< MCQ > : what conclusions can you draw from this model? 
-
-Wrap-up about context 
-
-
-interactive: options to select transformations, highlighting what is happening to estimate/significance for smoking, show residual
-
-apply transformation -- compare residual and what happens to the coefficient
+Let's revisit the `FEV` dataset to see if there are any other variables we should include in this model. Run the chunk below to take a glimpse at the variables in `FEV`. 
 
 
+```{r viewData, exercise=TRUE, exercise.lines=6}
+head(FEV)
+```
+
+Using general knowledge, we can reasonably conclude that lung capacity is impacted by smoking and height, which means including this information in our model is probably important. Additionally, it is reasonable to assume that age also impacts lung capacity, as we know our health changes in many ways as we age. So, it is possible that `age` is a variable that should be included in our transformed model. 
+
+In the code chunk below, add `age` to the transformed model and run a summary. 
+
+```{r addAge, exercise=TRUE, exercise.lines=6}
+log_fev_model_age <- lm()
+summary(log_fev_model_age)
+```
 
 
+```{r addAge-solution, eval=FALSE}
+log_fev_model_age <- lm(lnfev ~ smoke + height + age, data=FEV)
+summary(log_fev_model_age)
+```
 
+Looking at the model summary, we can see that including age as a predictor means that smoking now has a significant, negative effect on the natural log of lung capacity, which corroborates what we would expect to find in existing research. 
 
-
-
-
-
-
-
-
-
+<blurb about thikning about the model in the greater context: how strong is the existing evidence vs what the model is telling you -- use your brain, be critical >
 
