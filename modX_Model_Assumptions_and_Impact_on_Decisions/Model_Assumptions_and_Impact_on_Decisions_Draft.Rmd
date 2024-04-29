@@ -202,7 +202,9 @@ It appears that smoker status does influence the `fev ~ height` relationship as 
 ## Section 1:
 Start by building a linear model using fev as the response variable and smoke and height as predictors. This model will help us understand how smoking status and height can predict lung function, measured by forced expiratory volume (FEV).
 
-```{r e1s2, exercise=TRUE, exercise.lines=4}
+```{r e1s2, exercise = TRUE, exercise.lines=3}
+fev_model <-
+
 ```
 
 ```{r e1s2-hint-1}
@@ -220,7 +222,6 @@ summary(fev_model)
 ```{r e1s2-solution, eval=FALSE}
 fev_model <- lm(fev ~ smoke + height, data = FEV)
 
-# Summarizing the model
 summary(fev_model)
 ```
 
@@ -273,12 +274,10 @@ Including a squared term for height in your model (height²) allows you to model
 
 
 ```{r e3s2, exercise=TRUE, exercise.lines=10}
-# Adding height squared to the model
-FEV$height2 <- FEV$height^2
-fev_model_2 <- lm(fev ~ smoke + height + height2, data = FEV)
+FEV$height2 <- FEV$___^2
+fev_model_2 <- lm(fev ~ smoke + height + ___, data = FEV)
 
-# Summarizing the new model
-summary(fev_model_2)
+summary()
 
 plot()
 
@@ -290,7 +289,6 @@ plot()
 FEV$height2 <- FEV$height^2
 fev_model_2 <- lm(fev ~ smoke + height + __, data = FEV)
 
-# Summarizing the new model
 summary()
 
 plot(__$fitted.values, resid(__), 
@@ -305,7 +303,6 @@ abline(h = 0, col = "red")
 FEV$height2 <- FEV$height^2
 fev_model_2 <- lm(fev ~ smoke + height + height2, data = FEV)
 
-# Summarizing the new model
 summary(fev_model_2)
 
 plot(fev_model_2$fitted.values, resid(fev_model_2), 
@@ -319,11 +316,27 @@ grade_this_code()
 ```
 
 Now, we'll use another method to address the fanning issue observed in the first residuals vs. fitted values plot. Fanning occurs when the variance of residuals changes with the level of the fitted values, which can violate the homoscedasticity assumption of linear regression. To correct this, we will use a Box-Cox transformation, which can help stabilize variance across different levels of fitted values.
-#boxcox (won't show up when I run the document)
-```{r}
-#library(MASS) 
-#boxcox_result <- boxcox(fev_model_2, lambda = seq(-2, 2, by = 0.1)) 
-#plot(boxcox_result)
+
+```{r e5s2, exercise=TRUE, exercise.lines=4}
+# Use a Box-Cox transformation on fev_model_2
+
+```
+
+```{r e5s2-hint-1}
+#---
+
+# You can use the boxcox() function and insert the model's name in the brackets!
+
+#---
+```
+
+```{r e5s2-solution, eval=FALSE}
+# Use a Box-Cox transformation on fev_model_2
+boxcox(fev_model_2)
+```
+
+```{r e5s2-check}
+grade_this_code()
 ```
 After transforming fev, rebuild your model and check the residuals vs. fitted values plot again. This step is crucial to ensure that the transformation has effectively addressed the issue of fanning. Well done! Applying transformations like these can greatly improve your model's accuracy and the reliability of your inferences. Continue to explore and refine as necessary.
 
@@ -369,6 +382,7 @@ plot(fev_model_3$fitted.values, resid(fev_model_3),
 abline(h = 0, col = "red")
 
 ```
+
 
 ## Section 2:
 
