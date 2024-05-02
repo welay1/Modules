@@ -30,6 +30,8 @@ library(ggplot2)
 library(gradethis)
 library(dplyr)
 library(mplot)
+library(gridExtra)
+
 
 set.seed(123)
 data(fev)
@@ -140,8 +142,7 @@ fluidPage(
 ```{r, context="server"}
  output$plot <- renderPlot({
     ggplot(FEV, aes_string(x = input$Predictor, y = "fev")) +
-      geom_point(color = "deeppink1") +
-      labs(x = input$Predictor, y = "Forced Expiratory Volume") + theme_minimal()
+      geom_point(color = "deeppink1") + labs(x = input$Predictor, y = "Forced Expiratory Volume") + theme_minimal()
   })
   output$summary <- renderPrint({
     summary(fev[[input$Predictor]])
@@ -157,7 +158,7 @@ question("Which response-predictor relationship(s) appears non-linear?",
      answer("The relationship with `height`.", message="While you are correct that this relationship appears non-linear, you may be missing something else."),
      answer("The relationship with `sex`.", message="Try again! the relationship appears linear."),
      answer("They all appear linear.", message="Try again! Not all the relationships are linear."),
-     answer("None of the above.", message="Correct! Both relationships of `fev` with `smoking` and `height` appear non-linear. ", correct=T),
+     answer("More than 1.", message="Correct! Both relationships of `fev` with `smoking` and `height` appear non-linear. ", correct=T),
      allow_retry = T)
 ```
 
@@ -173,14 +174,14 @@ Therefore, create a scatterplot in the code chunk below between `height` and `fe
 ```{r e0_2, exercise=TRUE, exercise.lines=4}
 # add your code below
 ggplot(FEV, aes(x = ___, y = fev, color = ___)) +
-       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") 
-+ scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
+       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") + geom_smooth(method = "lm", se = FALSE, aes(group = factor(___), color = factor(___))) +
++ scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1")) 
 ```
 
 ```{r e0_2-solution, eval=FALSE}
 # add your code below
 ggplot(FEV, aes(x = height, y = fev, color = factor(smoke))) +
-       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") + scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1"))
+       geom_point(size = 1) + theme_minimal() + labs(color = "Smoking Status") + scale_color_manual(values = c("0" = "turquoise2", "1" = "deeppink1")) + geom_smooth(method = "lm", se = FALSE, aes(group = factor(smoke), color = factor(smoke)))
 ```
 
 ```{r e0_2-check}
@@ -409,3 +410,39 @@ Wrap-up about context
 interactive: options to select transformations, highlighting what is happening to estimate/significance for smoking, show residual
 
 apply transformation -- compare residual and what happens to the coefficient
+
+
+## Section 4: Interactive Exercise
+
+
+```{r, context="render", echo=FALSE}
+fluidPage(
+  titlePanel("Interaction"),
+  
+  # Main layout with split columns
+  splitLayout(
+    
+    # Left side with variable plots
+    cellWidths = c("50%", "50%"),
+    plotOutput("variable_plot"),
+    
+    # Right side with residual plot
+    plotOutput("residual_plot")
+  ),
+  
+  # Model selection dropdown
+  selectInput("model", "Select Model:", 
+              choices = c("fev ~ height + smoke",
+                          "fev ~ height+ height2 + smoke",
+                          "log_fev ~ height + smoke",
+                          "log_fev ~ height+ height2 + smoke")
+  )
+)
+```
+
+```{r, context="server"}
+### needs work
+
+```
+
+
